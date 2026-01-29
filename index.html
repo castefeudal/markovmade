@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+<html lang="ru" class="bg-obsidian">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>MARKOVMADE | Трансформация Личности, Фитнес Менторство и Психология</title>
+    <meta name="description" content="Авторская система Павла Маркова (MARKOVMAFIA). Мужской тренинг, женское преображение, нутрициология и ментальное здоровье. Закрытое сообщество для тех, кто строит наследие.">
+    <meta name="keywords" content="Павел Марков, MARKOVMADE, MARKOVMAFIA, мужской тренинг, фитнес наставник, нутрициолог, психология успеха, трансформация тела, личный бренд, закрытое сообщество">
+    <meta name="author" content="Pavel Markov">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://markovmade.com"> <meta property="og:type" content="website">
+    <meta property="og:url" content="https://markovmade.com"> <meta property="og:title" content="MARKOVMADE | Архитектура Личности">
+    <meta property="og:description" content="Не просто спорт. Пересборка личности, здоровья и мышления. Твой путь в MARKOVMAFIA начинается здесь.">
+    <meta property="og:image" content="https://i.ibb.co/JWKdKphb/preview.png"> <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="MARKOVMADE">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MARKOVMADE: Перепрошивка тела и разума на уровне биохимии">
+    <meta name="twitter:description" content="Авторская методика Павла Маркова. Управляй гормонами, мышлением и энергией, чтобы создать лучшую версию себя.">
+    <meta name="twitter:image" content="https://i.ibb.co/JWKdKphb/preview.png">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23D4AF37%22/></svg>">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/XZ2H1ctf/IMG-5845.png"> <meta name="theme-color" content="#050505">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+<style>
+    /* === 10/10 PERFORMANCE & STYLE === */
+    
+    /* Базовые настройки */
+    html.lenis { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+    .lenis.lenis-stopped { overflow: hidden; }
+    .lenis.lenis-scrolling iframe { pointer-events: none; }
+
+    body { 
+        text-rendering: optimizeLegibility; 
+        -webkit-font-smoothing: antialiased; 
+        background-color: #050505;
+        color: #F2F2F2;
+    }
+    
+    /* Улучшение шрифтов */
+    h1, h2 { letter-spacing: -0.03em; } 
+
+    /* === МОБИЛЬНАЯ ВЕРСТКА (ЖЕЛЕЗОБЕТОННАЯ) === */
+    @media (max-width: 1024px) {
+        .insight-ghost { display: none !important; }
+
+        /* Биография: Вертикальный стек, отключаем горизонтальную логику CSS */
+        #biography { height: auto !important; min-height: auto !important; }
+        
+        #bio-sticky { 
+            position: relative !important; 
+            height: auto !important; 
+            overflow: visible !important; 
+            top: 0 !important;
+        }
+        
+        #bio-track { 
+            display: flex !important; 
+            flex-direction: column !important; 
+            width: 100% !important; 
+            transform: none !important; /* Отключаем JS трансформацию на CSS уровне для страховки */
+        }
+        
+        /* Слайд мобильный */
+        .slide { 
+            width: 100% !important;
+            height: auto !important;
+            min-height: auto !important;
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding-top: 60px;
+            padding-bottom: 80px;
+        }
+
+        .slide img.absolute {
+            position: absolute; top: 0; left: 0;
+            height: 100%; width: 100%; object-fit: cover; z-index: 0;
+        }
+
+        #bio-progress-container, #bio-progress { display: none !important; }
+        .text-outline-year { display: none; }
+        
+        /* Фикс дерганья на мобильном */
+        .noise-overlay { opacity: 0.02 !important; animation: none !important; }
+    }
+
+    /* === ВИДЖЕТ ИНСАЙТОВ (ПК) — ULTRA LUXURY === */
+    .insight-ghost {
+        position: fixed; bottom: 40px; right: 40px; 
+        max-width: 320px; 
+        background: rgba(10, 10, 10, 0.6); /* Более прозрачный фон */
+        backdrop-filter: blur(16px); /* Сильное размытие фона (матовое стекло) */
+        border-left: 1px solid rgba(212, 175, 55, 0.8); 
+        padding: 24px 36px; border-radius: 2px; 
+        z-index: 9999; pointer-events: none;
+        
+        /* СОСТОЯНИЕ "СПРЯТАН" */
+        opacity: 0; 
+        filter: blur(15px); /* Размытие самого блока */
+        transform: translateY(30px) scale(0.98); /* Слегка внизу и чуть меньше */
+        
+        /* ФИЗИКА ДВИЖЕНИЯ (МАТЕМАТИКА РОСКОШИ) */
+        /* cubic-bezier(0.19, 1, 0.22, 1) — это "Expo Ease Out". Очень плавное торможение. */
+        transition: 
+            opacity 1.8s cubic-bezier(0.19, 1, 0.22, 1),
+            transform 1.8s cubic-bezier(0.19, 1, 0.22, 1),
+            filter 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+            
+        will-change: opacity, transform, filter; /* Сообщаем браузеру готовиться к рендеру */
+        box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+    }
+
+    .insight-ghost.active { 
+        /* СОСТОЯНИЕ "ВИДИМ" */
+        opacity: 1; 
+        filter: blur(0); 
+        transform: translateY(0) scale(1); 
+    }
+
+    /* === ОПТИМИЗАЦИЯ АНИМАЦИЙ (УБИРАЕТ ЛАГИ) === */
+    .will-change-transform { will-change: transform; }
+    
+    .parallax-img-wrap { overflow: hidden; height: 100%; width: 100%; }
+    .parallax-img { height: 130%; width: 100%; object-fit: cover; will-change: transform; }
+
+    /* === УСЛУГИ: АККОРДЕОН (ПЛАВНЫЙ И ЧИСТЫЙ) === */
+    .accordion-content { 
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        opacity: 0.5;
+    }
+    
+    .accordion-content > div {
+        overflow: hidden;
+    }
+
+    .accordion-content.open { 
+        grid-template-rows: 1fr;
+        opacity: 1;
+    }
+    
+    .rotate-icon { transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
+    .rotate-icon.open { transform: rotate(45deg); background: #F2F2F2; border-color: #F2F2F2; }
+    .rotate-icon.open path { stroke: #050505; }
+    
+    /* Чистка списков от точек */
+    ul { list-style: none !important; padding: 0 !important; margin: 0 !important; }
+    li::before { content: none !important; }
+
+    /* Фон и Эффекты */
+    .abstract-bg {
+        background: linear-gradient(270deg, rgba(212,175,55,0.04), rgba(5,5,5,0), rgba(255,255,255,0.02));
+        background-size: 300% 300%;
+        animation: flow 25s ease infinite;
+    }
+
+    .text-outline-year {
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
+        color: transparent; font-weight: 700;
+    }
+
+    /* Формы и Кнопки */
+    .manifest-input {
+        background: transparent; border: none; border-bottom: 1px solid rgba(163, 163, 163, 0.2);
+        color: #F2F2F2; padding: 1.5rem 0; width: 100%; outline: none; transition: border-color 0.4s ease;
+        font-family: 'Manrope', sans-serif; font-size: 1.1rem;
+        border-radius: 0; /* Фикс для iOS */
+    }
+    .manifest-input:focus { border-bottom-color: #D4AF37; }
+    .manifest-input::placeholder { color: #666; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; }
+    
+    .contact-btn {
+        background-color: rgba(5,5,5,0.5); border: 1px solid rgba(255,255,255,0.1); color: #B5B5B5;
+        transition: all 0.4s ease; position: relative; overflow: hidden; backdrop-filter: blur(5px);
+    }
+    .contact-btn:hover { color: #fff; border-color: #D4AF37; transform: translateY(-2px); }
+    
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.015); backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .service-badge {
+        position: absolute; bottom: 16px; right: 16px;
+        background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(4px);
+        padding: 6px 14px;
+        font-size: 10px; color: #fff; text-transform: uppercase; letter-spacing: 0.15em;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Шум (Статичный для производительности) */
+    .noise-overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        pointer-events: none; z-index: 9999; opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+    
+    ::selection { background: #D4AF37; color: #050505; }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "name": "Павел Марков",
+      "alternateName": "MARKOVMAFIA",
+      "image": "https://i.ibb.co/fGFdFRLn/image.png",
+      "description": "Эксперт по трансформации личности, фитнес-ментор, нутрициолог и основатель сообщества MARKOVMAFIA.",
+      "jobTitle": "Основатель / Ментор",
+      "url": "https://markovmade.com",
+      "sameAs": [
+        "https://t.me/markovmade",
+        "https://instagram.com/markovmade" 
+      ]
+    },
+    {
+      "@type": "ProfessionalService",
+      "name": "MARKOVMADE",
+      "image": "https://i.ibb.co/XZ2H1ctf/IMG-5845.png",
+      "priceRange": "$$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Москва, Санкт-Петербург, Сочи, Минск",
+        "addressCountry": "RU"
+      },
+      "telephone": "+79819722516",
+      "url": "https://markovmade.com",
+      "description": "Премиальное фитнес-наставничество, разбор анализов, психологическая коррекция и закрытое мужское сообщество."
+    }
+  ]
+}
+</script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#050505',      // Deepest Black
+                        charcoal: '#0F0F0F',      // Card Background
+                        platinum: '#F2F2F2',      // Primary Text (White-ish)
+                        dim: '#B5B5B5',           // Secondary Text (Readable Grey - Adjusted)
+                        gold: '#D4AF37',          // Metallic Gold
+                        goldlight: '#F4CF57',     // Gold Highlight
+                    },
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    letterSpacing: {
+                        luxury: '0.2em', // Custom wide spacing
+                    },
+                    animation: {
+                        'blob': 'blob 15s infinite alternate',
+                        'flow': 'flow 20s ease-in-out infinite',
+                        'flash': 'flash 0.5s ease-out forwards',
+                        'pulse-gold': 'pulse-gold 3s infinite',
+                        'fade-in': 'fadeIn 1s ease-out forwards',
+                    },
+                    keyframes: {
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        flow: {
+                            '0%': { BackgroundPosition: '0% 50%' },
+                            '50%': { BackgroundPosition: '100% 50%' },
+                            '100%': { BackgroundPosition: '0% 50%' },
+                        },
+                        flash: {
+                            '0%': { BackgroundColor: 'white', boxShadow: '0 0 50px white' },
+                            '100%': { BackgroundColor: 'transparent', boxShadow: 'none' }
+                        },
+                        'pulse-gold': {
+                            '0%, 100%': { boxShadow: '0 0 0 0 rgba(212, 175, 55, 0.4)' },
+                            '50%': { boxShadow: '0 0 0 10px rgba(212, 175, 55, 0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* === GLOBAL RESET & BASE === */
+html { 
+    scroll-padding-top: 0px; 
+    background-color: #050505; /* Красим подложку */
+}
+body { 
+    background-color: #050505; 
+    color: #F2F2F2; 
+    overscroll-behavior: none; /* ВАЖНО: Убирает белые полосы на iOS */
+    cursor: none; 
+    overflow-x: hidden; 
+    -webkit-font-smoothing: antialiased; 
+    -moz-osx-font-smoothing: grayscale; 
+}
+		* { -webkit-tap-highlight-color: transparent; }
+
+        @media (pointer: coarse) {
+            body { cursor: auto; }
+            #cursor { display: none; }
+        }
+
+        body.loading { overflow: hidden; height: 100vh; }
+        body.menu-open { overflow: hidden; }
+
+        /* Typography Improvements for Readability */
+        h1, h2, h3, h4 { text-wrap: balance; }
+        p { text-wrap: pretty; }
+        
+        /* Noise Texture */
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 30; opacity: 0.04;
+            Background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* === LUXURY SCROLLBAR === */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { Background: #050505; }
+        ::-webkit-scrollbar-thumb { Background: #333; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { Background: #D4AF37; }
+
+        /* === CURSOR === */
+        .custom-cursor {
+            position: fixed; top: 0; left: 0; width: 8px; height: 8px;
+            Background-color: #F2F2F2; border-radius: 50%; pointer-events: none; z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, Background-color 0.3s ease, border 0.3s ease;
+            mix-blend-mode: exclusion;
+        }
+        .custom-cursor.hovered {
+            width: 60px; height: 60px; Background-color: transparent; border: 1px solid #D4AF37;
+            mix-blend-mode: normal; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+        }
+
+
+        /* === UI ANIMATIONS === */
+        header { transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), Background-color 0.3s; }
+        header.scrolled-down { transform: translateY(-100%); }
+        header.scrolled-up { transform: translateY(0); Background-color: rgba(5, 5, 5, 0.9); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.03); }
+
+        .nav-link::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -6px; left: 0; Background-color: #D4AF37; transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .nav-link:hover::after { width: 100%; }
+
+        .reveal-text { transform: translateY(120%); opacity: 0; transition: all 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-text.visible { transform: translateY(0); opacity: 1; }
+        
+        .fade-in-up { opacity: 0; transform: translateY(30px); transition: all 1.1s ease-out; }
+        .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+        
+        /* Accordion Smoothness */
+        .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.8s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.6s; opacity: 0.3; }
+        .accordion-content.open { max-height: 2000px; opacity: 1; }
+        
+        .rotate-icon { transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
+        .rotate-icon.open { transform: rotate(45deg); Background: #F2F2F2; border-color: #F2F2F2; }
+        .rotate-icon.open path { stroke: #050505; }
+        
+        .abstract-bg {
+            Background: linear-gradient(270deg, rgba(212,175,55,0.04), rgba(5,5,5,0), rgba(255,255,255,0.02));
+            Background-size: 300% 300%;
+            animation: flow 25s ease infinite;
+        }
+
+        .text-outline-year {
+            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
+            color: transparent; font-weight: 700;
+        }
+
+        /* Inputs */
+        .manifest-input {
+            Background: transparent; border: none; border-bottom: 1px solid rgba(163, 163, 163, 0.2);
+            color: #F2F2F2; padding: 1.5rem 0; width: 100%; outline: none; transition: border-color 0.4s ease;
+            font-family: 'Manrope', sans-serif; font-size: 1.1rem;
+        }
+        .manifest-input:focus { border-bottom-color: #D4AF37; }
+        .manifest-input::placeholder { color: #666; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em; }
+        .flash-btn.active { animation: flash 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        /* Contact Buttons */
+        .contact-btn {
+            Background-color: rgba(5,5,5,0.5); border: 1px solid rgba(255,255,255,0.1); color: #B5B5B5;
+            transition: all 0.4s ease; position: relative; overflow: hidden; backdrop-filter: blur(5px);
+        }
+        .contact-btn::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 0; height: 100%;
+            transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); z-index: 0;
+        }
+        .contact-btn:hover { color: #fff; border-color: #D4AF37; transform: translateY(-2px); }
+        .contact-btn span { position: relative; z-index: 10; }
+        
+        .contact-btn.whatsapp:hover::before { width: 100%; Background-color: #1a5c32; }
+        .contact-btn.telegram:hover::before { width: 100%; Background-color: #229ED9; }
+        .contact-btn.email:hover::before { width: 100%; Background-color: #D4AF37; }
+        .contact-btn.email:hover { color: #050505; }
+
+        .glass-panel {
+            Background: rgba(255, 255, 255, 0.015); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tooltip-hint { opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+        .contact-container:hover .tooltip-hint { opacity: 1; }
+
+        ::selection { Background: #D4AF37; color: #050505; }
+        
+        /* Service Image Badge - Reusable Class */
+        .service-badge {
+            position: absolute; bottom: 16px; right: 16px;
+            Background: rgba(5, 5, 5, 0.85); backdrop-filter: blur(4px);
+            padding: 6px 14px;
+            font-size: 10px; color: #fff; text-transform: uppercase; letter-spacing: 0.15em;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+    </style>
+</head>
+<body class="bg-obsidian antialiased loading selection:bg-gold selection:text-black">
+
+    <div class="noise-overlay"></div>
+    <div id="cursor" class="custom-cursor"></div>
+
+    <div id="insight-ghost" class="insight-ghost">
+        <p id="insight-text" class="font-serif text-lg italic text-platinum/90 leading-relaxed tracking-wide"></p>
+        <span class="block mt-4 text-[9px] font-sans uppercase tracking-[0.3em] text-gold/80">Insight</span>
+    </div>
+
+    <div id="preloader" class="fixed inset-0 z-[100] bg-obsidian flex flex-col items-center justify-between py-12 px-8 transition-transform duration-[1.2s] ease-[0.76,0,0.24,1]">
+    <div class="w-full flex justify-between text-[10px] font-sans tracking-luxury uppercase text-gold/80 animate-pulse">
+        <span>От души, душевно</span><span>В ДУШУ</span>
+    </div>
+
+    <div class="overflow-hidden h-32 flex items-center justify-center w-full relative">
+        <p id="preloader-text" class="font-serif text-3xl md:text-5xl italic text-platinum text-center absolute transition-all duration-700 transform translate-y-0 opacity-100 drop-shadow-[0_0_20px_rgba(212,175,55,0.8)]">
+            Я тут. Сейчас. С Вами.
+        </p>
+    </div>
+
+    <div class="w-full flex justify-end">
+        <h1 id="preloader-count" class="text-8xl md:text-9xl font-sans font-thin tracking-tighter text-gold opacity-10">0%</h1>
+    </div>
+</div>
+
+    <header id="main-header" class="fixed top-0 left-0 w-full z-50 pt-4 pb-2 md:pt-6 md:pb-1 px-6 md:px-12 transition-all duration-300 border-b border-gold/30">
+    <div class="container mx-auto flex justify-between items-center">
+        <a href="#hero" class="interactive relative z-50 group">
+            <img src="https://i.ibb.co/XZ2H1ctf/IMG-5845.png" alt="MARKOVMADE" class="h-12 md:h-24 w-auto object-contain transition-all duration-300">
+        </a>
+        <nav class="hidden md:flex gap-12 items-center">
+            <a href="#about" class="interactive nav-link font-sans text-[13px] uppercase tracking-luxury text-dim hover:text-platinum transition-colors">I. Обо мне</a>
+            <a href="#principles" class="interactive nav-link font-sans text-[13px] uppercase tracking-luxury text-dim hover:text-platinum transition-colors">II. Принципы</a>
+            <a href="#biography" class="interactive nav-link font-sans text-[13px] uppercase tracking-luxury text-dim hover:text-platinum transition-colors">III. История</a>
+            
+            <a href="#services" class="interactive relative font-sans text-[13px] uppercase tracking-luxury text-gold transition-all duration-300 border-b-2 border-gold/40 pb-1 hover:border-gold">
+                IV. Услуги
+                <span class="absolute inset-0 bg-gold/5 blur-lg animate-pulse pointer-events-none -z-10"></span>
+            </a>
+            
+            <a href="#team" class="interactive nav-link font-sans text-[13px] uppercase tracking-luxury text-dim hover:text-platinum transition-colors">V. Команда</a>
+            
+            <a href="#contact" class="interactive group relative px-8 py-3 border border-gold/30 rounded-sm text-[10px] font-sans tracking-luxury uppercase text-platinum overflow-hidden transition-all duration-500 hover:shadow-[0_0_25px_rgba(212,175,55,0.3)]">
+                <span class="absolute inset-0 bg-gold translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out -z-10"></span>
+                
+                <span class="relative z-10 flex items-center gap-3 group-hover:text-obsidian transition-colors duration-500">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    Связь
+                </span>
+            </a>
+        </nav>
+        <button id="burger-btn" class="interactive md:hidden relative z-[100] w-10 h-10 flex flex-col justify-center items-end gap-1.5 group" onclick="toggleMenu()" aria-label="Menu">
+    <span class="w-8 h-[1px] bg-platinum transition-all group-hover:w-6 group-hover:bg-gold"></span>
+    <span class="w-6 h-[1px] bg-platinum transition-all group-hover:w-8 group-hover:bg-gold"></span>
+</button>
+    </div>
+</header>
+
+    <div id="mobile-menu" class="fixed inset-0 z-[90] bg-obsidian flex flex-col justify-start px-6 transform translate-x-full transition-transform duration-700 cubic-bezier(0.7,0,0.3,1) overflow-y-auto">
+    <nav class="flex flex-col gap-8 min-h-min pt-32 pb-16">
+        <a href="#about" class="interactive font-serif text-4xl text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">Обо мне</a>
+        <a href="#principles" class="interactive font-serif text-4xl text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">Принципы</a>
+        <a href="#biography" class="interactive font-serif text-4xl text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">История</a>
+        <a href="#services" class="interactive font-serif text-4xl text-gold transition-colors block" onclick="toggleMenu()">Услуги</a>
+        <a href="#team" class="interactive font-serif text-4xl text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">Команда</a>
+        <a href="#contact" class="interactive font-serif text-4xl text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">Контакты</a>
+    </nav>
+</div>
+
+    <main id="main-content" class="opacity-0 transition-opacity duration-1000">
+
+        <section id="hero" class="section-block relative h-[100dvh] w-full overflow-hidden bg-obsidian flex items-center justify-center" data-insight="Где внимание - там и результат.">
+            <div class="absolute inset-0 overflow-hidden pointer-events-none">
+                <div class="absolute top-[-20%] left-[-10%] w-[50vw] h-[50vw] bg-white rounded-full blur-[140px] opacity-[0.02] animate-blob"></div>
+                <div class="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] bg-gold rounded-full blur-[160px] opacity-[0.03] animate-blob" style="animation-delay: 2s;"></div>
+            </div>
+            <div class="relative z-10 container mx-auto px-6 md:px-12 flex flex-col items-center text-center">
+                <h1 class="font-serif text-[11vw] md:text-[9rem] leading-[0.9] text-platinum mix-blend-difference flex flex-col items-center select-none tracking-tight">
+                    <div class="overflow-hidden"><span class="reveal-text block">АРХИТЕКТУРА</span></div>
+                    <div class="overflow-hidden"><span class="reveal-text block italic text-dim font-light" style="transition-delay: 200ms;">НОВОЙ ЭРЫ</span></div>
+                </h1>
+                <p class="fade-in-up mt-12 max-w-2xl text-lg font-sans text-dim tracking-wide leading-relaxed" style="transition-delay: 400ms;">
+                    Я здесь, чтобы оставить после себя имя и поколения людей с крепкими ценностями. Каждый день проживая ради одного: помогать и быть по‑настоящему полезным.
+                </p>
+                <a href="#about" class="interactive fade-in-up mt-10 md:mt-20 px-12 py-5 border border-gold/50 rounded-sm text-xs font-sans tracking-luxury uppercase text-platinum hover:bg-gold hover:border-gold hover:text-obsidian transition-all duration-500 hover:shadow-[0_0_30px_rgba(212,175,55,0.15)]" style="transition-delay: 600ms;">
+                    НАЧАТЬ ЭКСПАНСИЮ
+                </a>
+                
+                <div class="mt-10 flex flex-col items-center gap-4 fade-in-up" style="transition-delay: 900ms;">
+                    <div class="w-[1px] h-24 bg-gradient-to-b from-gold/80 to-transparent"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section-block relative w-full bg-obsidian overflow-hidden" data-insight="Ваш опыт = Ваш капитал">
+    <div class="grid grid-cols-1 lg:grid-cols-2 items-center">
+        
+        <div class="relative w-full h-[60vh] lg:h-[85vh] overflow-hidden group border-r border-white/5 order-1 lg:order-none">
+            
+            <div class="absolute inset-0 z-20 opacity-20 pointer-events-none mix-blend-overlay bg-noise"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent z-10 opacity-30"></div>
+            
+            <img src="https://i.ibb.co/fGFdFRLn/image.png" 
+                 loading="lazy" decoding="async"
+                 alt="Павел Марков" 
+                 class="w-full h-full object-cover grayscale opacity-90 transition-all duration-[2s] ease-out group-hover:grayscale-0 group-hover:scale-105 transform will-change-transform">
+        </div>
+
+        <div class="relative flex flex-col justify-center w-full px-6 md:px-16 lg:px-24 py-16 lg:py-20 bg-obsidian z-10 order-2 lg:order-none">
+            
+            <div class="absolute top-1/2 right-0 w-[300px] h-[300px] bg-gold rounded-full blur-[180px] opacity-[0.03] pointer-events-none"></div>
+            
+            <div class="max-w-xl relative">
+                
+                <div class="fade-in-up mb-8 flex items-center gap-5">
+                    <div class="h-[1px] w-12 bg-gold/60"></div>
+                    <h3 class="font-sans text-[11px] font-bold tracking-[0.25em] text-gold uppercase">ПАВЕЛ МАРКОВ — MARKOVMAFIA</h3>
+                </div>
+
+                <div class="max-w-4xl mx-auto px-4 md:px-0">
+    <h2 class="fade-in-up font-serif text-3xl md:text-5xl leading-[1.25] md:leading-[1.2] text-platinum mb-8 md:mb-12" style="transition-delay: 100ms;">
+        Твои шрамы станут главным капиталом, <br class="hidden md:block">
+        <span class="italic text-dim font-light">если решишься превратить свой путь в историю.</span>
+    </h2>
+
+    <div class="fade-in-up space-y-6 md:space-y-8 font-sans text-dim text-base md:text-lg leading-relaxed tracking-wide text-pretty" style="transition-delay: 200ms;">
+        <p>
+            Я ломаю стереотип о том, что обстоятельства сильнее человека. 
+            Моя трансформация — это 16 лет пути: от большой футбольной мечты в 13 до оглушительного кризиса. Цифры на счетах превратились в нули, а активы — в пыль. Мое перерождение началось в Китае. Не с триумфа, а с признания: <span class="italic text-platinum/90">«Я больше не тот, кем был».</span>
+        </p>
+
+        <p>
+            Я знаю вкус предательства и тяжелую тишину депрессии — <span class="italic">когда боишься проверить телефон, но еще больше боишься, что он так и будет молчать неделями.</span> Пройдя через это, я научился видеть <span class="text-platinum border-b border-gold/30">фундамент, а не обложку</span>.
+        </p>
+
+        <p>
+            Сегодня <span class="text-platinum border-b border-gold/40 pb-0.5">MARKOVMADE</span> — это не про картинки. Это про смыслы. Я беру ваш опыт — со всеми ошибками и провалами — и превращаю его в <span class="text-platinum font-medium">твердую опору</span>. В то, что невозможно отобрать или разрушить.
+        </p>
+
+        <div class="mt-10 md:mt-14 pl-4 md:pl-6 border-l-2 border-gold/40 space-y-10 py-2">
+            
+            <div class="group">
+                <span class="block text-[10px] md:text-xs font-sans text-gold tracking-[0.2em] uppercase mb-3 opacity-80 group-hover:opacity-100 transition-opacity">Моя цель</span>
+                <p class="font-serif text-xl md:text-2xl text-platinum leading-snug">
+                    <span class="italic">Выжигать</span> иллюзии, чтобы на их месте строить смыслы
+                </p>
+            </div>
+
+            <div class="group">
+                <span class="block text-[10px] md:text-xs font-sans text-gold tracking-[0.2em] uppercase mb-3 opacity-80 group-hover:opacity-100 transition-opacity">Моё предназначение</span>
+                <p class="font-serif text-xl md:text-2xl text-platinum leading-snug">
+                    <span class="italic">Дать</span> твердую почву тем, кому тесно в рамках обыденности
+                </p>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+                <div class="fade-in-up mt-14" style="transition-delay: 300ms;">
+    <a href="#contact" class="interactive group relative inline-flex items-center justify-center gap-4 px-10 py-4 border border-gold/50 rounded-sm text-xs font-sans font-bold tracking-luxury uppercase text-platinum transition-all duration-500 hover:bg-gold hover:border-gold hover:text-obsidian hover:shadow-[0_0_30px_rgba(212,175,55,0.2)]">
+        <span class="relative z-10">Начать свою историю</span>
+        <svg class="relative z-10 w-4 h-4 transition-transform duration-500 group-hover:translate-x-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1.5" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+        </svg>
+    </a>
+</div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+        <section id="principles" class="section-block relative py-24 md:py-36 bg-obsidian text-platinum overflow-hidden" data-insight="Внешность привлекает. Принципы удерживают.">
+            <div class="absolute inset-0 abstract-bg opacity-30 pointer-events-none"></div>
+            <div class="container mx-auto px-6 md:px-12 relative z-10">
+                <div class="text-center max-w-4xl mx-auto mb-28 fade-in-up">
+                    <span class="text-[10px] font-sans tracking-luxury text-gold uppercase mb-8 block">02. ФИЛОСОФИЯ</span>
+                    <h2 class="font-serif text-3xl md:text-5xl leading-tight text-platinum mb-10 uppercase tracking-wide">
+                        Внешность привлекает внимание. <br>
+                        <span class="text-dim italic normal-case font-light">Принципы удерживают его.</span>
+                    </h2>
+                    <p class="font-sans text-dim text-lg max-w-2xl mx-auto leading-relaxed">
+                        Если визуальный образ — это фасад, то жизненные ценности — это несущие конструкции. Мой кодекс сформирован не теорией, а реальным путем.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-[1px] bg-white/10 border border-white/5">
+                    <div class="bg-obsidian p-6 md:p-16 group hover:bg-charcoal/60 transition-all duration-700 relative overflow-hidden fade-in-up h-full flex flex-col justify-between" style="transition-delay: 100ms;">
+                        <div>
+                            <span class="font-serif text-3xl text-gold mb-6 block opacity-50 group-hover:opacity-100 transition-opacity">I.</span>
+                            <h3 class="font-sans text-xl font-bold tracking-widest uppercase text-platinum mb-6 group-hover:text-gold transition-colors">АРХИТЕКТУРА ВОСПРИЯТИЯ</h3>
+                        </div>
+                        <div class="transform translate-y-4 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <p class="font-sans text-dim text-base leading-loose">Каждый новый человек — это «чистый лист» и потенциальный учитель. Не позволяйте теням прошлого опыта омрачать настоящее: прошлые разочарования не должны диктовать условия будущим союзам. Истинная мудрость заключается в способности извлекать ценность из каждого диалога, видя в собеседнике не проблему, а урок.</p>
+                        </div>
+                    </div>
+                    <div class="bg-obsidian p-6 md:p-16 group hover:bg-charcoal/60 transition-all duration-700 relative overflow-hidden fade-in-up h-full flex flex-col justify-between" style="transition-delay: 200ms;">
+                         <div>
+                            <span class="font-serif text-3xl text-gold mb-6 block opacity-50 group-hover:opacity-100 transition-opacity">II.</span>
+                            <h3 class="font-sans text-xl font-bold tracking-widest uppercase text-platinum mb-6 group-hover:text-gold transition-colors">ЭТИКЕТ СИЛЫ</h3>
+                        </div>
+                        <div class="transform translate-y-4 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <p class="font-sans text-dim text-base leading-loose">Искренность — это кратчайший путь к цели. Говорите как есть, ведь правда экономит годы. На агрессию и конфликт отвечайте безупречной вежливостью: это не слабость, а высшая форма контроля, которая обезоруживает любого противника. Ваша доброта — это не уязвимость, а сознательный выбор сильного человека.</p>
+                        </div>
+                    </div>
+                    <div class="bg-obsidian p-6 md:p-16 group hover:bg-charcoal/60 transition-all duration-700 relative overflow-hidden fade-in-up h-full flex flex-col justify-between" style="transition-delay: 300ms;">
+                        <div>
+                            <span class="font-serif text-3xl text-gold mb-6 block opacity-50 group-hover:opacity-100 transition-opacity">III.</span>
+                            <h3 class="font-sans text-xl font-bold tracking-widest uppercase text-platinum mb-6 group-hover:text-gold transition-colors">ВНУТРЕННЯЯ АВТОНОМИЯ</h3>
+                        </div>
+                        <div class="transform translate-y-4 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <p class="font-sans text-dim text-base leading-loose">Ваша способность созидать и зарабатывать не зависит от географии или обстоятельств. Настоящий капитал находится внутри: это ваши навыки, которые вы возьмете с собой, даже если потеряете всё остальное. Будьте уверены — в любой точке мира вы выживете и преуспеете, потому что ваше мастерство всегда остается при вас.</p>
+                        </div>
+                    </div>
+                    <div class="bg-obsidian p-6 md:p-16 group hover:bg-charcoal/60 transition-all duration-700 relative overflow-hidden fade-in-up h-full flex flex-col justify-between" style="transition-delay: 400ms;">
+                        <div>
+                            <span class="font-serif text-3xl text-gold mb-6 block opacity-50 group-hover:opacity-100 transition-opacity">IV.</span>
+                            <h3 class="font-sans text-xl font-bold tracking-widest uppercase text-platinum mb-6 group-hover:text-gold transition-colors">ТИРАНИЯ МОМЕНТА</h3>
+                        </div>
+                        <div class="transform translate-y-4 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <p class="font-sans text-dim text-base leading-loose">Время — единственный актив, который нельзя реинвестировать. Либо вы управляете своим вниманием через жесткую структуру и таймеры, либо мир управляет вами. Помните: где бы вы ни находились, вы — самодостаточная единица. Ваше умение выжить и созидать «с нуля» — это фундамент, на котором строится империя, не зависящая от внешних кризисов.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="biography" class="section-block relative bg-obsidian border-t border-white/5" data-insight="История — это не прошлое. Это фундамент будущего.">
+    <div class="pt-16 px-6 md:px-12 flex flex-col md:flex-row justify-between items-start">
+        <div class="fade-in-up">
+            <span class="text-xs font-sans tracking-luxury text-gold uppercase mb-4 block">03. ПУТЬ</span>
+            <h2 class="text-5xl md:text-7xl font-serif text-platinum">Эволюция</h2>
+        </div>
+        <div class="mt-6 md:mt-0 max-w-sm text-right hidden md:block fade-in-up">
+            <p class="font-sans text-dim text-sm tracking-wide leading-relaxed">От провинциальной мечты до цифровой экспансии.<br>14 лет непрерывной трансформации.</p>
+        </div>
+    </div>
+
+    <div id="bio-track" class="flex flex-col md:flex-row w-full mt-12 md:mt-0">
+        
+        <div class="slide w-full md:w-screen md:h-screen flex-shrink-0 relative overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-charcoal">
+            <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=1935&auto=format&fit=crop" loading="lazy" class="absolute inset-0 w-full h-full object-cover grayscale opacity-60" alt="Background">
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/80 to-transparent md:via-transparent"></div>
+            
+            <div class="relative z-10 w-full h-full flex flex-col items-center justify-center px-6 md:px-12 py-12 md:py-0">
+                <h3 class="md:absolute top-1/2 left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 text-6xl md:text-[15vw] font-sans text-outline-year select-none opacity-20 md:opacity-10 mb-8 md:mb-0">13–16</h3>
+                
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 w-full max-w-[90rem]">
+                    <div class="order-1 md:order-2 max-w-xl text-center bg-obsidian/80 p-6 md:p-8 backdrop-blur-md rounded-sm border border-white/5 shadow-2xl">
+                        <span class="text-gold font-sans text-xs tracking-luxury uppercase border border-gold/30 px-4 py-1.5 rounded-full mb-6 inline-block">Закалка</span>
+                        <h4 class="font-serif text-2xl md:text-5xl text-platinum mb-6">Рождение Мафии</h4>
+                        <p class="font-sans text-dim text-sm md:text-base leading-relaxed">Путь начался не с поддержки, а с вызова. В 13 — первый бизнес на дропшиппинге и создание ЗОЖ-движения в поселке. В 14 — профессиональный футбол и вызов в сборную, который обернулся жестким уроком: травля, коррупция и травма закрыли двери в большой спорт. Но именно это «непризнание» сверстниками заставило уйти в глубокое саморазвитие. Зал стал храмом, а личный бренд Young Athlete — манифестом силы. Так родилась Markov Made Mafia.</p>
+                    </div>
+
+                    <div class="order-2 md:order-1 grid grid-cols-2 md:block gap-4 w-full md:w-auto">
+                        <div class="w-full md:w-64 h-64 md:h-80 relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                            <img src="https://i.ibb.co/v6DhgDQz/IMG-5985.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков юность">
+                        </div>
+                        <div class="w-full md:w-64 h-64 md:h-80 md:hidden relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                            <img src="https://i.ibb.co/Dg4T5BZW/IMG-5963.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков актуальная форма">
+                        </div>
+                    </div>
+
+                    <div class="hidden md:block order-3 w-64 h-80 flex-shrink-0 relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                        <img src="https://i.ibb.co/Dg4T5BZW/IMG-5963.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full md:w-screen md:h-screen flex-shrink-0 relative overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-charcoal">
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1920&auto=format&fit=crop" loading="lazy" class="absolute inset-0 w-full h-full object-cover grayscale opacity-50" alt="Background">
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/80 to-transparent md:via-transparent"></div>
+            
+            <div class="relative z-10 w-full h-full flex flex-col items-center justify-center px-6 md:px-12 py-12 md:py-0">
+                <h3 class="md:absolute top-1/2 left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 text-6xl md:text-[15vw] font-sans text-outline-year select-none opacity-20 md:opacity-10 mb-8 md:mb-0">17–20</h3>
+                
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 w-full max-w-[90rem]">
+                    <div class="order-1 md:order-2 max-w-xl text-center bg-obsidian/80 p-6 md:p-8 backdrop-blur-md rounded-sm shadow-2xl border border-white/5">
+                        <span class="text-gold font-sans text-xs tracking-luxury uppercase border border-gold/30 px-4 py-1.5 rounded-full mb-6 inline-block">Экспансия</span>
+                        <h4 class="font-serif text-2xl md:text-5xl text-platinum mb-6">Взлет и Признание</h4>
+                        <p class="font-sans text-dim text-sm md:text-base leading-relaxed">Жажда масштаба. Время проверки амбиций на прочность. Победы в бодибилдинге, переезд в Петербург в 18 лет и работа в крупнейшей сети Sport Life. Исследование жизни во всех проявлениях: от медицины и маркетинга до участия в «Дом-2». Запуск стоматологической клиники и кальянного бизнеса. В 20 лет — пик медийности, накопления в 5.5 млн и ощущение, что мир принадлежит тебе. Но это была лишь подготовка к главному экзамену.</p>
+                    </div>
+
+                    <div class="order-2 md:order-1 grid grid-cols-2 md:block gap-4 w-full md:w-auto">
+                        <div class="w-full md:w-64 h-64 md:h-80 relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                             <img src="https://i.ibb.co/hRYJfLdp/IMG-5973.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков">
+                        </div>
+                        <div class="w-full md:w-64 h-64 md:h-80 md:hidden relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                            <img src="https://i.ibb.co/Q7422PZw/IMG-5975.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков">
+                        </div>
+                    </div>
+
+                    <div class="hidden md:block order-3 w-64 h-80 flex-shrink-0 relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                         <img src="https://i.ibb.co/Q7422PZw/IMG-5975.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full md:w-screen md:h-screen flex-shrink-0 relative overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-charcoal">
+            <img src="https://images.unsplash.com/photo-1515595967223-f9fa59af5a3b?q=80&w=1920&auto=format&fit=crop" loading="lazy" class="absolute inset-0 w-full h-full object-cover grayscale opacity-60" alt="Background">
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/80 to-transparent md:via-transparent"></div>
+            
+            <div class="relative z-10 w-full h-full flex flex-col items-center justify-center px-6 md:px-12 py-12 md:py-0">
+                <h3 class="md:absolute top-1/2 left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 text-6xl md:text-[15vw] font-sans text-outline-year select-none opacity-20 md:opacity-10 mb-8 md:mb-0">21–22</h3>
+                
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 w-full max-w-[90rem]">
+                    <div class="order-1 md:order-2 max-w-xl text-center bg-obsidian/80 p-6 md:p-8 backdrop-blur-md rounded-sm border border-white/5 shadow-2xl">
+                        <span class="text-platinum font-sans text-xs tracking-luxury uppercase border border-white/20 px-4 py-1.5 rounded-full mb-6 inline-block">Точка Ноль</span>
+                        <h4 class="font-serif text-2xl md:text-5xl text-platinum mb-6">Перерождение</h4>
+                        <p class="font-sans text-dim text-sm md:text-base leading-relaxed">Момент, когда рушится всё. Предательство близкого друга и партнера оставило с долгами в 1.5 млн и разбитыми смыслами. Продажа всех активов, уход из соцсетей и тяжелая депрессия. Выходом стал тотальный побег — переезд в Китай. Год в другой культуре, изучение языка, модельные контракты и призовые места на международных турнирах стали духовным монастырем, где личность была собрана заново из осколков.</p>
+                    </div>
+
+                    <div class="order-2 md:order-1 grid grid-cols-2 md:block gap-4 w-full md:w-auto">
+                        <div class="w-full md:w-64 h-64 md:h-80 relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                            <img src="https://i.ibb.co/mZLXhnK/IMG-5979.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков">
+                        </div>
+                        <div class="w-full md:w-64 h-64 md:h-80 md:hidden relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                            <img src="https://i.ibb.co/0RxhWJjp/IMG-6006.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков">
+                        </div>
+                    </div>
+
+                    <div class="hidden md:block order-3 w-64 h-80 flex-shrink-0 relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                        <img src="https://i.ibb.co/0RxhWJjp/IMG-6006.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full md:w-screen md:h-screen flex-shrink-0 relative overflow-hidden border-b md:border-b-0 md:border-r border-white/5 bg-charcoal">
+            <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=1920&auto=format&fit=crop" loading="lazy" class="absolute inset-0 w-full h-full object-cover grayscale opacity-50" alt="Background">
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/80 to-transparent md:via-transparent"></div>
+            
+            <div class="relative z-10 w-full h-full flex flex-col items-center justify-center px-6 md:px-12 py-12 md:py-0">
+                <h3 class="md:absolute top-1/2 left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 text-6xl md:text-[15vw] font-sans text-outline-year select-none opacity-20 md:opacity-10 mb-8 md:mb-0">23–25</h3>
+                
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 w-full max-w-[90rem]">
+                    <div class="order-1 md:order-2 max-w-xl text-center bg-obsidian/80 p-6 md:p-8 backdrop-blur-md rounded-sm border border-white/5 shadow-2xl">
+                        <span class="text-gold font-sans text-xs tracking-luxury uppercase border border-gold/30 px-4 py-1.5 rounded-full mb-6 inline-block">Мастерство</span>
+                        <h4 class="font-serif text-2xl md:text-5xl text-platinum mb-6">Архитектура Смыслов</h4>
+                        <p class="font-sans text-dim text-sm md:text-base leading-relaxed">Возвращение в Россию с новым фундаментом. Запуск агентства BrandYouMade и погружение в психологию, продажи и маркетинг. От руководящих постов в недвижимости Сочи до выступления на BlockChain Life перед 12 000 человек. Это период синтеза: когда умение вести переговоры и управлять персоналом соединилось с глубоким пониманием человеческой природы и маркетинга.</p>
+                    </div>
+
+                    <div class="order-2 md:order-1 grid grid-cols-2 md:block gap-4 w-full md:w-auto">
+                        <div class="w-full md:w-64 h-64 md:h-80 relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                            <img src="https://i.ibb.co/B27ys88H/photo-2024-05-04-22-11-21.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков">
+                        </div>
+                        <div class="w-full md:w-64 h-64 md:h-80 md:hidden relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                            <img src="https://i.ibb.co/pDnCyZh/photo-2022-05-14-20-50-41.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков">
+                        </div>
+                    </div>
+
+                    <div class="hidden md:block order-3 w-64 h-80 flex-shrink-0 relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                        <img src="https://i.ibb.co/pDnCyZh/photo-2022-05-14-20-50-41.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide w-full md:w-screen md:h-screen flex-shrink-0 relative overflow-hidden bg-obsidian">
+            <img src="https://images.unsplash.com/photo-1618077360395-f3068be8e001?q=80&w=1920&auto=format&fit=crop" loading="lazy" class="absolute inset-0 w-full h-full object-cover grayscale opacity-40" alt="Background">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-gold/5 to-obsidian/50 opacity-70"></div>
+            
+            <div class="relative z-10 w-full h-full flex flex-col items-center justify-center px-6 md:px-12 py-12 md:py-0">
+                <h3 class="md:absolute top-1/2 left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 text-6xl md:text-[15vw] font-sans text-outline-year select-none opacity-20 md:opacity-10 mb-8 md:mb-0">LEGACY</h3>
+                
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-16 w-full max-w-[90rem]">
+                    <div class="order-1 md:order-2 max-w-xl text-center bg-obsidian/80 p-6 md:p-8 backdrop-blur-md rounded-sm border border-white/5 shadow-2xl">
+                        <span class="text-gold font-sans text-xs tracking-luxury uppercase mb-6 inline-block">Новое Начало</span>
+                        <h4 class="font-serif text-2xl md:text-5xl text-platinum mb-6">MARKOVMAFIA</h4>
+                        <p class="font-sans text-dim text-sm md:text-base leading-relaxed mb-8">Пройдя через иллюзию комфорта, финансовые штормы и токсичные связи, я пришел к моменту истины. Опыт жизни стал финальным фрагментом пазла: я научился не просто смотреть, а видеть суть людей. Сегодня мой путь — это не погоня за атрибутами, а создание «Цифровых монументов» — наследия, которое останется после.
+
+Я больше не строю бизнес — я строю экосистему осознанности. Там, где другие видят просто мышцы или цифры, я вижу историю трансформации духа. Мой статус Амбассадора и преданный шпиц рядом — это фундамент новой, честной реальности. Старое не стерто — оно переплавлено в золото высшей пробы.</p>
+                        <p class="font-serif italic text-2xl md:text-3xl text-gold mt-10 md:mt-14">«Всё только начинается...»</p>
+                    </div>
+
+                    <div class="order-2 md:order-1 grid grid-cols-2 md:block gap-4 w-full md:w-auto">
+                        <div class="w-full md:w-64 h-64 md:h-80 relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                            <img src="https://i.ibb.co/wFxj5S7G/IMG-5946.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков">
+                        </div>
+                        <div class="w-full md:w-64 h-64 md:h-80 md:hidden relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                            <img src="https://i.ibb.co/fd59hkd3/IMG-2494.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков">
+                        </div>
+                    </div>
+
+                    <div class="hidden md:block order-3 w-64 h-80 flex-shrink-0 relative group overflow-hidden border border-white/10 rounded-sm shadow-2xl">
+                        <img src="https://i.ibb.co/fd59hkd3/IMG-2494.jpg" loading="lazy" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Павел Марков">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+        <section id="services" class="section-block relative py-24 bg-obsidian text-platinum" data-insight="Инвестируйте в единственное, что нельзя отнять — в себя.">
+    <div class="container mx-auto px-6 md:px-12">
+        <div class="mb-20 fade-in-up">
+            <span class="text-[10px] font-sans tracking-luxury text-dim uppercase mb-4 block">04. УСЛУГИ</span>
+            <h2 class="text-4xl md:text-5xl font-serif">Почему я?</h2>
+            <p class="mt-8 text-base text-dim font-sans max-w-2xl leading-relaxed">
+                За 15 лет в большом спорте, статусом КМС, глубокой теоретической и практической базой я прошел через всё: от жестких падений до триумфов. Сегодня я передаю этот опыт вам не просто через упражнения, а через <span class="text-platinum font-bold">систему трансформации,</span> которая меняет <span class="text-platinum font-bold">тело, мышление и качество жизни.</span>
+            </p>
+        </div>
+
+        <div class="w-full border-b border-white/10">
+
+            <div class="service-item group border-t border-white/10 hover:bg-white/[0.02] transition-colors duration-500">
+                <button class="w-full py-10 px-2 flex flex-col md:flex-row md:items-center justify-between text-left gap-6 outline-none interactive group" onclick="toggleAccordion(this)">
+                    <div class="flex items-center gap-4 md:w-1/4">
+                        <span class="font-sans text-xs text-dim/50 tracking-widest">(01)</span>
+                        <span class="font-sans text-[10px] text-gold tracking-luxury uppercase border border-gold/20 px-3 py-1.5 rounded-full group-hover:bg-gold group-hover:text-black transition-all duration-300">DOMINANCE</span>
+                    </div>
+                    <div class="flex flex-col gap-2 md:w-1/2">
+                        <h3 class="font-serif text-2xl md:text-3xl text-platinum group-hover:text-gold transition-colors duration-300">Архитектура Мужской Силы</h3>
+                        <p class="font-sans text-dim/60 text-sm leading-relaxed max-w-lg group-hover:text-dim transition-colors duration-300">
+                            Построение тела, которое вызывает уважение без слов. Силовой и функциональный тренинг. Питание. Работа с мышлением.
+                        </p>
+                    </div>
+                    <div class="md:w-1/4 flex justify-end">
+                        <div class="rotate-icon w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-gold/50 transition-colors duration-300">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0V12M0 6H12" stroke="currentColor" stroke-width="1" class="text-platinum group-hover:text-gold transition-colors duration-300"/></svg>
+                        </div>
+                    </div>
+                </button>
+                <div class="accordion-content">
+                    <div> 
+                        <div class="pb-16 md:pl-[25%] md:pr-12 px-4 flex flex-col gap-12 pt-6 border-t border-white/5 mx-2">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                                <div class="flex flex-col">
+                                    <h4 class="font-serif text-2xl md:text-3xl text-gold leading-tight mb-8">
+                                        Форма мальчика — не значит Мужчина. Пора менять содержание.
+                                    </h4>
+                                    
+                                    <p class="font-sans text-dim text-base leading-loose mb-10">
+                                       Высокая густонаселенность планеты породила жесткую конкуренцию. <span class="text-platinum border-b border-gold/30 font-bold uppercase">Как быть? ВЫДЕЛЯТЬСЯ.</span> Это работает на уровне инстинктов: сильный мужчина всегда заметен. Без спорта я бы никогда не достиг своих высот в карьере. Я дам тебе <span class="text-platinum font-bold">пошаговую систему</span>, которую сам прошел от и до, чтобы ты избежал ошибок и <span class="text-platinum font-bold">забрал свое право на силу</span>.
+                                    </p>
+                                    
+                                    <ul class="space-y-4 font-sans text-base text-dim/90">
+                                        <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Построишь эстетичное тело, которое вызывает уважение.</li>
+                                        <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Станешь магнитом для женщин и возможностей.</li>
+                                        <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Получишь уверенность, которая базируется на реальной силе.</li>
+                                    </ul>
+                                </div>
+                                <div class="relative">
+                                    <div class="w-full overflow-hidden bg-charcoal mb-6 relative group/image rounded-sm">
+                                        <img src="https://i.ibb.co/0VvVNjjG/MARKOVMADE.jpg" loading="lazy" class="relative w-full h-auto object-contain grayscale group-hover/image:grayscale-0 transition-all duration-700" alt="Мужской тренинг">
+                                        <div class="service-badge">Результат Гарантирован</div>
+                                    </div>
+                                    <div class="font-sans text-dim/70 text-sm leading-relaxed pl-6 border-l border-white/20 transition-opacity duration-500 group-hover/image:text-dim/60">
+                                        "Раньше я думал, что кубики пресса — это для моделей. Оказалось, это вопрос правильных настроек организма. С Павлом мы <span class="font-bold">выстроили систему питания и нагрузок</span> под мой график."
+                                        <br>
+                                        <span class="font-sans text-[10px] text-gold/70 not-italic mt-4 block font-bold tracking-widest uppercase">— Антон Королев, 34 года, Предприниматель</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#contact" class="w-max self-start inline-block mt-4 bg-transparent text-[#D4AF37] px-8 py-4 font-sans font-black uppercase text-[10px] tracking-[0.25em] border border-[#D4AF37] hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37] transition-all duration-500 transform hover:-translate-y-1">
+                                Начать трансформацию
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-item group border-t border-white/10 hover:bg-white/[0.02] transition-colors duration-500">
+                <button class="w-full py-10 px-2 flex flex-col md:flex-row md:items-center justify-between text-left gap-6 outline-none interactive group" onclick="toggleAccordion(this)">
+                    <div class="flex items-center gap-4 md:w-1/4">
+                        <span class="font-sans text-xs text-dim/50 tracking-widest">(02)</span>
+                        <span class="font-sans text-[10px] text-gold tracking-luxury uppercase border border-gold/20 px-3 py-1.5 rounded-full group-hover:bg-gold group-hover:text-black transition-all duration-300">AESTHETICS</span>
+                    </div>
+                    <div class="flex flex-col gap-2 md:w-1/2">
+                        <h3 class="font-serif text-2xl md:text-3xl text-platinum group-hover:text-gold transition-colors duration-300">Скульптура Тела & Женственность</h3>
+                        <p class="font-sans text-dim/60 text-sm leading-relaxed max-w-lg group-hover:text-dim transition-colors duration-300">
+                            Умный подход к стройности. Работа с анализами, циклом и качеством тела без изнурительных диет и вечных срывов.
+                        </p>
+                    </div>
+                    <div class="md:w-1/4 flex justify-end">
+                        <div class="rotate-icon w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-gold/50 transition-colors duration-300">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0V12M0 6H12" stroke="currentColor" stroke-width="1" class="text-platinum group-hover:text-gold transition-colors duration-300"/></svg>
+                        </div>
+                    </div>
+                </button>
+                <div class="accordion-content">
+                    <div>
+                        <div class="pb-16 md:pl-[25%] md:pr-12 px-4 flex flex-col gap-12 pt-6 border-t border-white/5 mx-2">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                                <div class="flex flex-col">
+                                    <h4 class="font-serif text-2xl md:text-3xl text-gold leading-tight mb-8">
+                                        Тело - это улика. Хватит себя прятать.
+                                    </h4>
+                                    
+                                    <p class="font-sans text-dim text-base leading-loose mb-10">
+                                        Многие девушки годами ходят по замкнутому кругу: диета — срыв — вина. Это происходит не потому, что тебе не хватает силы воли, а потому, что у тебя нет системы. Я предлагаю <span class="text-platinum font-bold">научный подход</span>. Мы начинаем не с беговой дорожки, а с <span class="text-platinum font-bold">анализов и налаживания режима</span>. Собирая информацию воедино, любая девушка <span class="text-platinum font-bold">достигнет результата</span>!
+                                    </p>
+                                    
+                                    <ul class="space-y-4 font-sans text-base text-dim/90">
+                                        <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Проверка гормонального фона и учет цикла.</li>
+                                        <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Комфортная диета (БЖУ) без голодовок.</li>
+                                        <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Тело, которое хочется любить и баловать.</li>
+                                    </ul>
+                                </div>
+                                <div class="relative">
+                                    <div class="w-full overflow-hidden bg-charcoal mb-6 relative group/image rounded-sm">
+                                        <img src="https://i.ibb.co/kscX2Zzv/MARKOVMADE.jpg" loading="lazy" class="relative w-full h-auto object-contain grayscale group-hover/image:grayscale-0 transition-all duration-700" alt="Женский тренинг">
+                                        <div class="service-badge">Индивидуальный подход</div>
+                                    </div>
+                                    <div class="font-sans text-dim/70 text-sm leading-relaxed pl-6 border-l border-white/20 transition-opacity duration-500 group-hover/image:text-dim/60">
+                                        "Раньше я была просто худой, но качество тела не радовало. Я боялась «перекачаться» и ела как птичка. Индивидуальный подход изменил всё: <span class="font-bold">ушли отеки, а ягодицы и спина наконец-то обрели объём</span>. Я впервые чувствую себя не просто стройной, а <span class="font-bold">по-настоящему атлетичной и сексуальной</span>."
+                                        <br>
+                                        <span class="font-sans text-[10px] text-gold/70 not-italic mt-4 block font-bold tracking-widest uppercase">— Алина Измайлова, 29 лет, Дизайнер-фотограф</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#contact" class="w-max self-start inline-block mt-4 bg-transparent text-[#D4AF37] px-8 py-4 font-sans font-black uppercase text-[10px] tracking-[0.25em] border border-[#D4AF37] hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37] transition-all duration-500 transform hover:-translate-y-1">
+                                Вернуть себе - себя
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-item group border-t border-white/10 hover:bg-white/[0.02] transition-colors duration-500">
+                <button class="w-full py-10 px-2 flex flex-col md:flex-row md:items-center justify-between text-left gap-6 outline-none interactive group" onclick="toggleAccordion(this)">
+                    <div class="flex items-center gap-4 md:w-1/4">
+                        <span class="font-sans text-xs text-dim/50 tracking-widest">(03)</span>
+                        <span class="font-sans text-[10px] text-gold tracking-luxury uppercase border border-gold/20 px-3 py-1.5 rounded-full group-hover:bg-gold group-hover:text-black transition-all duration-300">HEALTH</span>
+                    </div>
+                    <div class="flex flex-col gap-2 md:w-1/2">
+                        <h3 class="font-serif text-2xl md:text-3xl text-platinum group-hover:text-gold transition-colors duration-300">Клиническая Нутрициология</h3>
+                        <p class="font-sans text-dim/60 text-sm leading-relaxed max-w-lg group-hover:text-dim transition-colors duration-300">
+                            Биохимия вашей продуктивности. Коррекция дефицитов, чистая кожа и бесконечная энергия через питание, а не таблетки и БАДЫ.
+                        </p>
+                    </div>
+                    <div class="md:w-1/4 flex justify-end">
+                        <div class="rotate-icon w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-gold/50 transition-colors duration-300">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0V12M0 6H12" stroke="currentColor" stroke-width="1" class="text-platinum group-hover:text-gold transition-colors duration-300"/></svg>
+                        </div>
+                    </div>
+                </button>
+                <div class="accordion-content">
+                    <div>
+                        <div class="pb-16 md:pl-[25%] md:pr-12 px-4 flex flex-col gap-12 pt-6 border-t border-white/5 mx-2">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                                <div class="flex flex-col">
+                                    <h4 class="font-serif text-2xl md:text-3xl text-gold leading-tight mb-8">
+                                        Ваше меню — это рецепт здоровья или история болезни?
+                                    </h4>
+                                    
+                                    <p class="font-sans text-dim text-base leading-loose mb-10">
+                                        <span class="text-platinum font-bold">12 месяцев очной практики</span> диетологом и глубокая работа с <span class="text-platinum font-bold">эндокринологией</span> научили меня одному: тело не умеет врать. Я не просто составляю меню. Я анализирую <span class="text-platinum font-bold">биохимию вашего тела</span>. Еда — это либо ваше <span class="text-platinum font-bold">лекарство</span>, либо ваш медленный яд.
+                                    </p>
+                                    
+                                    <ul class="space-y-4 font-sans text-base text-dim/90">
+                                        <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Коррекция дефицитов и восстановление энергии.</li>
+                                        <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Улучшение качества кожи, сна и либидо.</li>
+                                        <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Понимание своего организма на всю жизнь.</li>
+                                    </ul>
+                                </div>
+                                <div class="relative">
+                                    <div class="w-full overflow-hidden bg-charcoal mb-6 relative group/image rounded-sm">
+                                        <img src="https://i.ibb.co/v4zj2YZ0/MARKOVMADE.jpg" loading="lazy" class="relative w-full h-auto object-contain grayscale group-hover/image:grayscale-0 transition-all duration-700" alt="Нутрициология">
+                                        <div class="service-badge">Медицинский подход</div>
+                                    </div>
+                                    <div class="font-sans text-dim/70 text-sm leading-relaxed pl-6 border-l border-white/20 transition-opacity duration-500 group-hover/image:text-dim/60">
+                                        "Годами пыталась «высушить» пресс в зале, а оказалось — нужно было просто сдать анализы. Когда закрыли дефициты, <span class="font-bold">тело буквально «сдулось»: ушли вечные отеки и тяжесть</span>, проявился рельеф. Я наконец-то <span class="font-bold">чувствую себя здоровой и живой</span>. Это лучший подарок себе!"
+                                        <br>
+                                        <span class="font-sans text-[10px] text-gold/70 not-italic mt-4 block font-bold tracking-widest uppercase">— Полина Старцева, 37 лет, Управляющая</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#contact" class="w-max self-start inline-block mt-4 bg-transparent text-[#D4AF37] px-8 py-4 font-sans font-black uppercase text-[10px] tracking-[0.25em] border border-[#D4AF37] hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37] transition-all duration-500 transform hover:-translate-y-1">
+                                Получить инструкцию к своему телу
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-item group border-t border-white/10 hover:bg-white/[0.02] transition-colors duration-500">
+                <button class="w-full py-10 px-2 flex flex-col md:flex-row md:items-center justify-between text-left gap-6 outline-none interactive group" onclick="toggleAccordion(this)">
+                    <div class="flex items-center gap-4 md:w-1/4">
+                        <span class="font-sans text-xs text-dim/50 tracking-widest">(04)</span>
+                        <span class="font-sans text-[10px] text-gold tracking-luxury uppercase border border-gold/20 px-3 py-1.5 rounded-full group-hover:bg-gold group-hover:text-black transition-all duration-300">MINDSET</span>
+                    </div>
+                    <div class="flex flex-col gap-2 md:w-1/2">
+                        <h3 class="font-serif text-2xl md:text-3xl text-platinum group-hover:text-gold transition-colors duration-300">Психология & Менторство</h3>
+                        <p class="font-sans text-dim/60 text-sm leading-relaxed max-w-lg group-hover:text-dim transition-colors duration-300">
+                            Честный диалог для сильных решений. Выход из эмоционального тупика и кризисов к масштабу личности и ясности целей.
+                        </p>
+                    </div>
+                    <div class="md:w-1/4 flex justify-end">
+                        <div class="rotate-icon w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:border-gold/50 transition-colors duration-300">
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0V12M0 6H12" stroke="currentColor" stroke-width="1" class="text-platinum group-hover:text-gold transition-colors duration-300"/></svg>
+                        </div>
+                    </div>
+                </button>
+                <div class="accordion-content">
+                    <div>
+                        <div class="pb-16 md:pl-[25%] md:pr-12 px-4 flex flex-col gap-12 pt-6 border-t border-white/5 mx-2">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                                <div class="space-y-10">
+                                    <div class="space-y-6">
+                                        <h4 class="font-serif text-2xl md:text-3xl text-gold leading-tight">
+                                            Хватит быть удобным. Стань эффективным
+                                        </h4>
+                                        <p class="font-sans text-dim text-base leading-loose">
+                                            Я не теоретик с дипломом на стене. Я — человек, который собрал себя из осколков. Я прошел через всё: потерю бизнеса, зависимости и черную депрессию. Я знаю, как это — быть «серым пятном» и как <span class="text-platinum font-bold">превратить себя в личность</span>, с которой считаются.
+                                            <br><br>
+                                            Я не учу по книжкам — там пишут, как «должно быть». Я учу по жизни — я знаю, как оно есть на самом деле. Мой метод — <span class="text-platinum font-bold">честный диалог</span> без лишнего шума. Мы <span class="text-platinum font-bold">сжигаем иллюзии</span> и оставляем только твою <span class="text-platinum font-bold border-b border-gold/30">истинную правду</span> — основу для твоих достижений.
+                                        </p>
+                                    </div>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                        <ul class="space-y-4 font-sans text-base text-dim/90">
+                                            <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Отношения полов (М/Ж).</li>
+                                            <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Поиск предназначения.</li>
+                                            <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Борьба с зависимостями.</li>
+                                        </ul>
+                                        <ul class="space-y-4 font-sans text-base text-dim/90">
+                                            <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Сепарация от родителей.</li>
+                                            <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Развитие харизмы.</li>
+                                            <li class="flex items-center gap-4"><span class="w-1.5 h-1.5 bg-gold rounded-full flex-shrink-0"></span> Духовный рост.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col gap-8">
+                                    <div class="w-full overflow-hidden bg-charcoal relative group/image rounded-sm">
+                                        <img src="https://i.ibb.co/PzwZMP8H/MARKOVMADE.webp" loading="lazy" class="w-full h-auto object-contain grayscale group-hover/image:grayscale-0 transition-all duration-700" alt="Психология">
+                                        <div class="service-badge">100% Конфиденциально</div>
+                                    </div>
+                                    <div class="font-sans text-dim/70 text-sm leading-relaxed pl-6 border-l border-white/10 transition-colors duration-500 group-hover/image:text-dim/70">
+                                        "Я была в полном <span class="font-bold">эмоциональном дефолте</span> — отношения рушились, внутри была <span class="font-bold">пустота</span>. Мы не просто поговорили, мы <span class="font-bold">перепрошили мои установки</span>. Самое удивительное, что вместе со спокойствием <span class="font-bold">вернулся вкус к жизни</span>: я снова начала рисовать и <span class="font-bold">нашла силы на новый рывок</span>."
+                                        <br>
+                                        <span class="font-sans text-[10px] text-gold/70 not-italic mt-4 block font-bold tracking-widest uppercase">— Светлана, 31 год, Маркетолог</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="#contact" class="w-max self-start inline-block mt-4 bg-transparent text-[#D4AF37] px-8 py-4 font-sans font-black uppercase text-[10px] tracking-[0.25em] border border-[#D4AF37] hover:bg-[#D4AF37] hover:text-black hover:border-[#D4AF37] transition-all duration-500 transform hover:-translate-y-1">
+                                Измениться к лучшему
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+        <style>
+    /* Noise Texture for the Analog Feel */
+    .noise-bg {
+        Background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+    }
+
+    /* Glitch Animation for Text */
+    @keyframes glitch-skew {
+        0% { transform: skew(0deg); }
+        20% { transform: skew(-2deg); }
+        40% { transform: skew(2deg); }
+        60% { transform: skew(-1deg); }
+        80% { transform: skew(1deg); }
+        100% { transform: skew(0deg); }
+    }
+
+    /* Card Reveal Animation */
+    @keyframes cardMaterialize {
+        0% { transform: scaleY(0.01) scaleX(0); opacity: 0; filter: blur(10px); }
+        50% { transform: scaleY(0.01) scaleX(1); opacity: 1; filter: blur(0px); }
+        100% { transform: scaleY(1) scaleX(1); opacity: 1; }
+    }
+
+    .animate-glitch { animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite; }
+    .card-enter { animation: cardMaterialize 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+    
+    .input-underline {
+        Background-size: 0% 100%;
+        Background-image: linear-gradient(#D4AF37, #D4AF37);
+        Background-repeat: no-repeat;
+        Background-position: bottom left;
+        transition: Background-size 0.5s ease;
+    }
+    .input-group:focus-within .input-underline {
+        Background-size: 100% 100%;
+    }
+</style>
+
+<section id="team" class="section-block relative py-20 bg-obsidian overflow-hidden" data-insight="Сила в окружении. Результат в дисциплине.">
+    <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gold/20 to-transparent"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,_rgba(212,175,55,0.03),_transparent_70%)] pointer-events-none"></div>
+
+    <div class="container mx-auto px-6 md:px-12 relative z-10">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16 fade-in-up">
+            <div class="w-20 h-20 mx-auto mb-8 rounded-full border border-gold/30 flex items-center justify-center relative">
+                <div class="absolute inset-0 border border-gold/10 rounded-full animate-pulse"></div>
+                <span class="font-serif text-2xl text-gold italic">K</span>
+            </div>
+            <span class="text-[10px] font-sans tracking-[0.4em] text-gold uppercase mb-4 block">Сообщество</span>
+            <h2 class="font-serif text-4xl md:text-6xl text-platinum mb-6 uppercase tracking-tight">Каста Феодалов</h2>
+            <p class="font-sans text-platinum/80 text-lg md:text-xl leading-relaxed">
+                Это закрытое объединение для тех, кто разделяет мои ценности. Мы растем индивидуально, но используем общие ресурсы, чтобы путь к цели был короче.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            <div class="group relative bg-charcoal/30 border border-white/5 p-10 transition-all duration-500 hover:border-gold/20 fade-in-up">
+                <div class="text-gold/60 mb-6 group-hover:text-gold transition-colors">
+                    <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+                </div>
+                <h3 class="font-serif text-2xl md:text-3xl text-platinum mb-4">Привилегии</h3>
+                <p class="font-sans text-base md:text-lg text-platinum/70 leading-relaxed">Доступ к проверенным инструментам, скидкам на услуги партнеров и закрытым мероприятиям команды.</p>
+            </div>
+
+            <div class="group relative bg-charcoal/30 border border-white/5 p-10 transition-all duration-500 hover:border-gold/20 fade-in-up" style="transition-delay: 100ms;">
+                <div class="text-gold/60 mb-6 group-hover:text-gold transition-colors">
+                    <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M12 2L2 22h20L12 2z"/><circle cx="12" cy="15" r="3"/></svg>
+                </div>
+                <h3 class="font-serif text-2xl md:text-3xl text-platinum mb-4">Методология</h3>
+                <p class="font-sans text-base md:text-lg text-platinum/70 leading-relaxed">Прямой доступ к общим знаниям и опыту. Обучение, которое дает результат без лишних движений.</p>
+            </div>
+
+            <div class="group relative bg-charcoal/30 border border-white/5 p-10 transition-all duration-500 hover:border-gold/20 fade-in-up" style="transition-delay: 200ms;">
+                <div class="text-gold/60 mb-6 group-hover:text-gold transition-colors">
+                    <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="12" cy="12" r="10"/><path d="M12 6v12M6 12h12"/></svg>
+                </div>
+                <h3 class="font-serif text-2xl md:text-3xl text-platinum mb-4">Синергия</h3>
+                <p class="font-sans text-base md:text-lg text-platinum/70 leading-relaxed">Правильное окружение и нетворкинг. Здесь ваши идеи находят поддержку и реальное воплощение.</p>
+            </div>
+        </div>
+
+        <div class="text-center mb-16 fade-in-up max-w-4xl mx-auto">
+            <p class="font-serif text-2xl md:text-3xl text-platinum leading-snug tracking-wide uppercase mb-4">
+                «Мы не просто меняем тела — мы пересобираем личности»
+            </p>
+            <p class="font-sans text-sm md:text-base text-gold uppercase tracking-[0.3em]">
+                Заполните манифест.
+            </p>
+        </div>
+
+        <div class="relative max-w-xl mx-auto min-h-[400px]">
+            
+            <form id="manifest-form" class="space-y-12 transition-all duration-700 ease-[0.7,0,0.3,1]">
+                <div class="relative group input-group">
+                    <input type="text" id="name" inputmode="text" required placeholder="ВАШЕ ИМЯ И КРАТКИЙ ОПЫТ" class="manifest-input text-center text-base md:text-lg bg-transparent border-b border-white/20 w-full py-4 text-platinum focus:outline-none transition-colors duration-500 placeholder:text-dim/50 placeholder:text-xs placeholder:tracking-[0.2em]">
+                    <div class="absolute bottom-0 left-0 w-full h-[1px] input-underline"></div>
+                </div>
+                
+                <div class="relative group input-group">
+                    <input type="text" id="goal" inputmode="text" required placeholder="ГЛАВНАЯ ЦЕЛЬ НА ГОД" class="manifest-input text-center text-base md:text-lg bg-transparent border-b border-white/20 w-full py-4 text-platinum focus:outline-none transition-colors duration-500 placeholder:text-dim/50 placeholder:text-xs placeholder:tracking-[0.2em]">
+                    <div class="absolute bottom-0 left-0 w-full h-[1px] input-underline"></div>
+                </div>
+
+                <div class="relative group input-group">
+                    <input type="text" id="value" inputmode="text" required placeholder="ЧЕМ ВЫ ПОЛЕЗНЫ СООБЩЕСТВУ?" class="manifest-input text-center text-base md:text-lg bg-transparent border-b border-white/20 w-full py-4 text-platinum focus:outline-none transition-colors duration-500 placeholder:text-dim/50 placeholder:text-xs placeholder:tracking-[0.2em]">
+                    <div class="absolute bottom-0 left-0 w-full h-[1px] input-underline"></div>
+                </div>
+
+                <div class="pt-6 text-center">
+    <button type="submit" class="interactive group relative px-20 py-6 border border-gold/40 text-gold font-sans text-xs font-bold tracking-[0.4em] uppercase overflow-hidden transition-all duration-500 hover:shadow-[0_0_40px_rgba(212,175,55,0.2)]">
+        <span class="relative z-10 group-hover:text-obsidian transition-colors duration-500">Сформировать</span>
+        <div class="absolute inset-0 bg-gold translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]"></div>
+    </button>
+    
+    <p class="mt-5 text-[9px] font-sans text-dim/40 uppercase tracking-widest">
+        Нажимая кнопку, вы принимаете условия 
+        <button type="button" onclick="togglePrivacy()" class="border-b border-dim/30 pb-0.5 hover:text-gold hover:border-gold transition-all duration-300">обработки данных</button>
+</p>
+    </p>
+</div>
+</form>
+
+            <div id="access-card" class="absolute inset-0 hidden flex-col items-center justify-center">
+                <div class="relative w-full bg-[#080808] border border-gold/30 p-8 md:p-12 shadow-[0_0_60px_rgba(0,0,0,0.8)] noise-bg overflow-hidden flex flex-col items-center text-center">
+                    
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gold"></div>
+                    <div class="absolute bottom-0 right-0 w-20 h-1 bg-gold"></div>
+                    <div class="absolute top-4 right-4 text-[8px] font-sans text-gold/40 tracking-widest">ID: <span id="card-id">0000</span></div>
+
+                    <div class="relative z-10 space-y-6">
+                        <div class="w-16 h-16 mx-auto border border-gold/20 rounded-full flex items-center justify-center">
+                            <svg class="w-8 h-8 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        </div>
+
+                        <div>
+                            <h3 class="font-serif text-3xl text-platinum mb-2">ЗАЯВКА В РАССМОТРЕНИИ</h3>
+                            <p class="font-sans text-[10px] text-dim tracking-[0.3em] uppercase">Остался последний шаг...</p>
+                        </div>
+
+                        <div class="py-4 border-t border-white/10 border-b border-white/10">
+                            <p class="font-sans text-xs text-gold/80 italic">"Манифест скопирован в буфер обмена, просто нажмите "ВСТАВИТЬ"</p>
+                        </div>
+
+                        <button id="telegram-btn" class="interactive group w-full py-4 bg-gold/10 border border-gold/40 hover:bg-gold transition-all duration-300 flex items-center justify-center gap-3">
+                            <span class="font-sans text-[10px] font-bold tracking-[0.2em] text-gold group-hover:text-obsidian uppercase">Отправить в Telegram</span>
+                            <svg class="w-4 h-4 text-gold group-hover:text-obsidian transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </div>
+
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-gold/5 to-transparent h-[10px] w-full animate-scan pointer-events-none opacity-30"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById('manifest-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // 1. Data Collection
+        const name = document.getElementById('name').value;
+        const goal = document.getElementById('goal').value;
+        const value = document.getElementById('value').value;
+
+        // 2. Format Text
+        const manifestoText = 
+`⚡️ ЗАЯВКА В КАСТУ
+
+I. ИМЯ И ОПЫТ:
+${name}
+
+II. ГЛАВНАЯ ЦЕЛЬ:
+${goal}
+
+III. ПОЛЬЗА:
+${value}
+
+---
+#MarkovMafia`;
+
+        // 3. Copy to Clipboard (Auto)
+        navigator.clipboard.writeText(manifestoText).then(() => {
+            console.log('Manifesto copied');
+        }).catch(err => {
+            console.error('Failed to copy', err);
+        });
+
+        // 4. Animation: Collapse Form -> Show Card
+        const form = document.getElementById('manifest-form');
+        const cardWrapper = document.getElementById('access-card');
+        const cardId = document.getElementById('card-id');
+        
+        // Random ID Generation
+        cardId.innerText = Math.floor(1000 + Math.random() * 9000);
+
+        // Animate Form Out
+        form.style.transform = "scaleY(0.01) scaleX(1)";
+        form.style.opacity = "0";
+
+        setTimeout(() => {
+            form.style.display = "none";
+            cardWrapper.classList.remove('hidden');
+            cardWrapper.classList.add('flex');
+            
+            // Trigger Animation via class
+            const cardInner = cardWrapper.firstElementChild;
+            cardInner.classList.add('card-enter');
+        }, 700);
+
+        // 5. Telegram Button Logic
+        document.getElementById('telegram-btn').onclick = function() {
+            // Open Telegram User
+            window.open('https://t.me/markovmade', '_blank');
+        };
+    });
+</script>
+
+        <section id="contact" class="section-block relative w-full py-28 md:py-40 overflow-hidden contact-container" data-insight="Принятое решение — это и есть начало трансформации.">
+    <div class="absolute inset-0 bg-gradient-to-b from-obsidian to-[#050505]"></div>
+    
+    <canvas id="gold-dust" class="absolute inset-0 w-full h-full pointer-events-none z-10 opacity-40 mix-blend-screen"></canvas>
+
+    <div class="container mx-auto px-6 md:px-12 relative z-20">
+        
+        <div class="text-center max-w-4xl mx-auto mb-24 fade-in-up">
+            <h2 class="font-serif text-5xl md:text-7xl text-platinum uppercase tracking-tight mb-8">Сила одного касания</h2>
+            <span class="font-sans text-[10px] md:text-xs font-bold tracking-[0.4em] text-gold uppercase mb-8 block relative inline-block">
+                Начало вашей трансформации
+                <span class="absolute -bottom-4 left-1/2 -translate-x-1/2 w-12 h-[1px] bg-gold/50"></span>
+            </span>
+            <p class="font-sans text-platinum/80 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mt-10">
+                Один диалог способен изменить траекторию жизни. Я открыт для тех, кто готов к созиданию и твердым результатам.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-28">
+            <div class="glass-panel p-12 flex flex-col items-center text-center fade-in-up hover:bg-white/5 transition-all duration-500 border border-white/5 group">
+                <span class="font-sans text-[9px] tracking-luxury text-gold/70 uppercase mb-6 group-hover:text-gold transition-colors">ФОРМАТ 01</span>
+                <h4 class="font-serif text-2xl md:text-3xl text-platinum mb-4">Личное Присутствие</h4>
+                <p class="font-sans text-base md:text-lg text-platinum/80 leading-relaxed">Минск • Сочи • Москва • СПб.<br>Наставничество в точках силы.</p>
+            </div>
+
+            <div class="glass-panel p-12 flex flex-col items-center text-center fade-in-up hover:bg-white/5 transition-all duration-500 border border-white/5 group" style="transition-delay: 100ms;">
+                <span class="font-sans text-[9px] tracking-luxury text-gold/70 uppercase mb-6 group-hover:text-gold transition-colors">ФОРМАТ 02</span>
+                <h4 class="font-serif text-2xl md:text-3xl text-platinum mb-4">Дистанционная Работа</h4>
+                <p class="font-sans text-base md:text-lg text-platinum/80 leading-relaxed">Эффективность без географических границ. Видеосвязь и контроль.</p>
+            </div>
+
+            <div class="glass-panel p-12 flex flex-col items-center text-center fade-in-up hover:bg-white/5 transition-all duration-500 border border-gold/20 group" style="transition-delay: 200ms;">
+                <span class="font-sans text-[9px] tracking-luxury text-gold/70 uppercase mb-6 group-hover:text-gold transition-colors">ГАРАНТИЯ</span>
+                <h4 class="font-serif text-2xl md:text-3xl text-platinum mb-4">Персональный Фокус</h4>
+                <p class="font-sans text-base md:text-lg text-platinum/80 leading-relaxed">Я гарантирую полное погружение в ваш запрос и сопровождение до результата.</p>
+            </div>
+        </div>
+
+        <div class="relative max-w-5xl mx-auto fade-in-up mb-32">
+            <div class="tooltip-hint absolute -top-14 left-1/2 -translate-x-1/2 text-center w-full">
+                <span class="font-sans text-[9px] text-gold tracking-luxury uppercase animate-pulse">Ваше время стоит дорого. Действуйте.</span>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-center gap-6">
+                <a href="https://wa.me/79819722516" target="_blank" class="contact-btn group flex-1 relative py-12 px-8 text-center border border-white/10 hover:border-[#25D366] hover:bg-[#25D366] transition-all duration-500 overflow-hidden">
+                    <svg class="absolute inset-0 w-full h-full object-cover opacity-[0.07] pointer-events-none -z-10 scale-125 group-hover:scale-150 transition-transform duration-1000" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                    <span class="font-sans text-[10px] font-bold tracking-luxury text-gold uppercase block mb-3 relative z-10 group-hover:text-obsidian transition-colors">Быстрый старт</span>
+                    <span class="font-serif text-xl text-platinum group-hover:text-obsidian transition-colors relative z-10">Написать в WhatsApp</span>
+                </a>
+
+                <a href="https://t.me/markovmade" target="_blank" class="contact-btn group flex-1 relative py-12 px-8 text-center border border-white/10 hover:border-[#229ED9] hover:bg-[#229ED9] transition-all duration-500 overflow-hidden">
+                    <svg class="absolute inset-0 w-full h-full object-cover opacity-[0.07] pointer-events-none -z-10 scale-125 group-hover:scale-150 transition-transform duration-1000" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 11.944 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                    <span class="font-sans text-[10px] font-bold tracking-luxury text-gold uppercase block mb-3 relative z-10 group-hover:text-obsidian transition-colors">Прямая связь</span>
+                    <span class="font-serif text-xl text-platinum group-hover:text-obsidian transition-colors relative z-10">Связаться в Telegram</span>
+                </a>
+
+                <a href="mailto:castefeudal@gmail.com" class="contact-btn group flex-1 relative py-12 px-8 text-center border border-white/10 hover:border-platinum hover:bg-platinum transition-all duration-500 overflow-hidden">
+                    <svg class="absolute inset-0 w-full h-full object-cover opacity-[0.07] pointer-events-none -z-10 scale-125 group-hover:scale-150 transition-transform duration-1000" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span class="font-sans text-[10px] font-bold tracking-luxury text-gold uppercase block mb-3 relative z-10 group-hover:text-obsidian transition-colors">Официальный запрос</span>
+                    <span class="font-serif text-xl text-platinum group-hover:text-obsidian transition-colors relative z-10">Отправить Манифест</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="text-center fade-in-up">
+            <p class="font-serif text-2xl md:text-4xl text-platinum/70 tracking-wider uppercase mb-6">
+                Ваш результат начинается с принятого решения.
+            </p>
+            <div class="w-16 h-[1px] bg-gold/40 mx-auto"></div>
+            <p class="font-sans text-[10px] text-gold uppercase tracking-[0.4em] mt-6 opacity-70">Я жду тех, кто готов.</p>
+        </div>
+    </div>
+</section>
+
+        <footer class="bg-[#08080a] py-12 px-6 border-t border-gold/10 relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,_rgba(212,175,55,0.04),_transparent_50%)] pointer-events-none"></div>
+
+    <div class="container mx-auto flex flex-col md:flex-row justify-between items-center gap-6 relative z-10">
+        
+        <span class="footer-gold-sync-pulse font-sans text-[11px] tracking-[0.4em] uppercase">
+            MARKOVMADE © 2026
+        </span>
+
+        <button onclick="togglePrivacy()" class="interactive footer-gold-sync-pulse font-sans text-[11px] tracking-[0.4em] uppercase hover:text-goldlight transition-all duration-300">
+            Privacy Policy
+        </button>
+
+        <span class="footer-gold-sync-pulse font-sans text-[11px] tracking-[0.4em] uppercase">
+            MARKOVMADE PRODUCTION
+        </span>
+
+    </div>
+
+    <style>
+        .footer-gold-sync-pulse {
+            color: #D4AF37; /* Основное золото */
+            opacity: 0.3;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0);
+            /* Единая анимация для всех элементов класса */
+            animation: syncGoldBreath 4.5s ease-in-out infinite;
+            transition: color 0.3s ease;
+        }
+
+        @keyframes syncGoldBreath {
+            0%, 100% {
+                opacity: 0.25;
+                text-shadow: 0 0 5px rgba(212, 175, 55, 0);
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8; /* Заметное, но благородное свечение */
+                text-shadow: 0 0 18px rgba(212, 175, 55, 0.45);
+                transform: scale(1.01); /* Микро-увеличение для эффекта объема */
+            }
+        }
+
+        /* Остановка и полная яркость при взаимодействии */
+        .footer-gold-sync-pulse:hover {
+            /* Удаляем строку animation-play-state: paused; */
+            opacity: 1 !important; /* Добавляем !important, чтобы перебить анимацию при наведении */
+            color: #F4CF57; 
+            text-shadow: 0 0 25px rgba(212, 175, 55, 0.6);
+            cursor: pointer; /* Лучше pointer, раз это кнопки/ссылки */
+        }
+    </style>
+</footer>
+
+    </main>
+
+    <div id="privacy-modal" class="fixed inset-0 z-[10000] hidden overflow-y-auto">
+    <div class="fixed inset-0 bg-obsidian/95 backdrop-blur-xl transition-opacity" onclick="togglePrivacy()"></div>
+    
+    <div class="flex min-h-full items-center justify-center p-4 text-center">
+        
+        <div class="glass-panel relative w-full max-w-2xl transform overflow-hidden bg-[#050505] p-6 md:p-12 text-left shadow-[0_0_50px_rgba(0,0,0,1)] border border-gold/20 transition-all my-8">
+            
+            <button onclick="togglePrivacy()" class="absolute top-6 right-6 text-gold p-4 bg-black/20 rounded-full backdrop-blur-md z-50 hover:text-platinum transition-colors">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+            </button>
+    
+            <h2 class="font-serif text-2xl md:text-3xl text-gold mb-6 uppercase tracking-widest pr-8">Privacy Policy</h2>
+            
+            <div class="font-sans text-dim/90 text-sm leading-relaxed space-y-6">
+                <p><strong class="text-platinum">01. ОБЩИЕ ПОЛОЖЕНИЯ.</strong> Настоящая политика определяет порядок обработки данных на сайте markovmade.com.</p>
+                <p><strong class="text-platinum">02. ТЕХНИЧЕСКАЯ МОДЕЛЬ.</strong> Сайт не сохраняет введенные данные в базы данных. Все операции (сбор текста и копирование в буфер обмена) происходят исключительно в браузере пользователя (client-side).</p>
+                <p><strong class="text-platinum">03. ПЕРЕДАЧА ДАННЫХ.</strong> Передача информации Администратору осуществляется пользователем самостоятельно путем осознанной отправки сообщения в мессенджеры Telegram или WhatsApp.</p>
+                <p><strong class="text-platinum">04. ЦЕЛЬ И СРОКИ.</strong> Данные используются только для первичной консультации. Ввиду отсутствия хранения данных на сервере, их удаление из систем сайта не требуется.</p>
+                <p><strong class="text-platinum">05. ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ.</strong> Администратор не несет ответственности за политику конфиденциальности и безопасность данных в сторонних сервисах.</p>
+                
+                <div class="pt-6 border-t border-white/5 text-[10px] tracking-widest text-gold/50">
+                    MARKOVMADE LEGAL DEPT. 2026
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+    // --- УПРАВЛЕНИЕ ПОЛИТИКОЙ ---
+    window.togglePrivacy = function() {
+        const modal = document.getElementById('privacy-modal');
+        const isHidden = modal.classList.contains('hidden');
+        if (isHidden) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; 
+        } else {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // --- УПРАВЛЕНИЕ АККОРДЕОНОМ ---
+    window.toggleAccordion = function(btn) {
+        const content = btn.nextElementSibling;
+        const icon = btn.querySelector('.rotate-icon');
+        
+        // Закрываем остальные
+        document.querySelectorAll('.accordion-content').forEach(c => { 
+            if(c !== content && c.classList.contains('open')) { 
+                c.classList.remove('open'); 
+                c.previousElementSibling.querySelector('.rotate-icon').classList.remove('open'); 
+            }
+        });
+
+        // Тоггл текущего
+        content.classList.toggle('open');
+        icon.classList.toggle('open');
+    }
+
+    // --- ОСНОВНАЯ ИНИЦИАЛИЗАЦИЯ ---
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        // 1. ПЛАВНЫЙ СКРОЛЛ LENIS
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            direction: 'vertical',
+            gestureDirection: 'vertical',
+            smooth: true,
+            mouseMultiplier: 1,
+            smoothTouch: false,
+            touchMultiplier: 2,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+
+        // 2. PRELOADER
+        const preloader = document.getElementById('preloader');
+        const countEl = document.getElementById('preloader-count');
+        const textEl = document.getElementById('preloader-text');
+        const mainContent = document.getElementById('main-content');
+        const quotes = ["Я тут. Сейчас. С вами", "Тишина громче слов.", "Создавая наследие.", "MARKOVMADE"];
+        let count = 0;
+        let pageLoaded = false;
+
+        document.body.classList.add('loading');
+        lenis.stop();
+
+        window.addEventListener('load', () => { pageLoaded = true; });
+
+        const interval = setInterval(() => {
+            if (count < 99 || pageLoaded) count++;
+            
+            countEl.innerText = count + '%';
+            if(count === 30) switchQuote(1); 
+            if(count === 60) switchQuote(2); 
+            if(count === 90) switchQuote(3);
+            
+            if (count >= 100 && pageLoaded) { 
+                clearInterval(interval); 
+                setTimeout(() => { 
+                    preloader.style.transform = 'translateY(-100%)'; 
+                    mainContent.classList.remove('opacity-0'); 
+                    document.body.classList.remove('loading'); 
+                    lenis.start();
+                    // Важно: пересчитываем размеры после загрузки
+                    updateLayoutMetrics();
+                    initScrollObserver(); 
+                }, 800); 
+            }
+        }, 20);
+
+        function switchQuote(i) { 
+            textEl.style.opacity = 0; textEl.style.transform = 'translateY(15px)'; 
+            setTimeout(() => { textEl.innerText = quotes[i]; textEl.style.opacity = 1; textEl.style.transform = 'translateY(0)'; }, 300); 
+        }
+
+        // 3. УМНЫЙ ХЕДЕР И ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ (ОПТИМИЗИРОВАНО)
+        const header = document.getElementById('main-header');
+        const bioSection = document.getElementById('biography');
+        const bioTrack = document.getElementById('bio-track');
+        const bioProgress = document.getElementById('bio-progress');
+        
+        // Кэшируем значения для производительности
+        let metrics = {
+            isDesktop: window.innerWidth > 768,
+            bioTop: 0,
+            bioHeight: 0,
+            bioScrollDist: 0,
+            trackScrollWidth: 0,
+            windowHeight: window.innerHeight,
+            windowWidth: window.innerWidth,
+            slideCount: 0 // Добавили подсчет слайдов
+        };
+
+        function updateLayoutMetrics() {
+            metrics.isDesktop = window.innerWidth > 768;
+            metrics.windowHeight = window.innerHeight;
+            metrics.windowWidth = window.innerWidth;
+            
+            // Считаем количество слайдов в истории для магнита
+            const slides = document.querySelectorAll('.slide');
+            metrics.slideCount = slides.length;
+
+            if (metrics.isDesktop && bioSection && bioTrack) {
+                // 1. Считаем полную ширину
+                metrics.trackScrollWidth = bioTrack.scrollWidth;
+
+                // 2. Рассчитываем высоту
+                const scrollLength = metrics.trackScrollWidth - metrics.windowWidth;
+                const totalHeight = scrollLength + metrics.windowHeight;
+
+                // 3. Задаем высоту
+                bioSection.style.height = `${totalHeight}px`;
+
+                metrics.bioTop = bioSection.offsetTop;
+                metrics.bioHeight = totalHeight;
+                metrics.bioScrollDist = scrollLength; 
+            } else {
+                // Сброс для мобилки
+                if(bioSection) bioSection.style.height = 'auto';
+                if(bioTrack) {
+                    bioTrack.style.position = '';
+                    bioTrack.style.top = '';
+                    bioTrack.style.left = '';
+                    bioTrack.style.transform = '';
+                }
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            updateLayoutMetrics();
+        });
+
+        let headerTimeout;
+        let snapTimeout; // Переменная для таймера магнита
+
+        // Основной цикл скролла
+        lenis.on('scroll', (e) => {
+            const scrollY = e.scroll;
+            const velocity = e.velocity;
+
+            // --- ХЕДЕР (без изменений) ---
+            if (scrollY > 50) {
+                if (velocity < 0) {
+                    header.classList.remove('scrolled-down');
+                    header.classList.add('scrolled-up');
+                    clearTimeout(headerTimeout);
+                    headerTimeout = setTimeout(() => {
+                        if (window.scrollY > 50) {
+                            header.classList.add('scrolled-down');
+                            header.classList.remove('scrolled-up');
+                        }
+                    }, 3000);
+                } else if (velocity > 0) {
+                    header.classList.add('scrolled-down');
+                    header.classList.remove('scrolled-up');
+                    clearTimeout(headerTimeout);
+                }
+            } else {
+                header.classList.remove('scrolled-down');
+                header.classList.add('scrolled-up');
+            }
+
+            // --- ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ + МАГНИТ (Только ПК) ---
+            if (metrics.isDesktop && metrics.bioScrollDist > 0) {
+                const relativeScroll = scrollY - metrics.bioTop;
+
+                // 1. Логика движения слайдов
+                if (relativeScroll >= 0 && relativeScroll <= metrics.bioScrollDist) {
+                    const progress = relativeScroll / metrics.bioScrollDist;
+                    const moveX = progress * (metrics.trackScrollWidth - metrics.windowWidth);
+                    
+                    bioTrack.style.position = 'fixed';
+                    bioTrack.style.top = '0';
+                    bioTrack.style.left = '0';
+                    bioTrack.style.width = '100%';
+                    bioTrack.style.height = '100vh';
+                    bioTrack.style.zIndex = '10';
+                    bioTrack.style.transform = `translate3d(${-moveX}px, 0, 0)`;
+                    
+                    if(bioProgress) bioProgress.style.width = `${progress * 100}%`;
+
+                    // === МАГНИТНАЯ ДОВОДКА (SNAP) ===
+                    // Сбрасываем таймер, пока вы скроллите
+                    clearTimeout(snapTimeout);
+                    
+                    // Запускаем таймер: если скролл остановился на 150мс
+                    snapTimeout = setTimeout(() => {
+                        // Вычисляем текущий "индекс" слайда (0, 1, 2, 3...)
+                        // Делим прогресс (0..1) на размер одного "шага"
+                        const step = 1 / (metrics.slideCount - 1);
+                        const nearestIndex = Math.round(progress / step);
+                        
+                        // Вычисляем идеальную точку скролла для этого слайда
+                        const targetProgress = nearestIndex * step;
+                        const targetScrollY = metrics.bioTop + (targetProgress * metrics.bioScrollDist);
+
+                        // Если мы не стоим уже идеально на месте — плавно едем туда
+                        if (Math.abs(window.scrollY - targetScrollY) > 5) {
+                            lenis.scrollTo(targetScrollY, { duration: 1.5, easing: (t) => 1 - Math.pow(1 - t, 3) });
+                        }
+                    }, 150); // Задержка перед срабатыванием магнита
+
+                } else if (relativeScroll < 0) {
+                    bioTrack.style.position = 'relative';
+                    bioTrack.style.transform = `translate3d(0px, 0, 0)`;
+                    clearTimeout(snapTimeout); // Убираем магнит вне блока
+                } else {
+                    const maxMove = metrics.trackScrollWidth - metrics.windowWidth;
+                    bioTrack.style.position = 'absolute';
+                    bioTrack.style.top = 'auto';
+                    bioTrack.style.bottom = '0';
+                    bioTrack.style.transform = `translate3d(${-maxMove}px, 0, 0)`;
+                    clearTimeout(snapTimeout); // Убираем магнит вне блока
+                }
+            }
+        });
+        
+
+        // 4. ИНТЕРАКТИВНЫЕ ЭЛЕМЕНТЫ
+        const interactiveBtns = document.querySelectorAll('.contact-btn, .interactive');
+        if (!('ontouchstart' in window)) {
+            interactiveBtns.forEach(btn => {
+                btn.addEventListener('mousemove', function(e) {
+                    const pos = btn.getBoundingClientRect();
+                    const x = e.clientX - pos.left - pos.width / 2;
+                    const y = e.clientY - pos.top - pos.height / 2;
+                    btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+                });
+                btn.addEventListener('mouseleave', function() {
+                    btn.style.transform = 'translate(0px, 0px)';
+                });
+            });
+        }
+
+        // Custom Cursor
+        const cursor = document.getElementById('cursor');
+        if (!('ontouchstart' in window)) {
+            document.addEventListener('mousemove', e => {
+                cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+            });
+            document.addEventListener('mouseover', e => { 
+                if (e.target.closest('a, button, .interactive')) cursor.classList.add('hovered'); 
+                else cursor.classList.remove('hovered'); 
+            });
+        }
+
+        // Mobile Menu
+        const menu = document.getElementById('mobile-menu');
+        window.toggleMenu = function() {
+            menu.classList.toggle('translate-x-full');
+            document.body.classList.toggle('menu-open');
+            if (!menu.classList.contains('translate-x-full')) {
+                const links = menu.querySelectorAll('a');
+                links.forEach((link, idx) => {
+                    link.style.opacity = '0';
+                    link.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        link.style.transition = 'all 0.5s ease';
+                        link.style.opacity = '1';
+                        link.style.transform = 'translateY(0)';
+                    }, 100 + (idx * 50));
+                });
+            }
+        }
+
+        function initScrollObserver() {
+            const observer = new IntersectionObserver((entries) => { 
+                entries.forEach(e => { 
+                    if (e.isIntersecting) { 
+                        e.target.classList.add('visible'); 
+                        observer.unobserve(e.target); 
+                    } 
+                }); 
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal-text, .fade-in-up').forEach(el => observer.observe(el));
+        }
+
+        // === ВСТАВКА: ЛОГИКА ИНСАЙТОВ (ТОЛЬКО ДЛЯ ПК > 1024px) + ТАЙМЕР 4 СЕК ===
+        if (window.innerWidth > 1024) {
+            const insightGhost = document.getElementById('insight-ghost');
+            const insightText = document.getElementById('insight-text');
+            const insightSections = document.querySelectorAll('[data-insight]');
+            let hideTimeout; // Переменная для хранения таймера
+
+            if (insightGhost && insightText && insightSections.length > 0) {
+                const insightObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const text = entry.target.getAttribute('data-insight');
+                            
+                            if (text) {
+                                // 1. Обновляем текст и показываем
+                                insightText.textContent = text;
+                                insightGhost.classList.add('active');
+
+                                // 2. Если был запущен таймер скрытия — отменяем его (сброс)
+                                if (hideTimeout) clearTimeout(hideTimeout);
+
+                                // 3. Запускаем новый таймер на 4 секунды (4000 мс)
+                                hideTimeout = setTimeout(() => {
+                                    insightGhost.classList.remove('active');
+                                }, 4000);
+                            }
+                        }
+                    });
+                }, { 
+                    // Линия срабатывания ровно посередине экрана
+                    rootMargin: "-50% 0px -50% 0px", 
+                    threshold: 0 
+                });
+
+                insightSections.forEach(section => {
+                    insightObserver.observe(section);
+                });
+            }
+        }
+        // === КОНЕЦ ВСТАВКИ ===
+
+        // Particles
+        const canvas = document.getElementById('gold-dust');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let particlesArray = [];
+            const numberOfParticles = window.innerWidth < 768 ? 30 : 60; // Меньше частиц для производительности
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resizeCanvas();
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2;
+                    this.speedX = Math.random() * 0.2 - 0.1; // Медленнее
+                    this.speedY = Math.random() * 0.2 - 0.1;
+                    this.opacity = Math.random() * 0.5 + 0.2;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.size > 0.2) this.size -= 0.003;
+                    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                }
+                draw() {
+                    ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            
+            function initParticles() {
+                particlesArray = [];
+                for (let i = 0; i < numberOfParticles; i++) particlesArray.push(new Particle());
+            }
+            
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particlesArray.length; i++) {
+                    particlesArray[i].update();
+                    particlesArray[i].draw();
+                    if (particlesArray[i].size <= 0.2) {
+                        particlesArray.splice(i, 1);
+                        particlesArray.push(new Particle());
+                    }
+                }
+                requestAnimationFrame(animateParticles);
+            }
+            
+            initParticles();
+            animateParticles();
+            window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+        }
+    });
+</script>
+</body>
+</html>
