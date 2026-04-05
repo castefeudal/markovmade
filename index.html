@@ -172,6 +172,13 @@
             padding-right: 2.5rem;
         }
 
+        /* === СОМАТИПЫ (НЕОНОВАЯ ПОДСВЕТКА) === */
+        .soma-btn { transition: all 0.4s ease; border: 1px solid rgba(255,255,255,0.2); color: #B5B5B5; }
+        .soma-btn:hover { border-color: rgba(255,255,255,0.5); color: #F2F2F2; }
+        .soma-ecto.active { border-color: #06b6d4; color: #06b6d4; box-shadow: 0 0 15px rgba(6,182,212,0.4); text-shadow: 0 0 10px rgba(6,182,212,0.5); }
+        .soma-meso.active { border-color: #D4AF37; color: #D4AF37; box-shadow: 0 0 15px rgba(212,175,55,0.4); text-shadow: 0 0 10px rgba(212,175,55,0.5); }
+        .soma-endo.active { border-color: #ef4444; color: #ef4444; box-shadow: 0 0 15px rgba(239,68,68,0.4); text-shadow: 0 0 10px rgba(239,68,68,0.5); }
+
         /* Эффекты кибер-сканирования */
         @keyframes scanline { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
         .animate-scanline { animation: scanline 1.5s linear infinite; }
@@ -319,17 +326,9 @@
             <nav class="hidden md:flex gap-10 items-center">
                 <a href="#about" class="interactive nav-link font-sans text-[12px] uppercase tracking-luxury text-dim hover:text-platinum transition-colors">I. Обо мне</a>
                 <a href="#principles" class="interactive nav-link font-sans text-[12px] uppercase tracking-luxury text-dim hover:text-platinum transition-colors">II. Принципы</a>
-                <a href="#biography" class="interactive nav-link font-sans text-[12px] uppercase tracking-luxury text-dim hover:text-platinum transition-colors">III. История</a>
-                
-                <a href="#services" class="interactive relative font-sans text-[12px] uppercase tracking-luxury transition-all duration-300 pb-1 menu-highlight-gold">
-                    IV. Услуги
-                </a>
-                
+                <a href="#calculators" class="interactive relative font-sans text-[12px] uppercase tracking-luxury transition-all duration-300 pb-1 menu-highlight-platinum">III. Расчёт</a>
+                <a href="#services" class="interactive relative font-sans text-[12px] uppercase tracking-luxury transition-all duration-300 pb-1 menu-highlight-gold">IV. Услуги</a>
                 <a href="#team" class="interactive nav-link font-sans text-[12px] uppercase tracking-luxury text-dim hover:text-platinum transition-colors">V. Команда</a>
-                
-                <a href="#calculators" class="interactive relative font-sans text-[12px] uppercase tracking-luxury transition-all duration-300 pb-1 menu-highlight-platinum">
-                    VI. Расчёт
-                </a>
                 
                 <a href="#contact" class="interactive group relative px-6 py-2 border border-gold/30 rounded-sm text-[10px] font-sans tracking-luxury uppercase text-platinum overflow-hidden transition-all duration-500 hover:shadow-[0_0_25px_rgba(212,175,55,0.3)]">
                     <span class="absolute inset-0 bg-gold translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out -z-10"></span>
@@ -337,7 +336,7 @@
                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                         </svg>
-                        Связь
+                        VI. Контакты
                     </span>
                 </a>
             </nav>
@@ -352,13 +351,12 @@
     <!-- MOBILE MENU -->
     <div id="mobile-menu" class="fixed inset-0 z-[55] bg-obsidian flex flex-col justify-center px-6 transform translate-x-full transition-transform duration-700 cubic-bezier(0.7,0,0.3,1) overflow-y-auto">
         <nav class="flex flex-col items-center gap-8 min-h-min py-16">
-            <a href="#about" class="interactive font-sans text-[13px] md:text-sm font-medium tracking-[0.3em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">I. Обо мне</a>
-            <a href="#principles" class="interactive font-sans text-[13px] md:text-sm font-medium tracking-[0.3em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">II. Принципы</a>
-            <a href="#biography" class="interactive font-sans text-[13px] md:text-sm font-medium tracking-[0.3em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">III. История</a>
-            <a href="#services" class="interactive font-sans text-[13px] md:text-sm font-medium tracking-[0.3em] uppercase text-gold transition-colors block" onclick="toggleMenu()">IV. Услуги</a>
-            <a href="#team" class="interactive font-sans text-[13px] md:text-sm font-medium tracking-[0.3em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">V. Команда</a>
-            <a href="#calculators" class="interactive font-sans text-[13px] md:text-sm font-medium tracking-[0.3em] uppercase text-platinum drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] transition-colors block" onclick="toggleMenu()">VI. Расчёт</a>
-            <a href="#contact" class="interactive font-sans text-[13px] md:text-sm font-medium tracking-[0.3em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">VII. Контакты</a>
+            <a href="#about" class="interactive font-sans text-lg md:text-xl font-medium tracking-[0.3em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">I. Обо мне</a>
+            <a href="#principles" class="interactive font-sans text-lg md:text-xl font-medium tracking-[0.3em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">II. Принципы</a>
+            <a href="#calculators" class="interactive font-sans text-lg md:text-xl font-medium tracking-[0.3em] uppercase text-platinum drop-shadow-[0_0_10px_rgba(255,255,255,0.1)] transition-colors block" onclick="toggleMenu()">III. Расчёт</a>
+            <a href="#services" class="interactive font-sans text-lg md:text-xl font-medium tracking-[0.3em] uppercase text-gold transition-colors block" onclick="toggleMenu()">IV. Услуги</a>
+            <a href="#team" class="interactive font-sans text-lg md:text-xl font-medium tracking-[0.3em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">V. Команда</a>
+            <a href="#contact" class="interactive font-sans text-lg md:text-xl font-medium tracking-[0.3em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">VI. Контакты</a>
         </nav>
     </div>
 
@@ -448,66 +446,11 @@
             </div>
         </section>
 
-        <!-- PRINCIPLES -->
-        <section id="principles" class="section-block relative py-24 md:py-36 bg-obsidian text-platinum overflow-hidden" data-insight="Внешность привлекает. Принципы удерживают.">
-            <div class="absolute inset-0 abstract-bg opacity-30 pointer-events-none"></div>
-            <div class="container mx-auto px-6 md:px-12 relative z-10">
-                <div class="text-center max-w-4xl mx-auto mb-28 fade-in-up">
-                    <span class="text-[10px] font-sans tracking-luxury text-gold uppercase mb-8 block">02. ФИЛОСОФИЯ</span>
-                    <h2 class="font-serif text-3xl md:text-5xl leading-tight text-platinum mb-10 uppercase tracking-wide">
-                        Внешность привлекает внимание. <br>
-                        <span class="text-dim italic normal-case font-light">Принципы удерживают его.</span>
-                    </h2>
-                    <p class="font-sans text-dim text-lg max-w-2xl mx-auto leading-relaxed">
-                        Если визуальный образ — это фасад, то жизненные ценности — это несущие конструкции. Мой кодекс сформирован не теорией, а реальным путем.
-                    </p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-[1px] bg-white/10 border border-white/5">
-                    <div class="bg-obsidian p-6 md:p-16 group hover:bg-charcoal/60 transition-all duration-700 relative overflow-hidden fade-in-up h-full flex flex-col justify-between" style="transition-delay: 100ms;">
-                        <div>
-                            <span class="font-serif text-3xl text-gold mb-6 block opacity-50 group-hover:opacity-100 transition-opacity">I.</span>
-                            <h3 class="font-sans text-xl font-bold tracking-widest uppercase text-platinum mb-6 group-hover:text-gold transition-colors">АРХИТЕКТУРА ВОСПРИЯТИЯ</h3>
-                        </div>
-                        <div class="transform translate-y-4 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                            <p class="font-sans text-dim text-base leading-loose">Каждый новый человек — это «чистый лист» и потенциальный учитель. Не позволяйте теням прошлого опыта омрачать настоящее: прошлые разочарования не должны диктовать условия будущим союзам. Истинная мудрость заключается в способности извлекать ценность из каждого диалога, видя в собеседнике не проблему, а урок.</p>
-                        </div>
-                    </div>
-                    <div class="bg-obsidian p-6 md:p-16 group hover:bg-charcoal/60 transition-all duration-700 relative overflow-hidden fade-in-up h-full flex flex-col justify-between" style="transition-delay: 200ms;">
-                         <div>
-                            <span class="font-serif text-3xl text-gold mb-6 block opacity-50 group-hover:opacity-100 transition-opacity">II.</span>
-                            <h3 class="font-sans text-xl font-bold tracking-widest uppercase text-platinum mb-6 group-hover:text-gold transition-colors">ЭТИКЕТ СИЛЫ</h3>
-                        </div>
-                        <div class="transform translate-y-4 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                            <p class="font-sans text-dim text-base leading-loose">Искренность — это кратчайший путь к цели. Говорите как есть, ведь правда экономит годы. На агрессию и конфликт отвечайте безупречной вежливостью: это не слабость, а высшая форма контроля, которая обезоруживает любого противника. Ваша доброта — это не уязвимость, а сознательный выбор сильного человека.</p>
-                        </div>
-                    </div>
-                    <div class="bg-obsidian p-6 md:p-16 group hover:bg-charcoal/60 transition-all duration-700 relative overflow-hidden fade-in-up h-full flex flex-col justify-between" style="transition-delay: 300ms;">
-                        <div>
-                            <span class="font-serif text-3xl text-gold mb-6 block opacity-50 group-hover:opacity-100 transition-opacity">III.</span>
-                            <h3 class="font-sans text-xl font-bold tracking-widest uppercase text-platinum mb-6 group-hover:text-gold transition-colors">ВНУТРЕННЯЯ АВТОНОМИЯ</h3>
-                        </div>
-                        <div class="transform translate-y-4 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                            <p class="font-sans text-dim text-base leading-loose">Ваша способность созидать и зарабатывать не зависит от географии или обстоятельств. Настоящий капитал находится внутри: это ваши навыки, которые вы возьмете с собой, даже если потеряете всё остальное. Будьте уверены — в любой точке мира вы выживете и преуспеете, потому что ваше мастерство всегда остается при вас.</p>
-                        </div>
-                    </div>
-                    <div class="bg-obsidian p-6 md:p-16 group hover:bg-charcoal/60 transition-all duration-700 relative overflow-hidden fade-in-up h-full flex flex-col justify-between" style="transition-delay: 400ms;">
-                        <div>
-                            <span class="font-serif text-3xl text-gold mb-6 block opacity-50 group-hover:opacity-100 transition-opacity">IV.</span>
-                            <h3 class="font-sans text-xl font-bold tracking-widest uppercase text-platinum mb-6 group-hover:text-gold transition-colors">ТИРАНИЯ МОМЕНТА</h3>
-                        </div>
-                        <div class="transform translate-y-4 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                            <p class="font-sans text-dim text-base leading-loose">Время — единственный актив, который нельзя реинвестировать. Либо вы управляете своим вниманием через жесткую структуру и таймеры, либо мир управляет вами. Помните: где бы вы ни находились, вы — самодостаточная единица. Ваше умение выжить и созидать «с нуля» — это фундамент, на котором строится империя, не зависящая от внешних кризисов.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- BIOGRAPHY -->
         <section id="biography" class="section-block relative bg-obsidian border-t border-white/5" data-insight="История — это не прошлое. Это фундамент будущего.">
             <div class="pt-16 px-6 md:px-12 flex flex-col md:flex-row justify-between items-start">
                 <div class="fade-in-up">
-                    <span class="text-xs font-sans tracking-luxury text-gold uppercase mb-4 block">03. ПУТЬ</span>
+                    <span class="text-xs font-sans tracking-luxury text-gold uppercase mb-4 block">ПУТЬ</span>
                     <h2 class="text-5xl md:text-7xl font-serif text-platinum">Эволюция</h2>
                 </div>
                 <div class="mt-6 md:mt-0 max-w-sm text-right hidden md:block fade-in-up">
@@ -648,6 +591,389 @@
                 </div>
             </div>
         </section>
+
+        <!-- PRINCIPLES -->
+        <section id="principles" class="section-block relative py-24 md:py-36 bg-obsidian text-platinum overflow-hidden" data-insight="Внешность привлекает. Принципы удерживают.">
+            <div class="absolute inset-0 abstract-bg opacity-30 pointer-events-none"></div>
+            <div class="container mx-auto px-6 md:px-12 relative z-10">
+                <div class="text-center max-w-4xl mx-auto mb-28 fade-in-up">
+                    <span class="text-[10px] font-sans tracking-luxury text-gold uppercase mb-8 block">02. ФИЛОСОФИЯ</span>
+                    <h2 class="font-serif text-3xl md:text-5xl leading-tight text-platinum mb-10 uppercase tracking-wide">
+                        Внешность привлекает внимание. <br>
+                        <span class="text-dim italic normal-case font-light">Принципы удерживают его.</span>
+                    </h2>
+                    <p class="font-sans text-dim text-lg max-w-2xl mx-auto leading-relaxed">
+                        Если визуальный образ — это фасад, то жизненные ценности — это несущие конструкции. Мой кодекс сформирован не теорией, а реальным путем.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-[1px] bg-white/10 border border-white/5">
+                    <div class="bg-obsidian p-6 md:p-16 group hover:bg-charcoal/60 transition-all duration-700 relative overflow-hidden fade-in-up h-full flex flex-col justify-between" style="transition-delay: 100ms;">
+                        <div>
+                            <span class="font-serif text-3xl text-gold mb-6 block opacity-50 group-hover:opacity-100 transition-opacity">I.</span>
+                            <h3 class="font-sans text-xl font-bold tracking-widest uppercase text-platinum mb-6 group-hover:text-gold transition-colors">АРХИТЕКТУРА ВОСПРИЯТИЯ</h3>
+                        </div>
+                        <div class="transform translate-y-4 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <p class="font-sans text-dim text-base leading-loose">Каждый новый человек — это «чистый лист» и потенциальный учитель. Не позволяйте теням прошлого опыта омрачать настоящее: прошлые разочарования не должны диктовать условия будущим союзам. Истинная мудрость заключается в способности извлекать ценность из каждого диалога, видя в собеседнике не проблему, а урок.</p>
+                        </div>
+                    </div>
+                    <div class="bg-obsidian p-6 md:p-16 group hover:bg-charcoal/60 transition-all duration-700 relative overflow-hidden fade-in-up h-full flex flex-col justify-between" style="transition-delay: 200ms;">
+                         <div>
+                            <span class="font-serif text-3xl text-gold mb-6 block opacity-50 group-hover:opacity-100 transition-opacity">II.</span>
+                            <h3 class="font-sans text-xl font-bold tracking-widest uppercase text-platinum mb-6 group-hover:text-gold transition-colors">ЭТИКЕТ СИЛЫ</h3>
+                        </div>
+                        <div class="transform translate-y-4 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <p class="font-sans text-dim text-base leading-loose">Искренность — это кратчайший путь к цели. Говорите как есть, ведь правда экономит годы. На агрессию и конфликт отвечайте безупречной вежливостью: это не слабость, а высшая форма контроля, которая обезоруживает любого противника. Ваша доброта — это не уязвимость, а сознательный выбор сильного человека.</p>
+                        </div>
+                    </div>
+                    <div class="bg-obsidian p-6 md:p-16 group hover:bg-charcoal/60 transition-all duration-700 relative overflow-hidden fade-in-up h-full flex flex-col justify-between" style="transition-delay: 300ms;">
+                        <div>
+                            <span class="font-serif text-3xl text-gold mb-6 block opacity-50 group-hover:opacity-100 transition-opacity">III.</span>
+                            <h3 class="font-sans text-xl font-bold tracking-widest uppercase text-platinum mb-6 group-hover:text-gold transition-colors">ВНУТРЕННЯЯ АВТОНОМИЯ</h3>
+                        </div>
+                        <div class="transform translate-y-4 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <p class="font-sans text-dim text-base leading-loose">Ваша способность созидать и зарабатывать не зависит от географии или обстоятельств. Настоящий капитал находится внутри: это ваши навыки, которые вы возьмете с собой, даже если потеряете всё остальное. Будьте уверены — в любой точке мира вы выживете и преуспеете, потому что ваше мастерство всегда остается при вас.</p>
+                        </div>
+                    </div>
+                    <div class="bg-obsidian p-6 md:p-16 group hover:bg-charcoal/60 transition-all duration-700 relative overflow-hidden fade-in-up h-full flex flex-col justify-between" style="transition-delay: 400ms;">
+                        <div>
+                            <span class="font-serif text-3xl text-gold mb-6 block opacity-50 group-hover:opacity-100 transition-opacity">IV.</span>
+                            <h3 class="font-sans text-xl font-bold tracking-widest uppercase text-platinum mb-6 group-hover:text-gold transition-colors">ТИРАНИЯ МОМЕНТА</h3>
+                        </div>
+                        <div class="transform translate-y-4 opacity-70 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                            <p class="font-sans text-dim text-base leading-loose">Время — единственный актив, который нельзя реинвестировать. Либо вы управляете своим вниманием через жесткую структуру и таймеры, либо мир управляет вами. Помните: где бы вы ни находились, вы — самодостаточная единица. Ваше умение выжить и созидать «с нуля» — это фундамент, на котором строится империя, не зависящая от внешних кризисов.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- === СЕКЦИЯ РАСЧЁТОВ (ИНСТРУМЕНТЫ) === -->
+        <section id="calculators" class="section-block relative py-24 md:py-32 bg-charcoal/50 border-t border-white/5 overflow-hidden" data-insight="Точные данные бьют любые мотивационные речи.">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,_rgba(212,175,55,0.02),_transparent_60%)] pointer-events-none"></div>
+            <div class="absolute top-0 right-0 w-[40vw] h-[40vw] bg-white rounded-full blur-[160px] opacity-[0.01] pointer-events-none"></div>
+
+            <div class="container mx-auto px-6 md:px-12 relative z-10">
+                <div class="text-center max-w-4xl mx-auto mb-16 fade-in-up">
+                    <span class="text-[10px] font-sans tracking-luxury text-gold uppercase mb-6 block">03. АРХИТЕКТУРА МЕТРИК</span>
+                    <h2 class="font-serif text-3xl md:text-5xl leading-tight text-platinum mb-6 uppercase tracking-wide">
+                        Оцифровка Организма
+                    </h2>
+                    <p class="font-sans text-dim text-lg max-w-2xl mx-auto leading-relaxed">
+                        Трансформация начинается там, где заканчиваются догадки и начинаются точные данные. Инструменты основаны на клинических алгоритмах (Mifflin-St Jeor, нормализованный FFMI, индекс аллостатической нагрузки).
+                    </p>
+                    <div class="mt-6 flex items-center justify-center gap-2 text-[10px] text-gold/60 uppercase tracking-widest font-bold">
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Погрешность вычислений ± 9-12%
+                    </div>
+                </div>
+
+                <div class="max-w-6xl mx-auto border border-white/10 bg-obsidian/80 backdrop-blur-md rounded-sm fade-in-up shadow-2xl relative min-h-[600px]">
+                    <!-- Табы переключения -->
+                    <div class="flex flex-col md:flex-row border-b border-white/10">
+                        <button class="calc-tab active flex-1 py-6 px-4 text-center border-b-2 border-gold text-gold font-sans text-xs md:text-sm tracking-widest uppercase transition-all duration-300 hover:bg-white/5" data-target="calc-fitness">
+                            I. Генетика (FFMI)
+                        </button>
+                        <button class="calc-tab flex-1 py-6 px-4 text-center border-b-2 border-transparent text-dim hover:text-platinum font-sans text-xs md:text-sm tracking-widest uppercase transition-all duration-300 hover:bg-white/5" data-target="calc-nutri">
+                            II. Биохимия (КБЖУ)
+                        </button>
+                        <button class="calc-tab flex-1 py-6 px-4 text-center border-b-2 border-transparent text-dim hover:text-platinum font-sans text-xs md:text-sm tracking-widest uppercase transition-all duration-300 hover:bg-white/5" data-target="calc-psycho">
+                            III. Ресурс ЦНС
+                        </button>
+                    </div>
+
+                    <!-- Контент Табов -->
+                    <div class="p-6 md:p-12 relative w-full h-full min-h-[500px]">
+
+                        <!-- 1. ФИТНЕС (FFMI) -->
+                        <div id="calc-fitness" class="calc-tab-content grid grid-cols-1 lg:grid-cols-2 gap-12 transition-opacity duration-500 opacity-100">
+                            <div id="calc-fitness-form" class="space-y-8">
+                                <div>
+                                    <h3 class="font-serif text-2xl text-platinum mb-2">Индекс генетического максимума</h3>
+                                    <p class="font-sans text-dim text-sm leading-relaxed">Расчет сухой массы (LBM) и предела роста мышц. Учитывает ваш природный соматип для максимальной точности.</p>
+                                </div>
+                                <div class="space-y-6">
+                                    <!-- Пол -->
+                                    <div>
+                                        <div class="flex gap-4">
+                                            <button class="ffmi-gender active flex-1 py-3 border border-[#3b82f6] text-[#3b82f6] shadow-[0_0_15px_rgba(59,130,246,0.3)] text-xs tracking-widest uppercase rounded-sm transition-all" data-gender="male">Мужчина</button>
+                                            <button class="ffmi-gender flex-1 py-3 border border-white/20 text-dim text-xs tracking-widest uppercase rounded-sm transition-all" data-gender="female">Женщина</button>
+                                        </div>
+                                    </div>
+                                    <!-- Соматип -->
+                                    <div>
+                                        <label class="font-sans text-xs text-dim tracking-widest uppercase block mb-3 text-center">Соматип (Костяк)</label>
+                                        <div class="flex gap-2">
+                                            <button class="ffmi-soma soma-btn soma-ecto flex-1 py-3 text-[10px] tracking-widest uppercase rounded-sm" data-val="ecto">Эктоморф</button>
+                                            <button class="ffmi-soma soma-btn soma-meso flex-1 py-3 text-[10px] tracking-widest uppercase rounded-sm active" data-val="meso">Мезоморф</button>
+                                            <button class="ffmi-soma soma-btn soma-endo flex-1 py-3 text-[10px] tracking-widest uppercase rounded-sm" data-val="endo">Эндоморф</button>
+                                        </div>
+                                        <p class="text-xs text-dim/80 text-center mt-4 font-sans leading-relaxed font-medium">
+                                            <span class="text-gold">Индекс Соловьева</span> (обхват запястья): <br>
+                                            М: &lt;17см (Экто) | 17-20см (Мезо) | &gt;20см (Эндо)<br>
+                                            Ж: &lt;15см (Экто) | 15-17см (Мезо) | &gt;17см (Эндо)
+                                        </p>
+                                    </div>
+                                    <!-- Поля ввода -->
+                                    <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/5">
+                                        <div class="flex flex-col items-center">
+                                            <label class="font-sans text-[10px] text-dim tracking-widest uppercase mb-2">Рост (см)</label>
+                                            <input type="number" id="ffmi-height" class="luxury-input-number calc-input-trigger" placeholder="180" value="180" inputmode="decimal">
+                                        </div>
+                                        <div class="flex flex-col items-center">
+                                            <label class="font-sans text-[10px] text-dim tracking-widest uppercase mb-2">Вес (кг)</label>
+                                            <input type="number" id="ffmi-weight" class="luxury-input-number calc-input-trigger" placeholder="80" value="80" step="0.1" inputmode="decimal">
+                                        </div>
+                                        <div class="flex flex-col items-center">
+                                            <label class="font-sans text-[10px] text-dim tracking-widest uppercase mb-2">Жир (%)</label>
+                                            <input type="number" id="ffmi-fat" class="luxury-input-number calc-input-trigger" placeholder="15" value="15" step="0.1" inputmode="decimal">
+                                        </div>
+                                    </div>
+                                    <p class="text-[13px] text-dim/80 text-center font-sans leading-relaxed mt-5 font-medium">
+                                        <span class="text-gold">Ориентир % жира:</span><br>
+                                        Мужчины: 8-12% (глубокая сепарация), 13-16% (атлетичное сложение), 17-20% (сглаженный рельеф). <br>
+                                        Женщины: 16-19% (выраженный рельеф), 20-24% (фитнес-стандарт), 25-28% (норма).
+                                    </p>
+                                </div>
+                                <button onclick="runAnalysis('calc-fitness', calculateFFMI)" class="interactive w-full py-4 bg-gold/10 border border-gold text-gold font-sans text-xs font-bold tracking-[0.2em] uppercase hover:bg-gold hover:text-obsidian transition-all duration-300">Анализировать генотип</button>
+                            </div>
+
+                            <!-- Результат -->
+                            <div class="relative bg-black/40 border border-white/5 p-8 rounded-sm overflow-hidden flex flex-col justify-center min-h-[400px]">
+                                <div id="calc-fitness-wait" class="absolute inset-0 flex flex-col items-center justify-center bg-obsidian/90 z-20 transition-opacity duration-300">
+                                    <svg class="w-12 h-12 text-dim/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                                    <span class="font-sans text-[10px] text-dim/50 tracking-widest uppercase text-center leading-loose">Введите метрики <br> для формирования отчета</span>
+                                </div>
+                                <div id="calc-fitness-loading" class="hidden absolute inset-0 flex-col items-center justify-center bg-obsidian z-30">
+                                    <div class="w-full h-1 bg-white/10 absolute top-0 left-0"><div class="h-full bg-gold w-1/3 animate-scanline"></div></div>
+                                    <span class="font-sans text-xs text-gold tracking-widest uppercase animate-pulse mb-4">Cyber-Scan Active</span>
+                                    <span class="neural-text font-serif text-2xl text-platinum animate-data-flicker">0XF8A...</span>
+                                </div>
+
+                                <div id="calc-fitness-result" class="hidden flex-col justify-center h-full relative z-10 w-full">
+                                    <div class="relative w-40 h-40 mx-auto mb-8">
+                                        <svg class="w-full h-full transform -rotate-90 drop-shadow-[0_0_15px_rgba(212,175,55,0.3)]" viewBox="0 0 100 100">
+                                            <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.05)" stroke-width="6" fill="none"></circle>
+                                            <circle id="ffmi-svg-bar" cx="50" cy="50" r="40" stroke="#D4AF37" stroke-width="6" fill="none" stroke-dasharray="251.2" stroke-dashoffset="251.2" stroke-linecap="round" class="transition-all duration-[1.5s] ease-out"></circle>
+                                        </svg>
+                                        <div class="absolute inset-0 flex flex-col items-center justify-center pt-2">
+                                            <span id="ffmi-score" class="text-4xl font-serif text-platinum leading-none">0.0</span>
+                                            <span class="text-[10px] text-gold uppercase tracking-widest mt-1">FFMI</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex justify-between items-end border-b border-white/10 pb-4 mb-4">
+                                        <div>
+                                            <span class="text-[9px] text-dim tracking-widest uppercase block mb-1">Сухая масса (LBM)</span>
+                                            <span id="ffmi-lbm" class="font-serif text-xl text-platinum">0 кг</span>
+                                        </div>
+                                        <div class="text-right">
+                                            <span class="text-[9px] text-dim tracking-widest uppercase block mb-1">Статус</span>
+                                            <span id="ffmi-status" class="font-sans text-sm text-gold uppercase tracking-widest font-bold">...</span>
+                                        </div>
+                                    </div>
+                                    <div id="ffmi-verdict" class="font-sans text-[13px] text-platinum/90 leading-relaxed italic border-l-2 border-gold/50 pl-4 py-2"></div>
+                                    
+                                    <div class="mt-8 text-center">
+                                        <a href="https://t.me/markovmade" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-gold uppercase tracking-[0.2em] border-b border-gold/30 pb-1 hover:text-platinum hover:border-platinum transition-colors">
+                                            Получить пошаговый план у Павла ➝
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. НУТРИЦИОЛОГИЯ (БЖУ) -->
+                        <div id="calc-nutri" class="calc-tab-content hidden grid-cols-1 lg:grid-cols-2 gap-12 transition-opacity duration-500 opacity-0">
+                            <div class="space-y-8">
+                                <div>
+                                    <h3 class="font-serif text-2xl text-platinum mb-2">Архитектура Метаболизма</h3>
+                                    <p class="font-sans text-dim text-sm leading-relaxed">Клиническая формула с адаптацией макронутриентов под соматип. Еда — это программный код для тела.</p>
+                                </div>
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="font-sans text-xs text-dim tracking-widest uppercase block mb-3 text-center">Пол</label>
+                                        <div class="flex gap-2">
+                                            <button class="nutri-gender active flex-1 py-3 border border-[#3b82f6] text-[#3b82f6] shadow-[0_0_15px_rgba(59,130,246,0.3)] text-[10px] tracking-widest uppercase rounded-sm transition-all" data-gender="male">М</button>
+                                            <button class="nutri-gender flex-1 py-3 border border-white/20 text-dim text-[10px] tracking-widest uppercase rounded-sm transition-all" data-gender="female">Ж</button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="font-sans text-xs text-dim tracking-widest uppercase block mb-3 text-center">Возраст</label>
+                                        <input type="number" id="nutri-age" class="luxury-input-number calc-input-trigger w-full" placeholder="28" value="28" inputmode="numeric">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="font-sans text-xs text-dim tracking-widest uppercase block mb-3 text-center">Рост (см)</label>
+                                        <input type="number" id="nutri-height" class="luxury-input-number calc-input-trigger w-full" placeholder="180" value="180" inputmode="decimal">
+                                    </div>
+                                    <div>
+                                        <label class="font-sans text-xs text-dim tracking-widest uppercase block mb-3 text-center">Вес (кг)</label>
+                                        <input type="number" id="nutri-weight" class="luxury-input-number calc-input-trigger w-full" placeholder="80" value="80" step="0.1" inputmode="decimal">
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="font-sans text-[10px] text-dim tracking-widest uppercase block mb-2">Активность (NEAT)</label>
+                                        <select id="nutri-activity" class="custom-select calc-input-trigger w-full bg-transparent border-b border-gold/40 py-3 text-gold font-sans text-xs outline-none cursor-pointer">
+                                            <option value="1.2" class="bg-obsidian text-platinum">Офис / Без спорта</option>
+                                            <option value="1.375" class="bg-obsidian text-platinum">Лёгкая (1-3 тренировки)</option>
+                                            <option value="1.55" selected class="bg-obsidian text-platinum">Средняя (3-5 тренировок)</option>
+                                            <option value="1.725" class="bg-obsidian text-platinum">Высокая (Ежедневно)</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="font-sans text-[10px] text-dim tracking-widest uppercase block mb-2 text-center">Соматип (Костяк)</label>
+                                        <div class="flex gap-2">
+                                            <button class="nutri-soma soma-btn soma-ecto flex-1 py-3 text-[10px] tracking-widest uppercase rounded-sm" data-val="ecto">Эктоморф</button>
+                                            <button class="nutri-soma soma-btn soma-meso flex-1 py-3 text-[10px] tracking-widest uppercase rounded-sm active" data-val="meso">Мезоморф</button>
+                                            <button class="nutri-soma soma-btn soma-endo flex-1 py-3 text-[10px] tracking-widest uppercase rounded-sm" data-val="endo">Эндоморф</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="font-sans text-[10px] text-dim tracking-widest uppercase block mb-3 text-center">Биохимическая Цель</label>
+                                    <div class="flex gap-2">
+                                        <button class="nutri-goal active flex-1 py-3 border border-gold text-gold text-[10px] tracking-widest uppercase rounded-sm transition-all" data-goal="cut">Рельеф (-20%)</button>
+                                        <button class="nutri-goal flex-1 py-3 border border-white/20 text-dim hover:border-white/50 hover:text-platinum text-[10px] tracking-widest uppercase rounded-sm transition-all" data-goal="maintain">Баланс (0%)</button>
+                                        <button class="nutri-goal flex-1 py-3 border border-white/20 text-dim hover:border-white/50 hover:text-platinum text-[10px] tracking-widest uppercase rounded-sm transition-all" data-goal="bulk">Масса (+15%)</button>
+                                    </div>
+                                </div>
+                                <button onclick="runAnalysis('calc-nutri', calculateNutri)" class="interactive w-full py-4 bg-gold/10 border border-gold text-gold font-sans text-xs font-bold tracking-[0.2em] uppercase hover:bg-gold hover:text-obsidian transition-all duration-300">Синтезировать протокол</button>
+                            </div>
+
+                            <!-- Результат -->
+                            <div class="relative bg-black/40 border border-white/5 p-8 rounded-sm overflow-hidden flex flex-col justify-center min-h-[400px]">
+                                <div id="calc-nutri-wait" class="absolute inset-0 flex flex-col items-center justify-center bg-obsidian/90 z-20 transition-opacity duration-300">
+                                    <svg class="w-12 h-12 text-dim/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                                    <span class="font-sans text-[10px] text-dim/50 tracking-widest uppercase text-center leading-loose">Введите метрики <br> для биохимического анализа</span>
+                                </div>
+                                <div id="calc-nutri-loading" class="hidden absolute inset-0 flex-col items-center justify-center bg-obsidian z-30">
+                                    <div class="w-full h-1 bg-white/10 absolute top-0 left-0"><div class="h-full bg-platinum w-1/3 animate-scanline"></div></div>
+                                    <span class="font-sans text-xs text-platinum tracking-widest uppercase animate-pulse mb-4">Bio-Scan Active</span>
+                                    <span class="neural-text font-serif text-2xl text-gold animate-data-flicker">METABOLIC...</span>
+                                </div>
+
+                                <div id="calc-nutri-result" class="hidden flex-col justify-center h-full relative z-10 w-full">
+                                    <div class="text-center mb-8">
+                                        <span class="text-[10px] text-dim uppercase tracking-[0.3em] block mb-2">Суточная Норма Энергии</span>
+                                        <div class="flex items-end justify-center gap-1">
+                                            <span id="nutri-cals" class="font-serif text-6xl text-gold leading-none">0</span>
+                                            <span class="font-sans text-dim text-sm mb-1"> Ккал</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="flex items-end justify-center h-32 gap-6 mb-6 border-b border-white/10 pb-6">
+                                        <div class="flex flex-col items-center gap-2 group w-16">
+                                            <div class="w-12 bg-white/5 relative h-full rounded-sm overflow-hidden border border-white/10 group-hover:border-platinum/50 transition-colors">
+                                                <div id="bar-p" class="absolute bottom-0 w-full bg-platinum transition-all duration-[1.5s] ease-out h-0 shadow-[0_0_10px_rgba(255,255,255,0.2)]"></div>
+                                            </div>
+                                            <span class="font-serif text-platinum text-xl leading-none mt-2" id="nutri-p">0г</span>
+                                            <span class="text-[9px] text-dim tracking-widest uppercase text-center leading-tight mt-1">Белки<br>(Мышцы)</span>
+                                        </div>
+                                        <div class="flex flex-col items-center gap-2 group w-16">
+                                            <div class="w-12 bg-white/5 relative h-full rounded-sm overflow-hidden border border-gold/20 group-hover:border-gold transition-colors">
+                                                <div id="bar-f" class="absolute bottom-0 w-full bg-gold transition-all duration-[1.5s] ease-out h-0 shadow-[0_0_10px_rgba(212,175,55,0.4)]"></div>
+                                            </div>
+                                            <span class="font-serif text-gold text-xl leading-none mt-2" id="nutri-f">0г</span>
+                                            <span class="text-[9px] text-gold tracking-widest uppercase text-center leading-tight mt-1">Жиры<br>(Гормоны)</span>
+                                        </div>
+                                        <div class="flex flex-col items-center gap-2 group w-16">
+                                            <div class="w-12 bg-white/5 relative h-full rounded-sm overflow-hidden border border-white/10 group-hover:border-dim/50 transition-colors">
+                                                <div id="bar-c" class="absolute bottom-0 w-full bg-dim transition-all duration-[1.5s] ease-out h-0"></div>
+                                            </div>
+                                            <span class="font-serif text-dim text-xl leading-none mt-2" id="nutri-c">0г</span>
+                                            <span class="text-[9px] text-dim tracking-widest uppercase text-center leading-tight mt-1">Угли<br>(Мозг/ЦНС)</span>
+                                        </div>
+                                    </div>
+                                    <div id="nutri-verdict" class="font-sans text-[13px] text-platinum/90 leading-relaxed italic border-l-2 border-gold/50 pl-4 py-2"></div>
+                                    
+                                    <div class="mt-8 text-center">
+                                        <a href="https://t.me/markovmade" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-gold uppercase tracking-[0.2em] border-b border-gold/30 pb-1 hover:text-platinum hover:border-platinum transition-colors">
+                                            Назначить менторскую сессию ➝
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. ПСИХОЛОГИЯ (ЦНС) -->
+                        <div id="calc-psycho" class="calc-tab-content hidden grid-cols-1 lg:grid-cols-2 gap-12 transition-opacity duration-500 opacity-0">
+                            <div class="space-y-6 flex flex-col justify-center">
+                                <div class="mb-4">
+                                    <h3 class="font-serif text-2xl text-platinum mb-2">Индекс истощения ЦНС</h3>
+                                    <p class="font-sans text-dim text-sm leading-relaxed">Оценка аллостатической нагрузки. Будьте честны. <br><strong class="text-gold">Оцените состояние от 1 до 10</strong> (где 1 — отсутствие симптома, 10 — максимум проявления).</p>
+                                </div>
+                                <div class="space-y-4 border border-white/5 bg-white/[0.01] p-6 md:p-8 rounded-sm">
+                                    <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                                        <label class="font-sans text-xs text-dim tracking-widest uppercase w-2/3 leading-snug">Фоновый стресс / Тревога</label>
+                                        <input type="number" class="psycho-input luxury-input-number !w-20 !text-xl !p-2 calc-input-trigger" min="1" max="10" placeholder="1-10">
+                                    </div>
+                                    <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                                        <label class="font-sans text-xs text-dim tracking-widest uppercase w-2/3 leading-snug">Просыпаюсь разбитым</label>
+                                        <input type="number" class="psycho-input luxury-input-number !w-20 !text-xl !p-2 calc-input-trigger" min="1" max="10" placeholder="1-10">
+                                    </div>
+                                    <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                                        <label class="font-sans text-xs text-dim tracking-widest uppercase w-2/3 leading-snug">Потеря фокуса / Туман в голове</label>
+                                        <input type="number" class="psycho-input luxury-input-number !w-20 !text-xl !p-2 calc-input-trigger" min="1" max="10" placeholder="1-10">
+                                    </div>
+                                    <div class="flex justify-between items-center border-b border-white/5 pb-4">
+                                        <label class="font-sans text-xs text-dim tracking-widest uppercase w-2/3 leading-snug">Тяга к сахару / кофе / соцсетям</label>
+                                        <input type="number" class="psycho-input luxury-input-number !w-20 !text-xl !p-2 calc-input-trigger" min="1" max="10" placeholder="1-10">
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <label class="font-sans text-xs text-dim tracking-widest uppercase w-2/3 leading-snug">Апатия к любимым делам</label>
+                                        <input type="number" class="psycho-input luxury-input-number !w-20 !text-xl !p-2 calc-input-trigger" min="1" max="10" placeholder="1-10">
+                                    </div>
+                                </div>
+                                <button onclick="runAnalysis('calc-psycho', calculatePsycho)" class="interactive w-full mt-4 py-4 bg-gold/10 border border-gold text-gold font-sans text-xs font-bold tracking-[0.2em] uppercase hover:bg-gold hover:text-obsidian transition-all duration-300">Оценить Нейро-Статус</button>
+                            </div>
+
+                            <!-- Результат -->
+                            <div class="relative bg-black/40 border border-white/5 p-8 rounded-sm overflow-hidden flex flex-col justify-center min-h-[400px]">
+                                <div id="calc-psycho-wait" class="absolute inset-0 flex flex-col items-center justify-center bg-obsidian/90 z-20 transition-opacity duration-300">
+                                    <svg class="w-12 h-12 text-dim/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                    <span class="font-sans text-[10px] text-dim/50 tracking-widest uppercase text-center leading-loose">Заполните метрики (1-10) <br> для оценки состояния</span>
+                                </div>
+                                <div id="calc-psycho-loading" class="hidden absolute inset-0 flex-col items-center justify-center bg-obsidian z-30">
+                                    <div class="w-full h-1 bg-white/10 absolute top-0 left-0"><div class="h-full bg-red-500 w-1/3 animate-scanline"></div></div>
+                                    <span class="font-sans text-xs text-red-500 tracking-widest uppercase animate-pulse mb-4">Neural-Scan Active</span>
+                                    <span class="neural-text font-serif text-2xl text-platinum animate-data-flicker">SYNAPSE...</span>
+                                </div>
+
+                                <div id="calc-psycho-result" class="hidden flex-col justify-center h-full relative z-10 w-full">
+                                    <div class="text-center mb-6 border-b border-white/10 pb-6">
+                                        <span class="text-[10px] text-dim uppercase tracking-[0.3em] block mb-2">Аллостатическая нагрузка (ЦНС)</span>
+                                        <div class="flex justify-center items-end gap-1">
+                                            <span id="psycho-score" class="font-serif text-7xl text-platinum leading-none transition-colors duration-1000">0</span>
+                                            <span class="font-serif text-3xl text-dim mb-1">%</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="text-center mb-6">
+                                        <span id="psycho-status" class="inline-block border px-6 py-2 rounded-full text-xs tracking-widest uppercase font-bold transition-colors duration-500">
+                                            —
+                                        </span>
+                                    </div>
+
+                                    <div id="psycho-protocol" class="font-sans text-[13px] text-platinum/90 leading-relaxed bg-white/5 p-6 rounded-sm border-l-2 transition-colors duration-500">
+                                        —
+                                    </div>
+                                    
+                                    <div class="mt-8 text-center">
+                                        <a href="https://t.me/markovmade" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-gold uppercase tracking-[0.2em] border-b border-gold/30 pb-1 hover:text-platinum hover:border-platinum transition-colors">
+                                            Написать Павлу лично ➝
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- === КОНЕЦ СЕКЦИИ РАСЧЁТОВ === -->
 
         <!-- SERVICES -->
         <section id="services" class="section-block relative py-24 bg-obsidian text-platinum" data-insight="Инвестируйте в единственное, что нельзя отнять — в себя.">
@@ -873,7 +1199,7 @@
                         <div class="absolute inset-0 border border-gold/10 rounded-full animate-pulse"></div>
                         <span class="font-serif text-2xl text-gold italic">K</span>
                     </div>
-                    <span class="text-[10px] font-sans tracking-[0.4em] text-gold uppercase mb-4 block">Сообщество</span>
+                    <span class="text-[10px] font-sans tracking-[0.4em] text-gold uppercase mb-4 block">05. СООБЩЕСТВО</span>
                     <h2 class="font-serif text-4xl md:text-6xl text-platinum mb-6 uppercase tracking-tight">Каста Феодалов</h2>
                     <p class="font-sans text-platinum/80 text-lg md:text-xl leading-relaxed">Это закрытое объединение для тех, кто разделяет мои ценности. Мы растем индивидуально, но используем общие ресурсы, чтобы путь к цели был короче.</p>
                 </div>
@@ -951,334 +1277,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- === СЕКЦИЯ РАСЧЁТОВ (ИНСТРУМЕНТЫ) === -->
-        <section id="calculators" class="section-block relative py-24 md:py-32 bg-charcoal/50 border-t border-white/5 overflow-hidden" data-insight="Точные данные бьют любые мотивационные речи.">
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_80%,_rgba(212,175,55,0.02),_transparent_60%)] pointer-events-none"></div>
-            <div class="absolute top-0 right-0 w-[40vw] h-[40vw] bg-white rounded-full blur-[160px] opacity-[0.01] pointer-events-none"></div>
-
-            <div class="container mx-auto px-6 md:px-12 relative z-10">
-                <div class="text-center max-w-4xl mx-auto mb-16 fade-in-up">
-                    <span class="text-[10px] font-sans tracking-luxury text-gold uppercase mb-6 block">06. АРХИТЕКТУРА МЕТРИК</span>
-                    <h2 class="font-serif text-3xl md:text-5xl leading-tight text-platinum mb-6 uppercase tracking-wide">
-                        Оцифровка Организма
-                    </h2>
-                    <p class="font-sans text-dim text-lg max-w-2xl mx-auto leading-relaxed">
-                        Трансформация начинается там, где заканчиваются догадки и начинаются точные данные. Инструменты основаны на клинических алгоритмах (Mifflin-St Jeor, нормализованный FFMI, индекс аллостатической нагрузки).
-                    </p>
-                    <div class="mt-6 flex items-center justify-center gap-2 text-[10px] text-gold/60 uppercase tracking-widest font-bold">
-                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        Погрешность вычислений ± 9-12%
-                    </div>
-                </div>
-
-                <div class="max-w-6xl mx-auto border border-white/10 bg-obsidian/80 backdrop-blur-md rounded-sm fade-in-up shadow-2xl relative min-h-[600px]">
-                    <!-- Табы переключения -->
-                    <div class="flex flex-col md:flex-row border-b border-white/10">
-                        <button class="calc-tab active flex-1 py-6 px-4 text-center border-b-2 border-gold text-gold font-sans text-xs md:text-sm tracking-widest uppercase transition-all duration-300 hover:bg-white/5" data-target="calc-fitness">
-                            I. Генетика (FFMI)
-                        </button>
-                        <button class="calc-tab flex-1 py-6 px-4 text-center border-b-2 border-transparent text-dim hover:text-platinum font-sans text-xs md:text-sm tracking-widest uppercase transition-all duration-300 hover:bg-white/5" data-target="calc-nutri">
-                            II. Биохимия (КБЖУ)
-                        </button>
-                        <button class="calc-tab flex-1 py-6 px-4 text-center border-b-2 border-transparent text-dim hover:text-platinum font-sans text-xs md:text-sm tracking-widest uppercase transition-all duration-300 hover:bg-white/5" data-target="calc-psycho">
-                            III. Ресурс ЦНС
-                        </button>
-                    </div>
-
-                    <!-- Контент Табов -->
-                    <div class="p-6 md:p-12 relative w-full h-full min-h-[500px]">
-
-                        <!-- 1. ФИТНЕС (FFMI) -->
-                        <div id="calc-fitness" class="calc-tab-content grid grid-cols-1 lg:grid-cols-2 gap-12 transition-opacity duration-500 opacity-100">
-                            <div id="calc-fitness-form" class="space-y-8">
-                                <div>
-                                    <h3 class="font-serif text-2xl text-platinum mb-2">Индекс генетического максимума</h3>
-                                    <p class="font-sans text-dim text-sm leading-relaxed">Расчет сухой массы (LBM) и предела роста мышц. Учитывает ваш природный соматип для максимальной точности.</p>
-                                </div>
-                                <div class="space-y-6">
-                                    <!-- Пол -->
-                                    <div>
-                                        <div class="flex gap-4">
-                                            <button class="ffmi-gender active flex-1 py-3 border border-[#3b82f6] text-[#3b82f6] shadow-[0_0_15px_rgba(59,130,246,0.3)] text-xs tracking-widest uppercase rounded-sm transition-all" data-gender="male">Мужчина</button>
-                                            <button class="ffmi-gender flex-1 py-3 border border-white/20 text-dim text-xs tracking-widest uppercase rounded-sm transition-all" data-gender="female">Женщина</button>
-                                        </div>
-                                    </div>
-                                    <!-- Соматип -->
-                                    <div>
-                                        <label class="font-sans text-xs text-dim tracking-widest uppercase block mb-3 text-center">Соматип (Костяк)</label>
-                                        <div class="flex gap-2">
-                                            <button class="ffmi-soma flex-1 py-3 border border-white/20 text-dim hover:border-white/50 hover:text-platinum text-[10px] tracking-widest uppercase rounded-sm transition-all" data-val="ecto">Эктоморф</button>
-                                            <button class="ffmi-soma active flex-1 py-3 border border-gold text-gold text-[10px] tracking-widest uppercase rounded-sm transition-all" data-val="meso">Мезоморф</button>
-                                            <button class="ffmi-soma flex-1 py-3 border border-white/20 text-dim hover:border-white/50 hover:text-platinum text-[10px] tracking-widest uppercase rounded-sm transition-all" data-val="endo">Эндоморф</button>
-                                        </div>
-                                        <p class="text-[10px] text-dim/50 text-center mt-3 font-sans leading-relaxed">
-                                            <span class="text-gold">Индекс Соловьева</span> (обхват запястья): <br>
-                                            М: &lt;17см (Экто) | 17-20см (Мезо) | &gt;20см (Эндо)<br>
-                                            Ж: &lt;15см (Экто) | 15-17см (Мезо) | &gt;17см (Эндо)
-                                        </p>
-                                    </div>
-                                    <!-- Поля ввода -->
-                                    <div class="grid grid-cols-3 gap-4 pt-4 border-t border-white/5">
-                                        <div class="flex flex-col items-center">
-                                            <label class="font-sans text-[10px] text-dim tracking-widest uppercase mb-2">Рост (см)</label>
-                                            <input type="number" id="ffmi-height" class="luxury-input-number calc-input-trigger" placeholder="180" value="180" inputmode="decimal">
-                                        </div>
-                                        <div class="flex flex-col items-center">
-                                            <label class="font-sans text-[10px] text-dim tracking-widest uppercase mb-2">Вес (кг)</label>
-                                            <input type="number" id="ffmi-weight" class="luxury-input-number calc-input-trigger" placeholder="80" value="80" step="0.1" inputmode="decimal">
-                                        </div>
-                                        <div class="flex flex-col items-center">
-                                            <label class="font-sans text-[10px] text-dim tracking-widest uppercase mb-2">Жир (%)</label>
-                                            <input type="number" id="ffmi-fat" class="luxury-input-number calc-input-trigger" placeholder="15" value="15" step="0.1" inputmode="decimal">
-                                        </div>
-                                    </div>
-                                    <p class="text-[10px] text-dim/50 text-center font-sans leading-relaxed mt-4">
-                                        * Ориентир % жира:<br>
-                                        Мужчины: 8-12% (глубокая сепарация), 13-16% (атлетичное сложение), 17-20% (сглаженный рельеф). <br>
-                                        Женщины: 16-19% (выраженный рельеф), 20-24% (фитнес-стандарт), 25-28% (норма).
-                                    </p>
-                                </div>
-                                <button onclick="runAnalysis('calc-fitness', calculateFFMI)" class="interactive w-full py-4 bg-gold/10 border border-gold text-gold font-sans text-xs font-bold tracking-[0.2em] uppercase hover:bg-gold hover:text-obsidian transition-all duration-300">Анализировать генотип</button>
-                            </div>
-
-                            <!-- Результат -->
-                            <div class="relative bg-black/40 border border-white/5 p-8 rounded-sm overflow-hidden flex flex-col justify-center min-h-[400px]">
-                                <div id="calc-fitness-wait" class="absolute inset-0 flex flex-col items-center justify-center bg-obsidian/90 z-20 transition-opacity duration-300">
-                                    <svg class="w-12 h-12 text-dim/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                                    <span class="font-sans text-[10px] text-dim/50 tracking-widest uppercase text-center leading-loose">Введите метрики <br> для формирования отчета</span>
-                                </div>
-                                <div id="calc-fitness-loading" class="hidden absolute inset-0 flex-col items-center justify-center bg-obsidian z-30">
-                                    <div class="w-full h-1 bg-white/10 absolute top-0 left-0"><div class="h-full bg-gold w-1/3 animate-scanline"></div></div>
-                                    <span class="font-sans text-xs text-gold tracking-widest uppercase animate-pulse mb-4">Cyber-Scan Active</span>
-                                    <span class="neural-text font-serif text-2xl text-platinum animate-data-flicker">0XF8A...</span>
-                                </div>
-
-                                <div id="calc-fitness-result" class="hidden flex-col justify-center h-full relative z-10 w-full">
-                                    <div class="relative w-40 h-40 mx-auto mb-8">
-                                        <svg class="w-full h-full transform -rotate-90 drop-shadow-[0_0_15px_rgba(212,175,55,0.3)]" viewBox="0 0 100 100">
-                                            <circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.05)" stroke-width="6" fill="none"></circle>
-                                            <circle id="ffmi-svg-bar" cx="50" cy="50" r="40" stroke="#D4AF37" stroke-width="6" fill="none" stroke-dasharray="251.2" stroke-dashoffset="251.2" stroke-linecap="round" class="transition-all duration-[1.5s] ease-out"></circle>
-                                        </svg>
-                                        <div class="absolute inset-0 flex flex-col items-center justify-center pt-2">
-                                            <span id="ffmi-score" class="text-4xl font-serif text-platinum leading-none">0.0</span>
-                                            <span class="text-[10px] text-gold uppercase tracking-widest mt-1">FFMI</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="flex justify-between items-end border-b border-white/10 pb-4 mb-4">
-                                        <div>
-                                            <span class="text-[9px] text-dim tracking-widest uppercase block mb-1">Сухая масса (LBM)</span>
-                                            <span id="ffmi-lbm" class="font-serif text-xl text-platinum">0 кг</span>
-                                        </div>
-                                        <div class="text-right">
-                                            <span class="text-[9px] text-dim tracking-widest uppercase block mb-1">Статус</span>
-                                            <span id="ffmi-status" class="font-sans text-sm text-gold uppercase tracking-widest font-bold">...</span>
-                                        </div>
-                                    </div>
-                                    <div id="ffmi-verdict" class="font-sans text-[13px] text-platinum/90 leading-relaxed italic border-l-2 border-gold/50 pl-4 py-2"></div>
-                                    
-                                    <div class="mt-8 text-center">
-                                        <a href="https://t.me/markovmade" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-gold uppercase tracking-[0.2em] border-b border-gold/30 pb-1 hover:text-platinum hover:border-platinum transition-colors">
-                                            Получить пошаговый план у Павла ➝
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 2. НУТРИЦИОЛОГИЯ (БЖУ) -->
-                        <div id="calc-nutri" class="calc-tab-content hidden grid-cols-1 lg:grid-cols-2 gap-12 transition-opacity duration-500 opacity-0">
-                            <div class="space-y-8">
-                                <div>
-                                    <h3 class="font-serif text-2xl text-platinum mb-2">Архитектура Метаболизма</h3>
-                                    <p class="font-sans text-dim text-sm leading-relaxed">Клиническая формула с адаптацией макронутриентов под соматип. Еда — это программный код для тела.</p>
-                                </div>
-                                <div class="grid grid-cols-2 gap-6">
-                                    <div>
-                                        <label class="font-sans text-xs text-dim tracking-widest uppercase block mb-3 text-center">Пол</label>
-                                        <div class="flex gap-2">
-                                            <button class="nutri-gender active flex-1 py-3 border border-[#3b82f6] text-[#3b82f6] shadow-[0_0_15px_rgba(59,130,246,0.3)] text-[10px] tracking-widest uppercase rounded-sm transition-all" data-gender="male">М</button>
-                                            <button class="nutri-gender flex-1 py-3 border border-white/20 text-dim text-[10px] tracking-widest uppercase rounded-sm transition-all" data-gender="female">Ж</button>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <label class="font-sans text-xs text-dim tracking-widest uppercase block mb-3 text-center">Возраст</label>
-                                        <input type="number" id="nutri-age" class="luxury-input-number calc-input-trigger w-full" placeholder="28" value="28" inputmode="numeric">
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-2 gap-6">
-                                    <div>
-                                        <label class="font-sans text-xs text-dim tracking-widest uppercase block mb-3 text-center">Рост (см)</label>
-                                        <input type="number" id="nutri-height" class="luxury-input-number calc-input-trigger w-full" placeholder="180" value="180" inputmode="decimal">
-                                    </div>
-                                    <div>
-                                        <label class="font-sans text-xs text-dim tracking-widest uppercase block mb-3 text-center">Вес (кг)</label>
-                                        <input type="number" id="nutri-weight" class="luxury-input-number calc-input-trigger w-full" placeholder="80" value="80" step="0.1" inputmode="decimal">
-                                    </div>
-                                </div>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div>
-                                        <label class="font-sans text-[10px] text-dim tracking-widest uppercase block mb-2">Активность (NEAT)</label>
-                                        <select id="nutri-activity" class="custom-select calc-input-trigger w-full bg-transparent border-b border-gold/40 py-3 text-gold font-sans text-xs outline-none cursor-pointer">
-                                            <option value="1.2" class="bg-obsidian text-platinum">Офис / Без спорта</option>
-                                            <option value="1.375" class="bg-obsidian text-platinum">Лёгкая (1-3 тренировки)</option>
-                                            <option value="1.55" selected class="bg-obsidian text-platinum">Средняя (3-5 тренировок)</option>
-                                            <option value="1.725" class="bg-obsidian text-platinum">Высокая (Ежедневно)</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label class="font-sans text-[10px] text-dim tracking-widest uppercase block mb-2 text-center">Соматип (Костяк)</label>
-                                        <div class="flex gap-2">
-                                            <button class="nutri-soma flex-1 py-3 border border-white/20 text-dim hover:border-white/50 hover:text-platinum text-[10px] tracking-widest uppercase rounded-sm transition-all" data-val="ecto">Эктоморф</button>
-                                            <button class="nutri-soma active flex-1 py-3 border border-gold text-gold text-[10px] tracking-widest uppercase rounded-sm transition-all" data-val="meso">Мезоморф</button>
-                                            <button class="nutri-soma flex-1 py-3 border border-white/20 text-dim hover:border-white/50 hover:text-platinum text-[10px] tracking-widest uppercase rounded-sm transition-all" data-val="endo">Эндоморф</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label class="font-sans text-[10px] text-dim tracking-widest uppercase block mb-3 text-center">Биохимическая Цель</label>
-                                    <div class="flex gap-2">
-                                        <button class="nutri-goal active flex-1 py-3 border border-gold text-gold text-[10px] tracking-widest uppercase rounded-sm transition-all" data-goal="cut">Рельеф (-20%)</button>
-                                        <button class="nutri-goal flex-1 py-3 border border-white/20 text-dim hover:border-white/50 hover:text-platinum text-[10px] tracking-widest uppercase rounded-sm transition-all" data-goal="maintain">Баланс (0%)</button>
-                                        <button class="nutri-goal flex-1 py-3 border border-white/20 text-dim hover:border-white/50 hover:text-platinum text-[10px] tracking-widest uppercase rounded-sm transition-all" data-goal="bulk">Масса (+15%)</button>
-                                    </div>
-                                </div>
-                                <button onclick="runAnalysis('calc-nutri', calculateNutri)" class="interactive w-full py-4 bg-gold/10 border border-gold text-gold font-sans text-xs font-bold tracking-[0.2em] uppercase hover:bg-gold hover:text-obsidian transition-all duration-300">Синтезировать протокол</button>
-                            </div>
-
-                            <!-- Результат -->
-                            <div class="relative bg-black/40 border border-white/5 p-8 rounded-sm overflow-hidden flex flex-col justify-center min-h-[400px]">
-                                <div id="calc-nutri-wait" class="absolute inset-0 flex flex-col items-center justify-center bg-obsidian/90 z-20 transition-opacity duration-300">
-                                    <svg class="w-12 h-12 text-dim/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
-                                    <span class="font-sans text-[10px] text-dim/50 tracking-widest uppercase text-center leading-loose">Введите метрики <br> для биохимического анализа</span>
-                                </div>
-                                <div id="calc-nutri-loading" class="hidden absolute inset-0 flex-col items-center justify-center bg-obsidian z-30">
-                                    <div class="w-full h-1 bg-white/10 absolute top-0 left-0"><div class="h-full bg-platinum w-1/3 animate-scanline"></div></div>
-                                    <span class="font-sans text-xs text-platinum tracking-widest uppercase animate-pulse mb-4">Bio-Scan Active</span>
-                                    <span class="neural-text font-serif text-2xl text-gold animate-data-flicker">METABOLIC...</span>
-                                </div>
-
-                                <div id="calc-nutri-result" class="hidden flex-col justify-center h-full relative z-10 w-full">
-                                    <div class="text-center mb-8">
-                                        <span class="text-[10px] text-dim uppercase tracking-[0.3em] block mb-2">Суточная Норма Энергии</span>
-                                        <div class="flex items-end justify-center gap-1">
-                                            <span id="nutri-cals" class="font-serif text-6xl text-gold leading-none">0</span>
-                                            <span class="font-sans text-dim text-sm mb-1"> Ккал</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="flex items-end justify-center h-32 gap-6 mb-6 border-b border-white/10 pb-6">
-                                        <div class="flex flex-col items-center gap-2 group w-16">
-                                            <div class="w-12 bg-white/5 relative h-full rounded-sm overflow-hidden border border-white/10 group-hover:border-platinum/50 transition-colors">
-                                                <div id="bar-p" class="absolute bottom-0 w-full bg-platinum transition-all duration-[1.5s] ease-out h-0 shadow-[0_0_10px_rgba(255,255,255,0.2)]"></div>
-                                            </div>
-                                            <span class="font-serif text-platinum text-xl leading-none mt-2" id="nutri-p">0г</span>
-                                            <span class="text-[9px] text-dim tracking-widest uppercase text-center leading-tight mt-1">Белки<br>(Мышцы)</span>
-                                        </div>
-                                        <div class="flex flex-col items-center gap-2 group w-16">
-                                            <div class="w-12 bg-white/5 relative h-full rounded-sm overflow-hidden border border-gold/20 group-hover:border-gold transition-colors">
-                                                <div id="bar-f" class="absolute bottom-0 w-full bg-gold transition-all duration-[1.5s] ease-out h-0 shadow-[0_0_10px_rgba(212,175,55,0.4)]"></div>
-                                            </div>
-                                            <span class="font-serif text-gold text-xl leading-none mt-2" id="nutri-f">0г</span>
-                                            <span class="text-[9px] text-gold tracking-widest uppercase text-center leading-tight mt-1">Жиры<br>(Гормоны)</span>
-                                        </div>
-                                        <div class="flex flex-col items-center gap-2 group w-16">
-                                            <div class="w-12 bg-white/5 relative h-full rounded-sm overflow-hidden border border-white/10 group-hover:border-dim/50 transition-colors">
-                                                <div id="bar-c" class="absolute bottom-0 w-full bg-dim transition-all duration-[1.5s] ease-out h-0"></div>
-                                            </div>
-                                            <span class="font-serif text-dim text-xl leading-none mt-2" id="nutri-c">0г</span>
-                                            <span class="text-[9px] text-dim tracking-widest uppercase text-center leading-tight mt-1">Угли<br>(Мозг/ЦНС)</span>
-                                        </div>
-                                    </div>
-                                    <div id="nutri-verdict" class="font-sans text-[13px] text-platinum/90 leading-relaxed italic border-l-2 border-gold/50 pl-4 py-2"></div>
-                                    
-                                    <div class="mt-8 text-center">
-                                        <a href="https://t.me/markovmade" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-gold uppercase tracking-[0.2em] border-b border-gold/30 pb-1 hover:text-platinum hover:border-platinum transition-colors">
-                                            Назначить менторскую сессию ➝
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 3. ПСИХОЛОГИЯ (ЦНС) -->
-                        <div id="calc-psycho" class="calc-tab-content hidden grid-cols-1 lg:grid-cols-2 gap-12 transition-opacity duration-500 opacity-0">
-                            <div class="space-y-6 flex flex-col justify-center">
-                                <div class="mb-4">
-                                    <h3 class="font-serif text-2xl text-platinum mb-2">Индекс истощения ЦНС</h3>
-                                    <p class="font-sans text-dim text-sm leading-relaxed">Оценка аллостатической нагрузки. Будьте честны. <br><strong class="text-gold">Оцените состояние от 1 до 10</strong> (где 1 — отсутствие симптома, 10 — максимум проявления).</p>
-                                </div>
-                                <div class="space-y-4 border border-white/5 bg-white/[0.01] p-6 md:p-8 rounded-sm">
-                                    <div class="flex justify-between items-center border-b border-white/5 pb-4">
-                                        <label class="font-sans text-xs text-dim tracking-widest uppercase w-2/3 leading-snug">Фоновый стресс / Тревога</label>
-                                        <input type="number" class="psycho-input luxury-input-number !w-20 !text-xl !p-2 calc-input-trigger" min="1" max="10" placeholder="1-10">
-                                    </div>
-                                    <div class="flex justify-between items-center border-b border-white/5 pb-4">
-                                        <label class="font-sans text-xs text-dim tracking-widest uppercase w-2/3 leading-snug">Просыпаюсь разбитым</label>
-                                        <input type="number" class="psycho-input luxury-input-number !w-20 !text-xl !p-2 calc-input-trigger" min="1" max="10" placeholder="1-10">
-                                    </div>
-                                    <div class="flex justify-between items-center border-b border-white/5 pb-4">
-                                        <label class="font-sans text-xs text-dim tracking-widest uppercase w-2/3 leading-snug">Потеря фокуса / Туман в голове</label>
-                                        <input type="number" class="psycho-input luxury-input-number !w-20 !text-xl !p-2 calc-input-trigger" min="1" max="10" placeholder="1-10">
-                                    </div>
-                                    <div class="flex justify-between items-center border-b border-white/5 pb-4">
-                                        <label class="font-sans text-xs text-dim tracking-widest uppercase w-2/3 leading-snug">Тяга к сахару / кофе / соцсетям</label>
-                                        <input type="number" class="psycho-input luxury-input-number !w-20 !text-xl !p-2 calc-input-trigger" min="1" max="10" placeholder="1-10">
-                                    </div>
-                                    <div class="flex justify-between items-center">
-                                        <label class="font-sans text-xs text-dim tracking-widest uppercase w-2/3 leading-snug">Апатия к любимым делам</label>
-                                        <input type="number" class="psycho-input luxury-input-number !w-20 !text-xl !p-2 calc-input-trigger" min="1" max="10" placeholder="1-10">
-                                    </div>
-                                </div>
-                                <button onclick="runAnalysis('calc-psycho', calculatePsycho)" class="interactive w-full mt-4 py-4 bg-gold/10 border border-gold text-gold font-sans text-xs font-bold tracking-[0.2em] uppercase hover:bg-gold hover:text-obsidian transition-all duration-300">Оценить Нейро-Статус</button>
-                            </div>
-
-                            <!-- Результат -->
-                            <div class="relative bg-black/40 border border-white/5 p-8 rounded-sm overflow-hidden flex flex-col justify-center min-h-[400px]">
-                                <div id="calc-psycho-wait" class="absolute inset-0 flex flex-col items-center justify-center bg-obsidian/90 z-20 transition-opacity duration-300">
-                                    <svg class="w-12 h-12 text-dim/30 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                                    <span class="font-sans text-[10px] text-dim/50 tracking-widest uppercase text-center leading-loose">Заполните метрики (1-10) <br> для оценки состояния</span>
-                                </div>
-                                <div id="calc-psycho-loading" class="hidden absolute inset-0 flex-col items-center justify-center bg-obsidian z-30">
-                                    <div class="w-full h-1 bg-white/10 absolute top-0 left-0"><div class="h-full bg-red-500 w-1/3 animate-scanline"></div></div>
-                                    <span class="font-sans text-xs text-red-500 tracking-widest uppercase animate-pulse mb-4">Neural-Scan Active</span>
-                                    <span class="neural-text font-serif text-2xl text-platinum animate-data-flicker">SYNAPSE...</span>
-                                </div>
-
-                                <div id="calc-psycho-result" class="hidden flex-col justify-center h-full relative z-10 w-full">
-                                    <div class="text-center mb-6 border-b border-white/10 pb-6">
-                                        <span class="text-[10px] text-dim uppercase tracking-[0.3em] block mb-2">Аллостатическая нагрузка (ЦНС)</span>
-                                        <div class="flex justify-center items-end gap-1">
-                                            <span id="psycho-score" class="font-serif text-7xl text-platinum leading-none transition-colors duration-1000">0</span>
-                                            <span class="font-serif text-3xl text-dim mb-1">%</span>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="text-center mb-6">
-                                        <span id="psycho-status" class="inline-block border px-6 py-2 rounded-full text-xs tracking-widest uppercase font-bold transition-colors duration-500">
-                                            —
-                                        </span>
-                                    </div>
-
-                                    <div id="psycho-protocol" class="font-sans text-[13px] text-platinum/90 leading-relaxed bg-white/5 p-6 rounded-sm border-l-2 transition-colors duration-500">
-                                        —
-                                    </div>
-                                    
-                                    <div class="mt-8 text-center">
-                                        <a href="https://t.me/markovmade" target="_blank" class="inline-flex items-center gap-2 text-xs font-bold text-gold uppercase tracking-[0.2em] border-b border-gold/30 pb-1 hover:text-platinum hover:border-platinum transition-colors">
-                                            Написать Павлу лично ➝
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- === КОНЕЦ СЕКЦИИ РАСЧЁТОВ === -->
 
         <!-- CONTACT SECTION -->
         <section id="contact" class="section-block relative w-full py-28 md:py-40 overflow-hidden contact-container" data-insight="Принятое решение — это и есть начало трансформации.">
@@ -1790,8 +1788,8 @@
         
         document.querySelectorAll('.ffmi-soma').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.ffmi-soma').forEach(b => { b.classList.replace('border-gold', 'border-white/20'); b.classList.replace('text-gold', 'text-dim'); });
-                btn.classList.replace('border-white/20', 'border-gold'); btn.classList.replace('text-dim', 'text-gold');
+                document.querySelectorAll('.ffmi-soma').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
                 ffmiSoma = btn.getAttribute('data-val');
                 updateIfVisible('calc-fitness', calculateFFMI);
             });
@@ -1919,8 +1917,8 @@
 
         document.querySelectorAll('.nutri-soma').forEach(btn => {
             btn.addEventListener('click', () => {
-                document.querySelectorAll('.nutri-soma').forEach(b => { b.classList.replace('border-gold','border-white/20'); b.classList.replace('text-gold','text-dim'); });
-                btn.classList.replace('border-white/20','border-gold'); btn.classList.replace('text-dim','text-gold');
+                document.querySelectorAll('.nutri-soma').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
                 nutriSoma = btn.getAttribute('data-val');
                 updateIfVisible('calc-nutri', calculateNutri);
             });
