@@ -5832,8 +5832,151 @@ html[lang="en"] .calc-tab,
 html[lang="en"] .section-kicker {
     letter-spacing: .12em !important;
 }
+
+
+/* === V10 LANGUAGE SWITCH FLAG BADGE + HERO GOLD EMPHASIS === */
+.lang-switch {
+    position: relative;
+    min-width: 82px;
+    padding: .58rem .86rem .58rem .58rem !important;
+    gap: .62rem !important;
+}
+.lang-switch::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgb(var(--color-gold) / .34), transparent 38%, rgb(var(--color-gold) / .18));
+    opacity: .42;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    padding: 1px;
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+}
+.lang-switch-flag {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid rgb(var(--color-gold) / .36);
+    background: radial-gradient(circle at 30% 20%, rgb(255 255 255 / .17), transparent 42%), rgb(var(--bg-obsidian) / .45);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .08), 0 8px 24px rgb(0 0 0 / .20);
+    font-size: 15px !important;
+    letter-spacing: 0;
+}
+.lang-switch-label {
+    min-width: 24px !important;
+    color: rgb(var(--color-gold));
+    font-size: 10.5px;
+    letter-spacing: .16em;
+}
+.lang-switch:hover .lang-switch-flag {
+    border-color: rgb(var(--color-gold) / .68);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .10), 0 10px 30px rgb(var(--color-gold) / .14);
+}
+.lang-switch-mobile {
+    min-width: 72px;
+    padding: .4rem .52rem .4rem .42rem !important;
+}
+.lang-switch-mobile .lang-switch-flag {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    font-size: 13px !important;
+}
+.lang-switch-menu {
+    min-width: 120px !important;
+}
+body.theme-light .lang-switch-flag {
+    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.82), transparent 48%), rgba(255,255,255,.64);
+    border-color: rgb(var(--color-gold) / .42);
+    box-shadow: 0 10px 28px rgba(46,35,20,.08), inset 0 1px 0 rgba(255,255,255,.72);
+}
+.hero-gold-emphasis {
+    position: relative;
+    display: inline-block;
+    color: rgb(var(--color-gold));
+    font-weight: 800;
+    white-space: nowrap;
+}
+.hero-gold-emphasis::after {
+    content: '';
+    position: absolute;
+    left: .03em;
+    right: .03em;
+    bottom: .02em;
+    height: .18em;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, rgb(var(--color-gold) / .52), transparent);
+    opacity: .9;
+    z-index: -1;
+}
+body.theme-light .hero-gold-emphasis {
+    color: rgb(var(--color-gold));
+}
+body.theme-soft .hero-gold-emphasis::after {
+    opacity: .55;
+}
+
 @media (max-width: 767px) {
     .lang-switch-menu { display: inline-flex; }
+}
+</style>
+
+
+
+<style id="markovmade-v11-language-flag-fix">
+/* === V11: CSS flags, so English shows EN, not GB letters in unsupported emoji environments === */
+.lang-switch-flag {
+    position: relative;
+    overflow: hidden;
+    font-size: 0 !important;
+    color: transparent !important;
+}
+.lang-switch-flag::before,
+.lang-switch-flag::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+.lang-switch-flag.lang-flag-en {
+    background:
+        linear-gradient(90deg, transparent 42%, #ffffff 42%, #ffffff 58%, transparent 58%),
+        linear-gradient(0deg, transparent 42%, #ffffff 42%, #ffffff 58%, transparent 58%),
+        linear-gradient(135deg, transparent 46%, #ffffff 46%, #ffffff 54%, transparent 54%),
+        linear-gradient(45deg, transparent 46%, #ffffff 46%, #ffffff 54%, transparent 54%),
+        #1f3f8f !important;
+}
+.lang-switch-flag.lang-flag-en::before {
+    background:
+        linear-gradient(90deg, transparent 45%, #c8102e 45%, #c8102e 55%, transparent 55%),
+        linear-gradient(0deg, transparent 45%, #c8102e 45%, #c8102e 55%, transparent 55%);
+    z-index: 2;
+}
+.lang-switch-flag.lang-flag-en::after {
+    inset: -2px;
+    background:
+        linear-gradient(135deg, transparent 48%, rgba(200,16,46,.95) 48%, rgba(200,16,46,.95) 52%, transparent 52%),
+        linear-gradient(45deg, transparent 48%, rgba(200,16,46,.95) 48%, rgba(200,16,46,.95) 52%, transparent 52%);
+    opacity: .85;
+    z-index: 1;
+}
+.lang-switch-flag.lang-flag-ru {
+    background: linear-gradient(180deg, #ffffff 0 33.333%, #1f57b8 33.333% 66.666%, #d52b1e 66.666% 100%) !important;
+}
+.lang-switch-flag.lang-flag-ru::before,
+.lang-switch-flag.lang-flag-ru::after {
+    display: none;
+}
+.lang-switch-label {
+    text-align: center;
+    color: rgb(var(--color-gold)) !important;
 }
 </style>
 
@@ -5893,7 +6036,7 @@ html[lang="en"] .section-kicker {
                     </button>
 
                     <button type="button" class="interactive lang-switch" data-lang-toggle title="Switch language" aria-label="Switch language">
-                        <span class="lang-switch-flag" aria-hidden="true">🇬🇧</span>
+                        <span class="lang-switch-flag lang-flag-en" aria-hidden="true"></span>
                         <span class="lang-switch-label">EN</span>
                     </button>
 
@@ -5916,7 +6059,7 @@ html[lang="en"] .section-kicker {
                 </button>
 
                 <button type="button" class="interactive lang-switch lang-switch-mobile" data-lang-toggle title="Switch language" aria-label="Switch language">
-                    <span class="lang-switch-flag" aria-hidden="true">🇬🇧</span>
+                    <span class="lang-switch-flag lang-flag-en" aria-hidden="true"></span>
                     <span class="lang-switch-label">EN</span>
                 </button>
                 <button id="burger-btn" class="interactive relative w-8 h-8 flex flex-col justify-center items-end gap-[5px] group" onclick="toggleMenu()" aria-label="Menu">
@@ -5936,7 +6079,7 @@ html[lang="en"] .section-kicker {
             <a href="#biography" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">IV. Эволюция</a>
             <a href="#team" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">V. Команда</a>
             <a href="#contact" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">VI. Контакты</a>
-            <button type="button" class="interactive lang-switch lang-switch-menu" data-lang-toggle title="Switch language" aria-label="Switch language"><span class="lang-switch-flag" aria-hidden="true">🇬🇧</span><span class="lang-switch-label">EN</span></button>
+            <button type="button" class="interactive lang-switch lang-switch-menu" data-lang-toggle title="Switch language" aria-label="Switch language"><span class="lang-switch-flag lang-flag-en" aria-hidden="true"></span><span class="lang-switch-label">EN</span></button>
         </nav>
     </div>
 
@@ -5992,7 +6135,7 @@ html[lang="en"] .section-kicker {
                     </h1>
 
                     <p class="fade-in-up max-w-xl text-base md:text-lg font-sans text-dim tracking-wide leading-relaxed mb-9" style="transition-delay: 160ms;">
-                        Я здесь, чтобы оставить после себя имя и поколения людей с крепкими ценностями. Каждый день проживая ради одного: помогать и быть по‑настоящему полезным.
+                        Я здесь, чтобы оставить после себя имя и поколения людей с крепкими ценностями. Каждый день проживая ради одного: <span class="hero-gold-emphasis">помогать</span> и быть по‑настоящему <span class="hero-gold-emphasis">полезным</span>.
                     </p>
 
                     <div class="fade-in-up flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-10" style="transition-delay: 240ms;">
@@ -9390,6 +9533,10 @@ html[lang="en"] .section-kicker {
   "Трансформация": "Transformation",
   "Вне Шаблонов": "Beyond Templates",
   "Я здесь, чтобы оставить после себя имя и поколения людей с крепкими ценностями. Каждый день проживая ради одного: помогать и быть по‑настоящему полезным.": "I am here to leave a name behind me and generations of people with strong values. Every day is lived for one thing: to help and to be truly useful.",
+  "Я здесь, чтобы оставить после себя имя и поколения людей с крепкими ценностями. Каждый день проживая ради одного:": "I am here to leave behind a name and generations of people with strong values. Every day is lived for one thing:",
+  "помогать": "to help",
+  "и быть по‑настоящему": "and to be truly",
+  "полезным": "useful",
   "📊 Пройти расчёт": "📊 Run the assessment",
   "🧭 Смотреть форматы": "🧭 View formats",
   "цифры вместо догадок": "numbers instead of guessing",
@@ -10038,7 +10185,11 @@ html[lang="en"] .section-kicker {
         document.querySelectorAll('[data-lang-toggle]').forEach(function(btn) {
             var flag = btn.querySelector('.lang-switch-flag');
             var label = btn.querySelector('.lang-switch-label');
-            if (flag) flag.textContent = lang === 'en' ? '🇷🇺' : '🇬🇧';
+            if (flag) {
+                flag.textContent = '';
+                flag.classList.toggle('lang-flag-ru', lang === 'en');
+                flag.classList.toggle('lang-flag-en', lang !== 'en');
+            }
             if (label) label.textContent = lang === 'en' ? 'RU' : 'EN';
             btn.setAttribute('aria-label', lang === 'en' ? 'Switch to Russian' : 'Switch to English');
             btn.setAttribute('title', lang === 'en' ? 'Switch to Russian' : 'Switch to English');
