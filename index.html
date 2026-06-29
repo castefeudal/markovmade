@@ -5766,6 +5766,77 @@ body.theme-light .contact-outcome-panel p {
 }
 </style>
 
+
+<style id="markovmade-bilingual-style">
+/* === MARKOVMADE BILINGUAL RU / EN SWITCH === */
+.lang-switch {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .55rem;
+    padding: .68rem .92rem;
+    border: 1px solid rgb(var(--color-gold) / .30);
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgb(255 255 255 / .065), rgb(255 255 255 / .025));
+    color: rgb(var(--text-platinum) / .94);
+    font-family: 'Manrope', Arial, sans-serif;
+    font-size: 10.5px;
+    line-height: 1;
+    font-weight: 950;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    box-shadow: 0 16px 45px rgb(0 0 0 / .20), inset 0 1px 0 rgb(255 255 255 / .06);
+    transition: transform .35s ease, color .35s ease, border-color .35s ease, background .35s ease, box-shadow .35s ease;
+}
+.lang-switch:hover {
+    transform: translateY(-1px);
+    color: rgb(var(--color-gold));
+    border-color: rgb(var(--color-gold) / .60);
+    background: linear-gradient(180deg, rgb(var(--color-gold) / .17), rgb(var(--color-gold) / .045));
+    box-shadow: 0 18px 52px rgb(var(--color-gold) / .12), inset 0 1px 0 rgb(255 255 255 / .08);
+}
+.lang-switch-flag {
+    font-size: 14px;
+    line-height: 1;
+    filter: saturate(.95) contrast(.98);
+}
+.lang-switch-label {
+    min-width: 20px;
+}
+.lang-switch-mobile {
+    min-height: 34px;
+    padding: .46rem .58rem;
+    gap: .35rem;
+    font-size: 9px;
+    letter-spacing: .10em;
+}
+.lang-switch-menu {
+    margin-top: .35rem;
+    min-width: 110px;
+}
+body.theme-light .lang-switch {
+    background: rgba(255,255,255,.58);
+    color: rgb(var(--text-platinum) / .88);
+    border-color: rgb(var(--color-gold) / .36);
+    box-shadow: 0 16px 42px rgba(46,35,20,.08), inset 0 1px 0 rgba(255,255,255,.55);
+}
+body.theme-light .lang-switch:hover {
+    color: rgb(var(--color-gold));
+    background: rgb(var(--color-gold) / .08);
+}
+html[lang="en"] .tracking-luxury,
+html[lang="en"] #main-header nav a,
+html[lang="en"] .premium-ribbon-item,
+html[lang="en"] .calc-tab,
+html[lang="en"] .section-kicker {
+    letter-spacing: .12em !important;
+}
+@media (max-width: 767px) {
+    .lang-switch-menu { display: inline-flex; }
+}
+</style>
+
 </head>
 
 <body class="bg-obsidian antialiased selection:bg-gold selection:text-obsidian">
@@ -5821,6 +5892,11 @@ body.theme-light .contact-outcome-panel p {
                         <span class="theme-switch-text">Тема</span>
                     </button>
 
+                    <button type="button" class="interactive lang-switch" data-lang-toggle title="Switch language" aria-label="Switch language">
+                        <span class="lang-switch-flag" aria-hidden="true">🇬🇧</span>
+                        <span class="lang-switch-label">EN</span>
+                    </button>
+
                     <a href="#contact" class="interactive group relative px-6 py-2 border border-gold/30 rounded-sm text-[10px] font-sans tracking-luxury uppercase text-platinum overflow-hidden transition-all duration-500 hover:shadow-[0_0_25px_rgb(var(--color-gold)/0.3)]">
                         <span class="absolute inset-0 bg-gold translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out -z-10"></span>
                         <span class="relative z-10 flex items-center gap-2 group-hover:text-obsidian transition-colors duration-500">
@@ -5837,6 +5913,11 @@ body.theme-light .contact-outcome-panel p {
                 <button onclick="toggleTheme()" class="interactive theme-switch theme-switch-mobile" title="Сменить тему" aria-label="Сменить тему: тёмная или светлая">
                     <span class="theme-switch-icon" aria-hidden="true"></span>
                     <span class="sr-only">Сменить тему</span>
+                </button>
+
+                <button type="button" class="interactive lang-switch lang-switch-mobile" data-lang-toggle title="Switch language" aria-label="Switch language">
+                    <span class="lang-switch-flag" aria-hidden="true">🇬🇧</span>
+                    <span class="lang-switch-label">EN</span>
                 </button>
                 <button id="burger-btn" class="interactive relative w-8 h-8 flex flex-col justify-center items-end gap-[5px] group" onclick="toggleMenu()" aria-label="Menu">
                     <span class="w-6 h-[1px] bg-platinum transition-all group-hover:w-4 group-hover:bg-gold"></span>
@@ -5855,6 +5936,7 @@ body.theme-light .contact-outcome-panel p {
             <a href="#biography" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">IV. Эволюция</a>
             <a href="#team" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">V. Команда</a>
             <a href="#contact" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">VI. Контакты</a>
+            <button type="button" class="interactive lang-switch lang-switch-menu" data-lang-toggle title="Switch language" aria-label="Switch language"><span class="lang-switch-flag" aria-hidden="true">🇬🇧</span><span class="lang-switch-label">EN</span></button>
         </nav>
     </div>
 
@@ -9283,6 +9365,732 @@ body.theme-light .contact-outcome-panel p {
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initLogoFallback, { once: true });
     else initLogoFallback();
+})();
+</script>
+
+
+<script id="markovmade-bilingual-script">
+(function() {
+    'use strict';
+    var DICT = {
+  "Плавающая кнопка связи": "Floating contact button",
+  "От души, душевно": "From the soul, with soul",
+  "В ДУШУ": "STRAIGHT TO THE CORE",
+  "Я тут. Сейчас. С Вами.": "I am here. Now. With you.",
+  "I. Расчёт": "I. Assessment",
+  "II. Услуги": "II. Services",
+  "III. Обо мне": "III. About me",
+  "IV. Эволюция": "IV. Evolution",
+  "V. Команда": "V. Team",
+  "VI. Контакты": "VI. Contacts",
+  "Тема": "Theme",
+  "Контакты": "Contacts",
+  "Сменить тему": "Switch theme",
+  "👑 MARKOVMADE / ТЕЛО / МЫШЛЕНИЕ / СИСТЕМА": "👑 MARKOVMADE / BODY / MINDSET / SYSTEM",
+  "Трансформация": "Transformation",
+  "Вне Шаблонов": "Beyond Templates",
+  "Я здесь, чтобы оставить после себя имя и поколения людей с крепкими ценностями. Каждый день проживая ради одного: помогать и быть по‑настоящему полезным.": "I am here to leave a name behind me and generations of people with strong values. Every day is lived for one thing: to help and to be truly useful.",
+  "📊 Пройти расчёт": "📊 Run the assessment",
+  "🧭 Смотреть форматы": "🧭 View formats",
+  "цифры вместо догадок": "numbers instead of guessing",
+  "стратегия без хаоса": "strategy without chaos",
+  "личный разбор": "personal audit",
+  "«Сначала точка А. Потом система. Потом результат, который можно повторять».": "“First, point A. Then the system. Then a result you can repeat.”",
+  "листай к расчёту": "scroll to assessment",
+  "Прогресс": "Progress",
+  "через цифры": "through numbers",
+  "Тело": "Body",
+  "без хаоса": "without chaos",
+  "Питание": "Nutrition",
+  "без гадания": "without guessing",
+  "Дисциплина": "Discipline",
+  "без насилия над собой": "without self-violence",
+  "📊 Реальная": "📊 Real",
+  "польза": "value",
+  "для каждого": "for everyone",
+  "🧭 Сначала": "🧭 First",
+  "расчёт": "assessment",
+  "— потом стратегия": "— then strategy",
+  "КАСТА ФЕОДАЛОВ": "CASTE OF FEUDALS",
+  "CALCULATORS / РАСЧЁТ": "CALCULATORS / ASSESSMENT",
+  "01. РАСЧЁТ": "01. ASSESSMENT",
+  "Оцифровка организма": "Body digitization",
+  "Калькулятор — не игрушка с цифрами, а премиальная точка входа: он быстро показывает состав тела, питание, восстановление, темп прогресса и формат работы, который логичен именно под вашу ситуацию.": "The calculator is not a toy with numbers. It is a premium entry point: it quickly shows body composition, nutrition, recovery, progress speed, and the work format that fits your situation.",
+  "точка А": "point A",
+  "стратегия": "strategy",
+  "БЖУ": "macros",
+  "восстановление": "recovery",
+  "формат работы": "work format",
+  "Ориентировочная модель. Не медицинская диагностика.": "Indicative model. Not a medical diagnosis.",
+  "Композиция тела": "Body composition",
+  "стратегия FFMI и LBM": "FFMI and LBM strategy",
+  "Калории / БЖУ": "Calories / Macros",
+  "питание под контроль": "nutrition under control",
+  "Восстановление": "Recovery",
+  "сон, стресс и ЦНС": "sleep, stress and CNS",
+  "динамика результата": "result dynamics",
+  "Подбор формата": "Format selection",
+  "следующий шаг без хаоса": "next step without chaos",
+  "Композиция тела / FFMI / LBM": "Body composition / FFMI / LBM",
+  "Расчёт сухой массы, жировой массы, FFMI, normalized FFMI и ближайшей стратегии. Базовая модель работает сразу, экспертные поля повышают точность.": "Calculation of lean mass, fat mass, FFMI, normalized FFMI, and the nearest strategy. The basic model works immediately; expert fields improve accuracy.",
+  "Пол": "Sex",
+  "Мужчина": "Male",
+  "Женщина": "Female",
+  "Возраст": "Age",
+  "Рост, см": "Height, cm",
+  "Вес, кг": "Weight, kg",
+  "Процент жира, %": "Body fat, %",
+  "Если не знаете процент жира — оставьте пустым и заполните талию, шею и бёдра ниже. Тогда сайт попробует оценить процент жира автоматически.": "If you do not know your body fat percentage, leave it empty and fill in waist, neck, and hips below. The site will estimate it automatically.",
+  "Уровень подготовки": "Training level",
+  "Новичок": "Beginner",
+  "Средний": "Intermediate",
+  "Продвинутый": "Advanced",
+  "Спортсмен": "Athlete",
+  "Цель": "Goal",
+  "Похудение": "Fat loss",
+  "Рекомпозиция": "Recomposition",
+  "Набор": "Muscle gain",
+  "Поддержание": "Maintenance",
+  "Уточнение процента жира": "Body fat refinement",
+  "Необязательно. Влияет на расчёт только если % жира не указан.": "Optional. Affects the calculation only if body fat % is not entered.",
+  "Талия, см": "Waist, cm",
+  "Нужно для примерной оценки процента жира.": "Needed for an approximate body fat estimate.",
+  "Шея, см": "Neck, cm",
+  "Вместе с талией помогает оценить состав тела.": "Together with waist, it helps estimate body composition.",
+  "Бёдра, см": "Hips, cm",
+  "Критично для расчёта у женщин. Для мужчин можно оставить пустым.": "Important for female calculation. Men can leave it empty.",
+  "Рассчитать композицию тела": "Calculate body composition",
+  "Результат": "Result",
+  "Точность модели: базовая": "Model accuracy: basic",
+  "Сухая масса": "Lean mass",
+  "Жировая масса": "Fat mass",
+  "Индекс уверенности": "Confidence index",
+  "Статус формы:": "Form status:",
+  "Сильная сторона:": "Strong side:",
+  "Слабое место:": "Weak point:",
+  "Ближайшая стратегия:": "Nearest strategy:",
+  "Цифры — это только точка входа. Главная ценность начинается там, где расчёт превращается в систему действий.": "Numbers are only the entry point. The real value begins when calculation becomes an action system.",
+  "Скопировать результат": "Copy result",
+  "Отправить результат в Telegram": "Send result to Telegram",
+  "Получить разбор у Павла": "Get Pavel’s audit",
+  "Расчёт не является медицинской диагностикой. Это ориентировочная модель для понимания точки А и выбора стратегии.": "This calculation is not a medical diagnosis. It is an indicative model for understanding point A and choosing a strategy.",
+  "Калории / БЖУ / TDEE": "Calories / Macros / TDEE",
+  "Mifflin–St Jeor как база, Katch–McArdle при известном проценте жира, корректировка по активности, шагам, тренировкам и цели.": "Mifflin–St Jeor as the base, Katch–McArdle when body fat is known, adjusted by activity, steps, training, and goal.",
+  "Активность": "Activity",
+  "Минимальная": "Minimal",
+  "Лёгкая": "Light",
+  "Средняя": "Moderate",
+  "Высокая": "High",
+  "Очень высокая": "Very high",
+  "Тренировки в неделю": "Workouts per week",
+  "Экспертные настройки": "Expert settings",
+  "Необязательно. Нужны для более точного расчёта.": "Optional. Used for a more accurate calculation.",
+  "Шаги / день": "Steps / day",
+  "Силовые / неделя": "Strength / week",
+  "Длительность силовой, мин": "Strength duration, min",
+  "Кардио / неделя": "Cardio / week",
+  "Длительность кардио, мин": "Cardio duration, min",
+  "Тип работы": "Work type",
+  "Сидячая": "Sedentary",
+  "Смешанная": "Mixed",
+  "Активная": "Active",
+  "Скорость цели": "Goal speed",
+  "Мягко": "Soft",
+  "Стандартно": "Standard",
+  "Агрессивно": "Aggressive",
+  "Предпочтение": "Preference",
+  "Больше углеводов": "More carbs",
+  "Сбалансированно": "Balanced",
+  "Ниже углеводы": "Lower carbs",
+  "Белок считать": "Protein based on",
+  "По весу": "By body weight",
+  "По сухой массе": "By lean mass",
+  "День": "Day",
+  "Тренировочный": "Training",
+  "День отдыха": "Rest day",
+  "Рассчитать КБЖУ": "Calculate macros",
+  "Целевые калории": "Target calories",
+  "Белки": "Protein",
+  "Жиры": "Fats",
+  "Углеводы": "Carbs",
+  "Точность модели": "Model accuracy",
+  "Тренировочный день:": "Training day:",
+  "День отдыха:": "Rest day:",
+  "Контроль:": "Control:",
+  "Расчёт не является медицинской диагностикой. Корректируйте план по динамике веса, талии, силовых, сна и самочувствия.": "This calculation is not a medical diagnosis. Adjust the plan based on weight trend, waist, strength, sleep, and well-being.",
+  "Индекс восстановления": "Recovery index",
+  "Мягкая модель оценки ресурса: сон, энергия, стресс, концентрация, тренировки, дефицит и рабочая нагрузка. Это не диагностика и не замена врачу.": "A soft model for assessing resources: sleep, energy, stress, focus, training, deficit, and workload. Not a diagnosis and not a substitute for a doctor.",
+  "Сон 1–10": "Sleep 1–10",
+  "Энергия 1–10": "Energy 1–10",
+  "Мотивация 1–10": "Motivation 1–10",
+  "Стресс 1–10": "Stress 1–10",
+  "Раздражительность 1–10": "Irritability 1–10",
+  "Желание тренироваться 1–10": "Desire to train 1–10",
+  "Мышечная болезненность 1–10": "Muscle soreness 1–10",
+  "Концентрация 1–10": "Focus 1–10",
+  "Аппетит 1–10": "Appetite 1–10",
+  "Самочувствие 1–10": "Well-being 1–10",
+  "Часы сна": "Sleep hours",
+  "Качество сна 1–10": "Sleep quality 1–10",
+  "Кофеин после 16:00": "Caffeine after 4 PM",
+  "Нет": "No",
+  "Да": "Yes",
+  "Тренировок за 7 дней": "Workouts in 7 days",
+  "Отказной тренинг": "Failure training",
+  "Пульс покоя": "Resting heart rate",
+  "Шаги": "Steps",
+  "Кардио": "Cardio",
+  "Дефицит калорий": "Calorie deficit",
+  "Жёсткий": "Hard",
+  "Рабочая нагрузка": "Workload",
+  "Низкая": "Low",
+  "Рассчитать восстановление": "Calculate recovery",
+  "Ресурс": "Resource",
+  "Ресурсно": "Resourced",
+  "Адаптация": "Adaptation",
+  "Перегруз": "Overload",
+  "Тренировка сегодня:": "Training today:",
+  "Кардио:": "Cardio:",
+  "Сон:": "Sleep:",
+  "Питание:": "Nutrition:",
+  "Получить персональный разбор": "Get a personal audit",
+  "Индекс восстановления — ориентировочная модель самонаблюдения, а не медицинская диагностика.": "Recovery index is an indicative self-observation model, not a medical diagnosis.",
+  "Прогресс через цифры": "Progress through numbers",
+  "Калькулятор показывает, как маленькие регулярные действия превращаются в накопленный результат: в финансах, бизнесе, контенте, навыках и дисциплине.": "The calculator shows how small regular actions turn into cumulative results: in finances, business, content, skills, and discipline.",
+  "Режим": "Mode",
+  "Финансы": "Finance",
+  "Бизнес": "Business",
+  "Контент": "Content",
+  "Навык": "Skill",
+  "Стартовая сумма": "Starting amount",
+  "Пополнение в месяц": "Monthly addition",
+  "Срок": "Term",
+  "Для финансов — в годах. Для навыков/контента — в месяцах.": "For finance — in years. For skills/content — in months.",
+  "Качество выполнения, %": "Execution quality, %",
+  "Регулярность, %": "Regularity, %",
+  "Показать накопление": "Show accumulation",
+  "Накопленный эффект": "Accumulated effect",
+  "модель: базовая": "model: basic",
+  "Итог": "Total",
+  "Чистый прирост": "Net growth",
+  "Множитель": "Multiplier",
+  "Хаос": "Chaos",
+  "Система": "System",
+  "Рычаг": "Leverage",
+  "Смысл:": "Meaning:",
+  "Стратегия:": "Strategy:",
+  "Риск:": "Risk:",
+  "Маленькое действие не впечатляет в моменте. Но система, повторённая достаточно долго, становится капиталом.": "A small action does not impress in the moment. But a system repeated long enough becomes capital.",
+  "Разобрать мой прогресс": "Audit my progress",
+  "Модель показывает ориентировочный накопительный эффект и не гарантирует доход, рост аудитории или конкретный результат.": "The model shows an approximate cumulative effect and does not guarantee income, audience growth, or a specific result.",
+  "Подбор формата работы": "Work format selection",
+  "Быстрая навигация: кто вы, какая цель, что сейчас мешает и насколько вы готовы включиться в систему.": "Quick navigation: who you are, your goal, what blocks you now, and how ready you are to enter the system.",
+  "Кто ты?": "Who are you?",
+  "Эксперт / предприниматель": "Expert / entrepreneur",
+  "Начинаю с нуля": "Starting from zero",
+  "Главная цель": "Main goal",
+  "Похудеть и собрать питание": "Lose fat and structure nutrition",
+  "Набрать форму и силу": "Build shape and strength",
+  "Рекомпозиция тела": "Body recomposition",
+  "Дисциплина / мышление": "Discipline / mindset",
+  "Личный бренд / контент": "Personal brand / content",
+  "Главная проблема": "Main problem",
+  "Вес стоит": "Weight is stuck",
+  "Нет системы": "No system",
+  "Срывы и откаты": "Breakdowns and setbacks",
+  "Мало энергии": "Low energy",
+  "Нет роста / масштаба": "No growth / scale",
+  "Готовность": "Readiness",
+  "Готов начать сейчас": "Ready to start now",
+  "Нужна неделя на решение": "Need a week to decide",
+  "Хочу мягкий старт": "I want a soft start",
+  "Пока хочу понять формат": "I want to understand the format first",
+  "Подобрать формат": "Select format",
+  "Рекомендация": "Recommendation",
+  "Формат входа": "Entry format",
+  "модель: расширенная": "model: advanced",
+  "Формат": "Format",
+  "Фокус": "Focus",
+  "Старт": "Start",
+  "Почему:": "Why:",
+  "Первый шаг:": "First step:",
+  "Что отправить:": "What to send:",
+  "Правильный формат экономит время. Не всем нужен жёсткий режим — иногда человеку сначала нужна ясная точка входа.": "The right format saves time. Not everyone needs a strict regimen — sometimes a person first needs a clear entry point.",
+  "Скопировать": "Copy",
+  "Отправить заявку": "Send request",
+  "Подбор формата — предварительная навигация, финальное решение зависит от целей, режима, здоровья, питания и готовности к работе.": "Format selection is preliminary navigation; the final decision depends on goals, routine, health, nutrition, and readiness to work.",
+  "02. УСЛУГИ": "02. SERVICES",
+  "Форматы работы": "Work formats",
+  "За годы в большом спорте, глубокой теоретической и практической базой я прошел через всё: от жестких падений до триумфов. Сегодня я передаю этот опыт вам не просто через упражнения, а через": "Through years in high-level sport and deep theoretical and practical work, I went through everything: from hard falls to victories. Today I pass this experience to you not just through exercises, but through a",
+  "систему трансформации,": "transformation system,",
+  "которая меняет": "that changes",
+  "тело, мышление и качество жизни.": "the body, mindset, and quality of life.",
+  "Гарантия результата": "Result guarantee",
+  "Гарантия здесь — не про чудеса и случайные цифры. Это гарантия": "This guarantee is not about miracles or random numbers. It is a guarantee of",
+  "системы, контроля и корректировок:": "system, control, and adjustments:",
+  "мы фиксируем точку А, отслеживаем динамику и правим питание, тренировки, режим и мышление по факту, чтобы путь к результату был понятным, измеримым и управляемым.": "we define point A, track dynamics, and adjust nutrition, training, routine, and mindset based on facts, so the path to the result is clear, measurable, and manageable.",
+  "💪 Архитектура Мужской Силы": "💪 Architecture of Male Strength",
+  "Построение тела, которое вызывает уважение без слов. Силовой и функциональный тренинг. Питание. Работа с мышлением.": "Building a body that earns respect without words. Strength and functional training. Nutrition. Mindset work.",
+  "Форма мальчика — не значит Мужчина. Пора менять содержание.": "A boy’s shape does not make a Man. It is time to change the substance.",
+  "Высокая густонаселенность планеты породила жесткую конкуренцию.": "A densely populated world has created fierce competition.",
+  "Как быть? ВЫДЕЛЯТЬСЯ.": "What to do? STAND OUT.",
+  "Я дам тебе": "I will give you",
+  "пошаговую систему": "a step-by-step system",
+  ", которую сам прошел от и до, чтобы ты избежал ошибок и": "that I went through myself from start to finish, so you avoid mistakes and",
+  "забрал свое право на силу": "claim your right to strength",
+  "Построишь эстетичное тело, которое вызывает уважение.": "Build an aesthetic body that earns respect.",
+  "Станешь магнитом для женщин и возможностей.": "Become a magnet for women and opportunities.",
+  "Получишь уверенность, которая базируется на реальной силе.": "Gain confidence based on real strength.",
+  "Системный подход": "Systematic approach",
+  "\"Раньше я думал, что кубики пресса — это для моделей. Оказалось, это вопрос правильных настроек организма. С Павлом мы": "“I used to think abs were for models. It turned out to be a matter of properly setting up the body. With Pavel, we",
+  "выстроили систему питания и нагрузок": "built a nutrition and training system",
+  "под мой график.\"": "around my schedule.”",
+  "— Антон Королев, 34 года, Предприниматель": "— Anton Korolev, 34, Entrepreneur",
+  "Начать трансформацию": "Start transformation",
+  "✨ Скульптура Тела & Женственность": "✨ Body Sculpture & Femininity",
+  "Умный подход к стройности. Работа с анализами, циклом и качеством тела без изнурительных диет и вечных срывов.": "A smart approach to leanness. Lab work, cycle awareness, and body quality without exhausting diets and endless breakdowns.",
+  "Тело — это улика. Хватит себя прятать.": "The body is evidence. Stop hiding yourself.",
+  "Многие девушки годами ходят по замкнутому кругу: диета — срыв — вина. Это происходит не потому, что тебе не хватает силы воли, а потому, что у тебя нет системы. Я предлагаю": "Many women spend years in the same loop: diet — breakdown — guilt. Not because they lack willpower, but because they lack a system. I offer a",
+  "научный подход": "scientific approach",
+  "Проверка гормонального фона и учет цикла.": "Hormonal check and cycle-aware planning.",
+  "Комфортная диета (БЖУ) без голодовок.": "Comfortable macros without starvation.",
+  "Тело, которое хочется любить и баловать.": "A body you want to love and take care of.",
+  "Индивидуальный подход": "Individual approach",
+  "\"Индивидуальный подход изменил всё:": "“The individual approach changed everything:",
+  "ушли отеки, а ягодицы и спина наконец-то обрели объём": "the swelling went away, and my glutes and back finally gained shape",
+  ". Я впервые чувствую себя не просто стройной, а": ". For the first time, I feel not just slim, but",
+  "по-настоящему атлетичной и сексуальной": "truly athletic and feminine",
+  "— Алина Измайлова, 29 лет": "— Alina Izmailova, 29",
+  "Вернуть себе - себя": "Return to yourself",
+  "🥗 Клиническая Нутрициология": "🥗 Clinical Nutrition",
+  "Биохимия вашей продуктивности. Коррекция дефицитов, чистая кожа и энергия через питание, а не таблетки.": "The biochemistry of your productivity. Correcting deficiencies, clearer skin, and energy through nutrition, not pills.",
+  "Ваше меню — это рецепт здоровья или история болезни?": "Is your menu a recipe for health or a medical history?",
+  "Годы очной практики": "Years of in-person practice",
+  "диетологом и работа с": "as a dietitian and work with",
+  "эндокринологией": "endocrinology",
+  "научили меня одному: тело не умеет врать. Я анализирую": "taught me one thing: the body does not lie. I analyze",
+  "биохимию вашей крови": "your blood biochemistry",
+  ". Еда — это либо ваше лекарство, либо ваш медленный яд.": ". Food is either your medicine or your slow poison.",
+  "Коррекция дефицитов и восстановление энергии.": "Deficiency correction and energy restoration.",
+  "Улучшение качества кожи, сна и либидо.": "Better skin quality, sleep, and libido.",
+  "Понимание своего организма на всю жизнь.": "Understanding your body for life.",
+  "Данные и питание": "Data and nutrition",
+  "\"Когда закрыли дефициты,": "“When we closed the deficiencies,",
+  "тело буквально «сдулось»: ушли вечные отеки и тяжесть": "the body literally deflated: constant swelling and heaviness disappeared",
+  ", проявился рельеф. Я наконец-то": "and definition appeared. I finally",
+  "чувствую себя здоровой и живой": "feel healthy and alive",
+  "— Полина Старцева, 37 лет": "— Polina Startseva, 37",
+  "Получить инструкцию к своему телу": "Get your body’s instruction manual",
+  "🧠 Психология & Менторство": "🧠 Psychology & Mentorship",
+  "Честный диалог для сильных решений. Выход из эмоционального тупика и кризисов к масштабу личности и ясности целей.": "Honest dialogue for strong decisions. A way out of emotional dead ends and crises toward personal scale and clarity of goals.",
+  "Хватит быть удобным. Стань эффективным": "Stop being convenient. Become effective.",
+  "Я не учу по книжкам. Я прошел через всё: потерю бизнеса, зависимости и черную депрессию. Я знаю, как": "I do not teach from books. I went through business loss, dependencies, and black depression. I know how to",
+  "превратить себя в личность": "turn yourself into a personality",
+  ", с которой считаются. Мой метод —": "that people take seriously. My method is",
+  "честный диалог": "honest dialogue",
+  "без лишнего шума.": "without unnecessary noise.",
+  "Отношения полов (М/Ж).": "Male/female relationships.",
+  "Поиск предназначения.": "Finding purpose.",
+  "Борьба с зависимостями.": "Fighting dependencies.",
+  "Сепарация от родителей.": "Separation from parents.",
+  "Развитие харизмы.": "Charisma development.",
+  "Духовный рост.": "Spiritual growth.",
+  "100% Конфиденциально": "100% Confidential",
+  "\"Мы не просто поговорили, мы": "“We did not just talk — we",
+  "перепрошили мои установки": "rewired my inner settings",
+  ". Самое удивительное, что вместе со спокойствием": ". The most surprising thing is that along with calmness",
+  "вернулся вкус к жизни": "my taste for life returned",
+  ": я снова начала рисовать и": "I started drawing again and",
+  "нашла силы на новый рывок": "found strength for a new leap",
+  "— Светлана, 31 год": "— Svetlana, 31",
+  "Измениться к лучшему": "Change for the better",
+  "03. ЛОГИКА ПУТИ": "03. PATH LOGIC",
+  "Не мотивация. А маршрут, который выдерживает реальную жизнь.": "Not motivation. A route that withstands real life.",
+  "Сначала мы не «начинаем с понедельника», а честно фиксируем точку А: тело, питание, режим, энергию, ограничения, мышление и главный тормоз. Потом собираем систему действий, где понятно, что делать сегодня, что отслеживать каждую неделю и где корректировать курс, если жизнь снова вмешалась в план.": "First, we do not “start on Monday.” We honestly define point A: body, nutrition, routine, energy, limitations, mindset, and the main brake. Then we build an action system where it is clear what to do today, what to track weekly, and where to adjust the course when life interferes again.",
+  "Диагностика": "Diagnostics",
+  "Сначала фиксируем реальную точку А: тело, питание, мышление, цель, ограничения, жизненную траекторию и то, что мешает результату прямо сейчас.": "First, we define the real point A: body, nutrition, mindset, goal, limitations, life trajectory, and what blocks the result right now.",
+  "живой разбор точки А": "live point A audit",
+  "тело, питание, мышление, цель, ограничения": "body, nutrition, mindset, goal, limitations",
+  "коррекция траектории жизни": "life trajectory correction",
+  "решения, режим, ограничения, энергия, приоритеты и следующий шаг без самообмана": "decisions, routine, limitations, energy, priorities, and the next step without self-deception",
+  "честная обратная связь": "honest feedback",
+  "без шаблонов, иллюзий и пустой мотивации": "without templates, illusions, and empty motivation",
+  "план первых действий": "first action plan",
+  "что делать сразу после встречи": "what to do immediately after the meeting",
+  "После диагностики цель переводится в рабочую систему: приложение, недельный маршрут, контроль питания и понятные корректировки под вашу реальную жизнь.": "After diagnostics, the goal becomes a working system: an app, a weekly route, nutrition control, and clear adjustments for your real life.",
+  "персональное приложение": "personal app",
+  "план, питание, задачи, отчёты и динамика в одном месте": "plan, nutrition, tasks, reports, and dynamics in one place",
+  "недельный маршрут": "weekly route",
+  "что делать, когда тренироваться, что отслеживать": "what to do, when to train, what to track",
+  "контроль питания и формы": "nutrition and form control",
+  "цифры, фото, замеры, самочувствие, прогресс": "numbers, photos, measurements, well-being, progress",
+  "корректировки под жизнь": "adjustments for real life",
+  "работа, сон, стресс, срывы, поездки, ограничения": "work, sleep, stress, breakdowns, travel, limitations",
+  "Сопровождение": "Support",
+  "Дальше система держится на обратной связи: не ломаем человека под идеальный график, а адаптируем план под реальность и возвращаем курс после откатов.": "Then the system is held by feedback: we do not break a person into an ideal schedule; we adapt the plan to reality and restore direction after setbacks.",
+  "приоритеты без хаоса": "priorities without chaos",
+  "что важно сейчас, а что только ворует ресурс": "what matters now and what only drains resources",
+  "система под режим": "system around your routine",
+  "без копирования чужой жизни и чужого графика": "without copying someone else’s life and schedule",
+  "адаптация по ходу": "adaptation along the way",
+  "план меняется вместе с реальностью, а не ломается от неё": "the plan changes with reality instead of breaking from it",
+  "мышление и дисциплина": "mindset and discipline",
+  "опора, решения и возврат в систему после отката": "support, decisions, and return to the system after a setback",
+  "ясная точка А": "clear point A",
+  "план без догадок": "plan without guessing",
+  "мышление под результат": "mindset for the result",
+  "корректировки по факту": "adjustments based on facts",
+  "Твои шрамы станут главным капиталом,": "Your scars will become your main capital,",
+  "если решишься превратить свой путь в историю.": "if you decide to turn your path into a story.",
+  "Я ломаю стереотип о том, что обстоятельства сильнее человека. Моя трансформация — это 16 лет пути: от большой футбольной мечты в 13 до оглушительного кризиса. Цифры на счетах превратились в нули, а активы — в пыль. Мое перерождение началось в Китае. Не с триумфа, а с признания:": "I break the stereotype that circumstances are stronger than a person. My transformation is a 16-year path: from a big football dream at 13 to a crushing crisis. Numbers in accounts turned to zero, assets to dust. My rebirth began in China. Not with triumph, but with an admission:",
+  "«Я больше не тот, кем был».": "“I am no longer who I used to be.”",
+  "Я знаю вкус предательства и тяжелую тишину депрессии —": "I know the taste of betrayal and the heavy silence of depression —",
+  "когда боишься проверить телефон, но еще больше боишься, что он так и будет молчать неделями.": "when you are afraid to check your phone, but even more afraid that it will stay silent for weeks.",
+  "Пройдя через это, я научился видеть": "Going through this taught me to see",
+  "фундамент, а не обложку": "the foundation, not the cover",
+  "Сегодня": "Today",
+  "— это не про картинки. Это про смыслы. Я беру ваш опыт — со всеми ошибками и провалами — и превращаю его в": "is not about pictures. It is about meaning. I take your experience — with all mistakes and failures — and turn it into",
+  "твердую опору": "solid support",
+  ". В то, что невозможно отобрать или разрушить.": ". Into something that cannot be taken away or destroyed.",
+  "опыт": "experience",
+  "система": "system",
+  "опора": "support",
+  "Моя цель": "My goal",
+  "Выжигать": "Burn out",
+  "иллюзии, чтобы на их месте строить смыслы": "illusions, so meaning can be built in their place",
+  "Моё предназначение": "My purpose",
+  "Дать": "Give",
+  "твердую почву тем, кому тесно в рамках обыденности": "solid ground to those who feel cramped inside the ordinary",
+  "Начать свою историю": "Start your story",
+  "04. ПУТЬ": "04. PATH",
+  "Эволюция": "Evolution",
+  "лет пути": "years of path",
+  "этапов": "stages",
+  "За каждым расчётом здесь стоит не шаблон, а путь, где спорт, кризисы, дисциплина, тело и характер пришлось собирать заново. Это не биография ради биографии — это фундамент метода MARKOVMADE: система, которая работает не в идеальных условиях, а в реальной жизни человека.": "Behind every calculation here is not a template, but a path where sport, crisis, discipline, body, and character had to be rebuilt from scratch. This is not biography for biography’s sake — it is the foundation of the MARKOVMADE method: a system that works not in ideal conditions, but in real human life.",
+  "Закалка": "Tempering",
+  "Рождение Мафии": "Birth of the Mafia",
+  "Путь начался не с поддержки, а с вызова. В 13 — первый бизнес на дропшиппинге и создание ЗОЖ-движения в поселке. В 14 — профессиональный футбол и вызов в сборную, который обернулся жестким уроком: травля, коррупция и травма закрыли двери в большой спорт. Но именно это «непризнание» сверстниками заставило уйти в глубокое саморазвитие. Зал стал храмом, а личный бренд Young Athlete — манифестом силы. Так родилась Markov Made Mafia.": "The path began not with support, but with a challenge. At 13 — a first dropshipping business and a healthy-lifestyle movement in a small town. At 14 — professional football and a national team call-up that turned into a harsh lesson: bullying, corruption, and injury closed the doors to big sport. But that lack of recognition by peers forced a deep turn into self-development. The gym became a temple, and the Young Athlete personal brand became a manifesto of strength. That is how Markov Made Mafia was born.",
+  "Экспансия": "Expansion",
+  "Взлет и Признание": "Rise and Recognition",
+  "Жажда масштаба. Время проверки амбиций на прочность. Победы в бодибилдинге, переезд в Петербург в 18 лет и работа в крупнейшей сети Sport Life. Исследование жизни во всех проявлениях: от медицины и маркетинга до участия в «Дом-2». Запуск стоматологической клиники и кальянного бизнеса. В 20 лет — пик медийности, накопления в 5.5 млн и ощущение, что мир принадлежит тебе. Но это была лишь подготовка к главному экзамену.": "A hunger for scale. A time when ambition was tested. Bodybuilding victories, moving to Saint Petersburg at 18, and working at the largest Sport Life network. Exploring life in all its forms: from medicine and marketing to appearing on Dom-2. Launching a dental clinic and a hookah business. At 20 — peak media visibility, 5.5 million in savings, and the feeling that the world belongs to you. But it was only preparation for the main exam.",
+  "Точка Ноль": "Point Zero",
+  "Перерождение": "Rebirth",
+  "Момент, когда рушится всё. Предательство близкого друга и партнера оставило с долгами в 1.5 млн и разбитыми смыслами. Продажа всех активов, уход из соцсетей и тяжелая депрессия. Выходом стал тотальный побег — переезд в Китай. Год в другой культуре, изучение языка, модельные контракты и призовые места на международных турнирах стали духовным монастырем, где личность была собрана заново из осколков.": "The moment when everything collapses. A close friend and partner’s betrayal left me with 1.5 million in debt and broken meaning. Selling all assets, leaving social media, and a severe depression. The way out became a total escape — moving to China. A year in another culture, language study, modeling contracts, and prize placements at international tournaments became a spiritual monastery where the personality was rebuilt from fragments.",
+  "Мастерство": "Mastery",
+  "Архитектура Смыслов": "Architecture of Meaning",
+  "Возвращение в Россию с новым фундаментом. Запуск агентства BrandYouMade и погружение в психологию, продажи и маркетинг. От руководящих постов в недвижимости Сочи до выступления на BlockChain Life перед 12 000 человек. Это период синтеза: когда умение вести переговоры и управлять персоналом соединилось с глубоким пониманием человеческой природы и маркетинга.": "Returning to Russia with a new foundation. Launching the BrandYouMade agency and immersing in psychology, sales, and marketing. From leadership roles in Sochi real estate to speaking at Blockchain Life in front of 12,000 people. This was a period of synthesis: when negotiation and team management merged with a deep understanding of human nature and marketing.",
+  "Новое Начало": "New Beginning",
+  "Пройдя через иллюзию комфорта, финансовые штормы и токсичные связи, я пришел к моменту истины. Опыт жизни стал финальным фрагментом пазла: я научился не просто смотреть, а видеть суть людей. Сегодня мой путь — это не погоня за атрибутами, а создание «Цифровых монументов» — наследия, которое останется после.": "After passing through the illusion of comfort, financial storms, and toxic ties, I reached a moment of truth. Life experience became the final piece of the puzzle: I learned not just to look, but to see the essence of people. Today, my path is not chasing attributes, but creating “digital monuments” — a legacy that remains.",
+  "Я больше не строю бизнес — я строю экосистему осознанности. Мой статус Амбассадора и преданный шпиц рядом — это фундамент новой, честной реальности. Старое не стерто — оно переплавлено в золото высшей пробы.": "I no longer build a business — I build an ecosystem of awareness. My status as an ambassador and my loyal spitz by my side are the foundation of a new, honest reality. The old was not erased — it was refined into high-grade gold.",
+  "05. ФИЛОСОФИЯ": "05. PHILOSOPHY",
+  "Внешность привлекает внимание.": "Appearance attracts attention.",
+  "Принципы удерживают его.": "Principles hold it.",
+  "Если визуальный образ — это фасад, то жизненные ценности — это несущие конструкции. Мой кодекс сформирован не теорией, а реальным путем.": "If visual image is the facade, life values are the load-bearing structures. My code was formed not by theory, but by a real path.",
+  "АРХИТЕКТУРА ВОСПРИЯТИЯ": "ARCHITECTURE OF PERCEPTION",
+  "Каждый новый человек — это «чистый лист» и потенциальный учитель. Не позволяйте теням прошлого опыта омрачать настоящее: прошлые разочарования не должны диктовать условия будущим союзам. Истинная мудрость заключается в способности извлекать ценность из каждого диалога.": "Every new person is a clean slate and a potential teacher. Do not let shadows of past experience darken the present: past disappointments must not dictate future alliances. True wisdom is the ability to extract value from every dialogue.",
+  "ЭТИКЕТ СИЛЫ": "ETIQUETTE OF STRENGTH",
+  "Искренность — это кратчайший путь к цели. Говорите как есть, ведь правда экономит годы. На агрессию и конфликт отвечайте безупречной вежливостью: это не слабость, а высшая форма контроля, которая обезоруживает любого противника. Доброта сильного — осознанный выбор.": "Sincerity is the shortest path to the goal. Speak as it is, because truth saves years. Answer aggression and conflict with impeccable politeness: this is not weakness, but the highest form of control that disarms any opponent. The kindness of the strong is a conscious choice.",
+  "ВНУТРЕННЯЯ АВТОНОМИЯ": "INNER AUTONOMY",
+  "Ваша способность созидать не зависит от географии. Настоящий капитал находится внутри: это ваши навыки, которые вы возьмете с собой, даже если потеряете всё остальное. В любой точке мира вы выживете, потому что ваше мастерство всегда при вас.": "Your ability to create does not depend on geography. True capital is inside: your skills, which you take with you even if you lose everything else. Anywhere in the world, you survive because your mastery is always with you.",
+  "ТИРАНИЯ МОМЕНТА": "TYRANNY OF THE MOMENT",
+  "Время — единственный актив, который нельзя реинвестировать. Либо вы управляете своим вниманием через жесткую структуру, либо мир управляет вами. Ваше умение созидать «с нуля» — это фундамент империи, не зависящей от внешних кризисов.": "Time is the only asset you cannot reinvest. Either you manage your attention through strict structure, or the world manages you. Your ability to create from zero is the foundation of an empire independent of external crises.",
+  "Сообщество": "Community",
+  "Каста Феодалов": "Caste of Feudals",
+  "Это закрытое объединение для тех, кто разделяет мои ценности. Мы растем индивидуально, но используем общие ресурсы, чтобы путь к цели был короче.": "A closed circle for those who share my values. We grow individually, but use shared resources so the path to the goal is shorter.",
+  "Привилегии": "Privileges",
+  "Доступ к проверенным инструментам, скидкам на услуги партнеров и закрытым мероприятиям команды.": "Access to proven tools, partner service discounts, and closed team events.",
+  "Методология": "Methodology",
+  "Прямой доступ к общим знаниям и опыту. Обучение, которое дает результат без лишних движений.": "Direct access to shared knowledge and experience. Learning that gives results without unnecessary moves.",
+  "Синергия": "Synergy",
+  "Правильное окружение и нетворкинг. Здесь ваши идеи находят поддержку и реальное воплощение.": "The right environment and networking. Here your ideas find support and real implementation.",
+  "«Мы не просто меняем тела — мы пересобираем личности»": "“We do not just change bodies — we rebuild personalities”",
+  "Заполните короткую заявку.": "Fill out a short request.",
+  "Можно указать ограничения, травмы, график, особенности восстановления и питания. Я работаю не только с идеальными условиями, а с реальной жизнью, где есть работа, стресс, ограничения и откаты.": "You can specify limitations, injuries, schedule, recovery, and nutrition specifics. I work not only with ideal conditions, but with real life — work, stress, limitations, and setbacks.",
+  "Имя / контакт": "Name / contact",
+  "Добавить рост / вес / возраст / опыт": "Add height / weight / age / experience",
+  "Необязательно": "Optional",
+  "Опыт тренировок": "Training experience",
+  "Выберите вариант": "Select an option",
+  "С нуля": "From zero",
+  "До 6 месяцев": "Up to 6 months",
+  "1–2 года": "1–2 years",
+  "3+ года": "3+ years",
+  "Возвращаюсь после паузы": "Returning after a break",
+  "Ограничения / травмы / нюансы": "Limitations / injuries / nuances",
+  "Желаемый формат": "Desired format",
+  "Персональный разбор": "Personal audit",
+  "Фитнес-наставничество": "Fitness mentorship",
+  "Питание / БЖУ": "Nutrition / macros",
+  "Дисциплина / режим": "Discipline / routine",
+  "Пока не знаю, нужен подбор": "Not sure yet — need selection",
+  "Куда удобнее ответить": "Where to reply",
+  "Комментарий": "Comment",
+  "Собрать заявку": "Build request",
+  "Нажимая кнопку, вы принимаете условия": "By clicking the button, you accept the terms of",
+  "обработки данных": "data processing",
+  "ЗАЯВКА СФОРМИРОВАНА": "REQUEST CREATED",
+  "Осталось отправить удобным способом": "Now send it the way that is convenient",
+  "Текст заявки уже собран: цель, данные, проблема, формат и результаты расчётов, если они были выполнены.": "The request text is already assembled: goal, data, problem, format, and calculation results if completed.",
+  "Открыть Telegram": "Open Telegram",
+  "Открыть WhatsApp": "Open WhatsApp",
+  "Скопировать заявку": "Copy request",
+  "Исправить данные": "Edit data",
+  "=== СЕКЦИЯ РАСЧЁТОВ (ИНСТРУМЕНТЫ) ===": "=== CALCULATION SECTION (TOOLS) ===",
+  "Сила одного касания": "The power of one contact",
+  "Один разбор может убрать месяцы хаоса": "One audit can remove months of chaos",
+  "Ценность не в «совете на минуту». Ценность в том, что после контакта у человека появляется ясность: что происходит с телом, питанием, мышлением и режимом — и какие первые действия дадут результат без лишней суеты.": "The value is not in a one-minute tip. The value is that after contact, a person has clarity: what is happening with the body, nutrition, mindset, and routine — and which first actions will create results without unnecessary noise.",
+  "ФОРМАТ 01": "FORMAT 01",
+  "Личное присутствие": "In-person presence",
+  "Минск • Сочи • Москва • СПб. Живой разбор, где сразу видно, что мешает форме: техника, питание, режим, дисциплина, ограничения и реальная точка А.": "Minsk • Sochi • Moscow • Saint Petersburg. A live audit where it becomes clear what blocks your form: technique, nutrition, routine, discipline, limitations, and the real point A.",
+  "коррекция техники движения": "movement technique correction",
+  "присед, тяга, жим, тяги, дыхание, амплитуда и безопасность суставов": "squat, deadlift, bench, rows, breathing, range of motion, and joint safety",
+  "ФОРМАТ 02": "FORMAT 02",
+  "Дистанционная работа": "Remote work",
+  "Для тех, кому нужен результат без привязки к городу: видеосвязь, контроль, персональное приложение, понятные задачи и корректировки под график.": "For those who need results without being tied to a city: video calls, control, personal app, clear tasks, and schedule-based adjustments.",
+  "ПОДХОД": "APPROACH",
+  "Персональный фокус": "Personal focus",
+  "Это не потоковая программа. Я смотрю на человека целиком: тело, питание, мышление, режим, ограничения, цель и то, что реально мешает держать систему.": "This is not a mass program. I look at the whole person: body, nutrition, mindset, routine, limitations, goal, and what truly prevents the system from holding.",
+  "После первого контакта": "After the first contact",
+  "Моя задача — не вдохновить на пару дней, а собрать человека в ясную систему действий.": "My task is not to inspire for a couple of days, but to assemble a person into a clear action system.",
+  "После первого контакта человек уже ясно видит себя со стороны: где сейчас тело, питание, режим, дисциплина и мышление; что тормозит прогресс; какие первые шаги дают сдвиг; какой формат работы подходит именно ему. Вместо хаоса — понятный маршрут: что делать, что отслеживать, что корректировать и как довести форму до результата, который виден в теле и чувствуется внутри.": "After the first contact, a person already sees themselves clearly from the outside: where the body, nutrition, routine, discipline, and mindset are now; what slows progress; which first steps create movement; which work format fits them specifically. Instead of chaos — a clear route: what to do, what to track, what to adjust, and how to bring the form to a result that is visible in the body and felt inside.",
+  "Ваше время стоит дорого. Действуйте.": "Your time is expensive. Act.",
+  "Написать в WhatsApp": "Write on WhatsApp",
+  "Коротко опишите цель, проблему, ограничения и удобный формат связи.": "Briefly describe your goal, problem, limitations, and preferred contact format.",
+  "Связаться в Telegram": "Contact on Telegram",
+  "Удобно отправить расчёт, заявку или вопрос по формату работы.": "Convenient for sending a calculation, request, or question about the work format.",
+  "Отправить на E-mail": "Send by email",
+  "Для подробного описания ситуации, сроков, ограничений и задачи.": "For a detailed description of the situation, timing, limitations, and task.",
+  "Ваш результат начинается с принятого решения.": "Your result begins with a decision.",
+  "Я жду тех, кто готов.": "I am waiting for those who are ready.",
+  "МОДАЛЬНОЕ ОКНО ПРАВИЛ": "RULES MODAL",
+  "Политика приватности": "Privacy policy",
+  "01. ОБЩИЕ ПОЛОЖЕНИЯ.": "01. GENERAL TERMS.",
+  "Настоящая политика определяет порядок обработки данных на сайте markovmade.com.": "This policy defines how data is processed on markovmade.com.",
+  "02. ТЕХНИЧЕСКАЯ МОДЕЛЬ.": "02. TECHNICAL MODEL.",
+  "Сайт не сохраняет введенные данные в базы данных. Все операции (сбор текста и копирование в буфер обмена) происходят исключительно в браузере пользователя (client-side).": "The site does not save entered data to databases. All operations — text generation and copying to the clipboard — happen exclusively in the user’s browser client-side.",
+  "03. ПЕРЕДАЧА ДАННЫХ.": "03. DATA TRANSFER.",
+  "Передача информации Администратору осуществляется пользователем самостоятельно путем осознанной отправки сообщения в мессенджеры Telegram или WhatsApp.": "Information is transferred to the administrator by the user independently through deliberate sending of a message in Telegram or WhatsApp.",
+  "04. ЦЕЛЬ И СРОКИ.": "04. PURPOSE AND TERMS.",
+  "Данные используются только для первичной консультации. Ввиду отсутствия хранения данных на сервере, их удаление из систем сайта не требуется.": "Data is used only for the initial consultation. Since data is not stored on the server, deletion from the site systems is not required.",
+  "05. ОТКАЗ ОТ ОТВЕТСТВЕННОСТИ.": "05. DISCLAIMER.",
+  "Администратор не несет ответственности за политику конфиденциальности и безопасность данных в сторонних сервисах.": "The administrator is not responsible for privacy policies or data security in third-party services.",
+  "Расчёты пока не отправлял / хочу разобрать вручную.": "I have not sent calculations yet / I want to review manually.",
+  "Здравствуйте, Павел. Хочу разобрать формат работы MARKOVMADE.": "Hello, Pavel. I want to discuss the MARKOVMADE work format.",
+  "Результаты расчёта:": "Calculation results:",
+  "Хочу понять точку А, стратегию и следующий шаг.": "I want to understand point A, the strategy, and the next step.",
+  "Заполните имя / опыт, цель и главную проблему — этого достаточно для нормального старта.": "Fill in name / experience, goal, and main problem — that is enough for a proper start.",
+  "Заявка скопирована.": "Request copied.",
+  "Не удалось скопировать автоматически. Выделите текст вручную.": "Could not copy automatically. Select the text manually.",
+  "базовая": "basic",
+  "расширенная": "advanced",
+  "уточнённая": "refined",
+  "экспертная": "expert",
+  "Нужен мышечный фундамент": "Muscle foundation needed",
+  "Нормальная база": "Normal base",
+  "Атлетичная форма": "Athletic form",
+  "Очень сильная мышечная база": "Very strong muscle base",
+  "Экстремально высокий уровень мышечной массы": "Extremely high level of muscle mass",
+  "Фитнес-форма": "Fitness form",
+  "Умеренный дефицит, силовые 3–5 раз в неделю, шаги и контроль талии раз в 7 дней.": "Moderate deficit, strength training 3–5 times per week, steps, and waist control every 7 days.",
+  "Умеренный профицит, прогрессия в базовых движениях и контроль набора жировой массы.": "Moderate surplus, progression in basic movements, and control of fat gain.",
+  "Рекомпозиция: белок, силовая прогрессия, умеренная активность и стабильный сон.": "Recomposition: protein, strength progression, moderate activity, and stable sleep.",
+  "Поддержание формы без лишней агрессии: восстановление, силовые и контроль энергии.": "Maintenance without unnecessary aggression: recovery, strength training, and energy control.",
+  "Поддержание с точечной коррекцией питания и тренировок по динамике формы.": "Maintenance with precise nutrition and training adjustments based on form dynamics.",
+  "Проверьте базовые поля: возраст, рост и вес обязательны для расчёта.": "Check the basic fields: age, height, and weight are required for calculation.",
+  "указан вручную": "entered manually",
+  "оценка Navy method": "Navy method estimate",
+  "модельная оценка из-за нехватки данных": "model estimate due to insufficient data",
+  "Мышечная база уже может работать как визуальный актив.": "The muscle base can already work as a visual asset.",
+  "Процент жира позволяет быстро улучшить визуальную форму.": "The body fat percentage allows a quick visual improvement.",
+  "Главная сильная сторона — понятная точка А, от которой можно строить систему.": "The main strong side is a clear point A from which a system can be built.",
+  "Жировая масса забирает визуальную плотность и может маскировать мышечный потенциал.": "Fat mass reduces visual density and can hide muscle potential.",
+  "Недостаточно сухой массы: нужен силовой фундамент.": "Not enough lean mass: a strength foundation is needed.",
+  "Основной риск — неправильно выбрать скорость цели и потерять восстановление.": "The main risk is choosing the wrong goal speed and losing recovery.",
+  "Проверить через 10–14 дней: средний вес за неделю, талию, силовые и самочувствие.": "Check in 10–14 days: weekly average weight, waist, strength, and well-being.",
+  "Предупреждение: дефицит выглядит агрессивным. Следите за сном, силовыми, либидо, настроением и восстановлением.": "Warning: the deficit looks aggressive. Watch sleep, strength, libido, mood, and recovery.",
+  "Предупреждение: целевые калории близко к базовому обмену. Такой режим лучше не держать долго без контроля.": "Warning: target calories are close to basal metabolism. This mode should not be held long without control.",
+  "Ресурсное состояние": "Resourced state",
+  "Можно тренироваться по плану. Лучший день для прогрессии и сложных задач.": "You can train according to plan. Best day for progression and harder tasks.",
+  "Кардио можно оставить в умеренном объёме.": "Cardio can remain moderate.",
+  "Сохранить режим сна и не ломать восстановление поздними стимулами.": "Keep sleep routine and do not break recovery with late stimulants.",
+  "Держать белок, воду, электролиты и стабильные приёмы пищи.": "Keep protein, water, electrolytes, and stable meals.",
+  "Адаптационный стресс": "Adaptive stress",
+  "Тренироваться можно, но без геройства: снизить отказные подходы и следить за техникой.": "You can train, but without heroics: reduce failure sets and watch technique.",
+  "Кардио оставить лёгким или умеренным. Не превращать его во вторую тренировку.": "Keep cardio light or moderate. Do not turn it into a second workout.",
+  "Приоритет — сон и снижение вечерней стимуляции.": "Priority is sleep and reducing evening stimulation.",
+  "Не ужесточать дефицит. Углеводы лучше ставить вокруг тренировки.": "Do not make the deficit harder. Place carbs around training.",
+  "Зона внимания: ресурс уже тратится быстрее, чем восстанавливается.": "Attention zone: resources are being spent faster than they recover.",
+  "Высокий риск перегруза": "High overload risk",
+  "Лучше сделать лёгкую тренировку, технику, мобилити или день восстановления.": "Better do a light session, technique, mobility, or a recovery day.",
+  "Только лёгкое кардио/ходьба. Интервалы и добивание лучше убрать.": "Only light cardio/walking. Remove intervals and finishing work.",
+  "Главная задача — 1–2 ночи качественного сна без позднего кофеина и лишнего экрана.": "Main task: 1–2 nights of quality sleep without late caffeine or extra screen time.",
+  "Не резать калории сильнее. Добавить нормальный приём пищи, воду и соль по самочувствию.": "Do not cut calories harder. Add a proper meal, water, and salt as needed.",
+  "Если такое состояние держится долго, появляются боль, панические симптомы, бессонница или резкое ухудшение самочувствия — нужен профильный специалист.": "If this state lasts long, or pain, panic symptoms, insomnia, or sharp worsening appear, consult a relevant specialist.",
+  "Деньги растут не только от суммы, а от регулярности, качества решений и горизонта.": "Money grows not only from the amount, but from regularity, decision quality, and horizon.",
+  "Бизнес растёт через повторяемую систему действий, а не через разовые рывки.": "Business grows through a repeatable action system, not one-off bursts.",
+  "Контент даёт эффект накопления, когда регулярность соединяется с улучшением качества.": "Content compounds when regularity is combined with quality improvement.",
+  "Навык растёт через минуты практики, качество повторений и отсутствие длинных провалов.": "Skill grows through minutes of practice, quality repetitions, and no long gaps.",
+  "Дисциплина — это не насилие над собой, а среда, где правильное действие становится проще.": "Discipline is not violence against yourself; it is an environment where the right action becomes easier.",
+  "Для финансов срок считается в годах.": "For finance, the term is counted in years.",
+  "Для этого режима срок считается в месяцах.": "For this mode, the term is counted in months.",
+  "Заполните старт, регулярное действие и срок.": "Fill in the start, regular action, and term.",
+  "Главный риск — переоценить мотивацию и недооценить среду. Упростите минимум действия.": "The main risk is overestimating motivation and underestimating environment. Simplify the minimum action.",
+  "Главный риск — перестать фиксировать процесс, когда первые результаты уже появились.": "The main risk is stopping process tracking once the first results appear.",
+  "Точка А": "Point A",
+  "Сейчас": "Now",
+  "7 дней": "7 days",
+  "Нужно сначала снять хаос, собрать данные и выбрать рабочую стратегию.": "First, remove chaos, collect data, and choose a working strategy.",
+  "Тело и рекомпозиция": "Body and recomposition",
+  "Силовые / БЖУ": "Strength / macros",
+  "Система дисциплины": "Discipline system",
+  "Режим / энергия": "Routine / energy",
+  "Личный бренд / стратегия": "Personal brand / strategy",
+  "Упаковка / рост": "Positioning / growth",
+  "Сначала отправьте цель и текущую ситуацию — без обязательства стартовать сразу.": "First, send your goal and current situation — with no obligation to start immediately.",
+  "Отправьте исходные данные, цель, главное препятствие и желаемый срок результата.": "Send initial data, goal, main obstacle, and desired result timeline.",
+  "Скрин расчётов, цель, вес/рост, режим, питание, тренировки и что сейчас больше всего мешает.": "Calculation screenshot, goal, weight/height, routine, nutrition, training, and what blocks you most now.",
+  "Сначала выполните расчёт на сайте MARKOVMADE.": "First complete the calculation on the MARKOVMADE site.",
+  "Заявка": "Request",
+  "Наверх": "To top",
+  "Скопировано": "Copied"
+};
+    var ATTR_DICT = {
+  "Сменить тему: тёмная / светлая": "Switch theme: dark / light",
+  "Сменить тему: тёмная или светлая": "Switch theme: dark or light",
+  "Сменить тему": "Switch theme",
+  "Павел / @telegram / WhatsApp": "Pavel / @telegram / WhatsApp",
+  "Сушка, набор, режим, дисциплина, восстановление": "Fat loss, muscle gain, routine, discipline, recovery",
+  "Спина, колено, плечо, давление, график, восстановление": "Back, knee, shoulder, blood pressure, schedule, recovery",
+  "Что мешает: вес стоит, срывы, боли, хаос в питании, нет режима": "What blocks you: stuck weight, breakdowns, pain, nutrition chaos, no routine",
+  "Что пробовали, сроки, ограничения, травмы, график, что важно учесть": "What you tried, deadlines, limitations, injuries, schedule, what matters"
+};
+    var META = {
+        ru: {
+            title: 'MARKOVMADE | Павел Марков — тело, дисциплина, питание и личная система',
+            description: 'MARKOVMADE — камерная система Павла Маркова для формы, дисциплины, питания, тела и личной собранности. Расчёты, форматы работы и заявка на персональный разбор.'
+        },
+        en: {
+            title: 'MARKOVMADE | Pavel Markov — body, discipline, nutrition and personal system',
+            description: 'MARKOVMADE is Pavel Markov’s premium system for body transformation, discipline, nutrition and personal structure. Calculators, work formats and a request for a personal audit.'
+        }
+    };
+    var currentLang = localStorage.getItem('markovmade_lang') || 'ru';
+    var textOriginals = new WeakMap();
+    var attrOriginals = new WeakMap();
+    var partialKeys = Object.keys(DICT).filter(function(k) { return k.length > 7; }).sort(function(a,b) { return b.length - a.length; });
+    var shortExactKeys = Object.keys(DICT).filter(function(k) { return k.length <= 7; });
+    function normalize(s) { return String(s || '').replace(/\s+/g, ' ').trim(); }
+    function escapeRegExp(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+    function translateString(s) {
+        var leading = (String(s).match(/^\s*/) || [''])[0];
+        var trailing = (String(s).match(/\s*$/) || [''])[0];
+        var core = normalize(s);
+        if (!core) return s;
+        if (DICT[core]) return leading + DICT[core] + trailing;
+        var out = core;
+        partialKeys.forEach(function(k) {
+            if (out.indexOf(k) !== -1) out = out.replace(new RegExp(escapeRegExp(k), 'g'), DICT[k]);
+        });
+        // safe short exact replacements only with clear separators
+        out = out.replace(/кг/g, 'kg').replace(/см/g, 'cm').replace(/ккал/g, 'kcal').replace(/БЖУ/g, 'macros').replace(/ЦНС/g, 'CNS');
+        return leading + out + trailing;
+    }
+    function shouldSkipNode(node) {
+        var p = node && node.parentElement;
+        if (!p) return true;
+        if (p.closest('script, style, noscript, code, pre, svg, [data-no-translate], [data-lang-toggle]')) return true;
+        return false;
+    }
+    function walkText(root, cb) {
+        var walker = document.createTreeWalker(root || document.body, NodeFilter.SHOW_TEXT, {
+            acceptNode: function(node) {
+                if (shouldSkipNode(node)) return NodeFilter.FILTER_REJECT;
+                if (!normalize(node.nodeValue)) return NodeFilter.FILTER_REJECT;
+                return NodeFilter.FILTER_ACCEPT;
+            }
+        });
+        var n;
+        while ((n = walker.nextNode())) cb(n);
+    }
+    function storeAttr(el, attr) {
+        var obj = attrOriginals.get(el) || {};
+        if (!obj[attr]) obj[attr] = el.getAttribute(attr);
+        attrOriginals.set(el, obj);
+    }
+    function applyAttrs(root, lang) {
+        var elements = (root || document).querySelectorAll ? (root || document).querySelectorAll('[placeholder], [title], [aria-label]') : [];
+        elements.forEach(function(el) {
+            if (el.closest('[data-no-translate], [data-lang-toggle]')) return;
+            ['placeholder','title','aria-label'].forEach(function(attr) {
+                if (!el.hasAttribute(attr)) return;
+                storeAttr(el, attr);
+                var original = (attrOriginals.get(el) || {})[attr] || el.getAttribute(attr);
+                var key = normalize(original);
+                if (lang === 'en') {
+                    el.setAttribute(attr, ATTR_DICT[key] || DICT[key] || translateString(original));
+                } else {
+                    el.setAttribute(attr, original);
+                }
+            });
+        });
+    }
+    function updateButtons(lang) {
+        document.querySelectorAll('[data-lang-toggle]').forEach(function(btn) {
+            var flag = btn.querySelector('.lang-switch-flag');
+            var label = btn.querySelector('.lang-switch-label');
+            if (flag) flag.textContent = lang === 'en' ? '🇷🇺' : '🇬🇧';
+            if (label) label.textContent = lang === 'en' ? 'RU' : 'EN';
+            btn.setAttribute('aria-label', lang === 'en' ? 'Switch to Russian' : 'Switch to English');
+            btn.setAttribute('title', lang === 'en' ? 'Switch to Russian' : 'Switch to English');
+        });
+    }
+    function updateMeta(lang) {
+        document.documentElement.lang = lang;
+        document.title = META[lang].title;
+        var desc = document.querySelector('meta[name="description"]');
+        if (desc) desc.setAttribute('content', META[lang].description);
+    }
+    function applyLanguage(lang, root) {
+        currentLang = lang;
+        localStorage.setItem('markovmade_lang', lang);
+        updateMeta(lang);
+        updateButtons(lang);
+        walkText(root || document.body, function(node) {
+            if (!textOriginals.has(node)) textOriginals.set(node, node.nodeValue);
+            var original = textOriginals.get(node);
+            node.nodeValue = lang === 'en' ? translateString(original) : original;
+        });
+        applyAttrs(root || document, lang);
+        document.body.classList.toggle('lang-en', lang === 'en');
+    }
+    function initBilingual() {
+        document.querySelectorAll('[data-lang-toggle]').forEach(function(btn) {
+            if (btn.__langReady) return;
+            btn.__langReady = true;
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                applyLanguage(currentLang === 'en' ? 'ru' : 'en');
+            });
+        });
+        applyLanguage(currentLang);
+        var observer = new MutationObserver(function(mutations) {
+            if (currentLang !== 'en') return;
+            mutations.forEach(function(m) {
+                m.addedNodes && m.addedNodes.forEach(function(node) {
+                    if (node.nodeType === 3 && !shouldSkipNode(node)) {
+                        if (!textOriginals.has(node)) textOriginals.set(node, node.nodeValue);
+                        node.nodeValue = translateString(textOriginals.get(node));
+                    } else if (node.nodeType === 1) {
+                        applyLanguage('en', node);
+                    }
+                });
+            });
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initBilingual, { once: true });
+    else initBilingual();
 })();
 </script>
 
