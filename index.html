@@ -6239,6 +6239,28 @@ body.theme-light .mm-service-route b {
 }
 </style>
 
+<script id="markovmade-safe-storage">
+(function(){
+  'use strict';
+  window.mmSafeStorage = window.mmSafeStorage || {
+    get: function(key, fallback){
+      try {
+        var value = window.localStorage.getItem(key);
+        return value === null ? fallback : value;
+      } catch (e) { return fallback; }
+    },
+    set: function(key, value){
+      try { window.localStorage.setItem(key, String(value)); return true; }
+      catch (e) { return false; }
+    },
+    remove: function(key){
+      try { window.localStorage.removeItem(key); return true; }
+      catch (e) { return false; }
+    }
+  };
+})();
+</script>
+
 <script id="markovmade-v16-dynamic-i18n">
 (function(){
   'use strict';
@@ -6256,11 +6278,94 @@ body.theme-light .mm-service-route b {
     'Поддержание с точечной коррекцией питания и тренировок по динамике формы.':'Maintenance with precise nutrition and training adjustments based on form dynamics.',
     'Проверить через 10–14 дней: средний вес за неделю, талию, силовые и самочувствие.':'Check after 10–14 days: weekly average weight, waist, strength and well-being.',
     'Главный риск — переоценить мотивацию и недооценить среду. Упростите минимум действия.':'The main risk is overestimating motivation and underestimating environment. Simplify the minimum action.',
-    'Сначала выполните расчёт на сайте MARKOVMADE.':'Run the MARKOVMADE assessment first.'
+    'Главный риск — перестать фиксировать процесс, когда первые результаты уже появились.':'The main risk is stopping process tracking after the first results appear.',
+    'Сначала выполните расчёт на сайте MARKOVMADE.':'Run the MARKOVMADE assessment first.',
+    'базовая':'basic',
+    'расширенная':'advanced',
+    'уточнённая':'refined',
+    'экспертная':'expert',
+    'Мышечная база уже может работать как визуальный актив.':'Your muscle base can already work as a visual asset.',
+    'Процент жира позволяет быстро улучшить визуальную форму.':'Your body-fat level allows a fast visual improvement.',
+    'Главная сильная сторона — понятная точка А, от которой можно строить систему.':'The main strength is a clear starting point to build the system from.',
+    'Жировая масса забирает визуальную плотность и может маскировать мышечный потенциал.':'Body fat reduces visual density and may hide muscular potential.',
+    'Недостаточно сухой массы: нужен силовой фундамент.':'Lean mass is insufficient: a strength foundation is needed.',
+    'Основной риск — неправильно выбрать скорость цели и потерять восстановление.':'The main risk is choosing the wrong goal pace and compromising recovery.',
+    'Предупреждение: дефицит выглядит агрессивным. Следите за сном, силовыми, либидо, настроением и восстановлением.':'Warning: the deficit looks aggressive. Monitor sleep, strength, libido, mood, and recovery.',
+    'Предупреждение: целевые калории близко к базовому обмену. Такой режим лучше не держать долго без контроля.':'Warning: target calories are close to basal metabolism. Do not maintain this setup for long without monitoring.',
+    'Ресурсное состояние':'Resourced state',
+    'Адаптационный стресс':'Adaptation stress',
+    'Высокий риск перегруза':'High overload risk',
+    'Можно тренироваться по плану. Лучший день для прогрессии и сложных задач.':'You can train as planned. This is a good day for progression and demanding work.',
+    'Кардио можно оставить в умеренном объёме.':'Cardio can stay at a moderate volume.',
+    'Сохранить режим сна и не ломать восстановление поздними стимулами.':'Keep your sleep schedule and avoid late stimuli that disrupt recovery.',
+    'Держать белок, воду, электролиты и стабильные приёмы пищи.':'Keep protein, water, electrolytes, and regular meals stable.',
+    'Тренироваться можно, но без геройства: снизить отказные подходы и следить за техникой.':'You can train, but without heroics: reduce failure sets and monitor technique.',
+    'Кардио оставить лёгким или умеренным. Не превращать его во вторую тренировку.':'Keep cardio light or moderate. Do not turn it into a second workout.',
+    'Приоритет — сон и снижение вечерней стимуляции.':'Prioritize sleep and reduce evening stimulation.',
+    'Не ужесточать дефицит. Углеводы лучше ставить вокруг тренировки.':'Do not deepen the deficit. Place more carbohydrates around training.',
+    'Зона внимания: ресурс уже тратится быстрее, чем восстанавливается.':'Attention zone: resources are being spent faster than they recover.',
+    'Лучше сделать лёгкую тренировку, технику, мобилити или день восстановления.':'Choose a light workout, technique work, mobility, or a recovery day.',
+    'Только лёгкое кардио/ходьба. Интервалы и добивание лучше убрать.':'Only light cardio or walking. Remove intervals and finishers.',
+    'Главная задача — 1–2 ночи качественного сна без позднего кофеина и лишнего экрана.':'The main task is 1–2 nights of quality sleep without late caffeine or unnecessary screen time.',
+    'Не резать калории сильнее. Добавить нормальный приём пищи, воду и соль по самочувствию.':'Do not cut calories further. Add a proper meal, water, and salt according to how you feel.',
+    'Если такое состояние держится долго, появляются боль, панические симптомы, бессонница или резкое ухудшение самочувствия — нужен профильный специалист.':'If this state persists, or pain, panic symptoms, insomnia, or a sharp decline in well-being appear, consult an appropriate specialist.',
+    'Стартовая сумма':'Starting amount',
+    'Пополнение в месяц':'Monthly contribution',
+    'Срок, лет':'Term, years',
+    'Капитал':'Capital',
+    'Деньги растут не только от суммы, а от регулярности, качества решений и горизонта.':'Money grows not only from the amount, but from consistency, decision quality, and time horizon.',
+    'Фиксировать пополнение, не ломать систему в плохие месяцы и пересматривать план раз в 30 дней.':'Keep contributions fixed, do not break the system in bad months, and review the plan every 30 days.',
+    'Текущий оборот / база':'Current revenue / base',
+    'Прирост в месяц':'Monthly growth',
+    'Срок, месяцев':'Term, months',
+    'Масштаб':'Scale',
+    'Бизнес растёт через повторяемую систему действий, а не через разовые рывки.':'Business grows through a repeatable system of actions, not isolated bursts.',
+    'Выделить один главный канал роста, закрепить недельный ритм и отслеживать конверсию.':'Choose one primary growth channel, establish a weekly rhythm, and track conversion.',
+    'Текущая аудитория':'Current audience',
+    'Публикаций / действий в месяц':'Posts / actions per month',
+    'Аудитория':'Audience',
+    'Контент даёт эффект накопления, когда регулярность соединяется с улучшением качества.':'Content compounds when consistency is combined with improving quality.',
+    'Держать стабильный выпуск, усиливать упаковку и каждую неделю анализировать удержание внимания.':'Maintain consistent output, improve presentation, and analyze attention retention every week.',
+    'Текущий уровень 1–100':'Current level 1–100',
+    'Минут практики в день':'Practice minutes per day',
+    'Уровень':'Level',
+    'Навык растёт через минуты практики, качество повторений и отсутствие длинных провалов.':'A skill grows through practice minutes, repetition quality, and the absence of long gaps.',
+    'Практиковать коротко, но ежедневно: 10–30 минут дают больше, чем редкие героические рывки.':'Practice briefly but daily: 10–30 minutes delivers more than rare heroic bursts.',
+    'Текущая дисциплина, %':'Current discipline, %',
+    'Полезных действий в день':'Useful actions per day',
+    'Стабильность':'Stability',
+    'Дисциплина — это не насилие над собой, а среда, где правильное действие становится проще.':'Discipline is not self-violence; it is an environment where the right action becomes easier.',
+    'Оставить минимум дня, привязать полезное к приятному и убрать лишнее трение.':'Define a daily minimum, pair useful actions with enjoyable ones, and remove unnecessary friction.',
+    'Для финансов срок считается в годах.':'For finance, the term is measured in years.',
+    'Для этого режима срок считается в месяцах.':'For this mode, the term is measured in months.',
+    'Персональный разбор':'Personal assessment',
+    'Точка А':'Starting point',
+    'Сейчас':'Now',
+    '7 дней':'7 days',
+    'Мягко':'Gradually',
+    'Нужно сначала снять хаос, собрать данные и выбрать рабочую стратегию.':'First, remove the chaos, collect the data, and choose a workable strategy.',
+    'Фитнес-наставничество':'Fitness mentoring',
+    'Питание / тело':'Nutrition / body',
+    'Главная задача — не просто снизить вес, а собрать понятную систему питания, активности и контроля динамики.':'The main task is not simply to lose weight, but to build a clear system for nutrition, activity, and progress tracking.',
+    'Тело и рекомпозиция':'Body and recomposition',
+    'Силовые / БЖУ':'Strength / macros',
+    'Здесь важны силовая прогрессия, белок, восстановление и корректная оценка состава тела.':'Strength progression, protein, recovery, and an accurate body-composition assessment matter here.',
+    'Система дисциплины':'Discipline system',
+    'Режим / энергия':'Routine / energy',
+    'Основной узел — не отсутствие желания, а отсутствие структуры, ритуалов и понятного минимума дня.':'The main issue is not a lack of desire, but a lack of structure, rituals, and a clear daily minimum.',
+    'Личный бренд / стратегия':'Personal brand / strategy',
+    'Упаковка / рост':'Positioning / growth',
+    'Нужно связать личность, продукт, контент и понятный путь заявки без лишнего шума.':'Connect personality, product, content, and a clear inquiry path without unnecessary noise.',
+    'Сначала отправьте цель и текущую ситуацию — без обязательства стартовать сразу.':'First send your goal and current situation, without any obligation to start immediately.',
+    'Отправьте исходные данные, цель, главное препятствие и желаемый срок результата.':'Send your starting data, goal, main obstacle, and desired result timeframe.',
+    'Скрин расчётов, цель, вес/рост, режим, питание, тренировки и что сейчас больше всего мешает.':'Send screenshots of the calculations, your goal, weight/height, routine, nutrition, training, and what is currently holding you back most.',
+    'Проверьте базовые поля: возраст, рост и вес обязательны для расчёта.':'Check the basic fields: age, height, and weight are required.',
+    'Заполните базовые параметры от 1 до 10.':'Fill in the basic parameters from 1 to 10.',
+    'Заполните старт, регулярное действие и срок.':'Fill in the starting value, recurring action, and term.'
   };
   var parts = [
     ['Жир:', 'Fat:'], ['жир —', 'body fat —'], ['жир ', 'body fat '], ['жировой массы', 'fat mass'], ['жировая масса', 'fat mass'], ['Жировая масса', 'Fat mass'],
-    ['Точность модели:', 'Model accuracy:'], ['точность модели:', 'model accuracy:'], ['кг','kg'], ['ккал','kcal'],
+    ['Точность модели:', 'Model accuracy:'], ['точность модели:', 'model accuracy:'], ['модель:', 'model:'], ['базовая','basic'], ['расширенная','advanced'], ['уточнённая','refined'], ['экспертная','expert'], ['кг','kg'], ['ккал','kcal'], [' г',' g'],
     ['указан вручную','entered manually'], ['оценка Navy method','Navy method estimate'], ['модельная оценка из-за нехватки данных','model estimate due to insufficient data'],
     ['больше углеводов вокруг тренировки.','more carbs around training.'], ['чуть ниже калории, белок оставить стабильным.','slightly lower calories, keep protein stable.'],
     ['белки —','protein —'], ['жиры —','fats —'], ['углеводы —','carbs —'], ['Тренировочный день','Training day'], ['день отдыха','rest day'],
@@ -6268,7 +6373,7 @@ body.theme-light .mm-service-route b {
     ['Здравствуйте, Павел. Я прошёл расчёт на сайте MARKOVMADE.','Hello, Pavel. I completed the MARKOVMADE assessment.'], ['Хочу получить разбор и понять, какая стратегия мне подойдёт.','I want an audit and to understand which strategy fits me.']
   ];
   function isEn(){
-    try { return document.documentElement.lang === 'en' || localStorage.getItem('markovmade_lang') === 'en'; } catch(e){ return document.documentElement.lang === 'en'; }
+    try { return document.documentElement.lang === 'en' || window.mmSafeStorage.get('markovmade_lang', 'ru') === 'en'; } catch(e){ return document.documentElement.lang === 'en'; }
   }
   window.__mmDynamicTranslate = function(value){
     var s = String(value == null ? '' : value);
@@ -6278,7 +6383,7 @@ body.theme-light .mm-service-route b {
     return s;
   };
   function applyVisibleCalcLang(){
-    var ids=['body-status','body-strong','body-weak','body-strategy','body-accuracy','nutri-training-day','nutri-rest-day','nutri-check','nutrition-accuracy','recovery-accuracy','growth-risk'];
+    var ids=['body-accuracy','body-confidence-label','body-fatmass','body-ffmi','body-lbm','body-nffmi','body-status','body-strategy','body-strong','body-weak','format-first-step','format-focus','format-reason','format-send','format-start','format-title','growth-accuracy','growth-add-label','growth-gain','growth-main-label','growth-meaning','growth-multiplier','growth-risk','growth-start-label','growth-strategy','growth-term-hint','growth-total','nutri-bmr','nutri-carbs','nutri-check','nutri-fat-result','nutri-protein','nutri-rest-day','nutri-target','nutri-tdee','nutri-training-day','nutri-warning','nutrition-accuracy','nutrition-confidence-label','rec-cardio-result','rec-nutrition-result','rec-score','rec-sleep-result','rec-status','rec-training','rec-warning','recovery-accuracy'];
     ids.forEach(function(id){
       var el=document.getElementById(id);
       if(!el) return;
@@ -6799,8 +6904,10 @@ body.theme-light #main-header .header-app-link:hover { color: #17140f !important
   background: radial-gradient(circle at 50% 0%, rgb(var(--color-gold) / .09), transparent 65%), rgba(0,0,0,.25) !important;
 }
 .mm-v21-case-image img {
+  display: block !important;
   width: 100% !important;
   height: auto !important;
+  aspect-ratio: 4 / 3 !important;
   min-height: 0 !important;
   max-height: 360px !important;
   object-fit: contain !important;
@@ -6863,6 +6970,132 @@ body.theme-light #main-header .header-app-link:hover { color: #17140f !important
 html, body { max-width: 100%; overflow-x: hidden !important; }
 section, header, footer, main, .container, .mm-v13-inner { min-width: 0; }
 img, video, canvas, svg { max-width: 100%; }
+</style>
+
+
+<style id="markovmade-user-request-final-fixes-v23">
+/* === POINT FIXES: service alignment, safe badges, cases, header emphasis === */
+
+/* Header: only Services is highlighted. */
+#main-header nav > a:not([href="#services"]):not([href="#contact"]) {
+    color: rgb(var(--text-platinum) / .68) !important;
+    background: transparent !important;
+    border-color: transparent !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+#main-header nav > a[href="#services"] {
+    color: rgb(var(--color-gold)) !important;
+    background: rgb(var(--color-gold) / .085) !important;
+    border: 1px solid rgb(var(--color-gold) / .22) !important;
+    border-radius: 999px !important;
+    padding: .62rem .88rem !important;
+    text-shadow: none !important;
+}
+#mobile-menu a { color: rgb(var(--text-platinum) / .88) !important; }
+#mobile-menu a[href="#services"] {
+    color: rgb(var(--color-gold)) !important;
+    border-color: rgb(var(--color-gold) / .40) !important;
+    background: rgb(var(--color-gold) / .08) !important;
+}
+#mobile-menu a:not([href="#services"]):hover { color: rgb(var(--color-gold)) !important; }
+body.theme-light #main-header nav > a:not([href="#services"]):not([href="#contact"]) {
+    color: rgba(24,22,18,.68) !important;
+    background: transparent !important;
+}
+body.theme-light #main-header nav > a[href="#services"] {
+    color: rgb(var(--color-gold)) !important;
+    background: rgb(var(--color-gold) / .10) !important;
+    border-color: rgb(var(--color-gold) / .28) !important;
+}
+
+/* Services: the three columns and their gaps must never exceed the container. */
+#services,
+#services .container,
+#services .service-item,
+#services .service-item > button,
+#services .accordion-content,
+#services .accordion-content > div,
+#services .accordion-content .grid,
+#services .accordion-content .relative,
+#services .mm-service-route {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+}
+@media (min-width: 768px) {
+    #services .service-item > button {
+        display: grid !important;
+        grid-template-columns: minmax(190px, .85fr) minmax(0, 1.75fr) minmax(150px, .55fr) !important;
+        align-items: center !important;
+        gap: clamp(1rem, 2vw, 1.7rem) !important;
+    }
+    #services .service-item > button > div {
+        width: auto !important;
+        min-width: 0 !important;
+    }
+    #services .service-item > button > div:last-child {
+        justify-self: end !important;
+        width: max-content !important;
+        max-width: 100% !important;
+    }
+}
+#services .mm-service-route {
+    width: 100% !important;
+    overflow: hidden !important;
+}
+#services .mm-service-route span {
+    min-width: 0 !important;
+    overflow-wrap: anywhere !important;
+}
+
+/* Service image badges remain fully inside their image containers. */
+#services .service-badge {
+    left: auto !important;
+    right: 12px !important;
+    bottom: 12px !important;
+    max-width: calc(100% - 24px) !important;
+    width: max-content !important;
+    box-sizing: border-box !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    text-align: center !important;
+    line-height: 1.35 !important;
+    z-index: 5 !important;
+}
+@media (max-width: 767px) {
+    #services .service-item > button {
+        display: grid !important;
+        grid-template-columns: minmax(0,1fr) !important;
+        gap: 1rem !important;
+        padding-left: .25rem !important;
+        padding-right: .25rem !important;
+    }
+    #services .service-item > button > div {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+    #services .service-item > button > div:last-child {
+        justify-content: flex-start !important;
+        flex-wrap: wrap !important;
+        gap: .8rem !important;
+    }
+    #services .mm-service-route { grid-template-columns: 1fr !important; }
+    #services .service-badge {
+        left: 10px !important;
+        right: 10px !important;
+        bottom: 10px !important;
+        width: auto !important;
+        max-width: none !important;
+        padding: .55rem .7rem !important;
+        font-size: 9px !important;
+    }
+}
+
+/* Cases: one complete, uncropped image per direction. */
+
+/* Final horizontal-overflow guard for desktop and mobile. */
+html, body { width: 100%; max-width: 100%; overflow-x: clip !important; }
 </style>
 
 </head>
@@ -6961,7 +7194,7 @@ img, video, canvas, svg { max-width: 100%; }
         <nav class="flex flex-col items-center gap-8 min-h-min py-16 w-full">
             <a href="#calculators" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum transition-colors block" onclick="toggleMenu()">I. Расчёт</a>
             <a href="#services" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-gold transition-colors block" onclick="toggleMenu()">II. Услуги</a>
-            <a href="#app-ecosystem" class="interactive mobile-app-link font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-gold transition-colors block" onclick="toggleMenu()">III. Приложение</a>
+            <a href="#app-ecosystem" class="interactive mobile-app-link font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">III. Приложение</a>
             <a href="#about" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">IV. Обо мне</a>
             <a href="#biography" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">V. Эволюция</a>
             <a href="#team" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">VI. Команда</a>
@@ -7136,15 +7369,15 @@ img, video, canvas, svg { max-width: 100%; }
     </div>
     <div class="mm-v21-cases-grid fade-in-up">
       <article class="mm-v21-case-card">
-        <div class="mm-v21-case-image"><img src="https://i.ibb.co/0VvVNjjG/MARKOVMADE.jpg" alt="Кейс мужской силы MARKOVMADE" loading="lazy" decoding="async"></div>
+        <div class="mm-v21-case-image"><img src="https://i.ibb.co/XkjZ4N71/1.png" alt="Кейс мужской силы MARKOVMADE" loading="lazy" decoding="async"></div>
         <div class="mm-v21-case-body"><span class="mm-v19-case-kicker">Мужская сила</span><h3>Тело, которое считывается без объяснений</h3><ul class="mm-v19-case-list"><li><b>Запрос</b><span>Нужна форма, силовой вектор, уверенность и понятная структура тренировок.</span></li><li><b>Разбор</b><span>Тренировки, питание, техника, восстановление, цель и слабые места в режиме.</span></li><li><b>Выход</b><span>Силовой план, питание, первые действия и опора на тело, которое вызывает уважение.</span></li></ul></div>
       </article>
       <article class="mm-v21-case-card">
-        <div class="mm-v21-case-image"><img src="https://i.ibb.co/kscX2Zzv/MARKOVMADE.jpg" alt="Кейс женской эстетики MARKOVMADE" loading="lazy" decoding="async"></div>
+        <div class="mm-v21-case-image"><img src="https://i.ibb.co/d0YD8q2V/3.png" alt="Кейс женской эстетики MARKOVMADE" loading="lazy" decoding="async"></div>
         <div class="mm-v21-case-body"><span class="mm-v19-case-kicker">Женская эстетика</span><h3>Стройность без голодовок и откатов</h3><ul class="mm-v19-case-list"><li><b>Запрос</b><span>Хочется легче, собраннее и красивее, но без изнурительных диет и вечной вины.</span></li><li><b>Разбор</b><span>БЖУ, цикл, самочувствие, режим, привычки, ограничения и комфортный темп.</span></li><li><b>Выход</b><span>Питание без насилия, контроль формы и система, которую можно держать в обычной жизни.</span></li></ul></div>
       </article>
       <article class="mm-v21-case-card">
-        <div class="mm-v21-case-image"><img src="https://i.ibb.co/v4zj2YZ0/MARKOVMADE.jpg" alt="Кейс клинической нутрициологии MARKOVMADE" loading="lazy" decoding="async"></div>
+        <div class="mm-v21-case-image"><img src="https://i.ibb.co/TD3tmtjQ/2.png" alt="Кейс нутрициологии MARKOVMADE — трансформация девушки" loading="lazy" decoding="async"></div>
         <div class="mm-v21-case-body"><span class="mm-v19-case-kicker">Нутрициология</span><h3>Энергия, восстановление и питание по фактам</h3><ul class="mm-v19-case-list"><li><b>Запрос</b><span>Нет энергии, сон хуже, кожа или восстановление проседают, питание собрано случайно.</span></li><li><b>Разбор</b><span>Рацион, дефициты, самочувствие, режим, нагрузка и биохимическая логика питания.</span></li><li><b>Выход</b><span>Коррекция питания, понимание организма и план, который поддерживает форму и ресурс.</span></li></ul></div>
       </article>
       <article class="mm-v21-case-card">
@@ -9082,7 +9315,7 @@ img, video, canvas, svg { max-width: 100%; }
             }
         };
         const leadBuildMessage = (id) => {
-            const en = document.documentElement.lang === 'en' || localStorage.getItem('markovmade_lang') === 'en';
+            const en = document.documentElement.lang === 'en' || window.mmSafeStorage.get('markovmade_lang', 'ru') === 'en';
             const calcResults = Object.values(mmCalcSummaries || {}).filter(Boolean).map(item => {
                 return (en && window.__mmDynamicTranslate) ? window.__mmDynamicTranslate(item) : item;
             });
@@ -9139,7 +9372,7 @@ img, video, canvas, svg { max-width: 100%; }
                 const requiredIds = ['name', 'goal', 'problem'];
                 const missing = requiredIds.filter(id => !leadRead(id) || leadRead(id) === '—');
                 if (missing.length) {
-                    if (errorEl) errorEl.textContent = (document.documentElement.lang === 'en' || localStorage.getItem('markovmade_lang') === 'en') ? 'Fill in name/contact, goal and main blocker — enough for a precise first reply.' : 'Заполните имя / контакт, цель и главный стопор — этого достаточно для точного первого ответа.';
+                    if (errorEl) errorEl.textContent = (document.documentElement.lang === 'en' || window.mmSafeStorage.get('markovmade_lang', 'ru') === 'en') ? 'Fill in name/contact, goal and main blocker — enough for a precise first reply.' : 'Заполните имя / контакт, цель и главный стопор — этого достаточно для точного первого ответа.';
                     const first = document.getElementById(missing[0]);
                     if (first) first.focus();
                     return;
@@ -9182,7 +9415,7 @@ img, video, canvas, svg { max-width: 100%; }
                 const text = leadState.text || leadBuildMessage(leadState.id || 'GEN-000');
                 if(window.mmTrack) window.mmTrack('lead_copy_click',{source:'form'});
                 const ok = await leadCopy(text);
-                if (statusEl) { const en = document.documentElement.lang === 'en' || localStorage.getItem('markovmade_lang') === 'en'; statusEl.textContent = ok ? (en ? 'Request copied.' : 'Заявка скопирована.') : (en ? 'Could not copy automatically. Select the text manually.' : 'Не удалось скопировать автоматически. Выделите текст вручную.'); }
+                if (statusEl) { const en = document.documentElement.lang === 'en' || window.mmSafeStorage.get('markovmade_lang', 'ru') === 'en'; statusEl.textContent = ok ? (en ? 'Request copied.' : 'Заявка скопирована.') : (en ? 'Could not copy automatically. Select the text manually.' : 'Не удалось скопировать автоматически. Выделите текст вручную.'); }
             });
             if (backBtn) backBtn.addEventListener('click', () => {
                 const cardWrapper = document.getElementById('access-card');
@@ -9704,10 +9937,10 @@ img, video, canvas, svg { max-width: 100%; }
             const addLabel = byId('growth-add-label');
             const termHint = byId('growth-term-hint');
             const mainLabel = byId('growth-main-label');
-            if (startLabel) startLabel.textContent = cfg.start;
-            if (addLabel) addLabel.textContent = cfg.add;
-            if (termHint) termHint.textContent = mode === 'finance' ? 'Для финансов срок считается в годах.' : 'Для этого режима срок считается в месяцах.';
-            if (mainLabel) mainLabel.textContent = cfg.main;
+            if (startLabel) setText('growth-start-label', cfg.start);
+            if (addLabel) setText('growth-add-label', cfg.add);
+            if (termHint) setText('growth-term-hint', mode === 'finance' ? 'Для финансов срок считается в годах.' : 'Для этого режима срок считается в месяцах.');
+            if (mainLabel) setText('growth-main-label', cfg.main);
             if (mode === 'skill') { byId('growth-start').max = '100'; byId('growth-start').value = Math.min(num('growth-start', 40), 100); byId('growth-add').value = byId('growth-add').value || '10'; }
             else if (mode === 'discipline') { byId('growth-start').max = '100'; byId('growth-start').value = Math.min(num('growth-start', 50), 100); }
             else { byId('growth-start').max = '100000000'; }
@@ -10591,7 +10824,7 @@ img, video, canvas, svg { max-width: 100%; }
     'нехватка времени': 'lack of time'
   };
   function isEnglish(){
-    return document.documentElement.lang === 'en' || localStorage.getItem('markovmade_lang') === 'en';
+    return document.documentElement.lang === 'en' || window.mmSafeStorage.get('markovmade_lang', 'ru') === 'en';
   }
   function formatValue(raw){
     return isEnglish() ? (EN_VALUE[raw] || raw) : raw;
@@ -11620,7 +11853,7 @@ img, video, canvas, svg { max-width: 100%; }
   'Всё, что должно работать вместе, я собираю в одном приложении.': 'Everything that must work together, I bring together in one app.',
   'Не отдельные файлы, не разрозненные заметки и не бесконечные чаты. План, питание, тренировки, задачи, отчёты, динамика и база знаний собираются в одном понятном пространстве под вашу цель, график и образ жизни. Так человек видит не просто список действий, а рабочую систему под себя.': 'Not separate files, scattered notes, or endless chats. Plan, nutrition, training, tasks, reports, progress, and a knowledge base come together in one clear space built around your goal, schedule, and lifestyle. That means a person sees not just a task list, but a working system built around them.',
   'Под вашу реальность': 'Built around your real life',
-  'Цель, график, ограничения и ритм жизни учитываются сразу — без шаблонного копирования чужого режима.': 'Your goal, schedule, constraints, and pace of life are taken into account from the start — without copying someone else's routine.',
+  'Цель, график, ограничения и ритм жизни учитываются сразу — без шаблонного копирования чужого режима.': 'Your goal, schedule, constraints, and pace of life are taken into account from the start — without copying someone’s routine.',
   'Прогресс виден по факту': 'Progress is visible in reality',
   'Питание, самочувствие, форма, задачи и движение к цели видны в одном месте, без догадок.': 'Nutrition, wellbeing, physique, tasks, and movement toward the goal are visible in one place — without guesswork.',
   'Одна рабочая среда': 'One working environment',
@@ -11683,7 +11916,19 @@ img, video, canvas, svg { max-width: 100%; }
   'Понятные калории, БЖУ, контроль динамики и корректировки под реальный режим человека.': 'Clear calories, macros, progress tracking, and adjustments built around a real schedule.',
   'Мышление и дисциплина': 'Mindset and discipline',
   'Приоритеты, опора, решения и возвращение в систему после откатов, стресса и срывов.': 'Priorities, support, decisions, and returning to structure after setbacks, stress, and slips.',
-  'Открыть формат': 'Open format'
+  'Открыть формат': 'Open format',
+  'IV. Обо мне': 'IV. About me',
+  'VI. Команда': 'VI. Team',
+  'Вы стараетесь — но тело': 'You are putting in the work — but your body',
+  'Не громкие обещания —': 'Not loud promises —',
+  'Лёгкий': 'Light',
+  'Меньше разговоров — больше': 'Less talk — more',
+  'Настройки по фактам': 'Fact-based adjustments',
+  'мало энергии': 'low energy',
+  'Короткие': 'Quick',
+  'ответы': 'answers',
+  'перед заявкой.': 'before submitting.'
+
 };
     var ATTR_DICT = {
   "Сменить тему: тёмная / светлая": "Switch theme: dark / light",
@@ -11737,7 +11982,19 @@ img, video, canvas, svg { max-width: 100%; }
   'Отметьте цель и главный стопор — я получу контекст, а вы сразу перейдёте от размышлений к первому действию.': 'Select your goal and main blocker — I get the context, and you move from thinking to the first action.',
   'Отметьте пункты выше — и заявка станет конкретной.': 'Select the points above — and your request becomes specific.',
   'Кому подходит': 'Best for',
-  'Что получаете': 'You get'
+  'Что получаете': 'You get',
+  'IV. Обо мне': 'IV. About me',
+  'VI. Команда': 'VI. Team',
+  'Вы стараетесь — но тело': 'You are putting in the work — but your body',
+  'Не громкие обещания —': 'Not loud promises —',
+  'Лёгкий': 'Light',
+  'Меньше разговоров — больше': 'Less talk — more',
+  'Настройки по фактам': 'Fact-based adjustments',
+  'мало энергии': 'low energy',
+  'Короткие': 'Quick',
+  'ответы': 'answers',
+  'перед заявкой.': 'before submitting.'
+
 };
     var META = {
         ru: {
@@ -11749,7 +12006,7 @@ img, video, canvas, svg { max-width: 100%; }
             description: 'MARKOVMADE is Pavel Markov’s personal system: FFMI, macros, recovery and progress assessment, body, nutrition, mindset, routine and a custom app built around the goal.'
         }
     };
-    var currentLang = localStorage.getItem('markovmade_lang') || 'ru';
+    var currentLang = window.mmSafeStorage.get('markovmade_lang', 'ru') || 'ru';
     var textOriginals = new WeakMap();
     var attrOriginals = new WeakMap();
     var partialKeys = Object.keys(DICT).filter(function(k) { return k.length > 7; }).sort(function(a,b) { return b.length - a.length; });
@@ -11767,7 +12024,7 @@ img, video, canvas, svg { max-width: 100%; }
             if (out.indexOf(k) !== -1) out = out.replace(new RegExp(escapeRegExp(k), 'g'), DICT[k]);
         });
         // safe short exact replacements only with clear separators
-        out = out.replace(/кг/g, 'kg').replace(/см/g, 'cm').replace(/ккал/g, 'kcal').replace(/БЖУ/g, 'macros').replace(/ЦНС/g, 'CNS');
+        out = out.replace(/\bкг\b/g, 'kg').replace(/\bсм\b/g, 'cm').replace(/\bккал\b/g, 'kcal').replace(/\bБЖУ\b/g, 'macros').replace(/\bЦНС\b/g, 'CNS');
         return leading + out + trailing;
     }
     function shouldSkipNode(node) {
@@ -11831,7 +12088,7 @@ img, video, canvas, svg { max-width: 100%; }
     }
     function applyLanguage(lang, root) {
         currentLang = lang;
-        localStorage.setItem('markovmade_lang', lang);
+        window.mmSafeStorage.set('markovmade_lang', lang);
         updateMeta(lang);
         updateButtons(lang);
         walkText(root || document.body, function(node) {
