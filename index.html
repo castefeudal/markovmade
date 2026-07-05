@@ -7102,7 +7102,7 @@ html, body { width: 100%; max-width: 100%; overflow-x: clip !important; }
 
 <style id="markovmade-hero-head-v8">
 /* ========================================================================== 
-   MARKOVMADE — HERO-HEAD2 / NATURAL INTERACTION V8
+   MARKOVMADE — HERO-HEAD2 / NATURAL INTERACTION V9
    Важно: никаких зеркальных переворотов, масок лица и искусственной подмены
    частей кадра. Всегда отображается цельный оригинальный кадр hero-head2.mp4.
    ========================================================================== */
@@ -7148,7 +7148,9 @@ html, body { width: 100%; max-width: 100%; overflow-x: clip !important; }
 .mm-hero-media .mm-hero-video,
 .mm-hero-media .mm-hero-canvas {
     position: absolute;
-    right: clamp(-34px, -1.6vw, -8px);
+    /* V9: кадр специально смещён вправо. Так лицо не наезжает на заголовок,
+       а нижний правый водяной знак исходного видео уходит за пределы экрана. */
+    right: clamp(-235px, -10.5vw, -170px);
     bottom: 0;
     top: auto;
     left: auto;
@@ -7270,7 +7272,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
 
 <style id="markovmade-hero-head-mobile-v8">
 /* ========================================================================== 
-   MARKOVMADE — MOBILE HERO-HEAD2 V8
+   MARKOVMADE — MOBILE HERO-HEAD2 V9
    Цельный кадр без растяжения и без обрезания лица. На узком экране режутся
    только пустые чёрные поля исходного 4:3-видео, а не сам персонаж.
    ========================================================================== */
@@ -7358,7 +7360,13 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
         max-width: none !important;
         object-fit: contain !important;
         object-position: center bottom !important;
-        transform: translate3d(calc(-50% + var(--mm-hero-x)), var(--mm-hero-y), 0) !important;
+        /* V9: небольшой безопасный сдвиг вправо на телефонах и планшетах.
+           Лицо остаётся целиком, пустое поле слева сокращается, watermark не попадает в кадр. */
+        transform: translate3d(
+            calc(-50% + var(--mm-hero-x) + clamp(18px, 5.5vw, 42px)),
+            var(--mm-hero-y),
+            0
+        ) !important;
         transform-origin: center bottom !important;
         filter: grayscale(2%) saturate(1.08) contrast(105%) brightness(98%) !important;
     }
@@ -7505,6 +7513,18 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
 }
 
 @media (max-width: 420px) {
+    /* На узких телефонах оставляем более деликатный сдвиг, чтобы оба уха и плечи
+       оставались в безопасной зоне экрана. */
+    .mm-hero-media .mm-hero-fallback,
+    .mm-hero-media .mm-hero-video,
+    .mm-hero-media .mm-hero-canvas {
+        transform: translate3d(
+            calc(-50% + var(--mm-hero-x) + 20px),
+            var(--mm-hero-y),
+            0
+        ) !important;
+    }
+
     #hero > .container {
         padding-top: clamp(345px, 51svh, 470px) !important;
     }
@@ -7525,6 +7545,16 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
 }
 
 @media (max-width: 900px) and (orientation: landscape) {
+    .mm-hero-media .mm-hero-fallback,
+    .mm-hero-media .mm-hero-video,
+    .mm-hero-media .mm-hero-canvas {
+        transform: translate3d(
+            calc(-50% + var(--mm-hero-x) + 30px),
+            var(--mm-hero-y),
+            0
+        ) !important;
+    }
+
     #hero {
         min-height: 720px !important;
     }
@@ -7714,7 +7744,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                     controlslist="nodownload noplaybackrate nofullscreen"
                     aria-hidden="true"
                 >
-                    <source src="./hero-head2.mp4?v=20260705-2" type="video/mp4">
+                    <source src="./hero-head2.mp4?v=20260705-3" type="video/mp4">
                 </video>
 
                 <!-- Canvas выводит только цельные кадры исходного ролика без зеркалирования и масок. -->
