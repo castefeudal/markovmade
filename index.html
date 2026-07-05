@@ -7100,9 +7100,9 @@ html, body { width: 100%; max-width: 100%; overflow-x: clip !important; }
 
 
 
-<style id="markovmade-hero-head-v4">
+<style id="markovmade-hero-head-v5">
 /* ========================================================================== 
-   MARKOVMADE — ИНТЕРАКТИВНАЯ ГОЛОВА V4
+   MARKOVMADE — ИНТЕРАКТИВНАЯ ГОЛОВА V5
    Основной режим: видео один раз декодируется в набор кадров, после чего
    положение головы мгновенно следует за курсором даже при движении назад.
    Файл hero-head.mp4 должен лежать рядом с index.html.
@@ -7423,7 +7423,7 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
                     controlslist="nodownload noplaybackrate nofullscreen"
                     aria-hidden="true"
                 >
-                    <source src="./hero-head.mp4?v=20260705-4" type="video/mp4">
+                    <source src="./hero-head.mp4?v=20260705-6" type="video/mp4">
                 </video>
 
                 <!-- На этот canvas выводятся подготовленные кадры ролика. -->
@@ -12437,7 +12437,7 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
 
 
 
-<script id="markovmade-hero-head-controller-v4">
+<script id="markovmade-hero-head-controller-v5">
 (function () {
     'use strict';
 
@@ -12458,28 +12458,35 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
         video.controls = false;
 
         var settings = {
-            /* Обрезаем неподвижные/служебные края ролика. */
-            startRatio: 0.025,
-            endRatio: 0.975,
+            /*
+             * Три опорные точки внутри исходного ролика:
+             * leftRatio   — герой максимально смотрит влево;
+             * centerRatio — герой смотрит прямо;
+             * rightRatio  — герой максимально смотрит вправо.
+             * Значения задаются как доля длительности ролика: от 0 до 1.
+             */
+            leftRatio: 0.02,
+            centerRatio: 0.50,
+            rightRatio: 0.98,
 
-            /* Измените на true, если герой поворачивается противоположно курсору. */
+            /* true — если движение в ролике записано справа налево. */
             reverse: false,
 
-            /* Чем выше число, тем быстрее голова догоняет курсор. */
-            smoothing: 0.24,
+            /* Чем выше значение, тем быстрее голова догоняет курсор. */
+            smoothing: 0.22,
 
-            /* Параллакс всего изображения — движение очень небольшое. */
+            /* Небольшой параллакс всей фигуры. */
             desktopShiftX: 10,
             desktopShiftY: 5,
             mobileShiftX: 4,
             mobileShiftY: 2,
 
-            /* Настройки запасной перемотки видео. */
-            directSeekInterval: 34,
-            directSeekEpsilon: 0.012,
+            /* Запасной режим прямой перемотки видео. */
+            directSeekInterval: 32,
+            directSeekEpsilon: 0.010,
 
             /* Возврат головы в центр после отпускания пальца. */
-            mobileReturnDelay: 700
+            mobileReturnDelay: 650
         };
 
         var reducedMotion = window.matchMedia &&
@@ -12491,7 +12498,11 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
         var frames = [];
         var duration = 0;
         var usefulStart = 0;
+        var usefulCenter = 0;
         var usefulEnd = 0;
+        var sourceStartRatio = 0;
+        var sourceCenterRatio = 0.5;
+        var sourceEndRatio = 1;
         var targetProgress = 0.5;
         var renderedProgress = 0.5;
         var lastDrawnIndex = -1;
@@ -12505,6 +12516,10 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
 
         function clamp(value, min, max) {
             return Math.min(max, Math.max(min, value));
+        }
+
+        function lerp(start, end, amount) {
+            return start + (end - start) * amount;
         }
 
         function wait(milliseconds) {
@@ -12553,6 +12568,24 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
             await waitForEvent(video, 'loadedmetadata', 12000);
         }
 
+        function calculateSourcePoints() {
+            sourceStartRatio = clamp(settings.leftRatio, 0, 0.995);
+            sourceEndRatio = clamp(settings.rightRatio, sourceStartRatio + 0.002, 1);
+            sourceCenterRatio = clamp(
+                settings.centerRatio,
+                sourceStartRatio + 0.001,
+                sourceEndRatio - 0.001
+            );
+
+            usefulStart = clamp(duration * sourceStartRatio, 0.001, duration - 0.003);
+            usefulEnd = clamp(duration * sourceEndRatio, usefulStart + 0.002, duration - 0.001);
+            usefulCenter = clamp(
+                duration * sourceCenterRatio,
+                usefulStart + 0.001,
+                usefulEnd - 0.001
+            );
+        }
+
         async function seekVideo(time) {
             var safeTime = clamp(time, 0.001, Math.max(0.001, duration - 0.001));
 
@@ -12575,13 +12608,13 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
             var sourceWidth = Math.max(1, video.videoWidth || 1280);
             var sourceHeight = Math.max(1, video.videoHeight || 720);
             var lowMemory = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4;
-            var maxWidth = coarsePointer ? 640 : (lowMemory ? 800 : 1040);
+            var maxWidth = coarsePointer ? 640 : (lowMemory ? 800 : 960);
             var width = Math.min(sourceWidth, maxWidth);
             var height = Math.max(1, Math.round(width * sourceHeight / sourceWidth));
-            var fps = coarsePointer ? 8 : (lowMemory ? 10 : 12);
+            var fps = coarsePointer ? 8 : (lowMemory ? 9 : 11);
             var count = Math.round((usefulEnd - usefulStart) * fps) + 1;
 
-            count = clamp(count, coarsePointer ? 24 : 32, coarsePointer ? 40 : 64);
+            count = clamp(count, coarsePointer ? 24 : 30, coarsePointer ? 42 : 60);
 
             return {
                 width: width,
@@ -12632,7 +12665,9 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
                     window.clearTimeout(timeoutId);
                     if (intervalId) window.clearInterval(intervalId);
                     if (callbackId && typeof video.cancelVideoFrameCallback === 'function') {
-                        try { video.cancelVideoFrameCallback(callbackId); } catch (cancelError) {}
+                        try {
+                            video.cancelVideoFrameCallback(callbackId);
+                        } catch (cancelError) {}
                     }
                     video.pause();
                     video.playbackRate = 1;
@@ -12659,7 +12694,11 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
                 }
 
                 function onVideoFrame(now, metadata) {
-                    captureAt(metadata && Number.isFinite(metadata.mediaTime) ? metadata.mediaTime : video.currentTime);
+                    captureAt(
+                        metadata && Number.isFinite(metadata.mediaTime)
+                            ? metadata.mediaTime
+                            : video.currentTime
+                    );
                     if (!finished) callbackId = video.requestVideoFrameCallback(onVideoFrame);
                 }
 
@@ -12693,18 +12732,52 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
                 await seekVideo(targetTimes[i]);
                 captured.push(createFrame(geometry.width, geometry.height));
 
-                /* Не блокируем интерфейс длинной синхронной серией. */
                 if (i % 6 === 5) await wait(0);
             }
 
             return captured;
         }
 
+        /*
+         * Явно разделяем экран на две половины:
+         * 0...0.5  = левый поворот -> прямой взгляд;
+         * 0.5...1  = прямой взгляд -> правый поворот.
+         * Благодаря этому середина ролика больше не считается автоматически
+         * и правая половина использует отдельный участок видео.
+         */
+        function progressToSourceRatio(progress) {
+            var pointerProgress = clamp(progress, 0, 1);
+
+            if (settings.reverse) {
+                pointerProgress = 1 - pointerProgress;
+            }
+
+            if (pointerProgress <= 0.5) {
+                return lerp(
+                    sourceStartRatio,
+                    sourceCenterRatio,
+                    pointerProgress / 0.5
+                );
+            }
+
+            return lerp(
+                sourceCenterRatio,
+                sourceEndRatio,
+                (pointerProgress - 0.5) / 0.5
+            );
+        }
+
+        function progressToFramePosition(progress) {
+            var sourceRatio = progressToSourceRatio(progress);
+            var sourceSpan = Math.max(0.001, sourceEndRatio - sourceStartRatio);
+            return clamp((sourceRatio - sourceStartRatio) / sourceSpan, 0, 1);
+        }
+
         function drawFrame(progress, force) {
             if (!frames.length || !context) return;
 
-            var normalized = settings.reverse ? 1 - progress : progress;
-            var index = Math.round(clamp(normalized, 0, 1) * (frames.length - 1));
+            var normalized = progressToFramePosition(progress);
+            var index = Math.round(normalized * (frames.length - 1));
 
             if (!force && index === lastDrawnIndex) return;
 
@@ -12718,11 +12791,13 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
 
             context.drawImage(frame, 0, 0, canvas.width, canvas.height);
             lastDrawnIndex = index;
+
+            media.dataset.mmProgress = progress.toFixed(3);
+            media.dataset.mmSourceRatio = progressToSourceRatio(progress).toFixed(3);
         }
 
         function progressToTime(progress) {
-            var normalized = settings.reverse ? 1 - progress : progress;
-            return usefulStart + (usefulEnd - usefulStart) * clamp(normalized, 0, 1);
+            return duration * progressToSourceRatio(progress);
         }
 
         function updateDirectVideo(timestamp) {
@@ -12735,6 +12810,8 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
             try {
                 video.currentTime = desiredTime;
                 lastSeekAt = timestamp;
+                media.dataset.mmProgress = renderedProgress.toFixed(3);
+                media.dataset.mmSourceRatio = progressToSourceRatio(renderedProgress).toFixed(3);
             } catch (error) {}
         }
 
@@ -12749,7 +12826,8 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
             if (destroyed || !heroVisible || document.hidden || reducedMotion) return;
 
             renderedProgress += (targetProgress - renderedProgress) * settings.smoothing;
-            if (Math.abs(targetProgress - renderedProgress) < 0.0006) {
+
+            if (Math.abs(targetProgress - renderedProgress) < 0.0005) {
                 renderedProgress = targetProgress;
             }
 
@@ -12760,7 +12838,7 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
             }
 
             if (
-                Math.abs(targetProgress - renderedProgress) > 0.0006 ||
+                Math.abs(targetProgress - renderedProgress) > 0.0005 ||
                 (directMode && video.seeking)
             ) {
                 requestAnimation();
@@ -12789,10 +12867,13 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
 
             if (immediate) {
                 renderedProgress = targetProgress;
+
                 if (frames.length) {
                     drawFrame(renderedProgress, true);
                 } else if (directMode && duration) {
-                    try { video.currentTime = progressToTime(renderedProgress); } catch (error) {}
+                    try {
+                        video.currentTime = progressToTime(renderedProgress);
+                    } catch (error) {}
                 }
             }
 
@@ -12803,7 +12884,8 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
             var rect = hero.getBoundingClientRect();
             if (!rect.width || !rect.height) return;
 
-            var progressX = clamp((clientX - rect.left) / rect.width, 0, 1);
+            /* X берётся от всей ширины окна — обе стороны экрана работают симметрично. */
+            var progressX = clamp(clientX / Math.max(1, window.innerWidth), 0, 1);
             var progressY = clamp((clientY - rect.top) / rect.height, 0, 1);
 
             window.clearTimeout(returnTimer);
@@ -12823,16 +12905,18 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
             directMode = true;
             media.classList.add('mm-direct-ready');
             video.pause();
-            setProgress(0.5, true);
+            setProgress(targetProgress, true);
         }
 
         function markVideoError(error) {
             media.classList.remove('mm-frames-ready', 'mm-direct-ready');
             media.classList.add('mm-video-error');
+
             if (animationFrame) {
                 window.cancelAnimationFrame(animationFrame);
                 animationFrame = 0;
             }
+
             if (window.console && console.warn) {
                 console.warn('[MARKOVMADE] hero-head.mp4 не загрузился:', error || 'unknown error');
             }
@@ -12843,10 +12927,10 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
                 await ensureMetadata();
 
                 duration = video.duration;
-                usefulStart = clamp(duration * settings.startRatio, 0.001, duration - 0.002);
-                usefulEnd = clamp(duration * settings.endRatio, usefulStart + 0.001, duration - 0.001);
+                calculateSourcePoints();
 
-                await seekVideo((usefulStart + usefulEnd) / 2);
+                /* Стартуем строго с кадра, где герой смотрит прямо. */
+                await seekVideo(usefulCenter);
                 enableDirectMode();
 
                 if (reducedMotion) return;
@@ -12872,7 +12956,7 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
                 frames = captured;
                 directMode = false;
                 video.pause();
-                drawFrame(0.5, true);
+                drawFrame(renderedProgress, true);
                 media.classList.remove('mm-direct-ready');
                 media.classList.add('mm-frames-ready');
                 media.dataset.mmFrameCount = String(frames.length);
@@ -12880,11 +12964,14 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
             } catch (error) {
                 if (Number.isFinite(video.duration) && video.duration > 0) {
                     duration = video.duration;
-                    usefulStart = clamp(duration * settings.startRatio, 0.001, duration - 0.002);
-                    usefulEnd = clamp(duration * settings.endRatio, usefulStart + 0.001, duration - 0.001);
+                    calculateSourcePoints();
                     enableDirectMode();
+
                     if (window.console && console.warn) {
-                        console.warn('[MARKOVMADE] Кэш кадров недоступен, включена прямая перемотка:', error);
+                        console.warn(
+                            '[MARKOVMADE] Кэш кадров недоступен, включена прямая перемотка:',
+                            error
+                        );
                     }
                 } else {
                     markVideoError(error);
@@ -12898,7 +12985,7 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
 
         video.addEventListener('seeked', requestAnimation);
 
-        /* Компьютер: положение головы зависит от X-координаты курсора. */
+        /* Компьютер: курсор слева/по центру/справа выбирает три зоны ролика. */
         window.addEventListener('pointermove', function (event) {
             if (
                 reducedMotion ||
@@ -12961,6 +13048,7 @@ body.theme-soft .mm-hero-media .mm-hero-canvas {
 
         document.addEventListener('visibilitychange', function () {
             video.pause();
+
             if (document.hidden && animationFrame) {
                 window.cancelAnimationFrame(animationFrame);
                 animationFrame = 0;
