@@ -7100,10 +7100,12 @@ html, body { width: 100%; max-width: 100%; overflow-x: clip !important; }
 
 
 
-<style id="markovmade-hero-video-v3">
+<style id="markovmade-hero-head-v4">
 /* ========================================================================== 
-   MARKOVMADE — ИНТЕРАКТИВНОЕ ВИДЕО В ПЕРВОМ ЭКРАНЕ
-   Файл: hero-head.mp4, рядом с index.html
+   MARKOVMADE — ИНТЕРАКТИВНАЯ ГОЛОВА V4
+   Основной режим: видео один раз декодируется в набор кадров, после чего
+   положение головы мгновенно следует за курсором даже при движении назад.
+   Файл hero-head.mp4 должен лежать рядом с index.html.
    ========================================================================== */
 
 #hero {
@@ -7116,7 +7118,8 @@ html, body { width: 100%; max-width: 100%; overflow-x: clip !important; }
 }
 
 .mm-hero-media .mm-hero-fallback,
-.mm-hero-media .mm-hero-video {
+.mm-hero-media .mm-hero-video,
+.mm-hero-media .mm-hero-canvas {
     position: absolute;
     top: 0;
     right: 0;
@@ -7124,42 +7127,64 @@ html, body { width: 100%; max-width: 100%; overflow-x: clip !important; }
     height: 100%;
     object-fit: cover;
     object-position: center 18%;
-    transform: translate3d(var(--mm-hero-x), var(--mm-hero-y), 0) scale(1.025);
+    transform: translate3d(var(--mm-hero-x), var(--mm-hero-y), 0) scale(1.035);
     transform-origin: center center;
     pointer-events: none;
     user-select: none;
     -webkit-user-select: none;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+    will-change: transform, opacity;
 }
 
 .mm-hero-media .mm-hero-fallback {
     z-index: 0;
     opacity: .94;
     filter: grayscale(28%) contrast(101%) brightness(88%);
-    transition: opacity .32s ease, filter .5s ease, transform .18s linear;
+    transition: opacity .35s ease, filter .5s ease, transform .16s linear;
 }
 
+/* Видео используется как невидимый декодер и как запасной интерактивный режим. */
 .mm-hero-media .mm-hero-video {
     z-index: 1;
     display: block;
     max-width: none;
     opacity: 0;
     filter: grayscale(28%) contrast(101%) brightness(88%);
-    transition: opacity .32s ease, filter .5s ease, transform .18s linear;
+    transition: opacity .35s ease, filter .5s ease, transform .16s linear;
 }
 
-/* Видео показывается только после успешной загрузки и установки стартового кадра. */
-.mm-hero-media.mm-video-ready .mm-hero-video {
+/* Canvas показывает заранее подготовленные кадры и обеспечивает плавное движение назад. */
+.mm-hero-media .mm-hero-canvas {
+    z-index: 1;
+    display: block;
+    max-width: none;
+    opacity: 0;
+    filter: grayscale(28%) contrast(101%) brightness(88%);
+    transition: opacity .35s ease, filter .5s ease, transform .16s linear;
+}
+
+.mm-hero-media.mm-frames-ready .mm-hero-canvas {
     opacity: .94;
 }
 
-.mm-hero-media.mm-video-ready .mm-hero-fallback {
+.mm-hero-media.mm-frames-ready .mm-hero-fallback,
+.mm-hero-media.mm-frames-ready .mm-hero-video {
     opacity: 0;
 }
 
-/* При ошибке видео сайт продолжает работать со старым изображением. */
-.mm-hero-media.mm-video-error .mm-hero-video {
+/* Запасной режим: если кэш кадров не создался, используется обычная перемотка видео. */
+.mm-hero-media.mm-direct-ready:not(.mm-frames-ready) .mm-hero-video {
+    opacity: .94;
+}
+
+.mm-hero-media.mm-direct-ready:not(.mm-frames-ready) .mm-hero-fallback {
+    opacity: 0;
+}
+
+/* Если ролик не загрузился, остаётся исходная фотография. */
+.mm-hero-media.mm-video-error .mm-hero-video,
+.mm-hero-media.mm-video-error .mm-hero-canvas {
     display: none;
 }
 
@@ -7167,69 +7192,68 @@ html, body { width: 100%; max-width: 100%; overflow-x: clip !important; }
     opacity: .94;
 }
 
-body:not(.theme-light) .hero-premium:hover .mm-hero-media.mm-video-ready .mm-hero-video,
-body:not(.theme-light) .mm-hero-media.mm-video-ready .mm-hero-video.mm-img-color {
+body:not(.theme-light) .hero-premium:hover .mm-hero-media.mm-frames-ready .mm-hero-canvas,
+body:not(.theme-light) .hero-premium:hover .mm-hero-media.mm-direct-ready .mm-hero-video,
+body:not(.theme-light) .mm-hero-media .mm-img-color {
     filter: grayscale(0%) saturate(1.10) contrast(104%) brightness(94%);
     opacity: .98;
 }
 
 body.theme-light .mm-hero-media .mm-hero-fallback,
-body.theme-light .mm-hero-media .mm-hero-video {
+body.theme-light .mm-hero-media .mm-hero-video,
+body.theme-light .mm-hero-media .mm-hero-canvas {
     filter: grayscale(20%) contrast(96%) brightness(94%) saturate(88%) !important;
 }
 
-body.theme-light .mm-hero-media.mm-video-ready .mm-hero-video {
+body.theme-light .mm-hero-media.mm-frames-ready .mm-hero-canvas,
+body.theme-light .mm-hero-media.mm-direct-ready:not(.mm-frames-ready) .mm-hero-video {
     opacity: .78;
 }
 
-body.theme-light .mm-hero-media.mm-video-ready .mm-hero-fallback {
-    opacity: 0;
-}
-
 body.theme-soft .mm-hero-media .mm-hero-fallback,
-body.theme-soft .mm-hero-media .mm-hero-video {
+body.theme-soft .mm-hero-media .mm-hero-video,
+body.theme-soft .mm-hero-media .mm-hero-canvas {
     filter: grayscale(28%) contrast(85%) brightness(90%) !important;
 }
 
 @media (max-width: 1024px) {
     .mm-hero-media .mm-hero-fallback,
-    .mm-hero-media .mm-hero-video {
+    .mm-hero-media .mm-hero-video,
+    .mm-hero-media .mm-hero-canvas {
         left: 0;
         right: auto;
         width: 100% !important;
         height: 100%;
         object-position: center top !important;
-        transform: translate3d(var(--mm-hero-x), var(--mm-hero-y), 0) scale(1.015);
+        transform: translate3d(var(--mm-hero-x), var(--mm-hero-y), 0) scale(1.025);
         filter: grayscale(35%) contrast(104%) brightness(66%) !important;
     }
 
-    .mm-hero-media.mm-video-ready .mm-hero-video {
-        opacity: .38 !important;
-    }
-
+    .mm-hero-media.mm-frames-ready .mm-hero-canvas,
+    .mm-hero-media.mm-direct-ready:not(.mm-frames-ready) .mm-hero-video,
     .mm-hero-media.mm-video-error .mm-hero-fallback,
-    .mm-hero-media:not(.mm-video-ready) .mm-hero-fallback {
-        opacity: .38 !important;
+    .mm-hero-media:not(.mm-frames-ready):not(.mm-direct-ready) .mm-hero-fallback {
+        opacity: .40 !important;
     }
 
     body.theme-light .mm-hero-media .mm-hero-fallback,
-    body.theme-light .mm-hero-media .mm-hero-video {
+    body.theme-light .mm-hero-media .mm-hero-video,
+    body.theme-light .mm-hero-media .mm-hero-canvas {
         filter: grayscale(20%) contrast(94%) brightness(86%) saturate(88%) !important;
     }
 
-    body.theme-light .mm-hero-media.mm-video-ready .mm-hero-video {
-        opacity: .42 !important;
-    }
-
+    body.theme-light .mm-hero-media.mm-frames-ready .mm-hero-canvas,
+    body.theme-light .mm-hero-media.mm-direct-ready:not(.mm-frames-ready) .mm-hero-video,
     body.theme-light .mm-hero-media.mm-video-error .mm-hero-fallback,
-    body.theme-light .mm-hero-media:not(.mm-video-ready) .mm-hero-fallback {
-        opacity: .42 !important;
+    body.theme-light .mm-hero-media:not(.mm-frames-ready):not(.mm-direct-ready) .mm-hero-fallback {
+        opacity: .43 !important;
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .mm-hero-media .mm-hero-fallback,
-    .mm-hero-media .mm-hero-video {
+    .mm-hero-media .mm-hero-video,
+    .mm-hero-media .mm-hero-canvas {
         transition: opacity .2s ease, filter .2s ease !important;
         transform: scale(1.025) !important;
     }
@@ -7399,8 +7423,17 @@ body.theme-soft .mm-hero-media .mm-hero-video {
                     controlslist="nodownload noplaybackrate nofullscreen"
                     aria-hidden="true"
                 >
-                    <source src="./hero-head.mp4" type="video/mp4">
+                    <source src="./hero-head.mp4?v=20260705-4" type="video/mp4">
                 </video>
+
+                <!-- На этот canvas выводятся подготовленные кадры ролика. -->
+                <canvas
+                    id="hero-head-canvas"
+                    class="mm-hero-canvas"
+                    width="1280"
+                    height="720"
+                    aria-hidden="true"
+                ></canvas>
             </div>
 
             <div class="container mx-auto px-6 md:px-12 lg:px-20 relative z-10">
@@ -12404,80 +12437,341 @@ body.theme-soft .mm-hero-media .mm-hero-video {
 
 
 
-<script id="markovmade-hero-video-controller-v3">
+<script id="markovmade-hero-head-controller-v4">
 (function () {
     'use strict';
 
-    function initMarkovmadeHeroVideo() {
+    function initMarkovmadeHeroHead() {
         var hero = document.getElementById('hero');
         var media = hero ? hero.querySelector('.mm-hero-media') : null;
         var video = document.getElementById('hero-head-video');
+        var canvas = document.getElementById('hero-head-canvas');
 
-        if (!hero || !media || !video || video.dataset.mmInitialized === 'true') {
+        if (!hero || !media || !video || !canvas || media.dataset.mmHeadReady === 'true') {
             return;
         }
 
-        video.dataset.mmInitialized = 'true';
+        media.dataset.mmHeadReady = 'true';
         video.muted = true;
         video.defaultMuted = true;
         video.playsInline = true;
+        video.controls = false;
 
         var settings = {
-            /* Начало и конец полезного движения внутри ролика. */
-            startRatio: 0.02,
-            endRatio: 0.98,
+            /* Обрезаем неподвижные/служебные края ролика. */
+            startRatio: 0.025,
+            endRatio: 0.975,
 
-            /* Поставьте true только если голова движется противоположно курсору. */
+            /* Измените на true, если герой поворачивается противоположно курсору. */
             reverse: false,
 
-            /* Скорость сглаживания. Больше число — быстрее реакция. */
-            smoothing: 0.20,
+            /* Чем выше число, тем быстрее голова догоняет курсор. */
+            smoothing: 0.24,
 
-            /* Ограничение частоты перемотки видео. */
-            seekInterval: 42,
+            /* Параллакс всего изображения — движение очень небольшое. */
+            desktopShiftX: 10,
+            desktopShiftY: 5,
+            mobileShiftX: 4,
+            mobileShiftY: 2,
 
-            /* Через сколько мс после отпускания пальца вернуть голову в центр. */
-            mobileReturnDelay: 650
+            /* Настройки запасной перемотки видео. */
+            directSeekInterval: 34,
+            directSeekEpsilon: 0.012,
+
+            /* Возврат головы в центр после отпускания пальца. */
+            mobileReturnDelay: 700
         };
 
         var reducedMotion = window.matchMedia &&
             window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var coarsePointer = window.matchMedia &&
+            window.matchMedia('(hover: none), (pointer: coarse)').matches;
 
+        var context = canvas.getContext('2d', { alpha: false });
+        var frames = [];
         var duration = 0;
+        var usefulStart = 0;
+        var usefulEnd = 0;
         var targetProgress = 0.5;
         var renderedProgress = 0.5;
-        var frameRequest = 0;
-        var lastSeekTime = 0;
+        var lastDrawnIndex = -1;
+        var animationFrame = 0;
+        var lastSeekAt = 0;
         var heroVisible = true;
         var touchActive = false;
         var returnTimer = 0;
-        var firstFramePrepared = false;
+        var directMode = false;
+        var destroyed = false;
 
         function clamp(value, min, max) {
             return Math.min(max, Math.max(min, value));
         }
 
-        function progressToTime(progress) {
-            if (!duration) return 0;
+        function wait(milliseconds) {
+            return new Promise(function (resolve) {
+                window.setTimeout(resolve, milliseconds);
+            });
+        }
+
+        function waitForEvent(target, eventName, timeout) {
+            return new Promise(function (resolve, reject) {
+                var timer = window.setTimeout(function () {
+                    cleanup();
+                    reject(new Error('Timeout: ' + eventName));
+                }, timeout || 8000);
+
+                function cleanup() {
+                    window.clearTimeout(timer);
+                    target.removeEventListener(eventName, onEvent);
+                    target.removeEventListener('error', onError);
+                }
+
+                function onEvent(event) {
+                    cleanup();
+                    resolve(event);
+                }
+
+                function onError() {
+                    cleanup();
+                    reject(new Error('Video loading error'));
+                }
+
+                target.addEventListener(eventName, onEvent, { once: true });
+                target.addEventListener('error', onError, { once: true });
+            });
+        }
+
+        async function ensureMetadata() {
+            if (Number.isFinite(video.duration) && video.duration > 0 && video.readyState >= 1) {
+                return;
+            }
+
+            try {
+                video.load();
+            } catch (error) {}
+
+            await waitForEvent(video, 'loadedmetadata', 12000);
+        }
+
+        async function seekVideo(time) {
+            var safeTime = clamp(time, 0.001, Math.max(0.001, duration - 0.001));
+
+            if (Math.abs(video.currentTime - safeTime) < 0.008 && video.readyState >= 2) {
+                return;
+            }
+
+            var seekPromise = waitForEvent(video, 'seeked', 5000);
+            video.currentTime = safeTime;
+            await seekPromise;
+
+            if (video.readyState < 2) {
+                try {
+                    await waitForEvent(video, 'loadeddata', 4000);
+                } catch (error) {}
+            }
+        }
+
+        function calculateFrameGeometry() {
+            var sourceWidth = Math.max(1, video.videoWidth || 1280);
+            var sourceHeight = Math.max(1, video.videoHeight || 720);
+            var lowMemory = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4;
+            var maxWidth = coarsePointer ? 640 : (lowMemory ? 800 : 1040);
+            var width = Math.min(sourceWidth, maxWidth);
+            var height = Math.max(1, Math.round(width * sourceHeight / sourceWidth));
+            var fps = coarsePointer ? 8 : (lowMemory ? 10 : 12);
+            var count = Math.round((usefulEnd - usefulStart) * fps) + 1;
+
+            count = clamp(count, coarsePointer ? 24 : 32, coarsePointer ? 40 : 64);
+
+            return {
+                width: width,
+                height: height,
+                count: count
+            };
+        }
+
+        function createFrame(width, height) {
+            var frameCanvas = document.createElement('canvas');
+            frameCanvas.width = width;
+            frameCanvas.height = height;
+            var frameContext = frameCanvas.getContext('2d', { alpha: false });
+            frameContext.drawImage(video, 0, 0, width, height);
+            return frameCanvas;
+        }
+
+        function buildTargetTimes(count) {
+            var result = [];
+            var span = Math.max(0.001, usefulEnd - usefulStart);
+
+            for (var i = 0; i < count; i += 1) {
+                result.push(usefulStart + span * (i / Math.max(1, count - 1)));
+            }
+
+            return result;
+        }
+
+        async function captureFramesByPlayback(geometry, targetTimes) {
+            var captured = [];
+            var nextTarget = 0;
+            var callbackId = 0;
+            var intervalId = 0;
+            var finished = false;
+
+            await seekVideo(targetTimes[0]);
+            captured.push(createFrame(geometry.width, geometry.height));
+            nextTarget = 1;
+
+            return new Promise(function (resolve, reject) {
+                var timeoutId = window.setTimeout(function () {
+                    finish(new Error('Frame capture timeout'));
+                }, Math.max(10000, duration * 4500));
+
+                function finish(error) {
+                    if (finished) return;
+                    finished = true;
+                    window.clearTimeout(timeoutId);
+                    if (intervalId) window.clearInterval(intervalId);
+                    if (callbackId && typeof video.cancelVideoFrameCallback === 'function') {
+                        try { video.cancelVideoFrameCallback(callbackId); } catch (cancelError) {}
+                    }
+                    video.pause();
+                    video.playbackRate = 1;
+                    if (error) reject(error); else resolve(captured);
+                }
+
+                function captureAt(mediaTime) {
+                    if (finished) return;
+
+                    while (
+                        nextTarget < targetTimes.length &&
+                        mediaTime + 0.025 >= targetTimes[nextTarget]
+                    ) {
+                        captured.push(createFrame(geometry.width, geometry.height));
+                        nextTarget += 1;
+                    }
+
+                    if (nextTarget >= targetTimes.length || mediaTime >= usefulEnd - 0.004) {
+                        while (captured.length < targetTimes.length) {
+                            captured.push(createFrame(geometry.width, geometry.height));
+                        }
+                        finish();
+                    }
+                }
+
+                function onVideoFrame(now, metadata) {
+                    captureAt(metadata && Number.isFinite(metadata.mediaTime) ? metadata.mediaTime : video.currentTime);
+                    if (!finished) callbackId = video.requestVideoFrameCallback(onVideoFrame);
+                }
+
+                video.playbackRate = coarsePointer ? 2 : 3;
+
+                var playPromise;
+                try {
+                    playPromise = video.play();
+                } catch (error) {
+                    finish(error);
+                    return;
+                }
+
+                Promise.resolve(playPromise).then(function () {
+                    if (typeof video.requestVideoFrameCallback === 'function') {
+                        callbackId = video.requestVideoFrameCallback(onVideoFrame);
+                    } else {
+                        intervalId = window.setInterval(function () {
+                            captureAt(video.currentTime);
+                        }, 24);
+                    }
+                }).catch(finish);
+            });
+        }
+
+        async function captureFramesBySeeking(geometry, targetTimes) {
+            var captured = [];
+
+            for (var i = 0; i < targetTimes.length; i += 1) {
+                if (destroyed) throw new Error('Controller destroyed');
+                await seekVideo(targetTimes[i]);
+                captured.push(createFrame(geometry.width, geometry.height));
+
+                /* Не блокируем интерфейс длинной синхронной серией. */
+                if (i % 6 === 5) await wait(0);
+            }
+
+            return captured;
+        }
+
+        function drawFrame(progress, force) {
+            if (!frames.length || !context) return;
 
             var normalized = settings.reverse ? 1 - progress : progress;
-            var ratio = settings.startRatio +
-                (settings.endRatio - settings.startRatio) * clamp(normalized, 0, 1);
+            var index = Math.round(clamp(normalized, 0, 1) * (frames.length - 1));
 
-            return clamp(
-                duration * ratio,
-                0.001,
-                Math.max(0.001, duration - 0.001)
-            );
+            if (!force && index === lastDrawnIndex) return;
+
+            var frame = frames[index];
+            if (!frame) return;
+
+            if (canvas.width !== frame.width || canvas.height !== frame.height) {
+                canvas.width = frame.width;
+                canvas.height = frame.height;
+            }
+
+            context.drawImage(frame, 0, 0, canvas.width, canvas.height);
+            lastDrawnIndex = index;
+        }
+
+        function progressToTime(progress) {
+            var normalized = settings.reverse ? 1 - progress : progress;
+            return usefulStart + (usefulEnd - usefulStart) * clamp(normalized, 0, 1);
+        }
+
+        function updateDirectVideo(timestamp) {
+            if (!directMode || !duration || video.seeking || video.readyState < 1) return;
+            if (timestamp - lastSeekAt < settings.directSeekInterval) return;
+
+            var desiredTime = progressToTime(renderedProgress);
+            if (Math.abs(video.currentTime - desiredTime) < settings.directSeekEpsilon) return;
+
+            try {
+                video.currentTime = desiredTime;
+                lastSeekAt = timestamp;
+            } catch (error) {}
+        }
+
+        function requestAnimation() {
+            if (!animationFrame && heroVisible && !document.hidden && !reducedMotion) {
+                animationFrame = window.requestAnimationFrame(animate);
+            }
+        }
+
+        function animate(timestamp) {
+            animationFrame = 0;
+            if (destroyed || !heroVisible || document.hidden || reducedMotion) return;
+
+            renderedProgress += (targetProgress - renderedProgress) * settings.smoothing;
+            if (Math.abs(targetProgress - renderedProgress) < 0.0006) {
+                renderedProgress = targetProgress;
+            }
+
+            if (frames.length) {
+                drawFrame(renderedProgress, false);
+            } else {
+                updateDirectVideo(timestamp);
+            }
+
+            if (
+                Math.abs(targetProgress - renderedProgress) > 0.0006 ||
+                (directMode && video.seeking)
+            ) {
+                requestAnimation();
+            }
         }
 
         function setVisualShift(progressX, progressY) {
             if (reducedMotion) return;
 
-            var mobile = window.matchMedia &&
-                window.matchMedia('(hover: none), (pointer: coarse)').matches;
-            var maxX = mobile ? 4 : 9;
-            var maxY = mobile ? 2 : 5;
+            var maxX = coarsePointer ? settings.mobileShiftX : settings.desktopShiftX;
+            var maxY = coarsePointer ? settings.mobileShiftY : settings.desktopShiftY;
             var x = (clamp(progressX, 0, 1) - 0.5) * 2 * maxX;
             var y = (clamp(progressY, 0, 1) - 0.5) * 2 * maxY;
 
@@ -12490,73 +12784,19 @@ body.theme-soft .mm-hero-media .mm-hero-video {
             media.style.setProperty('--mm-hero-y', '0px');
         }
 
-        function markVideoReady() {
-            if (media.classList.contains('mm-video-error')) return;
-            media.classList.add('mm-video-ready');
-        }
-
-        function markVideoError() {
-            media.classList.remove('mm-video-ready');
-            media.classList.add('mm-video-error');
-            if (frameRequest) {
-                window.cancelAnimationFrame(frameRequest);
-                frameRequest = 0;
-            }
-        }
-
-        function requestRender() {
-            if (!frameRequest && heroVisible && !document.hidden && duration) {
-                frameRequest = window.requestAnimationFrame(render);
-            }
-        }
-
-        function render(timestamp) {
-            frameRequest = 0;
-
-            if (!duration || !heroVisible || document.hidden || reducedMotion) {
-                return;
-            }
-
-            renderedProgress +=
-                (targetProgress - renderedProgress) * settings.smoothing;
-
-            var desiredTime = progressToTime(renderedProgress);
-            var targetTime = progressToTime(targetProgress);
-            var difference = Math.abs(video.currentTime - desiredTime);
-            var canSeek = !video.seeking && video.readyState >= 1;
-            var intervalPassed = timestamp - lastSeekTime >= settings.seekInterval;
-
-            if (canSeek && intervalPassed && difference > 0.014) {
-                try {
-                    video.currentTime = desiredTime;
-                    lastSeekTime = timestamp;
-                } catch (error) {
-                    /* Следующий animation frame повторит попытку. */
-                }
-            }
-
-            if (
-                Math.abs(targetProgress - renderedProgress) > 0.0015 ||
-                video.seeking ||
-                Math.abs(video.currentTime - targetTime) > 0.03
-            ) {
-                requestRender();
-            }
-        }
-
         function setProgress(progress, immediate) {
             targetProgress = clamp(progress, 0, 1);
 
             if (immediate) {
                 renderedProgress = targetProgress;
-                if (duration && video.readyState >= 1) {
-                    try {
-                        video.currentTime = progressToTime(renderedProgress);
-                    } catch (error) {}
+                if (frames.length) {
+                    drawFrame(renderedProgress, true);
+                } else if (directMode && duration) {
+                    try { video.currentTime = progressToTime(renderedProgress); } catch (error) {}
                 }
             }
 
-            requestRender();
+            requestAnimation();
         }
 
         function pointToProgress(clientX, clientY, immediate) {
@@ -12566,6 +12806,7 @@ body.theme-soft .mm-hero-media .mm-hero-video {
             var progressX = clamp((clientX - rect.left) / rect.width, 0, 1);
             var progressY = clamp((clientY - rect.top) / rect.height, 0, 1);
 
+            window.clearTimeout(returnTimer);
             setProgress(progressX, immediate);
             setVisualShift(progressX, progressY);
         }
@@ -12578,69 +12819,86 @@ body.theme-soft .mm-hero-media .mm-hero-video {
             }, typeof delay === 'number' ? delay : 0);
         }
 
-        function prepareCenterFrame() {
-            if (!Number.isFinite(video.duration) || video.duration <= 0) return;
-
-            duration = video.duration;
+        function enableDirectMode() {
+            directMode = true;
+            media.classList.add('mm-direct-ready');
             video.pause();
             setProgress(0.5, true);
+        }
 
-            if (!firstFramePrepared) {
-                firstFramePrepared = true;
-
-                var readyFallback = window.setTimeout(markVideoReady, 550);
-                video.addEventListener('seeked', function onInitialSeek() {
-                    window.clearTimeout(readyFallback);
-                    markVideoReady();
-                }, { once: true });
+        function markVideoError(error) {
+            media.classList.remove('mm-frames-ready', 'mm-direct-ready');
+            media.classList.add('mm-video-error');
+            if (animationFrame) {
+                window.cancelAnimationFrame(animationFrame);
+                animationFrame = 0;
+            }
+            if (window.console && console.warn) {
+                console.warn('[MARKOVMADE] hero-head.mp4 не загрузился:', error || 'unknown error');
             }
         }
 
-        function primeVideo() {
-            if (media.classList.contains('mm-video-error')) return;
-
+        async function prepareFrames() {
             try {
-                var playResult = video.play();
-                if (playResult && typeof playResult.then === 'function') {
-                    playResult.then(function () {
-                        video.pause();
-                        prepareCenterFrame();
-                    }).catch(function () {
-                        video.pause();
-                        prepareCenterFrame();
-                    });
-                } else {
+                await ensureMetadata();
+
+                duration = video.duration;
+                usefulStart = clamp(duration * settings.startRatio, 0.001, duration - 0.002);
+                usefulEnd = clamp(duration * settings.endRatio, usefulStart + 0.001, duration - 0.001);
+
+                await seekVideo((usefulStart + usefulEnd) / 2);
+                enableDirectMode();
+
+                if (reducedMotion) return;
+
+                var geometry = calculateFrameGeometry();
+                var targetTimes = buildTargetTimes(geometry.count);
+                var captured;
+
+                try {
+                    captured = await captureFramesByPlayback(geometry, targetTimes);
+                    if (!captured || captured.length < Math.min(12, geometry.count)) {
+                        throw new Error('Not enough decoded frames');
+                    }
+                } catch (playbackError) {
                     video.pause();
-                    prepareCenterFrame();
+                    captured = await captureFramesBySeeking(geometry, targetTimes);
                 }
+
+                if (!captured || captured.length < 2) {
+                    throw new Error('Frame cache is empty');
+                }
+
+                frames = captured;
+                directMode = false;
+                video.pause();
+                drawFrame(0.5, true);
+                media.classList.remove('mm-direct-ready');
+                media.classList.add('mm-frames-ready');
+                media.dataset.mmFrameCount = String(frames.length);
+                requestAnimation();
             } catch (error) {
-                prepareCenterFrame();
+                if (Number.isFinite(video.duration) && video.duration > 0) {
+                    duration = video.duration;
+                    usefulStart = clamp(duration * settings.startRatio, 0.001, duration - 0.002);
+                    usefulEnd = clamp(duration * settings.endRatio, usefulStart + 0.001, duration - 0.001);
+                    enableDirectMode();
+                    if (window.console && console.warn) {
+                        console.warn('[MARKOVMADE] Кэш кадров недоступен, включена прямая перемотка:', error);
+                    }
+                } else {
+                    markVideoError(error);
+                }
             }
         }
 
-        video.addEventListener('loadedmetadata', prepareCenterFrame);
-        video.addEventListener('loadeddata', function () {
-            prepareCenterFrame();
-            markVideoReady();
-        });
-        video.addEventListener('canplay', function () {
-            prepareCenterFrame();
-            markVideoReady();
-        });
-        video.addEventListener('seeked', requestRender);
-        video.addEventListener('error', markVideoError);
-        video.addEventListener('stalled', function () {
-            /* Не прячем сайт: остаётся запасная фотография до восстановления загрузки. */
+        video.addEventListener('error', function () {
+            markVideoError(video.error || new Error('Video error'));
         });
 
-        if (video.readyState >= 1) {
-            prepareCenterFrame();
-        }
-        if (video.readyState >= 2) {
-            markVideoReady();
-        }
+        video.addEventListener('seeked', requestAnimation);
 
-        /* На компьютере голова следует за горизонтальным положением мыши. */
+        /* Компьютер: положение головы зависит от X-координаты курсора. */
         window.addEventListener('pointermove', function (event) {
             if (
                 reducedMotion ||
@@ -12655,43 +12913,23 @@ body.theme-soft .mm-hero-media .mm-hero-video {
         }, { passive: true });
 
         document.documentElement.addEventListener('mouseleave', function () {
-            returnToCenter(80);
+            returnToCenter(100);
         }, { passive: true });
 
         window.addEventListener('blur', function () {
             returnToCenter(0);
         });
 
-        /* На телефоне положение головы меняется горизонтальным движением пальца по hero-блоку. */
+        /* Телефон: горизонтальное движение пальцем по первому экрану. */
         hero.addEventListener('touchstart', function (event) {
             if (reducedMotion || !event.touches || !event.touches.length) return;
-
             touchActive = true;
-            window.clearTimeout(returnTimer);
-            primeVideo();
-
-            pointToProgress(
-                event.touches[0].clientX,
-                event.touches[0].clientY,
-                true
-            );
+            pointToProgress(event.touches[0].clientX, event.touches[0].clientY, true);
         }, { passive: true });
 
         hero.addEventListener('touchmove', function (event) {
-            if (
-                reducedMotion ||
-                !touchActive ||
-                !event.touches ||
-                !event.touches.length
-            ) {
-                return;
-            }
-
-            pointToProgress(
-                event.touches[0].clientX,
-                event.touches[0].clientY,
-                false
-            );
+            if (reducedMotion || !touchActive || !event.touches || !event.touches.length) return;
+            pointToProgress(event.touches[0].clientX, event.touches[0].clientY, false);
         }, { passive: true });
 
         function finishTouch() {
@@ -12707,14 +12945,13 @@ body.theme-soft .mm-hero-media .mm-hero-video {
             var observer = new IntersectionObserver(function (entries) {
                 entries.forEach(function (entry) {
                     if (entry.target !== hero) return;
-
                     heroVisible = entry.isIntersecting && entry.intersectionRatio > 0;
 
                     if (heroVisible) {
-                        requestRender();
-                    } else if (frameRequest) {
-                        window.cancelAnimationFrame(frameRequest);
-                        frameRequest = 0;
+                        requestAnimation();
+                    } else if (animationFrame) {
+                        window.cancelAnimationFrame(animationFrame);
+                        animationFrame = 0;
                     }
                 });
             }, { threshold: [0, 0.01, 0.2] });
@@ -12724,35 +12961,28 @@ body.theme-soft .mm-hero-media .mm-hero-video {
 
         document.addEventListener('visibilitychange', function () {
             video.pause();
-
-            if (document.hidden) {
-                if (frameRequest) {
-                    window.cancelAnimationFrame(frameRequest);
-                    frameRequest = 0;
-                }
-            } else {
-                requestRender();
+            if (document.hidden && animationFrame) {
+                window.cancelAnimationFrame(animationFrame);
+                animationFrame = 0;
+            } else if (!document.hidden) {
+                requestAnimation();
             }
         });
 
-        /* Предзагрузка и подготовка декодера без блокировки сайта. */
-        try {
-            video.load();
-        } catch (error) {}
+        window.addEventListener('pagehide', function () {
+            destroyed = true;
+            video.pause();
+            frames.length = 0;
+            if (animationFrame) window.cancelAnimationFrame(animationFrame);
+        }, { once: true });
 
-        if (!reducedMotion) {
-            window.setTimeout(primeVideo, 250);
-        }
+        prepareFrames();
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener(
-            'DOMContentLoaded',
-            initMarkovmadeHeroVideo,
-            { once: true }
-        );
+        document.addEventListener('DOMContentLoaded', initMarkovmadeHeroHead, { once: true });
     } else {
-        initMarkovmadeHeroVideo();
+        initMarkovmadeHeroHead();
     }
 })();
 </script>
