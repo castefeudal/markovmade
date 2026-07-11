@@ -45,7 +45,7 @@
     <meta name="twitter:image:alt" content="MARKOVMADE — перепрошивка тела и разума, персональное приложение и личный разбор">
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23D4AF37%22/></svg>">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/XZ2H1ctf/IMG-5845.png"> 
+    <link rel="apple-touch-icon" href="https://i.ibb.co/ynttSL8k/image.png"> 
     <!-- Динамический meta theme-color для поддержки смены тем -->
     <meta name="theme-color" content="#050505" id="theme-color-meta">
 
@@ -7810,6 +7810,195 @@ body.theme-light .mm-app-task:hover { border-color: rgb(var(--color-gold) / .45)
     .mm-app-task:hover { transform: none; }
 }
 </style>
+
+<style id="markovmade-point-fixes-v25">
+/* v25 точечные правки: новое лого, компактный блок приложения, быстрый лид в Telegram. */
+#main-header .mm-header-logo-link {
+    margin-left: clamp(-1.1rem, -1.15vw, -0.35rem) !important;
+    flex: 0 0 auto !important;
+    max-width: min(23vw, 158px) !important;
+}
+#main-header .mm-header-logo-link img {
+    width: auto !important;
+    max-width: 100% !important;
+    max-height: clamp(42px, 4.7vw, 66px) !important;
+    object-fit: contain !important;
+}
+@media (min-width: 768px) and (max-width: 1180px) {
+    #main-header nav { gap: clamp(1rem, 1.55vw, 1.55rem) !important; }
+    #main-header .mm-header-logo-link { max-width: 132px !important; margin-left: -1.2rem !important; }
+    #main-header nav > a { font-size: 10px !important; letter-spacing: .26em !important; }
+}
+@media (max-width: 767px) {
+    #main-header .mm-header-logo-link { margin-left: -0.38rem !important; max-width: 118px !important; }
+    #main-header .mm-header-logo-link img { max-height: 44px !important; }
+}
+
+#app-ecosystem.mm-app-section-hybrid .mm-app-hybrid-shell {
+    max-width: 1180px !important;
+    padding: clamp(1rem, 2.35vw, 1.8rem) !important;
+    border: 1px solid rgb(var(--color-gold) / .24) !important;
+    background:
+        radial-gradient(circle at 12% 0%, rgb(var(--color-gold) / .13), transparent 24rem),
+        radial-gradient(circle at 86% 42%, rgba(255,255,255,.045), transparent 24rem),
+        rgba(255,255,255,.018) !important;
+    box-shadow: 0 44px 130px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+#app-ecosystem .mm-app-hybrid-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(330px, .82fr);
+    gap: clamp(1.35rem, 3vw, 2.8rem);
+    align-items: center;
+}
+#app-ecosystem .mm-app-hybrid-left { min-width: 0; }
+#app-ecosystem .mm-app-hybrid-left .app-showcase-head {
+    max-width: 760px !important;
+    margin: 0 !important;
+    text-align: left !important;
+}
+#app-ecosystem .app-hybrid-title {
+    max-width: 760px !important;
+    font-size: clamp(2.25rem, 4.65vw, 4.75rem) !important;
+    line-height: 1.01 !important;
+    letter-spacing: -0.045em !important;
+}
+#app-ecosystem .mm-app-hybrid-left .app-copy-v22 {
+    max-width: 66ch !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    font-size: clamp(1rem, 1.18vw, 1.1rem) !important;
+    line-height: 1.76 !important;
+}
+#app-ecosystem .app-image-card-v25 {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    border-radius: 28px !important;
+    border-color: rgb(var(--color-gold) / .18) !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.012)) !important;
+    box-shadow: 0 28px 80px rgba(0,0,0,.30), inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+#app-ecosystem .app-image-card-v25 img {
+    width: 100% !important;
+    max-height: 350px !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    background: rgba(0,0,0,.18) !important;
+}
+#app-ecosystem .app-image-caption-v25 {
+    justify-content: flex-start !important;
+    text-align: left !important;
+    padding: .9rem 1rem !important;
+}
+#app-ecosystem .app-image-caption-v25 span {
+    max-width: 64ch !important;
+    margin: 0 !important;
+    color: rgb(var(--text-platinum) / .76) !important;
+}
+#app-ecosystem .app-metrics-v25 {
+    max-width: 100% !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: .75rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+#app-ecosystem .app-metrics-v25 .app-metric {
+    padding: .95rem !important;
+    border-radius: 18px !important;
+    background: rgba(255,255,255,.028) !important;
+}
+#app-ecosystem .app-metrics-v25 .app-metric b { font-size: .85rem !important; }
+#app-ecosystem .app-metrics-v25 .app-metric span { font-size: .84rem !important; line-height: 1.56 !important; }
+
+#app-ecosystem .mm-app-mini-panel {
+    position: relative;
+    min-width: 0;
+    padding: clamp(.85rem, 1.7vw, 1.15rem);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 34px;
+    background:
+        radial-gradient(circle at 50% 0%, rgb(var(--color-gold) / .10), transparent 18rem),
+        rgba(0,0,0,.18);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+}
+#app-ecosystem .mm-app-mini-label {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    margin: 0 0 .8rem .25rem;
+    color: rgb(var(--color-gold));
+    font: 900 .62rem/1 Manrope, sans-serif;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+}
+#app-ecosystem .mm-app-mini-label span {
+    width: .46rem;
+    aspect-ratio: 1;
+    border-radius: 999px;
+    background: rgb(var(--color-gold));
+    box-shadow: 0 0 18px rgb(var(--color-gold) / .55);
+}
+#app-ecosystem .mm-app-mini-wrap {
+    max-width: 390px !important;
+    padding: 0 !important;
+}
+#app-ecosystem .mm-app-mini-wrap .mm-app-orbit { inset: 5% -3%; opacity: .75; }
+#app-ecosystem .mm-app-mini-wrap .mm-app-device {
+    min-height: 520px !important;
+    padding: 13px 14px 18px !important;
+    border-radius: 28px !important;
+    box-shadow: 0 30px 75px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.08), 0 0 0 7px rgba(255,255,255,.015) !important;
+}
+#app-ecosystem .mm-app-mini-wrap .mm-app-user { margin: 18px 0 13px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-app-user strong { font-size: 21px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-app-avatar { width: 36px !important; font-size: 17px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-app-tab { min-height: 34px !important; padding: 7px 5px !important; font-size: 8px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-app-screen { padding-top: 13px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-app-hero-card { min-height: 108px !important; padding: 15px !important; gap: 12px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-app-hero-card strong { font-size: 20px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-ring { width: 64px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-ring.large { width: 86px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-app-kpi-row { gap: 6px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-app-kpi-row > div { padding: 10px 8px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-app-kpi-row b { font-size: 14px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-app-task { padding: 11px !important; grid-template-columns: 18px 1fr auto !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-app-chart { height: 135px !important; padding: 17px 12px 12px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-macro-bars { padding: 14px !important; gap: 12px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-recovery-hero { padding: 15px !important; gap: 14px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-recovery-hero strong { font-size: 19px !important; }
+#app-ecosystem .mm-app-mini-wrap .mm-app-caption {
+    max-width: 340px;
+    margin: 14px auto 0 !important;
+    color: rgb(var(--text-platinum) / .52) !important;
+}
+
+body.theme-light #app-ecosystem.mm-app-section-hybrid .mm-app-hybrid-shell,
+body.theme-light #app-ecosystem .mm-app-mini-panel,
+body.theme-light #app-ecosystem .app-image-card-v25,
+body.theme-light #app-ecosystem .app-metrics-v25 .app-metric {
+    background-color: rgba(255,255,255,.54) !important;
+    border-color: rgba(166,124,34,.16) !important;
+}
+
+@media (max-width: 1023px) {
+    #app-ecosystem .mm-app-hybrid-grid { grid-template-columns: 1fr !important; }
+    #app-ecosystem .mm-app-hybrid-left .app-showcase-head { text-align: center !important; margin-inline: auto !important; }
+    #app-ecosystem .mm-app-hybrid-left .app-copy-v22 { margin-inline: auto !important; }
+    #app-ecosystem .app-image-card-v25 { max-width: 820px !important; margin-inline: auto !important; }
+    #app-ecosystem .app-image-caption-v25 { text-align: center !important; justify-content: center !important; }
+    #app-ecosystem .app-image-caption-v25 span { margin-inline: auto !important; }
+    #app-ecosystem .app-metrics-v25 { max-width: 820px !important; margin-inline: auto !important; }
+    #app-ecosystem .app-cta-row-v22 { justify-content: center !important; }
+    #app-ecosystem .mm-app-mini-panel { max-width: 470px; margin-inline: auto; }
+}
+@media (max-width: 700px) {
+    #app-ecosystem .app-metrics-v25 { grid-template-columns: 1fr !important; }
+    #app-ecosystem .app-image-card-v25 img { max-height: 430px !important; object-fit: contain !important; }
+    #app-ecosystem .mm-app-mini-wrap { max-width: 100% !important; }
+    #app-ecosystem .mm-app-mini-wrap .mm-app-device { min-height: 560px !important; }
+}
+</style>
+
 </head>
 
 <body class="bg-obsidian antialiased selection:bg-gold selection:text-obsidian">
@@ -7848,8 +8037,8 @@ body.theme-light .mm-app-task:hover { border-color: rgb(var(--color-gold) / .45)
     <!-- HEADER -->
     <header id="main-header" class="fixed top-0 left-0 w-full z-50 py-3 md:pt-6 md:pb-1 px-5 md:px-12 transition-all duration-300 border-b border-gold/30">
         <div class="container mx-auto flex justify-between items-center relative">
-            <a href="#hero" class="interactive relative z-[60] flex items-center h-9 md:h-20">
-                <img src="https://i.ibb.co/XZ2H1ctf/IMG-5845.png" alt="MARKOVMADE" decoding="async" class="h-full w-auto object-contain drop-shadow-[0_0_15px_rgb(var(--color-gold)/0.2)] transition-transform duration-500 hover:scale-105">
+            <a href="#hero" class="interactive relative z-[60] flex items-center h-9 md:h-20 mm-header-logo-link">
+                <img src="https://i.ibb.co/ynttSL8k/image.png" alt="MARKOVMADE" decoding="async" class="h-full w-auto object-contain drop-shadow-[0_0_15px_rgb(var(--color-gold)/0.2)] transition-transform duration-500 hover:scale-105">
             </a>
             
             <nav class="hidden md:flex gap-7 lg:gap-9 items-center">
@@ -8789,27 +8978,39 @@ body.theme-light .mm-app-task:hover { border-color: rgb(var(--color-gold) / .45)
 
 
 
-<section id="app-ecosystem" class="section-block mm-app-section relative py-20 md:py-28 bg-obsidian text-platinum" data-insight="Персональное приложение собирает план, питание, задачи и динамику в одну рабочую систему.">
+<section id="app-ecosystem" class="section-block mm-app-section mm-app-section-hybrid relative py-20 md:py-28 bg-obsidian text-platinum" data-insight="Персональное приложение собирает план, питание, задачи и динамику в одну рабочую систему.">
   <div class="container mx-auto px-6 md:px-8">
-    <div class="max-w-7xl mx-auto mm-app-layout">
-      <div class="mm-app-story fade-in-up">
-        <span class="app-kicker">Персональное приложение / Live prototype</span>
-        <h2 class="font-serif text-platinum mt-5 mb-5">Ваш план перестаёт жить в голове. Он начинает работать каждый день.</h2>
-        <p class="app-copy app-copy-v22">Я собираю персональное пространство под цель, график и ограничения человека. В нём видно главное: что делать сегодня, как питаться, насколько вы восстановились и действительно ли движетесь вперёд.</p>
+    <div class="max-w-7xl mx-auto app-showcase-shell app-showcase-shell-v22 mm-app-hybrid-shell">
+      <div class="mm-app-hybrid-grid">
+        <div class="mm-app-hybrid-left fade-in-up">
+          <div class="app-showcase-head">
+            <span class="app-kicker">Персональное приложение</span>
+            <h2 class="font-serif text-platinum mt-5 mb-5 app-hybrid-title">Я собираю вашу систему в понятном приложении.</h2>
+            <p class="app-copy app-copy-v22">План, питание, тренировки, задачи, отчёты и динамика находятся в одном месте. Не набор разрозненных файлов, а рабочее пространство под вашу цель, график и ограничения.</p>
+          </div>
 
-        <div class="mm-app-benefits" aria-label="Преимущества персонального приложения">
-          <article><span>01</span><div><b>Один экран — один следующий шаг</b><p>Без десятков таблиц, заметок и потерянных сообщений.</p></div></article>
-          <article><span>02</span><div><b>План меняется вместе с жизнью</b><p>Нагрузка, питание и задачи корректируются по фактам, а не по чувству вины.</p></div></article>
-          <article><span>03</span><div><b>Прогресс невозможно «не заметить»</b><p>Вес, замеры, фото, тренировки и ресурс собраны в одну динамику.</p></div></article>
+          <div class="app-image-card app-image-card-v22 app-image-card-v25 mt-8">
+            <img src="https://i.ibb.co/8gKHFW26/image.png" alt="Пример персонального приложения MARKOVMADE" loading="lazy" decoding="async">
+            <div class="app-image-caption app-image-caption-v22 app-image-caption-v25">
+              <span>Приложение показывает не просто список действий, а систему: что делать, что отслеживать и как видеть движение к результату.</span>
+            </div>
+          </div>
+
+          <div class="app-metrics app-metrics-v22 app-metrics-v25 mt-8">
+            <div class="app-metric"><b>Под цель</b><span>Форма, питание, режим и задачи собираются вокруг конкретного результата.</span></div>
+            <div class="app-metric"><b>Под график</b><span>План учитывает работу, сон, стресс, поездки и реальные ограничения.</span></div>
+            <div class="app-metric"><b>Под контроль</b><span>Фото, замеры, питание, самочувствие и динамика не теряются в разных местах.</span></div>
+          </div>
+
+          <div class="app-cta-row app-cta-row-v22">
+            <a href="#contact" class="mm-v13-cta interactive" data-analytics="v25_app_contact">Понять, какое приложение нужно мне</a>
+            <a href="#services" class="mm-v13-cta secondary interactive" data-analytics="v25_app_services">Посмотреть форматы</a>
+          </div>
         </div>
 
-        <div class="app-cta-row app-cta-row-v22">
-          <a href="#contact" class="mm-v13-cta interactive" data-analytics="v24_app_contact">Собрать систему под меня</a>
-          <a href="#calculators" class="mm-v13-cta secondary interactive" data-analytics="v24_app_calculators">Начать с расчёта</a>
-        </div>
-      </div>
-
-      <div class="mm-app-device-wrap fade-in-up" style="transition-delay:120ms">
+        <div class="mm-app-mini-panel" aria-label="Мини-прототип персонального приложения MARKOVMADE">
+          <div class="mm-app-mini-label"><span></span> Live-прототип</div>
+<div class="mm-app-device-wrap mm-app-mini-wrap fade-in-up" style="transition-delay:120ms">
         <div class="mm-app-orbit" aria-hidden="true"></div>
         <div class="mm-app-device" aria-label="Интерактивный прототип персонального приложения MARKOVMADE">
           <div class="mm-app-status"><span>09:41</span><span class="mm-app-status-brand">MARKOV / OS</span><span>● ● ●</span></div>
@@ -8855,7 +9056,9 @@ body.theme-light .mm-app-task:hover { border-color: rgb(var(--color-gold) / .45)
 
           <div class="mm-app-home" aria-hidden="true"></div>
         </div>
-        <p class="mm-app-caption"><span></span> Интерактивный демонстрационный прототип. Состав экранов и метрик настраивается под человека.</p>
+        <p class="mm-app-caption"><span></span> Живой мини-прототип: экраны и метрики собираются под цель, график и ограничения.</p>
+      </div>
+        </div>
       </div>
     </div>
   </div>
@@ -14024,5 +14227,53 @@ body.theme-light .mm-app-task:hover { border-color: rgb(var(--color-gold) / .45)
     }
 })();
 </script>
+
+<script id="markovmade-direct-telegram-lead-v25">
+(function () {
+    'use strict';
+    var tgUser = 'markovmade';
+    function isEnglish() {
+        try {
+            return document.documentElement.lang === 'en' || (window.mmSafeStorage && window.mmSafeStorage.get('markovmade_lang', 'ru') === 'en');
+        } catch (e) { return document.documentElement.lang === 'en'; }
+    }
+    function buildLeadText() {
+        if (isEnglish()) {
+            return 'Hello, Pavel. I want to submit a MARKOVMADE request. Please help me understand which format suits me: assessment, coaching, nutrition, training, or a personal app. My goal: ______. My current situation: ______.';
+        }
+        return 'Здравствуйте, Павел. Хочу оставить заявку MARKOVMADE и понять, какой формат мне подойдёт: разбор, сопровождение, питание, тренировки или персональное приложение. Моя цель: ______. Моя текущая ситуация: ______.';
+    }
+    function leadUrl() {
+        return 'https://t.me/' + tgUser + '?text=' + encodeURIComponent(buildLeadText());
+    }
+    function closeMobileMenu() {
+        var menu = document.getElementById('mobile-menu');
+        if (menu) menu.classList.add('translate-x-full');
+        if (document.body) {
+            document.body.classList.remove('menu-open');
+            document.body.style.overflow = '';
+            document.body.style.overflowY = '';
+        }
+    }
+    document.addEventListener('click', function (event) {
+        var link = event.target && event.target.closest ? event.target.closest('a[href="#contact"]') : null;
+        if (!link) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        closeMobileMenu();
+        if (window.mmTrack) {
+            try { window.mmTrack('lead_direct_telegram_open', { cta: (link.textContent || '').trim().slice(0, 90) }); } catch (e) {}
+        }
+        window.open(leadUrl(), '_blank', 'noopener,noreferrer');
+    }, true);
+    document.addEventListener('DOMContentLoaded', function () {
+        Array.prototype.slice.call(document.querySelectorAll('a[href="#contact"]')).forEach(function (link) {
+            link.setAttribute('data-lead-direct', 'telegram');
+            link.setAttribute('aria-label', isEnglish() ? 'Open Telegram request to Pavel' : 'Открыть заявку Павлу в Telegram');
+        });
+    });
+})();
+</script>
+
 </body>
 </html>
