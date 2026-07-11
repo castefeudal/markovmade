@@ -45,7 +45,7 @@
     <meta name="twitter:image:alt" content="MARKOVMADE — перепрошивка тела и разума, персональное приложение и личный разбор">
     
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2250%22 fill=%22%23D4AF37%22/></svg>">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/ynttSL8k/image.png"> 
+    <link rel="apple-touch-icon" href="https://i.ibb.co/TMR1hPHv/11.png"> 
     <!-- Динамический meta theme-color для поддержки смены тем -->
     <meta name="theme-color" content="#050505" id="theme-color-meta">
 
@@ -6370,7 +6370,12 @@ body.theme-light .mm-service-route b {
     'рабочий диапазон':'working range',
     'зона внимания':'attention range',
     'высокий диапазон':'high range',
-    '≈ стабильный вес':'≈ stable weight'
+    '≈ стабильный вес':'≈ stable weight',
+    'введите талию — оценю зону риска':'enter waist — I will assess the risk zone',
+    'талия в низком диапазоне':'waist is in a low range',
+    'талия в рабочем диапазоне':'waist is in a working range',
+    'талия требует внимания':'waist needs attention',
+    'высокий риск по талии':'high waist-risk zone'
   };
   var parts = [
     ['Жир:', 'Fat:'], ['жир —', 'body fat —'], ['жир ', 'body fat '], ['жировой массы', 'fat mass'], ['жировая масса', 'fat mass'], ['Жировая масса', 'Fat mass'],
@@ -6392,7 +6397,7 @@ body.theme-light .mm-service-route b {
     return s;
   };
   function applyVisibleCalcLang(){
-    var ids=['body-accuracy','body-confidence-label','body-fatmass','body-ffmi','body-lbm','body-nffmi','body-status','body-strategy','body-strong','body-weak','body-target-weight','body-pace','body-whtr','body-whtr-note','format-first-step','format-focus','format-reason','format-send','format-start','format-title','growth-accuracy','growth-add-label','growth-gain','growth-main-label','growth-meaning','growth-multiplier','growth-risk','growth-start-label','growth-strategy','growth-term-hint','growth-total','nutri-bmr','nutri-carbs','nutri-check','nutri-fat-result','nutri-protein','nutri-rest-day','nutri-target','nutri-tdee','nutri-training-day','nutri-warning','nutri-corridor','nutri-weekly-change','nutri-water','nutrition-accuracy','nutrition-confidence-label','rec-cardio-result','rec-nutrition-result','rec-score','rec-sleep-result','rec-status','rec-training','rec-warning','rec-decision','recovery-accuracy'];
+    var ids=['body-accuracy','body-confidence-label','body-fatmass','body-ffmi','body-lbm','body-nffmi','body-status','body-strategy','body-strong','body-weak','body-target-weight','body-pace','body-whtr','body-whtr-note','body-decision-explain','format-first-step','format-focus','format-reason','format-send','format-start','format-title','growth-accuracy','growth-add-label','growth-gain','growth-main-label','growth-meaning','growth-multiplier','growth-risk','growth-start-label','growth-strategy','growth-term-hint','growth-total','nutri-bmr','nutri-carbs','nutri-check','nutri-fat-result','nutri-protein','nutri-rest-day','nutri-target','nutri-tdee','nutri-training-day','nutri-warning','nutri-corridor','nutri-weekly-change','nutri-water','nutrition-accuracy','nutrition-confidence-label','rec-cardio-result','rec-nutrition-result','rec-score','rec-sleep-result','rec-status','rec-training','rec-warning','rec-decision','recovery-accuracy'];
     ids.forEach(function(id){
       var el=document.getElementById(id);
       if(!el) return;
@@ -7999,6 +8004,253 @@ body.theme-light #app-ecosystem .app-metrics-v25 .app-metric {
 }
 </style>
 
+
+<style id="markovmade-point-fixes-v26">
+/* v26 точечные правки: сильнее логотип, нагляднее прототип приложения, понятнее калькулятор. */
+
+/* 1. Логотип: больше, заметнее, без фоновой капсулы. */
+#main-header > .container {
+    grid-template-columns: minmax(92px, 148px) minmax(0, 1fr) !important;
+    gap: clamp(.55rem, 1.2vw, 1.25rem) !important;
+}
+#main-header .mm-header-logo-link,
+#main-header a[href="#hero"].mm-header-logo-link {
+    width: clamp(96px, 9.4vw, 150px) !important;
+    min-width: clamp(96px, 9.4vw, 150px) !important;
+    height: 70px !important;
+    margin-left: clamp(-16px, -1.05vw, -8px) !important;
+    padding: .24rem .18rem !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+}
+#main-header .mm-header-logo-link img {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 70px !important;
+    object-fit: contain !important;
+    object-position: left center !important;
+    background: transparent !important;
+    mix-blend-mode: normal !important;
+    filter: drop-shadow(0 14px 28px rgb(0 0 0 / .45)) drop-shadow(0 0 18px rgb(var(--color-gold) / .22)) !important;
+    opacity: 1 !important;
+}
+body.theme-light #main-header .mm-header-logo-link img {
+    filter: drop-shadow(0 10px 22px rgba(55,38,12,.16)) !important;
+}
+@media (max-width: 1240px) {
+    #main-header > .container { grid-template-columns: minmax(86px, 126px) minmax(0, 1fr) !important; }
+    #main-header .mm-header-logo-link,
+    #main-header a[href="#hero"].mm-header-logo-link {
+        width: clamp(88px, 8.5vw, 126px) !important;
+        min-width: clamp(88px, 8.5vw, 126px) !important;
+    }
+}
+@media (max-width: 767px) {
+    #main-header .mm-header-logo-link,
+    #main-header a[href="#hero"].mm-header-logo-link {
+        width: 86px !important;
+        min-width: 86px !important;
+        height: 52px !important;
+        margin-left: -9px !important;
+    }
+    #main-header .mm-header-logo-link img { max-height: 52px !important; }
+}
+
+/* 2. Фото приложения: показываем интерфейс целиком, а не обрезанный фрагмент. */
+#app-ecosystem .app-image-card-v25 {
+    overflow: hidden !important;
+    border-radius: 32px !important;
+    border-color: rgb(var(--color-gold) / .24) !important;
+    background:
+        radial-gradient(circle at 18% 0%, rgb(var(--color-gold) / .12), transparent 18rem),
+        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.014)) !important;
+}
+#app-ecosystem .app-image-card-v25 img {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-height: 520px !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    padding: clamp(.55rem, 1.3vw, 1rem) !important;
+    background: rgba(0,0,0,.24) !important;
+    filter: saturate(1.06) contrast(1.04) brightness(.94) !important;
+}
+#app-ecosystem .app-image-caption-v25 {
+    border-top-color: rgb(var(--color-gold) / .14) !important;
+    background: rgba(0,0,0,.36) !important;
+}
+
+/* 3. Прототип: превращаем виджет в понятную демо-панель продукта. */
+#app-ecosystem .mm-app-mini-panel {
+    border-radius: 38px !important;
+    border-color: rgb(var(--color-gold) / .22) !important;
+    background:
+        radial-gradient(circle at 50% 0%, rgb(var(--color-gold) / .16), transparent 18rem),
+        radial-gradient(circle at 100% 72%, rgba(255,255,255,.055), transparent 16rem),
+        rgba(0,0,0,.24) !important;
+    box-shadow: 0 34px 96px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.07) !important;
+}
+#app-ecosystem .mm-app-mini-toolbar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: .45rem;
+    margin: 0 0 .9rem;
+}
+#app-ecosystem .mm-app-mini-toolbar span {
+    min-height: 30px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgb(var(--color-gold) / .18);
+    border-radius: 999px;
+    color: rgb(var(--text-platinum) / .75);
+    background: rgb(var(--color-gold) / .055);
+    font: 850 .56rem/1 Manrope, sans-serif;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+#app-ecosystem .mm-app-mini-wrap {
+    max-width: 420px !important;
+}
+#app-ecosystem .mm-app-mini-wrap .mm-app-device {
+    min-height: 650px !important;
+    padding: 15px 15px 19px !important;
+    border-radius: 32px !important;
+    border-color: rgb(var(--color-gold) / .30) !important;
+    background:
+        radial-gradient(circle at 16% 0%, rgb(var(--color-gold) / .12), transparent 14rem),
+        linear-gradient(160deg, rgba(31,31,29,.98), rgba(7,7,7,.99) 66%) !important;
+}
+#app-ecosystem .mm-app-preview-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 150px;
+    margin: 0 0 12px;
+    border: 1px solid rgb(var(--color-gold) / .18);
+    border-radius: 20px;
+    background: rgba(255,255,255,.035);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+}
+#app-ecosystem .mm-app-preview-card img {
+    display: block;
+    width: 100%;
+    height: 172px;
+    object-fit: cover;
+    object-position: center top;
+    opacity: .78;
+    filter: saturate(1.08) contrast(1.06) brightness(.78) !important;
+    transform: scale(1.015);
+}
+#app-ecosystem .mm-app-preview-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 20%, rgba(0,0,0,.78));
+    pointer-events: none;
+}
+#app-ecosystem .mm-app-preview-overlay {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 12px;
+    z-index: 1;
+}
+#app-ecosystem .mm-app-preview-overlay small {
+    display: block;
+    color: rgb(var(--color-gold));
+    font: 900 .48rem/1 Manrope, sans-serif;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+}
+#app-ecosystem .mm-app-preview-overlay b {
+    display: block;
+    margin-top: 6px;
+    color: rgb(var(--text-platinum));
+    font: 700 .75rem/1.25 Manrope, sans-serif;
+    letter-spacing: .02em;
+}
+#app-ecosystem .mm-app-mini-wrap .mm-app-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: rgba(255,255,255,.045) !important;
+    backdrop-filter: blur(10px);
+}
+#app-ecosystem .mm-app-mini-wrap .mm-app-tab {
+    min-height: 38px !important;
+    font-size: 8.5px !important;
+}
+#app-ecosystem .mm-app-mini-wrap .mm-app-screen-head,
+#app-ecosystem .mm-app-mini-wrap .mm-app-hero-card,
+#app-ecosystem .mm-app-mini-wrap .mm-app-task,
+#app-ecosystem .mm-app-mini-wrap .mm-app-kpi-row > div,
+#app-ecosystem .mm-app-mini-wrap .mm-macro-bars,
+#app-ecosystem .mm-app-mini-wrap .mm-recovery-hero,
+#app-ecosystem .mm-app-mini-wrap .mm-app-insight {
+    border-color: rgb(var(--color-gold) / .13) !important;
+    background: linear-gradient(180deg, rgba(255,255,255,.052), rgba(255,255,255,.018)) !important;
+}
+#app-ecosystem .mm-app-mini-wrap .mm-app-caption {
+    font-size: 8.5px !important;
+    color: rgb(var(--text-platinum) / .62) !important;
+}
+body.theme-light #app-ecosystem .mm-app-preview-card img { filter: saturate(1.02) contrast(1.02) brightness(.96) !important; }
+body.theme-light #app-ecosystem .mm-app-preview-card::after { background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.78)); }
+body.theme-light #app-ecosystem .mm-app-preview-overlay b { color: #17140f; }
+@media (max-width: 700px) {
+    #app-ecosystem .app-image-card-v25 img { max-height: 560px !important; object-fit: contain !important; }
+    #app-ecosystem .mm-app-mini-wrap .mm-app-device { min-height: 690px !important; }
+    #app-ecosystem .mm-app-preview-card img { height: 185px; }
+}
+
+/* 4. Калькулятор: результат читается как решение, а не набор сухих цифр. */
+#calculators .mm-decision-grid-clear .mm-decision-metric {
+    padding: 14px 15px !important;
+    border-color: rgb(var(--color-gold) / .18) !important;
+    background: linear-gradient(180deg, rgb(var(--color-gold) / .06), rgb(255 255 255 / .018)) !important;
+}
+#calculators .mm-decision-grid-clear .mm-decision-metric span {
+    color: rgb(var(--color-gold)) !important;
+    font-size: 8px !important;
+}
+#calculators .mm-decision-grid-clear .mm-decision-metric strong {
+    font: 750 clamp(13px, 1.35vw, 18px)/1.18 Manrope, sans-serif !important;
+    letter-spacing: -.01em !important;
+    text-wrap: balance;
+}
+#calculators .mm-decision-grid-clear .mm-decision-metric small {
+    display: block;
+    max-width: 22ch;
+    color: rgb(var(--text-platinum) / .58) !important;
+    font-size: 8px !important;
+    line-height: 1.35 !important;
+    letter-spacing: .02em !important;
+}
+#calculators .mm-decision-explain {
+    margin-top: 10px;
+    padding: 13px 15px;
+    border: 1px solid rgb(var(--color-gold) / .16);
+    border-radius: 14px;
+    background: rgb(var(--color-gold) / .055);
+    color: rgb(var(--text-platinum) / .78);
+    font: 600 11px/1.58 Manrope, sans-serif;
+}
+@media (max-width: 639px) {
+    #calculators .mm-decision-grid-clear .mm-decision-metric {
+        grid-template-columns: 1fr !important;
+    }
+    #calculators .mm-decision-grid-clear .mm-decision-metric strong {
+        grid-row: auto !important;
+        grid-column: auto !important;
+        text-align: left !important;
+        margin: 7px 0 5px !important;
+    }
+}
+</style>
+
 </head>
 
 <body class="bg-obsidian antialiased selection:bg-gold selection:text-obsidian">
@@ -8038,7 +8290,7 @@ body.theme-light #app-ecosystem .app-metrics-v25 .app-metric {
     <header id="main-header" class="fixed top-0 left-0 w-full z-50 py-3 md:pt-6 md:pb-1 px-5 md:px-12 transition-all duration-300 border-b border-gold/30">
         <div class="container mx-auto flex justify-between items-center relative">
             <a href="#hero" class="interactive relative z-[60] flex items-center h-9 md:h-20 mm-header-logo-link">
-                <img src="https://i.ibb.co/ynttSL8k/image.png" alt="MARKOVMADE" decoding="async" class="h-full w-auto object-contain drop-shadow-[0_0_15px_rgb(var(--color-gold)/0.2)] transition-transform duration-500 hover:scale-105">
+                <img src="https://i.ibb.co/TMR1hPHv/11.png" alt="MARKOVMADE" decoding="async" class="h-full w-auto object-contain drop-shadow-[0_0_15px_rgb(var(--color-gold)/0.2)] transition-transform duration-500 hover:scale-105">
             </a>
             
             <nav class="hidden md:flex gap-7 lg:gap-9 items-center">
@@ -8482,11 +8734,12 @@ body.theme-light #app-ecosystem .app-metrics-v25 .app-metric {
                                     <div class="metric-card"><span>FFMI</span><strong id="body-ffmi">—</strong></div>
                                     <div class="metric-card"><span>Normalized FFMI</span><strong id="body-nffmi">—</strong></div>
                                 </div>
-                                <div class="mm-decision-grid" aria-label="Практические ориентиры композиции тела">
-                                    <div class="mm-decision-metric"><span>Ориентир веса</span><strong id="body-target-weight">—</strong><small>при сохранении сухой массы</small></div>
-                                    <div class="mm-decision-metric"><span>Рабочий темп</span><strong id="body-pace">—</strong><small>на неделю</small></div>
-                                    <div class="mm-decision-metric"><span>Талия / рост</span><strong id="body-whtr">—</strong><small id="body-whtr-note">нужна талия</small></div>
+                                <div class="mm-decision-grid mm-decision-grid-clear" aria-label="Практические ориентиры композиции тела">
+                                    <div class="mm-decision-metric"><span>Коридор цели</span><strong id="body-target-weight">—</strong><small>примерный вес при сохранении текущей сухой массы</small></div>
+                                    <div class="mm-decision-metric"><span>Темп на 7 дней</span><strong id="body-pace">—</strong><small>сколько веса логично менять без срыва восстановления</small></div>
+                                    <div class="mm-decision-metric"><span>Талия ÷ рост</span><strong id="body-whtr">—</strong><small id="body-whtr-note">введите талию — оценю зону риска</small></div>
                                 </div>
+                                <div class="mm-decision-explain" id="body-decision-explain">Заполните данные — здесь появится человеческое объяснение: что означает весовой коридор, нормален ли темп и зачем нужна талия.</div>
                                 <div class="mt-6">
                                     <div class="flex justify-between text-[10px] uppercase tracking-[0.2em] text-dim mb-2">
                                         <span>Индекс уверенности</span><span id="body-confidence-label">—</span>
@@ -9010,11 +9263,20 @@ body.theme-light #app-ecosystem .app-metrics-v25 .app-metric {
 
         <div class="mm-app-mini-panel" aria-label="Мини-прототип персонального приложения MARKOVMADE">
           <div class="mm-app-mini-label"><span></span> Live-прототип</div>
+          <div class="mm-app-mini-toolbar" aria-hidden="true"><span>Цель</span><span>План</span><span>Контроль</span></div>
 <div class="mm-app-device-wrap mm-app-mini-wrap fade-in-up" style="transition-delay:120ms">
         <div class="mm-app-orbit" aria-hidden="true"></div>
         <div class="mm-app-device" aria-label="Интерактивный прототип персонального приложения MARKOVMADE">
           <div class="mm-app-status"><span>09:41</span><span class="mm-app-status-brand">MARKOV / OS</span><span>● ● ●</span></div>
           <div class="mm-app-user"><div><small>ДОБРО ПОЖАЛОВАТЬ</small><strong>Личная система</strong></div><span class="mm-app-avatar" aria-hidden="true">M</span></div>
+
+          <div class="mm-app-preview-card" aria-label="Визуальный пример персонального рабочего пространства">
+            <img src="https://i.ibb.co/8gKHFW26/image.png" alt="Визуальный пример приложения MARKOVMADE" loading="lazy" decoding="async">
+            <div class="mm-app-preview-overlay">
+              <small>РАБОЧАЯ ПАНЕЛЬ</small>
+              <b>цель · план · питание · отчёты</b>
+            </div>
+          </div>
 
           <div class="mm-app-tabs" role="tablist" aria-label="Экраны прототипа приложения">
             <button type="button" class="mm-app-tab active" role="tab" aria-selected="true" data-app-tab="today">Сегодня</button>
@@ -10666,13 +10928,21 @@ body.theme-light #app-ecosystem .app-metrics-v25 .app-metric {
             const targetFat = sex === 'male' ? (goal === 'bulk' ? Math.max(12, Math.min(fat, 18)) : goal === 'recomp' ? 15 : 12) : (goal === 'bulk' ? Math.max(20, Math.min(fat, 28)) : goal === 'recomp' ? 24 : 21);
             const targetWeight = goal === 'bulk' ? weight * 1.025 : goal === 'maintain' ? weight : lbm / (1 - targetFat / 100);
             const targetLabel = goal === 'maintain' ? `${round(weight * .99, 1)}–${round(weight * 1.01, 1)} кг` : goal === 'bulk' ? `${round(weight * 1.015, 1)}–${round(weight * 1.035, 1)} кг` : `${round(targetWeight * .985, 1)}–${round(targetWeight * 1.015, 1)} кг`;
-            const paceLabel = goal === 'cut' ? `−${round(weight * .008, 1)}…−${round(weight * .004, 1)} кг` : goal === 'bulk' ? `+${round(weight * .0015, 1)}…+${round(weight * .003, 1)} кг` : goal === 'recomp' ? '0…−0.3 кг' : '±0.2 кг';
+            const paceLabel = goal === 'cut' ? `минус ${round(weight * .004, 1)}–${round(weight * .008, 1)} кг/нед.` : goal === 'bulk' ? `плюс ${round(weight * .0015, 1)}–${round(weight * .003, 1)} кг/нед.` : goal === 'recomp' ? '0–0.3 кг/нед. вниз' : 'около ±0.2 кг/нед.';
             const whtr = Number.isFinite(waist) ? waist / height : NaN;
-            const whtrNote = !Number.isFinite(whtr) ? 'заполните талию' : whtr < .46 ? 'низкий диапазон' : whtr < .51 ? 'рабочий диапазон' : whtr < .58 ? 'зона внимания' : 'высокий диапазон';
+            const whtrNote = !Number.isFinite(whtr) ? 'введите талию — оценю зону риска' : whtr < .46 ? 'талия в низком диапазоне' : whtr < .51 ? 'талия в рабочем диапазоне' : whtr < .58 ? 'талия требует внимания' : 'высокий риск по талии';
+            const decisionExplain = goal === 'cut'
+                ? `Коридор цели — это примерный вес при сохранении сухой массы. Темп «${paceLabel}» значит: жир уходит, но силовые и восстановление не должны разваливаться.`
+                : goal === 'bulk'
+                    ? `Коридор цели показывает аккуратный набор без резкого роста жира. Темп «${paceLabel}» — контролируемый набор, где важнее качество массы, а не просто цифра на весах.`
+                    : goal === 'recomp'
+                        ? `Для рекомпозиции нормально, если вес почти стоит. Главный маркер — талия, фото, силовые и самочувствие, а не ежедневные скачки веса.`
+                        : `Для удержания формы важен не один вес, а стабильный коридор, талия, энергия и тренировки. Резких изменений здесь не требуется.`;
             setText('body-target-weight', targetLabel);
             setText('body-pace', paceLabel);
             setText('body-whtr', Number.isFinite(whtr) ? round(whtr, 2) : '—');
             setText('body-whtr-note', whtrNote);
+            setText('body-decision-explain', decisionExplain);
             setText('body-status', `${status}. BMI: ${round(bmi, 1)}. Жир: ${round(fat, 1)}% (${fatSource}).`);
             setText('body-strong', strong);
             setText('body-weak', weak);
@@ -12961,11 +13231,18 @@ body.theme-light #app-ecosystem .app-metrics-v25 .app-metric {
   'управляемый результат': 'a controlled result',
   'Практические ориентиры композиции тела': 'Practical body-composition targets',
   'Ориентир веса': 'Weight target',
+  'Коридор цели': 'Target corridor',
   'при сохранении сухой массы': 'while preserving lean mass',
+  'примерный вес при сохранении текущей сухой массы': 'estimated weight if current lean mass is preserved',
   'Рабочий темп': 'Working pace',
+  'Темп на 7 дней': '7-day pace',
   'на неделю': 'per week',
+  'сколько веса логично менять без срыва восстановления': 'how much weight can change without breaking recovery',
   'Талия / рост': 'Waist / height',
+  'Талия ÷ рост': 'Waist ÷ height',
   'нужна талия': 'waist needed',
+  'введите талию — оценю зону риска': 'enter waist — I will assess the risk zone',
+  'Заполните данные — здесь появится человеческое объяснение: что означает весовой коридор, нормален ли темп и зачем нужна талия.': 'Fill in the data — a plain-language explanation will appear here: what the weight corridor means, whether the pace is normal, and why waist matters.',
   'Практические ориентиры питания': 'Practical nutrition targets',
   'Коридор калорий': 'Calorie range',
   'допуск на день': 'daily tolerance',
