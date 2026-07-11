@@ -6361,7 +6361,16 @@ body.theme-light .mm-service-route b {
     'Скрин расчётов, цель, вес/рост, режим, питание, тренировки и что сейчас больше всего мешает.':'Send screenshots of the calculations, your goal, weight/height, routine, nutrition, training, and what is currently holding you back most.',
     'Проверьте базовые поля: возраст, рост и вес обязательны для расчёта.':'Check the basic fields: age, height, and weight are required.',
     'Заполните базовые параметры от 1 до 10.':'Fill in the basic parameters from 1 to 10.',
-    'Заполните старт, регулярное действие и срок.':'Fill in the starting value, recurring action, and term.'
+    'Заполните старт, регулярное действие и срок.':'Fill in the starting value, recurring action, and term.',
+    'Работать по плану. Сегодня можно прогрессировать без дополнительного снижения нагрузки.':'Follow the plan. Today you can progress without an additional load reduction.',
+    'Сохранить тренировку, но убрать геройство: меньше отказа, больше контроля техники и сна.':'Keep the workout, but remove the heroics: less failure work, more control over technique and sleep.',
+    'Снизить нагрузку: восстановительная сессия, ходьба или отдых вместо тяжёлой тренировки.':'Reduce the load: choose a recovery session, walking, or rest instead of heavy training.',
+    'заполните талию':'enter your waist',
+    'низкий диапазон':'low range',
+    'рабочий диапазон':'working range',
+    'зона внимания':'attention range',
+    'высокий диапазон':'high range',
+    '≈ стабильный вес':'≈ stable weight'
   };
   var parts = [
     ['Жир:', 'Fat:'], ['жир —', 'body fat —'], ['жир ', 'body fat '], ['жировой массы', 'fat mass'], ['жировая масса', 'fat mass'], ['Жировая масса', 'Fat mass'],
@@ -6383,7 +6392,7 @@ body.theme-light .mm-service-route b {
     return s;
   };
   function applyVisibleCalcLang(){
-    var ids=['body-accuracy','body-confidence-label','body-fatmass','body-ffmi','body-lbm','body-nffmi','body-status','body-strategy','body-strong','body-weak','format-first-step','format-focus','format-reason','format-send','format-start','format-title','growth-accuracy','growth-add-label','growth-gain','growth-main-label','growth-meaning','growth-multiplier','growth-risk','growth-start-label','growth-strategy','growth-term-hint','growth-total','nutri-bmr','nutri-carbs','nutri-check','nutri-fat-result','nutri-protein','nutri-rest-day','nutri-target','nutri-tdee','nutri-training-day','nutri-warning','nutrition-accuracy','nutrition-confidence-label','rec-cardio-result','rec-nutrition-result','rec-score','rec-sleep-result','rec-status','rec-training','rec-warning','recovery-accuracy'];
+    var ids=['body-accuracy','body-confidence-label','body-fatmass','body-ffmi','body-lbm','body-nffmi','body-status','body-strategy','body-strong','body-weak','body-target-weight','body-pace','body-whtr','body-whtr-note','format-first-step','format-focus','format-reason','format-send','format-start','format-title','growth-accuracy','growth-add-label','growth-gain','growth-main-label','growth-meaning','growth-multiplier','growth-risk','growth-start-label','growth-strategy','growth-term-hint','growth-total','nutri-bmr','nutri-carbs','nutri-check','nutri-fat-result','nutri-protein','nutri-rest-day','nutri-target','nutri-tdee','nutri-training-day','nutri-warning','nutri-corridor','nutri-weekly-change','nutri-water','nutrition-accuracy','nutrition-confidence-label','rec-cardio-result','rec-nutrition-result','rec-score','rec-sleep-result','rec-status','rec-training','rec-warning','rec-decision','recovery-accuracy'];
     ids.forEach(function(id){
       var el=document.getElementById(id);
       if(!el) return;
@@ -7581,6 +7590,226 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
 }
 </style>
 
+<style id="markovmade-v24-product-system">
+/* MARKOVMADE v24 — unified hierarchy, calculator decisions and live app prototype */
+:root {
+    --mm-radius-sm: 14px;
+    --mm-radius-md: 22px;
+    --mm-radius-lg: 32px;
+    --mm-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+html { scroll-padding-top: 88px; }
+body { text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+body, button, input, select, textarea { font-variant-numeric: tabular-nums; }
+a, button, input, select, textarea, summary { -webkit-tap-highlight-color: transparent; }
+:where(a, button, input, select, textarea, summary):focus-visible {
+    outline: 2px solid rgb(var(--color-gold));
+    outline-offset: 4px;
+}
+.section-block > .container, .mm-v13-inner { width: min(100%, 1440px); margin-inline: auto; }
+.hero-title-premium { text-wrap: balance; letter-spacing: -.045em; }
+.hero-content-premium > p { text-wrap: pretty; }
+.metric-card, .macro-grid > div, .result-block, .expert-shell,
+.mm-v13-card, .mm-v18-proof-card, .mm-v18-faq-card, .mm-v21-case-card,
+.contact-value-card { border-radius: var(--mm-radius-sm) !important; }
+.result-shell { border-radius: var(--mm-radius-md) !important; }
+.calc-primary-btn, .calc-secondary-btn, .calc-gold-link, .mm-v13-cta { min-height: 48px; }
+.calc-primary-btn { border-radius: 999px !important; }
+.luxury-input-number, .mm-select, .manifest-input { min-height: 50px; border-radius: 12px !important; }
+
+.mm-decision-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+}
+.mm-decision-metric {
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid rgb(var(--color-gold) / .16);
+    border-radius: 14px;
+    background: linear-gradient(145deg, rgb(var(--color-gold) / .055), transparent 72%);
+}
+.mm-decision-metric span, .mm-decision-metric small {
+    display: block;
+    color: rgb(var(--text-dim) / .8);
+    font: 700 8px/1.35 Manrope, sans-serif;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+}
+.mm-decision-metric strong {
+    display: block;
+    margin: 6px 0 4px;
+    color: rgb(var(--text-platinum));
+    font: 500 clamp(17px, 2vw, 22px)/1.1 "Cormorant Garamond", serif;
+}
+.mm-decision-metric small { font-size: 7px; letter-spacing: .08em; text-transform: none; }
+.mm-daily-decision {
+    margin: -2px -2px 10px !important;
+    padding: 12px 14px;
+    border: 1px solid rgb(var(--color-gold) / .18);
+    border-radius: 12px;
+    background: rgb(var(--color-gold) / .06);
+}
+
+.mm-app-section {
+    isolation: isolate;
+    overflow: hidden;
+    border-block: 1px solid rgb(var(--color-gold) / .11);
+    background:
+        radial-gradient(circle at 76% 40%, rgb(var(--color-gold) / .09), transparent 30%),
+        radial-gradient(circle at 20% 70%, rgb(255 255 255 / .025), transparent 32%),
+        rgb(var(--bg-obsidian));
+}
+.mm-app-section::before {
+    content: "MARKOV / OS";
+    position: absolute;
+    inset: 50% auto auto 50%;
+    z-index: -1;
+    translate: -50% -50%;
+    color: rgb(var(--text-platinum) / .018);
+    font: 800 clamp(90px, 18vw, 300px)/.75 Manrope, sans-serif;
+    letter-spacing: -.08em;
+    white-space: nowrap;
+}
+.mm-app-layout { display: grid; grid-template-columns: minmax(0, .88fr) minmax(440px, 1.12fr); gap: clamp(44px, 7vw, 100px); align-items: center; }
+.mm-app-story h2 { max-width: 760px; font-size: clamp(42px, 5.2vw, 76px); line-height: .98; letter-spacing: -.035em; text-wrap: balance; }
+.mm-app-story .app-copy { max-width: 650px; font-size: clamp(15px, 1.25vw, 18px); line-height: 1.72; }
+.mm-app-benefits { margin-top: 32px; border-block: 1px solid rgb(var(--text-platinum) / .09); }
+.mm-app-benefits article { display: grid; grid-template-columns: 42px 1fr; gap: 16px; padding: 19px 0; border-bottom: 1px solid rgb(var(--text-platinum) / .07); }
+.mm-app-benefits article:last-child { border-bottom: 0; }
+.mm-app-benefits article > span { color: rgb(var(--color-gold)); font: 800 10px/1.4 Manrope, sans-serif; letter-spacing: .16em; }
+.mm-app-benefits b { display: block; color: rgb(var(--text-platinum)); font: 650 14px/1.4 Manrope, sans-serif; }
+.mm-app-benefits p { margin-top: 5px; color: rgb(var(--text-dim)); font: 500 12px/1.55 Manrope, sans-serif; }
+.mm-app-device-wrap { position: relative; width: 100%; max-width: 630px; margin-inline: auto; padding: 24px; }
+.mm-app-orbit { position: absolute; inset: 6% -6%; z-index: -1; border: 1px solid rgb(var(--color-gold) / .12); border-radius: 50%; transform: rotate(-14deg); }
+.mm-app-orbit::after { content: ""; position: absolute; top: 13%; right: 7%; width: 8px; aspect-ratio: 1; border-radius: 50%; background: rgb(var(--color-gold)); box-shadow: 0 0 30px rgb(var(--color-gold)); animation: mm-orbit-pulse 2.8s ease-in-out infinite; }
+.mm-app-device {
+    position: relative;
+    min-height: 665px;
+    padding: 16px 20px 24px;
+    overflow: hidden;
+    border: 1px solid rgb(var(--color-gold) / .24);
+    border-radius: 34px;
+    background: linear-gradient(160deg, rgb(25 25 24 / .98), rgb(7 7 7 / .99) 68%);
+    box-shadow: 0 45px 100px rgb(0 0 0 / .5), inset 0 1px 0 rgb(255 255 255 / .08), 0 0 0 8px rgb(255 255 255 / .018);
+}
+.mm-app-device::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / .045), transparent 60%); transform: translateX(-110%); animation: mm-device-sheen 7s var(--mm-ease) infinite; }
+.mm-app-status, .mm-app-user, .mm-app-screen-head, .mm-recovery-hero { display: flex; align-items: center; justify-content: space-between; }
+.mm-app-status { color: rgb(var(--text-dim) / .75); font: 700 8px/1 Manrope, sans-serif; letter-spacing: .14em; }
+.mm-app-status-brand { color: rgb(var(--color-gold)); }
+.mm-app-user { margin: 24px 0 18px; }
+.mm-app-user small, .mm-app-screen small, .mm-app-insight small, .mm-recovery-hero small { display: block; color: rgb(var(--color-gold) / .8); font: 800 8px/1.3 Manrope, sans-serif; letter-spacing: .16em; }
+.mm-app-user strong { display: block; margin-top: 4px; color: rgb(var(--text-platinum)); font: 500 25px/1.1 "Cormorant Garamond", serif; }
+.mm-app-avatar { display: grid; place-items: center; width: 42px; aspect-ratio: 1; border: 1px solid rgb(var(--color-gold) / .35); border-radius: 50%; color: rgb(var(--color-gold)); background: rgb(var(--color-gold) / .07); font: 500 20px/1 "Cormorant Garamond", serif; }
+.mm-app-tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 4px; border: 1px solid rgb(255 255 255 / .07); border-radius: 13px; background: rgb(255 255 255 / .025); }
+.mm-app-tab { min-height: 38px; padding: 8px 7px; border-radius: 9px; color: rgb(var(--text-dim)); font: 750 9px/1 Manrope, sans-serif; letter-spacing: .04em; transition: .3s var(--mm-ease); }
+.mm-app-tab:hover { color: rgb(var(--text-platinum)); }
+.mm-app-tab.active { color: rgb(12 11 8); background: rgb(var(--color-gold)); box-shadow: 0 8px 26px rgb(var(--color-gold) / .16); }
+.mm-app-screen { padding-top: 18px; animation: mm-screen-in .48s var(--mm-ease) both; }
+.mm-app-hero-card { display: flex; align-items: center; justify-content: space-between; gap: 18px; min-height: 132px; padding: 20px; border: 1px solid rgb(var(--color-gold) / .15); border-radius: 18px; background: linear-gradient(135deg, rgb(var(--color-gold) / .11), rgb(255 255 255 / .02)); }
+.mm-app-hero-card strong { display: block; margin-top: 8px; color: rgb(var(--text-platinum)); font: 500 25px/1.05 "Cormorant Garamond", serif; }
+.mm-ring { --value: 72; position: relative; display: grid; place-items: center; flex: 0 0 auto; width: 78px; aspect-ratio: 1; border-radius: 50%; background: conic-gradient(rgb(var(--color-gold)) calc(var(--value) * 1%), rgb(255 255 255 / .07) 0); }
+.mm-ring::after { content: ""; position: absolute; inset: 6px; border-radius: inherit; background: rgb(13 13 13); }
+.mm-ring span, .mm-ring small { position: relative; z-index: 1; }
+.mm-ring span { color: rgb(var(--text-platinum)); font: 600 17px/1 Manrope, sans-serif; }
+.mm-ring small { margin-top: -20px; color: rgb(var(--text-dim)); font-size: 7px; }
+.mm-ring.large { width: 112px; }
+.mm-ring.large span { font: 500 34px/1 "Cormorant Garamond", serif; }
+.mm-app-kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px; }
+.mm-app-kpi-row > div { min-width: 0; padding: 13px 12px; border: 1px solid rgb(255 255 255 / .07); border-radius: 12px; background: rgb(255 255 255 / .025); }
+.mm-app-kpi-row small { color: rgb(var(--text-dim) / .8); }
+.mm-app-kpi-row b { display: inline-block; margin-top: 8px; color: rgb(var(--text-platinum)); font: 600 18px/1 Manrope, sans-serif; }
+.mm-app-kpi-row span { margin-left: 3px; color: rgb(var(--text-dim)); font: 600 8px/1 Manrope, sans-serif; }
+.mm-app-list { display: grid; gap: 8px; margin-top: 10px; }
+.mm-app-task { display: grid; grid-template-columns: 20px 1fr auto; gap: 11px; align-items: center; width: 100%; padding: 13px; border: 1px solid rgb(255 255 255 / .065); border-radius: 12px; color: inherit; text-align: left; background: rgb(255 255 255 / .02); transition: .3s var(--mm-ease); }
+.mm-app-task:hover { border-color: rgb(var(--color-gold) / .25); transform: translateX(2px); }
+.mm-app-task > i { width: 17px; aspect-ratio: 1; border: 1px solid rgb(var(--text-dim)); border-radius: 50%; }
+.mm-app-task.done > i { border-color: rgb(var(--color-gold)); background: radial-gradient(circle, rgb(var(--color-gold)) 0 35%, transparent 38%); }
+.mm-app-task b, .mm-app-task small { display: block; }
+.mm-app-task b { color: rgb(var(--text-platinum)); font: 650 11px/1.3 Manrope, sans-serif; }
+.mm-app-task small { margin-top: 3px; color: rgb(var(--text-dim)); font: 500 8px/1.3 Manrope, sans-serif; }
+.mm-app-task em { color: rgb(var(--color-gold) / .75); font: 750 8px/1 Manrope, sans-serif; text-transform: uppercase; }
+.mm-app-screen-head { min-height: 58px; padding: 14px 16px; border: 1px solid rgb(255 255 255 / .07); border-radius: 14px; background: rgb(255 255 255 / .025); }
+.mm-app-screen-head strong { display: block; margin-top: 5px; color: rgb(var(--text-platinum)); font: 500 21px/1 "Cormorant Garamond", serif; }
+.mm-app-screen-head > span { color: rgb(var(--text-dim)); font: 700 10px/1 Manrope, sans-serif; }
+.mm-app-screen-head .mm-positive { color: rgb(var(--color-gold)); }
+.mm-app-chart { display: flex; align-items: flex-end; gap: 8px; height: 190px; margin-top: 10px; padding: 24px 18px 16px; border: 1px solid rgb(255 255 255 / .07); border-radius: 14px; background: repeating-linear-gradient(to bottom, transparent 0 46px, rgb(255 255 255 / .045) 47px 48px); }
+.mm-app-chart i { flex: 1; height: var(--h); border-radius: 8px 8px 3px 3px; background: linear-gradient(to top, rgb(var(--color-gold) / .2), rgb(var(--color-gold) / .9)); transform-origin: bottom; animation: mm-chart-grow .7s var(--mm-ease) both; }
+.mm-app-insight { margin-top: 10px; padding: 15px 16px; border-left: 2px solid rgb(var(--color-gold)); border-radius: 0 12px 12px 0; background: rgb(var(--color-gold) / .055); }
+.mm-app-insight p { margin-top: 6px; color: rgb(var(--text-platinum) / .84); font: 500 10px/1.55 Manrope, sans-serif; }
+.mm-macro-bars { display: grid; gap: 16px; margin-top: 18px; padding: 18px; border: 1px solid rgb(255 255 255 / .07); border-radius: 14px; }
+.mm-macro-bars span { display: flex; justify-content: space-between; color: rgb(var(--text-dim)); font: 650 9px/1 Manrope, sans-serif; }
+.mm-macro-bars b { color: rgb(var(--text-platinum)); }
+.mm-macro-bars i, .mm-readiness-scale i { display: block; height: 5px; margin-top: 8px; overflow: hidden; border-radius: 99px; background: rgb(255 255 255 / .07); }
+.mm-macro-bars em, .mm-readiness-scale em { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, rgb(var(--color-gold) / .55), rgb(var(--color-gold))); }
+.mm-app-list.compact { margin-top: 12px; }
+.mm-app-meal { display: grid; grid-template-columns: 52px 1fr auto; align-items: center; padding: 12px 14px; border: 1px solid rgb(255 255 255 / .06); border-radius: 11px; color: rgb(var(--text-dim)); font: 650 9px/1 Manrope, sans-serif; }
+.mm-app-meal b { color: rgb(var(--text-platinum)); font-size: 10px; }
+.mm-app-meal.active { border-color: rgb(var(--color-gold) / .24); background: rgb(var(--color-gold) / .045); }
+.mm-recovery-hero { gap: 20px; padding: 20px; border: 1px solid rgb(var(--color-gold) / .13); border-radius: 16px; background: rgb(var(--color-gold) / .045); }
+.mm-recovery-hero > div:last-child { flex: 1; }
+.mm-recovery-hero strong { display: block; margin-top: 7px; color: rgb(var(--text-platinum)); font: 500 23px/1.05 "Cormorant Garamond", serif; }
+.mm-recovery-hero p { margin-top: 8px; color: rgb(var(--text-dim)); font: 500 9px/1.5 Manrope, sans-serif; }
+.mm-readiness-scale { display: grid; grid-template-columns: 90px 1fr 36px; gap: 10px; align-items: center; margin-top: 14px; color: rgb(var(--text-dim)); font: 700 8px/1 Manrope, sans-serif; text-transform: uppercase; }
+.mm-readiness-scale i { margin: 0; }
+.mm-readiness-scale b { color: rgb(var(--color-gold)); text-align: right; }
+.mm-app-home { width: 98px; height: 3px; margin: 18px auto 0; border-radius: 99px; background: rgb(var(--text-platinum) / .3); }
+.mm-app-caption { display: flex; gap: 9px; align-items: center; justify-content: center; margin-top: 18px; color: rgb(var(--text-dim) / .72); font: 600 8px/1.45 Manrope, sans-serif; letter-spacing: .04em; text-align: center; }
+.mm-app-caption span { width: 5px; aspect-ratio: 1; border-radius: 50%; background: rgb(var(--color-gold)); box-shadow: 0 0 13px rgb(var(--color-gold)); }
+
+body.theme-light .mm-app-section { background: radial-gradient(circle at 76% 40%, rgb(var(--color-gold) / .11), transparent 32%), #f4efe6; }
+body.theme-light .mm-app-device { background: linear-gradient(160deg, #fffdf8, #ebe3d6); box-shadow: 0 40px 90px rgb(66 47 20 / .16), inset 0 1px 0 white, 0 0 0 8px rgb(100 70 25 / .035); }
+body.theme-light .mm-ring::after { background: #f8f3e9; }
+body.theme-light .mm-app-tabs, body.theme-light .mm-app-kpi-row > div, body.theme-light .mm-app-task,
+body.theme-light .mm-app-screen-head, body.theme-light .mm-app-chart, body.theme-light .mm-macro-bars,
+body.theme-light .mm-app-meal { background-color: rgb(255 255 255 / .5); border-color: rgb(37 28 15 / .10); }
+body.theme-light .mm-app-insight, body.theme-light .mm-recovery-hero, body.theme-light .mm-app-hero-card { background-color: rgb(var(--color-gold) / .07); }
+body.theme-light .mm-app-task:hover { border-color: rgb(var(--color-gold) / .45); }
+
+@keyframes mm-device-sheen { 0%, 64% { transform: translateX(-110%); } 82%, 100% { transform: translateX(120%); } }
+@keyframes mm-orbit-pulse { 0%, 100% { transform: scale(.7); opacity: .45; } 50% { transform: scale(1.35); opacity: 1; } }
+@keyframes mm-screen-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes mm-chart-grow { from { transform: scaleY(0); opacity: .2; } to { transform: scaleY(1); opacity: 1; } }
+
+@media (max-width: 1023px) {
+    .mm-app-layout { grid-template-columns: 1fr; }
+    .mm-app-story { max-width: 760px; margin-inline: auto; text-align: center; }
+    .mm-app-story .app-copy { margin-inline: auto; }
+    .mm-app-benefits { text-align: left; }
+    .mm-app-story .app-cta-row { justify-content: center; }
+}
+@media (max-width: 639px) {
+    html { scroll-padding-top: 70px; }
+    .hero-title-premium { font-size: clamp(48px, 14.2vw, 68px) !important; line-height: .9 !important; }
+    .hero-content-premium { padding-top: 64px !important; }
+    .hero-content-premium > p { max-width: 88%; font-size: 13px !important; line-height: 1.58 !important; }
+    .mm-decision-grid { grid-template-columns: 1fr; }
+    .mm-decision-metric { display: grid; grid-template-columns: 1fr auto; gap: 3px 10px; align-items: center; }
+    .mm-decision-metric strong { grid-row: 1 / 3; grid-column: 2; margin: 0; text-align: right; }
+    .mm-app-section { padding-block: 74px !important; }
+    .mm-app-story h2 { font-size: clamp(39px, 12vw, 54px); }
+    .mm-app-device-wrap { padding: 20px 0 0; }
+    .mm-app-device { min-height: 620px; padding: 14px 13px 20px; border-radius: 26px; }
+    .mm-app-tabs { overflow-x: auto; grid-template-columns: repeat(4, minmax(75px, 1fr)); scrollbar-width: none; }
+    .mm-app-tabs::-webkit-scrollbar { display: none; }
+    .mm-app-tab { min-height: 42px; }
+    .mm-app-hero-card strong { font-size: 21px; }
+    .mm-app-kpi-row > div { padding: 11px 8px; }
+    .mm-app-kpi-row b { font-size: 15px; }
+    .mm-app-chart { height: 165px; padding-inline: 12px; }
+    .mm-recovery-hero { align-items: flex-start; padding: 16px; }
+    .mm-ring.large { width: 88px; }
+    .mm-app-caption { padding-inline: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto !important; }
+    .mm-app-orbit::after, .mm-app-device::before, .mm-app-chart i { animation: none !important; }
+    .mm-app-screen { animation: none !important; }
+    .mm-app-task:hover { transform: none; }
+}
+</style>
 </head>
 
 <body class="bg-obsidian antialiased selection:bg-gold selection:text-obsidian">
@@ -7589,7 +7818,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
     <div id="cursor" class="custom-cursor"></div>
 
     <!-- Плавающая кнопка связи -->
-    <a href="https://t.me/markovmade?text=Здравствуйте!%20Готов%20работать%20над%20собой%20и%20менять%20свою%20жизнь%20к%20лучшему!" target="_blank" id="floating-cta" class="interactive fixed bottom-6 right-5 md:bottom-8 md:right-10 z-[90] opacity-0 translate-y-10 pointer-events-none transition-all duration-500 ease-out group flex items-center justify-center">
+    <a href="https://t.me/markovmade?text=Здравствуйте!%20Готов%20работать%20над%20собой%20и%20менять%20свою%20жизнь%20к%20лучшему!" target="_blank" rel="noopener noreferrer" id="floating-cta" class="interactive fixed bottom-6 right-5 md:bottom-8 md:right-10 z-[90] opacity-0 translate-y-10 pointer-events-none transition-all duration-500 ease-out group flex items-center justify-center">
         <div class="absolute inset-0 rounded-full bg-gold animate-soft-ping"></div>
         <div class="relative bg-obsidian border border-gold/40 text-gold rounded-full p-3 md:p-3.5 shadow-[0_0_15px_rgb(var(--color-gold)/0.2)] group-hover:bg-gold group-hover:text-obsidian transition-all duration-300">
             <svg class="w-6 h-6 md:w-7 md:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
@@ -7612,7 +7841,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
             </p>
         </div>
         <div class="w-full flex justify-end">
-            <h1 id="preloader-count" class="text-8xl md:text-9xl font-sans font-thin tracking-tighter text-gold opacity-10">0%</h1>
+            <div id="preloader-count" class="text-8xl md:text-9xl font-sans font-thin tracking-tighter text-gold opacity-10" aria-hidden="true">0%</div>
         </div>
     </div>
 
@@ -7632,7 +7861,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                 <a href="#team" class="interactive nav-link font-sans text-[12px] uppercase tracking-luxury text-dim hover:text-platinum transition-colors">VI. Команда</a>
 
                 <div class="flex items-center ml-2 border-l border-white/10 pl-6 gap-5">
-                    <button onclick="toggleTheme()" class="interactive theme-switch" title="Сменить тему: тёмная / светлая" aria-label="Сменить тему: тёмная или светлая">
+                    <button type="button" onclick="toggleTheme()" class="interactive theme-switch" title="Сменить тему: тёмная / светлая" aria-label="Сменить тему: тёмная или светлая">
                         <span class="theme-switch-icon" aria-hidden="true"></span>
                         <span class="theme-switch-text">Тема</span>
                     </button>
@@ -7655,7 +7884,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
             </nav>
 
             <div class="flex items-center gap-4 md:hidden relative z-[60]">
-                <button onclick="toggleTheme()" class="interactive theme-switch theme-switch-mobile" title="Сменить тему" aria-label="Сменить тему: тёмная или светлая">
+                <button type="button" onclick="toggleTheme()" class="interactive theme-switch theme-switch-mobile" title="Сменить тему" aria-label="Сменить тему: тёмная или светлая">
                     <span class="theme-switch-icon" aria-hidden="true"></span>
                     <span class="sr-only">Сменить тему</span>
                 </button>
@@ -7664,7 +7893,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                     <span class="lang-switch-flag lang-flag-en" aria-hidden="true"></span>
                     <span class="lang-switch-label">EN</span>
                 </button>
-                <button id="burger-btn" class="interactive relative w-8 h-8 flex flex-col justify-center items-end gap-[5px] group" onclick="toggleMenu()" aria-label="Menu">
+                <button type="button" id="burger-btn" class="interactive relative w-8 h-8 flex flex-col justify-center items-end gap-[5px] group" onclick="toggleMenu()" aria-label="Menu">
                     <span class="w-6 h-[1px] bg-platinum transition-all group-hover:w-4 group-hover:bg-gold"></span>
                     <span class="w-4 h-[1px] bg-platinum transition-all group-hover:w-6 group-hover:bg-gold"></span>
                 </button>
@@ -7777,7 +8006,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                     </h1>
 
                     <p class="fade-in-up max-w-xl text-base md:text-lg font-sans text-dim tracking-wide leading-relaxed mb-9" style="transition-delay: 160ms;">
-                        Я здесь, чтобы оставить после себя имя и поколения людей с крепкими ценностями. Каждый день проживая ради одного: <span class="hero-gold-emphasis">помогать</span> и быть по‑настоящему <span class="hero-gold-emphasis">полезным</span>.
+                        Персональная система тела, питания и дисциплины: сначала находим вашу точку А, затем собираем план под реальную жизнь и превращаем прогресс в <span class="hero-gold-emphasis">управляемый результат</span>.
                     </p>
 
                     <div class="fade-in-up flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-10" style="transition-delay: 240ms;">
@@ -8064,6 +8293,11 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                                     <div class="metric-card"><span>FFMI</span><strong id="body-ffmi">—</strong></div>
                                     <div class="metric-card"><span>Normalized FFMI</span><strong id="body-nffmi">—</strong></div>
                                 </div>
+                                <div class="mm-decision-grid" aria-label="Практические ориентиры композиции тела">
+                                    <div class="mm-decision-metric"><span>Ориентир веса</span><strong id="body-target-weight">—</strong><small>при сохранении сухой массы</small></div>
+                                    <div class="mm-decision-metric"><span>Рабочий темп</span><strong id="body-pace">—</strong><small>на неделю</small></div>
+                                    <div class="mm-decision-metric"><span>Талия / рост</span><strong id="body-whtr">—</strong><small id="body-whtr-note">нужна талия</small></div>
+                                </div>
                                 <div class="mt-6">
                                     <div class="flex justify-between text-[10px] uppercase tracking-[0.2em] text-dim mb-2">
                                         <span>Индекс уверенности</span><span id="body-confidence-label">—</span>
@@ -8233,6 +8467,11 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                                     <div><span>Жиры</span><strong id="nutri-fat-result">—</strong></div>
                                     <div><span>Углеводы</span><strong id="nutri-carbs">—</strong></div>
                                 </div>
+                                <div class="mm-decision-grid" aria-label="Практические ориентиры питания">
+                                    <div class="mm-decision-metric"><span>Коридор калорий</span><strong id="nutri-corridor">—</strong><small>допуск на день</small></div>
+                                    <div class="mm-decision-metric"><span>Ожидаемый темп</span><strong id="nutri-weekly-change">—</strong><small>расчётная динамика</small></div>
+                                    <div class="mm-decision-metric"><span>Вода</span><strong id="nutri-water">—</strong><small>базовый ориентир</small></div>
+                                </div>
                                 <div class="mt-6">
                                     <div class="flex justify-between text-[10px] uppercase tracking-[0.2em] text-dim mb-2">
                                         <span>Точность модели</span><span id="nutrition-confidence-label">—</span>
@@ -8334,7 +8573,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                                 </div>
                                 <div class="recovery-score-wrap">
                                     <span id="rec-score" class="font-serif text-7xl md:text-8xl text-platinum leading-none">—</span>
-                                    <span class="font-serif text-3xl text-dim">/100</span>
+                                    <span class="font-sans text-xs uppercase tracking-widest text-dim">/100 нагрузка</span>
                                 </div>
                                 <div class="mt-6">
                                     <div class="flex justify-between text-[10px] uppercase tracking-[0.2em] text-dim mb-2">
@@ -8346,6 +8585,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                                     </div>
                                 </div>
                                 <div class="result-block">
+                                    <p class="mm-daily-decision"><strong>Решение дня:</strong> <span id="rec-decision">—</span></p>
                                     <p><strong>Тренировка сегодня:</strong> <span id="rec-training">—</span></p>
                                     <p><strong>Кардио:</strong> <span id="rec-cardio-result">—</span></p>
                                     <p><strong>Сон:</strong> <span id="rec-sleep-result">—</span></p>
@@ -8549,31 +8789,73 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
 
 
 
-<section id="app-ecosystem" class="section-block relative py-20 md:py-24 bg-obsidian text-platinum" data-insight="Персональное приложение собирает план, питание, задачи и динамику в одну рабочую систему.">
+<section id="app-ecosystem" class="section-block mm-app-section relative py-20 md:py-28 bg-obsidian text-platinum" data-insight="Персональное приложение собирает план, питание, задачи и динамику в одну рабочую систему.">
   <div class="container mx-auto px-6 md:px-8">
-    <div class="max-w-6xl mx-auto app-showcase-shell app-showcase-shell-v22">
-      <div class="app-showcase-head">
-        <span class="app-kicker">Персональное приложение</span>
-        <h2 class="font-serif text-platinum mt-5 mb-5">Я собираю вашу систему в понятном приложении.</h2>
-        <p class="app-copy app-copy-v22">План, питание, тренировки, задачи, отчёты и динамика находятся в одном месте. Не набор разрозненных файлов, а рабочее пространство под вашу цель, график и ограничения.</p>
-      </div>
+    <div class="max-w-7xl mx-auto mm-app-layout">
+      <div class="mm-app-story fade-in-up">
+        <span class="app-kicker">Персональное приложение / Live prototype</span>
+        <h2 class="font-serif text-platinum mt-5 mb-5">Ваш план перестаёт жить в голове. Он начинает работать каждый день.</h2>
+        <p class="app-copy app-copy-v22">Я собираю персональное пространство под цель, график и ограничения человека. В нём видно главное: что делать сегодня, как питаться, насколько вы восстановились и действительно ли движетесь вперёд.</p>
 
-      <div class="app-image-card app-image-card-v22 mt-8">
-        <img src="https://i.ibb.co/8gKHFW26/image.png" alt="Пример персонального приложения MARKOVMADE" loading="lazy" decoding="async">
-        <div class="app-image-caption app-image-caption-v22">
-          <span>Приложение показывает не просто список действий, а систему: что делать, что отслеживать и как видеть движение к результату.</span>
+        <div class="mm-app-benefits" aria-label="Преимущества персонального приложения">
+          <article><span>01</span><div><b>Один экран — один следующий шаг</b><p>Без десятков таблиц, заметок и потерянных сообщений.</p></div></article>
+          <article><span>02</span><div><b>План меняется вместе с жизнью</b><p>Нагрузка, питание и задачи корректируются по фактам, а не по чувству вины.</p></div></article>
+          <article><span>03</span><div><b>Прогресс невозможно «не заметить»</b><p>Вес, замеры, фото, тренировки и ресурс собраны в одну динамику.</p></div></article>
+        </div>
+
+        <div class="app-cta-row app-cta-row-v22">
+          <a href="#contact" class="mm-v13-cta interactive" data-analytics="v24_app_contact">Собрать систему под меня</a>
+          <a href="#calculators" class="mm-v13-cta secondary interactive" data-analytics="v24_app_calculators">Начать с расчёта</a>
         </div>
       </div>
 
-      <div class="app-metrics app-metrics-v22 mt-8">
-        <div class="app-metric"><b>Под цель</b><span>Форма, питание, режим и задачи собираются вокруг конкретного результата.</span></div>
-        <div class="app-metric"><b>Под график</b><span>План учитывает работу, сон, стресс, поездки и реальные ограничения.</span></div>
-        <div class="app-metric"><b>Под контроль</b><span>Фото, замеры, питание, самочувствие и динамика не теряются в разных местах.</span></div>
-      </div>
+      <div class="mm-app-device-wrap fade-in-up" style="transition-delay:120ms">
+        <div class="mm-app-orbit" aria-hidden="true"></div>
+        <div class="mm-app-device" aria-label="Интерактивный прототип персонального приложения MARKOVMADE">
+          <div class="mm-app-status"><span>09:41</span><span class="mm-app-status-brand">MARKOV / OS</span><span>● ● ●</span></div>
+          <div class="mm-app-user"><div><small>ДОБРО ПОЖАЛОВАТЬ</small><strong>Личная система</strong></div><span class="mm-app-avatar" aria-hidden="true">M</span></div>
 
-      <div class="app-cta-row app-cta-row-v22">
-        <a href="#contact" class="mm-v13-cta interactive" data-analytics="v22_app_contact">Понять, какое приложение нужно мне</a>
-        <a href="#services" class="mm-v13-cta secondary interactive" data-analytics="v22_app_services">Посмотреть форматы</a>
+          <div class="mm-app-tabs" role="tablist" aria-label="Экраны прототипа приложения">
+            <button type="button" class="mm-app-tab active" role="tab" aria-selected="true" data-app-tab="today">Сегодня</button>
+            <button type="button" class="mm-app-tab" role="tab" aria-selected="false" data-app-tab="progress">Прогресс</button>
+            <button type="button" class="mm-app-tab" role="tab" aria-selected="false" data-app-tab="nutrition">Питание</button>
+            <button type="button" class="mm-app-tab" role="tab" aria-selected="false" data-app-tab="recovery">Ресурс</button>
+          </div>
+
+          <div class="mm-app-screen active" data-app-screen="today" role="tabpanel">
+            <div class="mm-app-hero-card"><div><small>ФОКУС ДНЯ</small><strong>Сделать минимум.<br>Закрепить систему.</strong></div><div class="mm-ring" style="--value:72"><span>72%</span><small>день</small></div></div>
+            <div class="mm-app-kpi-row"><div><small>Вес</small><b>78.4</b><span>кг</span></div><div><small>Шаги</small><b>6 840</b><span>/ 8 000</span></div><div><small>Вода</small><b>1.8</b><span>/ 2.6 л</span></div></div>
+            <div class="mm-app-list">
+              <button type="button" class="mm-app-task done" aria-pressed="true"><i></i><span><b>Утренний запуск</b><small>вода · дыхание · план</small></span><em>готово</em></button>
+              <button type="button" class="mm-app-task" aria-pressed="false"><i></i><span><b>Силовая тренировка</b><small>верх тела · 55 минут</small></span><em>18:30</em></button>
+              <button type="button" class="mm-app-task" aria-pressed="false"><i></i><span><b>Вечерний отчёт</b><small>вес · питание · ресурс</small></span><em>2 мин</em></button>
+            </div>
+          </div>
+
+          <div class="mm-app-screen" data-app-screen="progress" role="tabpanel" hidden>
+            <div class="mm-app-screen-head"><div><small>ПОСЛЕДНИЕ 8 НЕДЕЛЬ</small><strong>Динамика формы</strong></div><span class="mm-positive">−4.8 кг</span></div>
+            <div class="mm-app-chart" aria-label="Демонстрационный график динамики веса"><i style="--h:88%"></i><i style="--h:82%"></i><i style="--h:78%"></i><i style="--h:72%"></i><i style="--h:68%"></i><i style="--h:60%"></i><i style="--h:54%"></i><i style="--h:48%"></i></div>
+            <div class="mm-app-kpi-row"><div><small>Талия</small><b>−6</b><span>см</span></div><div><small>Силовые</small><b>+9</b><span>%</span></div><div><small>Ритм</small><b>86</b><span>%</span></div></div>
+            <div class="mm-app-insight"><small>ВЫВОД СИСТЕМЫ</small><p>Темп устойчивый. Калории пока не снижаем: форма меняется, силовые сохраняются.</p></div>
+          </div>
+
+          <div class="mm-app-screen" data-app-screen="nutrition" role="tabpanel" hidden>
+            <div class="mm-app-screen-head"><div><small>ПЛАН НА СЕГОДНЯ</small><strong>Питание без гадания</strong></div><span>1 640 / 2 280</span></div>
+            <div class="mm-macro-bars"><div><span>Белки <b>148 / 180 г</b></span><i><em style="width:82%"></em></i></div><div><span>Жиры <b>56 / 72 г</b></span><i><em style="width:78%"></em></i></div><div><span>Углеводы <b>154 / 238 г</b></span><i><em style="width:65%"></em></i></div></div>
+            <div class="mm-app-list compact"><div class="mm-app-meal"><span>08:30</span><b>Завтрак</b><em>540 ккал</em></div><div class="mm-app-meal"><span>13:20</span><b>Обед</b><em>680 ккал</em></div><div class="mm-app-meal active"><span>19:00</span><b>Ужин</b><em>осталось 640</em></div></div>
+            <div class="mm-app-insight"><small>СЛЕДУЮЩИЙ ШАГ</small><p>Доберите белок и воду. Углеводы оставьте вокруг тренировки.</p></div>
+          </div>
+
+          <div class="mm-app-screen" data-app-screen="recovery" role="tabpanel" hidden>
+            <div class="mm-recovery-hero"><div class="mm-ring large" style="--value:81"><span>81</span><small>ресурс</small></div><div><small>ГОТОВНОСТЬ</small><strong>Можно прогрессировать</strong><p>Сон и энергия в норме. Сегодня — плановая нагрузка без дополнительных ограничений.</p></div></div>
+            <div class="mm-app-kpi-row"><div><small>Сон</small><b>7:42</b><span>хорошо</span></div><div><small>Стресс</small><b>3</b><span>/ 10</span></div><div><small>Пульс</small><b>58</b><span>уд/мин</span></div></div>
+            <div class="mm-readiness-scale"><span>восстановление</span><i><em style="width:81%"></em></i><b>81%</b></div>
+            <div class="mm-app-insight"><small>РЕШЕНИЕ ДНЯ</small><p>Работайте по плану. Кардио — умеренное, сон сегодня не сдвигать.</p></div>
+          </div>
+
+          <div class="mm-app-home" aria-hidden="true"></div>
+        </div>
+        <p class="mm-app-caption"><span></span> Интерактивный демонстрационный прототип. Состав экранов и метрик настраивается под человека.</p>
       </div>
     </div>
   </div>
@@ -8603,7 +8885,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                 <div class="w-full border-b border-white/10">
                     
                     <div class="service-item group border-t border-white/10 hover:bg-white/[0.02] transition-colors duration-500">
-                        <button class="w-full py-10 px-2 flex flex-col md:flex-row md:items-center justify-between text-left gap-6 outline-none interactive group" onclick="toggleAccordion(this)">
+                        <button type="button" class="w-full py-10 px-2 flex flex-col md:flex-row md:items-center justify-between text-left gap-6 outline-none interactive group" onclick="toggleAccordion(this)">
                             <div class="flex items-center gap-4 md:w-1/4">
                                 <span class="font-sans text-xs text-dim/50 tracking-widest">(01)</span>
                                 <svg class="w-5 h-5 text-gold opacity-80 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M3 14h18M6 6v12M18 6v12"/></svg>
@@ -8652,7 +8934,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                     </div>
 
                     <div class="service-item group border-t border-white/10 hover:bg-white/[0.02] transition-colors duration-500">
-                        <button class="w-full py-10 px-2 flex flex-col md:flex-row md:items-center justify-between text-left gap-6 outline-none interactive group" onclick="toggleAccordion(this)">
+                        <button type="button" class="w-full py-10 px-2 flex flex-col md:flex-row md:items-center justify-between text-left gap-6 outline-none interactive group" onclick="toggleAccordion(this)">
                             <div class="flex items-center gap-4 md:w-1/4">
                                 <span class="font-sans text-xs text-dim/50 tracking-widest">(02)</span>
                                 <svg class="w-5 h-5 text-gold opacity-80 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
@@ -8701,7 +8983,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                     </div>
 
                     <div class="service-item group border-t border-white/10 hover:bg-white/[0.02] transition-colors duration-500">
-                        <button class="w-full py-10 px-2 flex flex-col md:flex-row md:items-center justify-between text-left gap-6 outline-none interactive group" onclick="toggleAccordion(this)">
+                        <button type="button" class="w-full py-10 px-2 flex flex-col md:flex-row md:items-center justify-between text-left gap-6 outline-none interactive group" onclick="toggleAccordion(this)">
                             <div class="flex items-center gap-4 md:w-1/4">
                                 <span class="font-sans text-xs text-dim/50 tracking-widest">(03)</span>
                                 <svg class="w-5 h-5 text-gold opacity-80 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
@@ -8750,7 +9032,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                     </div>
 
                     <div class="service-item group border-t border-white/10 hover:bg-white/[0.02] transition-colors duration-500">
-                        <button class="w-full py-10 px-2 flex flex-col md:flex-row md:items-center justify-between text-left gap-6 outline-none interactive group" onclick="toggleAccordion(this)">
+                        <button type="button" class="w-full py-10 px-2 flex flex-col md:flex-row md:items-center justify-between text-left gap-6 outline-none interactive group" onclick="toggleAccordion(this)">
                             <div class="flex items-center gap-4 md:w-1/4">
                                 <span class="font-sans text-xs text-dim/50 tracking-widest">(04)</span>
                                 <svg class="w-5 h-5 text-gold opacity-80 group-hover:opacity-100" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/></svg>
@@ -8808,6 +9090,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                     </div>
 
                 </div>
+            </div>
             </div>
         </section>
 
@@ -9182,8 +9465,8 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
   </div>
   <div class="mm-v13-quiz-result" id="quiz-summary">Отметьте пункты выше — и заявка станет конкретной.</div>
   <div class="mm-v13-cta-row" style="justify-content:center;margin-top:20px">
-    <a id="quiz-telegram-link" href="https://t.me/markovmade?text=Здравствуйте!%20Хочу%20разобрать%20мою%20ситуацию%20и%20понять%20формат%20работы%20MARKOVMADE." target="_blank" class="mm-v13-cta interactive" data-analytics="v17_quiz_telegram">Отправить заявку в Telegram</a>
-    <a href="https://wa.me/79819722516" target="_blank" class="mm-v13-cta secondary interactive" data-analytics="v17_quiz_whatsapp">Написать в WhatsApp</a>
+    <a id="quiz-telegram-link" href="https://t.me/markovmade?text=Здравствуйте!%20Хочу%20разобрать%20мою%20ситуацию%20и%20понять%20формат%20работы%20MARKOVMADE." target="_blank" rel="noopener noreferrer" class="mm-v13-cta interactive" data-analytics="v17_quiz_telegram">Отправить заявку в Telegram</a>
+    <a href="https://wa.me/79819722516" target="_blank" rel="noopener noreferrer" class="mm-v13-cta secondary interactive" data-analytics="v17_quiz_whatsapp">Написать в WhatsApp</a>
   </div>
 </div>
 
@@ -9404,13 +9687,13 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
             </div>
 
             <div class="contact-channel-grid flex flex-col md:flex-row justify-center gap-5 lg:gap-6">
-                <a href="https://wa.me/79819722516" target="_blank" class="contact-btn contact-btn-whatsapp group flex-1 relative py-8 px-7 text-center border border-white/10 transition-all duration-500 overflow-hidden" aria-label="Написать Павлу в WhatsApp">
+                <a href="https://wa.me/79819722516" target="_blank" rel="noopener noreferrer" class="contact-btn contact-btn-whatsapp group flex-1 relative py-8 px-7 text-center border border-white/10 transition-all duration-500 overflow-hidden" aria-label="Написать Павлу в WhatsApp">
                     <span class="contact-channel">WhatsApp</span>
                     <span class="contact-title">Написать в WhatsApp</span>
                     <span class="contact-description">Коротко опишите цель, проблему, ограничения и удобный формат связи.</span>
                 </a>
 
-                <a href="https://t.me/markovmade?text=Здравствуйте!%20Хочу%20разобрать%20точку%20А%2C%20цель%2C%20ограничения%20и%20формат%20работы%20MARKOVMADE." target="_blank" class="contact-btn contact-btn-telegram group flex-1 relative py-8 px-7 text-center border border-white/10 transition-all duration-500 overflow-hidden" aria-label="Связаться с Павлом в Telegram">
+                <a href="https://t.me/markovmade?text=Здравствуйте!%20Хочу%20разобрать%20точку%20А%2C%20цель%2C%20ограничения%20и%20формат%20работы%20MARKOVMADE." target="_blank" rel="noopener noreferrer" class="contact-btn contact-btn-telegram group flex-1 relative py-8 px-7 text-center border border-white/10 transition-all duration-500 overflow-hidden" aria-label="Связаться с Павлом в Telegram">
                     <span class="contact-channel">Telegram</span>
                     <span class="contact-title">Связаться в Telegram</span>
                     <span class="contact-description">Удобно отправить расчёт, заявку или вопрос по формату работы.</span>
@@ -9443,7 +9726,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                 <span class="footer-gold-sync-pulse font-sans text-[11px] tracking-[0.4em] uppercase">
                     MARKOVMADE © 2026
                 </span>
-                <button onclick="togglePrivacy()" class="footer-gold-sync-pulse font-sans text-[11px] tracking-[0.4em] uppercase transition-all duration-300 bg-transparent border-0 p-0">
+                <button type="button" onclick="togglePrivacy()" class="footer-gold-sync-pulse font-sans text-[11px] tracking-[0.4em] uppercase transition-all duration-300 bg-transparent border-0 p-0">
     Privacy Policy
 </button>
                 <span class="footer-gold-sync-pulse font-sans text-[11px] tracking-[0.4em] uppercase">
@@ -9474,7 +9757,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
         <div class="fixed inset-0 bg-obsidian/95 backdrop-blur-xl transition-opacity" onclick="togglePrivacy()"></div>
         <div class="flex min-h-full items-center justify-center p-4 text-center">
             <div class="glass-panel relative w-full max-w-2xl transform overflow-hidden bg-charcoal p-6 md:p-12 text-left shadow-[0_0_50px_rgba(0,0,0,1)] border border-gold/20 transition-all my-8">
-                <button onclick="togglePrivacy()" class="absolute top-6 right-6 text-gold p-4 bg-black/20 rounded-full backdrop-blur-md z-50 hover:text-platinum transition-colors">
+                <button type="button" onclick="togglePrivacy()" class="absolute top-6 right-6 text-gold p-4 bg-black/20 rounded-full backdrop-blur-md z-50 hover:text-platinum transition-colors" aria-label="Закрыть политику приватности">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
                 </button>
                 <h2 class="font-serif text-2xl md:text-3xl text-gold mb-6 uppercase tracking-widest pr-8">Политика приватности</h2>
@@ -10177,6 +10460,16 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
             setText('body-fatmass', kg(fatMass));
             setText('body-ffmi', round(ffmi, 1));
             setText('body-nffmi', round(nffmi, 1));
+            const targetFat = sex === 'male' ? (goal === 'bulk' ? Math.max(12, Math.min(fat, 18)) : goal === 'recomp' ? 15 : 12) : (goal === 'bulk' ? Math.max(20, Math.min(fat, 28)) : goal === 'recomp' ? 24 : 21);
+            const targetWeight = goal === 'bulk' ? weight * 1.025 : goal === 'maintain' ? weight : lbm / (1 - targetFat / 100);
+            const targetLabel = goal === 'maintain' ? `${round(weight * .99, 1)}–${round(weight * 1.01, 1)} кг` : goal === 'bulk' ? `${round(weight * 1.015, 1)}–${round(weight * 1.035, 1)} кг` : `${round(targetWeight * .985, 1)}–${round(targetWeight * 1.015, 1)} кг`;
+            const paceLabel = goal === 'cut' ? `−${round(weight * .008, 1)}…−${round(weight * .004, 1)} кг` : goal === 'bulk' ? `+${round(weight * .0015, 1)}…+${round(weight * .003, 1)} кг` : goal === 'recomp' ? '0…−0.3 кг' : '±0.2 кг';
+            const whtr = Number.isFinite(waist) ? waist / height : NaN;
+            const whtrNote = !Number.isFinite(whtr) ? 'заполните талию' : whtr < .46 ? 'низкий диапазон' : whtr < .51 ? 'рабочий диапазон' : whtr < .58 ? 'зона внимания' : 'высокий диапазон';
+            setText('body-target-weight', targetLabel);
+            setText('body-pace', paceLabel);
+            setText('body-whtr', Number.isFinite(whtr) ? round(whtr, 2) : '—');
+            setText('body-whtr-note', whtrNote);
             setText('body-status', `${status}. BMI: ${round(bmi, 1)}. Жир: ${round(fat, 1)}% (${fatSource}).`);
             setText('body-strong', strong);
             setText('body-weak', weak);
@@ -10297,6 +10590,13 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
             setText('nutri-protein', grams(macros.protein));
             setText('nutri-fat-result', grams(macros.fats));
             setText('nutri-carbs', grams(macros.carbs));
+            const corridor = Math.max(80, Math.round(dayTarget * .04 / 10) * 10);
+            const weeklyChange = ((target - tdee) * 7) / 7700;
+            const waterMin = weight * 0.03;
+            const waterMax = weight * 0.035;
+            setText('nutri-corridor', `${Math.round(dayTarget - corridor)}–${Math.round(dayTarget + corridor)}`);
+            setText('nutri-weekly-change', Math.abs(weeklyChange) < .03 ? '≈ стабильный вес' : `${weeklyChange > 0 ? '+' : '−'}${round(Math.abs(weeklyChange), 2)} кг/нед`);
+            setText('nutri-water', `${round(waterMin, 1)}–${round(waterMax, 1)} л`);
             setText('nutri-training-day', `${kcal(trainingDay)}: больше углеводов вокруг тренировки.`);
             setText('nutri-rest-day', `${kcal(restDay)}: чуть ниже калории, белок оставить стабильным.`);
             setText('nutri-check', 'Проверить через 10–14 дней: средний вес за неделю, талию, силовые и самочувствие.');
@@ -10403,6 +10703,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
             let sleep = 'Сохранить режим сна и не ломать восстановление поздними стимулами.';
             let nutrition = 'Держать белок, воду, электролиты и стабильные приёмы пищи.';
             let warning = '';
+            let decision = 'Работать по плану. Сегодня можно прогрессировать без дополнительного снижения нагрузки.';
 
             if (score > 35 && score <= 65) {
                 status = 'Адаптационный стресс';
@@ -10411,6 +10712,7 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                 sleep = 'Приоритет — сон и снижение вечерней стимуляции.';
                 nutrition = 'Не ужесточать дефицит. Углеводы лучше ставить вокруг тренировки.';
                 warning = 'Зона внимания: ресурс уже тратится быстрее, чем восстанавливается.';
+                decision = 'Сохранить тренировку, но убрать геройство: меньше отказа, больше контроля техники и сна.';
             } else if (score > 65) {
                 status = 'Высокий риск перегруза';
                 training = 'Лучше сделать лёгкую тренировку, технику, мобилити или день восстановления.';
@@ -10418,12 +10720,14 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
                 sleep = 'Главная задача — 1–2 ночи качественного сна без позднего кофеина и лишнего экрана.';
                 nutrition = 'Не резать калории сильнее. Добавить нормальный приём пищи, воду и соль по самочувствию.';
                 warning = 'Если такое состояние держится долго, появляются боль, панические симптомы, бессонница или резкое ухудшение самочувствия — нужен профильный специалист.';
+                decision = 'Снизить нагрузку: восстановительная сессия, ходьба или отдых вместо тяжёлой тренировки.';
             }
 
             const accuracy = getAccuracy('recovery', { expertCount });
 
             setText('rec-score', score);
             setText('rec-status', status);
+            setText('rec-decision', decision);
             setText('rec-training', training);
             setText('rec-cardio-result', cardio);
             setText('rec-sleep-result', sleep);
@@ -12449,7 +12753,80 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
   'мало энергии': 'low energy',
   'Короткие': 'Quick',
   'ответы': 'answers',
-  'перед заявкой.': 'before submitting.'
+  'перед заявкой.': 'before submitting.',
+  'Персональная система тела, питания и дисциплины: сначала находим вашу точку А, затем собираем план под реальную жизнь и превращаем прогресс в': 'A personal system for body, nutrition, and discipline: first we identify your starting point, then build a plan around real life and turn progress into',
+  'управляемый результат': 'a controlled result',
+  'Практические ориентиры композиции тела': 'Practical body-composition targets',
+  'Ориентир веса': 'Weight target',
+  'при сохранении сухой массы': 'while preserving lean mass',
+  'Рабочий темп': 'Working pace',
+  'на неделю': 'per week',
+  'Талия / рост': 'Waist / height',
+  'нужна талия': 'waist needed',
+  'Практические ориентиры питания': 'Practical nutrition targets',
+  'Коридор калорий': 'Calorie range',
+  'допуск на день': 'daily tolerance',
+  'Ожидаемый темп': 'Expected pace',
+  'расчётная динамика': 'estimated trend',
+  'Вода': 'Water',
+  'базовый ориентир': 'baseline target',
+  '/100 нагрузка': '/100 load',
+  'Решение дня:': 'Decision for today:',
+  'Персональное приложение / Live prototype': 'Personal app / Live prototype',
+  'Ваш план перестаёт жить в голове. Он начинает работать каждый день.': 'Your plan stops living in your head. It starts working every day.',
+  'Я собираю персональное пространство под цель, график и ограничения человека. В нём видно главное: что делать сегодня, как питаться, насколько вы восстановились и действительно ли движетесь вперёд.': 'I build a personal workspace around your goal, schedule, and constraints. It shows what matters: what to do today, how to eat, how recovered you are, and whether you are truly moving forward.',
+  'Один экран — один следующий шаг': 'One screen — one next step',
+  'Без десятков таблиц, заметок и потерянных сообщений.': 'No dozens of spreadsheets, notes, or lost messages.',
+  'План меняется вместе с жизнью': 'The plan changes with real life',
+  'Нагрузка, питание и задачи корректируются по фактам, а не по чувству вины.': 'Training, nutrition, and tasks adjust to facts, not guilt.',
+  'Прогресс невозможно «не заметить»': 'Progress becomes impossible to miss',
+  'Вес, замеры, фото, тренировки и ресурс собраны в одну динамику.': 'Weight, measurements, photos, training, and recovery form one trend.',
+  'Собрать систему под меня': 'Build my system',
+  'Начать с расчёта': 'Start with an assessment',
+  'Интерактивный прототип персонального приложения MARKOVMADE': 'Interactive MARKOVMADE personal-app prototype',
+  'Экраны прототипа приложения': 'App prototype screens',
+  'Сегодня': 'Today',
+  'Прогресс': 'Progress',
+  'Питание': 'Nutrition',
+  'Ресурс': 'Recovery',
+  'ДОБРО ПОЖАЛОВАТЬ': 'WELCOME',
+  'Личная система': 'Personal system',
+  'ФОКУС ДНЯ': 'TODAY’S FOCUS',
+  'Сделать минимум.': 'Complete the minimum.',
+  'Закрепить систему.': 'Reinforce the system.',
+  'Шаги': 'Steps',
+  'Утренний запуск': 'Morning launch',
+  'вода · дыхание · план': 'water · breathing · plan',
+  'готово': 'done',
+  'Силовая тренировка': 'Strength training',
+  'верх тела · 55 минут': 'upper body · 55 minutes',
+  'Вечерний отчёт': 'Evening check-in',
+  'вес · питание · ресурс': 'weight · nutrition · recovery',
+  'ПОСЛЕДНИЕ 8 НЕДЕЛЬ': 'LAST 8 WEEKS',
+  'Динамика формы': 'Body trend',
+  'Талия': 'Waist',
+  'Силовые': 'Strength',
+  'Ритм': 'Consistency',
+  'ВЫВОД СИСТЕМЫ': 'SYSTEM INSIGHT',
+  'Темп устойчивый. Калории пока не снижаем: форма меняется, силовые сохраняются.': 'The pace is sustainable. Keep calories stable: body composition is changing and strength is holding.',
+  'ПЛАН НА СЕГОДНЯ': 'TODAY’S PLAN',
+  'Питание без гадания': 'Nutrition without guesswork',
+  'Завтрак': 'Breakfast',
+  'Обед': 'Lunch',
+  'Ужин': 'Dinner',
+  'осталось 640': '640 left',
+  'СЛЕДУЮЩИЙ ШАГ': 'NEXT STEP',
+  'Доберите белок и воду. Углеводы оставьте вокруг тренировки.': 'Complete your protein and water targets. Keep carbs around training.',
+  'ГОТОВНОСТЬ': 'READINESS',
+  'Можно прогрессировать': 'Ready to progress',
+  'Сон и энергия в норме. Сегодня — плановая нагрузка без дополнительных ограничений.': 'Sleep and energy are on target. Today: planned training without extra restrictions.',
+  'Сон': 'Sleep',
+  'Стресс': 'Stress',
+  'Пульс': 'Heart rate',
+  'восстановление': 'recovery',
+  'РЕШЕНИЕ ДНЯ': 'DECISION FOR TODAY',
+  'Работайте по плану. Кардио — умеренное, сон сегодня не сдвигать.': 'Follow the plan. Keep cardio moderate and do not shift sleep tonight.',
+  'Интерактивный демонстрационный прототип. Состав экранов и метрик настраивается под человека.': 'Interactive demo prototype. Screens and metrics are tailored to each person.'
 
 };
     var ATTR_DICT = {
@@ -13583,5 +13960,69 @@ body.theme-soft .mm-hero-media .mm-hero-fallback {
 })();
 </script>
 
+<script id="markovmade-v24-product-interactions">
+(function () {
+    'use strict';
+
+    function initProductPrototype() {
+        var root = document.getElementById('app-ecosystem');
+        if (!root || root.dataset.v24Ready === 'true') return;
+        root.dataset.v24Ready = 'true';
+
+        var tabs = Array.from(root.querySelectorAll('[data-app-tab]'));
+        var screens = Array.from(root.querySelectorAll('[data-app-screen]'));
+
+        function activate(name, focusTab) {
+            tabs.forEach(function (tab) {
+                var active = tab.dataset.appTab === name;
+                tab.classList.toggle('active', active);
+                tab.setAttribute('aria-selected', active ? 'true' : 'false');
+                tab.setAttribute('tabindex', active ? '0' : '-1');
+                if (active && focusTab) tab.focus({ preventScroll: true });
+            });
+            screens.forEach(function (screen) {
+                var active = screen.dataset.appScreen === name;
+                screen.classList.toggle('active', active);
+                screen.hidden = !active;
+            });
+            if (window.mmTrack) window.mmTrack('app_prototype_view', { screen: name });
+        }
+
+        tabs.forEach(function (tab, index) {
+            tab.addEventListener('click', function () { activate(tab.dataset.appTab, false); });
+            tab.addEventListener('keydown', function (event) {
+                if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft' && event.key !== 'Home' && event.key !== 'End') return;
+                event.preventDefault();
+                var next = index;
+                if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+                if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+                if (event.key === 'Home') next = 0;
+                if (event.key === 'End') next = tabs.length - 1;
+                activate(tabs[next].dataset.appTab, true);
+            });
+        });
+
+        root.querySelectorAll('.mm-app-task').forEach(function (task) {
+            var initialState = task.querySelector('em');
+            if (initialState && !initialState.dataset.defaultText) initialState.dataset.defaultText = task.classList.contains('done') ? 'в плане' : initialState.textContent;
+            task.addEventListener('click', function () {
+                var done = !task.classList.contains('done');
+                task.classList.toggle('done', done);
+                task.setAttribute('aria-pressed', done ? 'true' : 'false');
+                var state = task.querySelector('em');
+                if (state) state.textContent = done ? 'готово' : (state.dataset.defaultText || state.textContent);
+            });
+        });
+
+        activate('today', false);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initProductPrototype, { once: true });
+    } else {
+        initProductPrototype();
+    }
+})();
+</script>
 </body>
 </html>
