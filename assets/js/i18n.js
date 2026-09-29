@@ -131,7 +131,18 @@
   "Стандартно": "Standard",
   "Агрессивно": "Aggressive",
   "Предпочтение": "Preference",
+  "Сбалансировано": "Balanced",
   "Больше углеводов": "More carbs",
+  "Больше жиров": "More fats",
+  "Организация тех же калорий": "Distribute the same calories",
+  "Калории и белок остаются неизменными. Жиры не опускаются ниже 0,6 г/кг.": "Calories and protein stay the same. Fat stays at or above 0.6 g/kg.",
+  "Как получена оценка": "How was this estimate obtained?",
+  "Не знаю / неизвестно": "Unknown",
+  "Многочастотный BIA": "Multi-frequency BIA",
+  "Бытовой BIA": "Consumer BIA",
+  "Калипер / складки": "Calipers / skinfolds",
+  "Визуальная оценка": "Visual estimate",
+  "Оценка специалиста": "Professional estimate",
   "Сбалансированно": "Balanced",
   "Ниже углеводы": "Lower carbs",
   "Белок считать": "Protein based on",
@@ -1108,6 +1119,7 @@
 
 };
     var ATTR_DICT = {
+  "Сценарий распределения макронутриентов": "Macronutrient distribution scenario",
   "Сменить тему: тёмная / светлая": "Switch theme: dark / light",
   "Сменить тему: тёмная или светлая": "Switch theme: dark or light",
   "Сменить тему": "Switch theme",

@@ -124,7 +124,7 @@
   ]
 }
 </script>
-<script>(function(){document.documentElement.classList.add("js");var value=null;try{value=localStorage.getItem('mm.theme')||localStorage.getItem('markov-theme')}catch(e){}var aliases={dark:'obsidian',deep:'obsidian',light:'ivory',soft:'graphite',calm:'graphite'};if(aliases[value])value=aliases[value];if(['obsidian','ivory','graphite','contrast'].indexOf(value)<0){try{value=matchMedia('(prefers-contrast: more)').matches?'contrast':(matchMedia('(prefers-color-scheme: light)').matches?'ivory':'obsidian')}catch(e){value='obsidian'}}document.documentElement.dataset.theme=value})();</script>
+<script>(function(){document.documentElement.classList.add('js');var aliases={obsidian:'aurum-noir',dark:'aurum-noir',deep:'aurum-noir',ivory:'ivory-atelier',light:'ivory-atelier',graphite:'titanium-midnight',soft:'titanium-midnight',calm:'titanium-midnight',contrast:'mono-access'};var known=['aurum-noir','ivory-atelier','imperial-emerald','oxblood-atelier','titanium-midnight','mono-access'];var resolve=function(value){return aliases[value]|| (known.indexOf(value)>=0?value:null)};var value=null;try{value=resolve(localStorage.getItem('mm.theme'))||resolve(localStorage.getItem('markov-theme'))}catch(e){}if(!value){try{value=matchMedia('(prefers-contrast: more)').matches?'mono-access':(matchMedia('(prefers-color-scheme: light)').matches?'ivory-atelier':'aurum-noir')}catch(e){value='aurum-noir'}}document.documentElement.dataset.theme=value})();</script>
 <link rel="stylesheet" href="assets/css/legacy.css">
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/product.css">
@@ -423,6 +423,7 @@
     ['Точность модели:', 'Model accuracy:'], ['точность модели:', 'model accuracy:'], ['модель:', 'model:'], ['базовая','basic'], ['расширенная','advanced'], ['уточнённая','refined'], ['экспертная','expert'], ['кг','kg'], ['ккал','kcal'], [' г',' g'],
     ['указан вручную','entered manually'], ['оценка Navy method','Navy method estimate'], ['модельная оценка из-за нехватки данных','model estimate due to insufficient data'],
     ['больше углеводов вокруг тренировки.','more carbs around training.'], ['чуть ниже калории, белок оставить стабильным.','slightly lower calories, keep protein stable.'],
+    ['Сохранено введённое значение ','Saved entered value '], [' без коррекции. Источник: ',' without adjustment. Source: '], ['Точный диапазон ошибки без индивидуальной валидации не выводится.','No precise error range is reported without individual validation.'],
     ['белки —','protein —'], ['жиры —','fats —'], ['углеводы —','carbs —'], ['Тренировочный день','Training day'], ['день отдыха','rest day'],
     ['мужчина','male'], ['женщина','female'], ['сухая масса','lean mass'], ['Сухая масса','Lean mass'], ['Результат:','Result:'], ['Мои данные:','My data:'], ['Статус:','Status:'],
     ['Здравствуйте, Павел. Я прошёл расчёт на сайте MARKOVMADE.','Hello, Pavel. I completed the MARKOVMADE assessment.'], ['Хочу получить разбор и понять, какая стратегия мне подойдёт.','I want an audit and to understand which strategy fits me.']
@@ -439,6 +440,7 @@
   };
   function applyVisibleCalcLang(){
     var ids=['body-accuracy','body-confidence-label','body-fatmass','body-ffmi','body-lbm','body-nffmi','body-status','body-strategy','body-strong','body-weak','body-target-weight','body-pace','body-whtr','body-whtr-note','body-decision-explain','format-first-step','format-focus','format-reason','format-send','format-start','format-title','growth-accuracy','growth-add-label','growth-gain','growth-main-label','growth-meaning','growth-multiplier','growth-risk','growth-start-label','growth-strategy','growth-term-hint','growth-total','nutri-bmr','nutri-carbs','nutri-check','nutri-fat-result','nutri-protein','nutri-rest-day','nutri-target','nutri-tdee','nutri-training-day','nutri-warning','nutri-corridor','nutri-weekly-change','nutri-water','nutrition-accuracy','nutrition-confidence-label','rec-cardio-result','rec-nutrition-result','rec-score','rec-sleep-result','rec-status','rec-training','rec-warning','rec-decision','recovery-accuracy'];
+    ids.push('lab-body-range');
     ids.forEach(function(id){
       var el=document.getElementById(id);
       if(!el) return;
@@ -503,7 +505,7 @@
     <div id="cursor" class="custom-cursor"></div>
 
     <!-- Плавающая кнопка связи -->
-    <a href="https://t.me/markovmade?text=Здравствуйте!%20Готов%20работать%20над%20собой%20и%20менять%20свою%20жизнь%20к%20лучшему!" target="_blank" rel="noopener noreferrer" id="floating-cta" class="interactive fixed bottom-6 right-5 md:bottom-8 md:right-10 z-[90] opacity-0 translate-y-10 pointer-events-none transition-all duration-500 ease-out group flex items-center justify-center">
+    <a href="https://t.me/markovmade?text=Здравствуйте!%20Готов%20работать%20над%20собой%20и%20менять%20свою%20жизнь%20к%20лучшему!" target="_blank" rel="noopener noreferrer" id="floating-cta" aria-label="Отправить в Telegram" class="interactive fixed bottom-6 right-5 md:bottom-8 md:right-10 z-[90] opacity-0 translate-y-10 pointer-events-none transition-all duration-500 ease-out group flex items-center justify-center">
         <div class="absolute inset-0 rounded-full bg-gold animate-soft-ping"></div>
         <div class="relative bg-obsidian border border-gold/40 text-gold rounded-full p-3 md:p-3.5 shadow-[0_0_15px_rgb(var(--color-gold)/0.2)] group-hover:bg-gold group-hover:text-obsidian transition-all duration-300">
             <svg class="w-6 h-6 md:w-7 md:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
@@ -547,7 +549,7 @@
                 <a href="#team" class="interactive nav-link font-sans text-[12px] uppercase tracking-luxury text-dim hover:text-platinum transition-colors">VII. Команда</a>
 
                 <div class="flex items-center ml-2 border-l border-white/10 pl-6 gap-5">
-                    <button type="button" onclick="toggleTheme()" class="interactive theme-switch" title="Сменить тему: тёмная / светлая" aria-label="Сменить тему: тёмная или светлая">
+                    <button type="button" class="interactive theme-switch" title="Сменить тему" aria-label="Сменить тему">
                         <span class="theme-switch-icon" aria-hidden="true"></span>
                         <span class="theme-switch-text">Тема</span>
                     </button>
@@ -570,7 +572,7 @@
             </nav>
 
             <div class="flex items-center gap-4 md:hidden relative z-[60] mm-header-mobile-controls">
-                <button type="button" onclick="toggleTheme()" class="interactive theme-switch theme-switch-mobile" title="Сменить тему" aria-label="Сменить тему: тёмная или светлая">
+                <button type="button" class="interactive theme-switch theme-switch-mobile" title="Сменить тему" aria-label="Сменить тему">
                     <span class="theme-switch-icon" aria-hidden="true"></span>
                     <span class="sr-only">Сменить тему</span>
                 </button>
@@ -860,7 +862,22 @@
           <div class="mm-lab-snap" data-snap="pace" hidden><small>Темп</small><b>—</b></div>
         </div>
         <p class="mm-lab-snapshot-empty" id="mm-lab-snapshot-empty">Заполните состав тела или питание — сводка соберёт расчётные сигналы в одном месте.</p>
+        <div class="mm-lab-data-tools" role="group" aria-label="История и перенос данных">
+          <button type="button" class="mm-lab-secondary" data-lab-history-open data-copy-ru="История и сравнение" data-copy-en="History and compare">История и сравнение</button>
+          <button type="button" class="mm-lab-secondary" data-lab-export data-copy-ru="Экспортировать данные" data-copy-en="Export data">Экспортировать данные</button>
+          <button type="button" class="mm-lab-secondary" data-lab-import-trigger data-copy-ru="Импортировать данные" data-copy-en="Import data">Импортировать данные</button>
+          <input type="file" id="mm-lab-import-file" accept="application/json,.json" hidden aria-label="Импортировать резервную копию MARKOVMADE LAB">
+          <span class="mm-lab-data-status" id="mm-lab-data-status" role="status" aria-live="polite"></span>
+        </div>
       </section>
+
+      <dialog class="mm-lab-history-dialog" id="mm-lab-history-dialog" aria-labelledby="mm-lab-history-title">
+        <div class="mm-lab-history-head"><div><span class="mm-lab-kicker" data-copy-ru="ИСТОРИЯ · ЛОКАЛЬНО" data-copy-en="HISTORY · ON DEVICE">ИСТОРИЯ · ЛОКАЛЬНО</span><h3 id="mm-lab-history-title" data-copy-ru="Снимки модели" data-copy-en="Model snapshots">Снимки модели</h3><p data-copy-ru="Сравните результаты одного расчётного потока. История хранится только в этом браузере." data-copy-en="Compare runs of the same model. History stays in this browser.">Сравните результаты одного расчётного потока. История хранится только в этом браузере.</p></div><button type="button" class="mm-theme-close" data-lab-history-close aria-label="Закрыть историю">×</button></div>
+        <div class="mm-lab-history-compare"><label><span data-copy-ru="Снимок A" data-copy-en="Snapshot A">Снимок A</span><select id="mm-lab-history-a"></select></label><label><span data-copy-ru="Снимок B" data-copy-en="Snapshot B">Снимок B</span><select id="mm-lab-history-b"></select></label></div>
+        <div class="mm-lab-history-output" id="mm-lab-history-output" aria-live="polite"></div>
+        <h4 data-copy-ru="Недавние расчёты" data-copy-en="Recent calculations">Недавние расчёты</h4><ol id="mm-lab-history-list"></ol>
+        <p class="mm-lab-history-note" data-copy-ru="Для удаления истории используйте «Очистить мои данные». Экспорт создаёт JSON-файл на вашем устройстве." data-copy-en="Use “Clear my data” to delete history. Export creates a JSON file on your device.">Для удаления истории используйте «Очистить мои данные». Экспорт создаёт JSON-файл на вашем устройстве.</p>
+      </dialog>
 
       <div class="mm-lab-tabs" role="tablist" aria-label="Инструменты MARKOVMADE LAB">
         <button type="button" class="mm-lab-tab" data-mm-lab-tab="body" role="tab" aria-selected="true" aria-controls="mm-lab-body" id="mm-lab-tab-body">
@@ -910,7 +927,7 @@
                 <div class="mm-lab-field"><label for="lab-body-height">Рост <em>см</em></label><input id="lab-body-height" class="mm-lab-input" type="number" min="120" max="230" step="0.1" inputmode="decimal" placeholder="188" data-profile="height"></div>
                 <div class="mm-lab-field"><label for="lab-body-weight">Вес <em>кг</em></label><input id="lab-body-weight" class="mm-lab-input" type="number" min="35" max="300" step="0.1" inputmode="decimal" placeholder="100" data-profile="weight"></div>
                 <div class="mm-lab-field wide"><label>Как определить % жира?</label><div class="mm-lab-segment" data-segment="body-bf-method"><button type="button" aria-pressed="true" data-value="known">Я знаю % жира</button><button type="button" aria-pressed="false" data-value="tape">Рассчитать по замерам</button></div></div>
-                <div class="mm-lab-field wide" data-bf-known><label for="lab-body-bf">Процент жира <em>%</em></label><input id="lab-body-bf" class="mm-lab-input" type="number" min="3" max="60" step="0.1" inputmode="decimal" placeholder="15" data-profile="bodyFat"><small>Если значение получено DEXA/BodPod/одинаковым методом замеров, укажите его. Метод измерения всё равно имеет погрешность.</small></div>
+                <div class="mm-lab-field wide" data-bf-known><label for="lab-body-bf">Процент жира <em>%</em></label><input id="lab-body-bf" class="mm-lab-input" type="number" min="3" max="60" step="0.1" inputmode="decimal" placeholder="15" data-profile="bodyFat"><label for="lab-body-bf-source">Как получена оценка</label><select id="lab-body-bf-source" class="mm-lab-select"><option value="unknown" selected>Не знаю / неизвестно</option><option value="dexa">DEXA</option><option value="multi-bia">Многочастотный BIA</option><option value="consumer-bia">Бытовой BIA</option><option value="skinfold">Калипер / складки</option><option value="tape">Лента / окружности</option><option value="visual">Визуальная оценка</option><option value="professional">Оценка специалиста</option></select><small>Метод влияет на формулировку уверенности, но введённый вами процент не корректируется.</small></div>
                 <div class="mm-lab-field" data-bf-tape hidden><label for="lab-body-waist">Талия / живот <em>см</em></label><input id="lab-body-waist" class="mm-lab-input" type="number" min="40" max="200" step="0.1" inputmode="decimal" placeholder="86"></div>
                 <div class="mm-lab-field" data-bf-tape hidden><label for="lab-body-neck">Шея <em>см</em></label><input id="lab-body-neck" class="mm-lab-input" type="number" min="20" max="80" step="0.1" inputmode="decimal" placeholder="40"></div>
                 <div class="mm-lab-field wide" data-bf-tape data-female-only hidden><label for="lab-body-hips">Бёдра <em>см</em></label><input id="lab-body-hips" class="mm-lab-input" type="number" min="50" max="200" step="0.1" inputmode="decimal" placeholder="98"></div>
@@ -967,6 +984,7 @@
           <div class="mm-lab-result" aria-live="polite"><div class="mm-lab-result-head"><span>Рабочий старт</span><div class="mm-lab-badges"><span class="mm-lab-badge" data-quality="nutrition">Полнота: —</span><span class="mm-lab-badge" data-confidence="nutrition">Уверенность: —</span></div></div>
             <div class="mm-lab-hero-result"><small>Целевой коридор</small><strong id="lab-nutri-main">—</strong><p id="lab-nutri-sub">Формула — стартовая гипотеза. Реальный тренд за 2–3 недели важнее одной расчётной цифры.</p></div>
             <div class="mm-lab-metrics"><div class="mm-lab-metric"><small>RMR / BMR</small><b id="lab-nutri-rmr">—</b><em id="lab-nutri-rmr-method">—</em></div><div class="mm-lab-metric"><small>TDEE / поддержание</small><b id="lab-nutri-tdee">—</b><em id="lab-nutri-tdee-method">—</em></div><div class="mm-lab-metric"><small>Центр коридора</small><b id="lab-nutri-center">—</b></div></div>
+            <div class="mm-lab-field wide"><p class="mm-lab-section-title">Организация тех же калорий</p><div class="mm-lab-segment" data-segment="nutri-macro-scenario" role="group" aria-label="Сценарий распределения макронутриентов"><button type="button" aria-pressed="true" data-value="balanced">Сбалансировано</button><button type="button" aria-pressed="false" data-value="higher-carb">Больше углеводов</button><button type="button" aria-pressed="false" data-value="higher-fat">Больше жиров</button></div><small>Калории и белок остаются неизменными. Жиры не опускаются ниже 0,6 г/кг.</small></div>
             <div class="mm-lab-metrics" style="margin-top:8px"><div class="mm-lab-metric"><small>Белок</small><b id="lab-nutri-protein">—</b><em id="lab-nutri-protein-note">рабочий диапазон</em></div><div class="mm-lab-metric"><small>Жиры</small><b id="lab-nutri-fat">—</b><em>минимум → рабочая зона</em></div><div class="mm-lab-metric"><small>Углеводы</small><b id="lab-nutri-carb">—</b><em>остаток энергии</em></div></div>
             <div class="mm-lab-insight" id="lab-nutri-meaning"><strong>Что это значит:</strong> выполните расчёт.</div><div class="mm-lab-decision"><h4>Как применять</h4><ol id="lab-nutri-actions"><li>Используйте среднее за неделю, а не один идеальный день.</li><li>Пересмотрите расчёт после 14–21 дня по тренду веса и талии.</li></ol></div>
             <details class="mm-lab-details"><summary>Метод и ограничения</summary><div class="mm-lab-details-body" id="lab-nutri-method">Базовая REE-модель — Mifflin–St Jeor для взрослых. В PRO для спортсменов 18–35 лет доступна формула ten Haaf. Предиктивное уравнение не заменяет измерение непрямой калориметрией и не знает ваш реальный NEAT.</div></details>
@@ -1160,23 +1178,23 @@
 
           <div class="mm-os-screen active" id="mm-os-screen-today" data-app-screen="today" role="tabpanel" aria-labelledby="mm-os-tab-today">
             <div class="mm-os-decision">
-              <div class="mm-os-decision-copy"><span>РЕШЕНИЕ ДНЯ</span><h3>Сегодня ничего не меняем.</h3><p>Вес колеблется, но талия и 7-дневный тренд идут по плану. Оставьте питание и нагрузку без коррекции.</p></div>
-              <div class="mm-os-score" aria-label="Ресурс 78 из 100"><strong>78</strong><span>/100</span><small>ресурс</small></div>
+              <div class="mm-os-decision-copy"><span>РЕШЕНИЕ ДНЯ</span><h3 id="mm-os-today-decision">Сначала соберите исходные данные.</h3><p id="mm-os-today-reason">Выполните расчёт в LAB. Здесь появится следующий шаг и сигналы, на которых он основан.</p></div>
+              <div class="mm-os-score" id="mm-os-today-score" aria-label="Ресурс: ещё не рассчитан"><strong>—</strong><span>/100</span><small>ресурс</small></div>
             </div>
             <div class="mm-os-metrics" aria-label="Ключевые показатели дня">
-              <div><span>Калории</span><b>2 450</b><small>цель дня</small></div>
-              <div><span>Вес</span><b>98,6</b><small>−4,8 кг за 8 нед.</small></div>
-              <div><span>Сон</span><b>7:42</b><small>среднее 7 дней</small></div>
-              <div><span>Шаги</span><b>6 840</b><small>из 8 000</small></div>
+              <div><span>Калории</span><b data-os-model="calories">—</b><small data-os-model-note="calories">нет расчёта</small></div>
+              <div><span>Вес</span><b data-os-model="weight">—</b><small data-os-model-note="weight">нет измерения</small></div>
+              <div><span>Ресурс</span><b data-os-model="readiness">—</b><small data-os-model-note="readiness">нет оценки</small></div>
+              <div><span>Тренд</span><b data-os-model="trend">—</b><small data-os-model-note="trend">нужны измерения</small></div>
             </div>
             <div class="mm-os-today-grid">
               <div class="mm-os-actions-card">
-                <div class="mm-os-card-head"><span>Сегодня</span><small>3 ключевых действия</small></div>
-                <button type="button" class="mm-os-task mm-app-task done" aria-pressed="true"><span class="mm-os-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><span><b>Питание по плану</b><small>коридор 2 380–2 520 ккал</small></span><em>готово</em></button>
-                <button type="button" class="mm-os-task mm-app-task" aria-pressed="false"><span class="mm-os-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><span><b>Силовая тренировка</b><small>верх тела · 55 минут</small></span><em>18:30</em></button>
-                <button type="button" class="mm-os-task mm-app-task" aria-pressed="false"><span class="mm-os-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><span><b>Вечерний отчёт</b><small>вес · питание · ресурс</small></span><em>2 мин</em></button>
+                <div class="mm-os-card-head"><span>Следующий шаг</span><small>на основании LAB</small></div>
+                <button type="button" class="mm-os-task mm-app-task" aria-pressed="false"><span class="mm-os-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><span><b data-os-action="0">Рассчитайте исходные данные</b><small data-os-action-note="0">Первый сигнал займёт меньше минуты.</small></span><em>сейчас</em></button>
+                <button type="button" class="mm-os-task mm-app-task" aria-pressed="false"><span class="mm-os-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><span><b data-os-action="1">Соберите тренд веса</b><small data-os-action-note="1">Сравните недельные средние.</small></span><em>7 дней</em></button>
+                <button type="button" class="mm-os-task mm-app-task" aria-pressed="false"><span class="mm-os-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><span><b data-os-action="2">Повторите оценку ресурса</b><small data-os-action-note="2">Сверяйте сигналы в одинаковых условиях.</small></span><em>регулярно</em></button>
               </div>
-              <div class="mm-os-signal-card"><span class="mm-os-signal-label">СИГНАЛ СИСТЕМЫ</span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 17l5-5 3 3 7-8"/><path d="M15 7h4v4"/></svg><b>Тренд сильнее шума</b><p>Два дня вес выше, но среднее за неделю продолжает снижаться. Коррекция пока не нужна.</p></div>
+              <div class="mm-os-signal-card"><span class="mm-os-signal-label">СИГНАЛ СИСТЕМЫ</span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 17l5-5 3 3 7-8"/><path d="M15 7h4v4"/></svg><b id="mm-os-signal-title">Данных пока нет</b><p id="mm-os-signal-copy">После расчёта в LAB здесь появится измеримый сигнал, который поддерживает решение дня.</p></div>
             </div>
           </div>
 
@@ -2220,6 +2238,7 @@
         </div>
     </div>
 
+<script src="assets/js/lab-models.js"></script>
 <script src="assets/js/app-runtime.js"></script>
 
 <script id="markovmade-final-guards">
@@ -2286,17 +2305,6 @@
             var isClosed = menu.classList.contains('translate-x-full');
             menu.classList.toggle('translate-x-full', !isClosed);
             document.body.classList.toggle('menu-open', isClosed);
-        };
-    }
-
-    if (typeof window.toggleTheme !== 'function') {
-        window.toggleTheme = function(){
-            var body = document.body;
-            body.classList.toggle('theme-light');
-            var isLight = body.classList.contains('theme-light');
-            try { localStorage.setItem('markov-theme', isLight ? 'light' : 'deep'); } catch(e) {}
-            var meta = qs('#theme-color-meta');
-            if (meta) meta.setAttribute('content', isLight ? '#F8F5EE' : '#050505');
         };
     }
 
@@ -2576,8 +2584,8 @@
     function updateThemeColor(){
         var meta = $('#theme-color-meta');
         if (!meta) return;
-        var light = document.body && document.body.classList.contains('theme-light');
-        meta.setAttribute('content', light ? '#f8f5ee' : '#050505');
+        var colors = {'aurum-noir':'#080807','ivory-atelier':'#f1ede4','imperial-emerald':'#08100d','oxblood-atelier':'#10090b','titanium-midnight':'#090d12','mono-access':'#000000'};
+        meta.setAttribute('content', colors[document.documentElement.dataset.theme] || '#080807');
     }
 
     function ensureProgress(){
@@ -3006,7 +3014,7 @@
     payload = payload || {};
     try {
       payload.language = document.documentElement.lang || 'ru';
-      payload.theme = document.body.classList.contains('theme-light') ? 'light' : (document.body.classList.contains('theme-soft') ? 'soft' : 'dark');
+      payload.theme = document.documentElement.dataset.theme || 'aurum-noir';
       payload.device_width = window.innerWidth;
       payload.path = location.pathname;
     } catch(e) {}
@@ -3040,7 +3048,7 @@
   function track(name, params){
     params = params || {};
     params.lang = document.body.classList.contains('lang-en') ? 'en' : 'ru';
-    params.theme = document.body.classList.contains('theme-light') ? 'light' : (document.body.classList.contains('theme-soft') ? 'soft' : 'dark');
+    params.theme = document.documentElement.dataset.theme || 'aurum-noir';
     params.width = window.innerWidth;
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: name, markovmade: params });
@@ -3253,5 +3261,6 @@
 </script>
 
 <script src="assets/js/theme-system.js"></script>
+<script src="assets/js/lab-history.js"></script>
 </body>
 </html>

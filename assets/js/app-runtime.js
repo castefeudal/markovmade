@@ -1,25 +1,3 @@
-// --- ПЕРЕКЛЮЧАТЕЛЬ ТЕМЫ ---
-    function toggleTheme() {
-        const body = document.body;
-        body.classList.add('theme-transition');
-        body.classList.toggle('theme-light');
-        body.classList.remove('theme-soft');
-        const isLight = body.classList.contains('theme-light');
-        try { localStorage.setItem('markov-theme', isLight ? 'light' : 'deep'); } catch (e) {}
-        const metaThemeColor = document.getElementById('theme-color-meta');
-        if (metaThemeColor) metaThemeColor.setAttribute('content', isLight ? '#F8F5EE' : '#050505');
-        setTimeout(() => body.classList.remove('theme-transition'), 500);
-    }
-
-    try {
-        if (localStorage.getItem('markov-theme') === 'light') {
-            document.body.classList.add('theme-light');
-            document.body.classList.remove('theme-soft');
-            const metaThemeColor = document.getElementById('theme-color-meta');
-            if (metaThemeColor) metaThemeColor.setAttribute('content', '#F8F5EE');
-        }
-    } catch (e) {}
-
     // --- УПРАВЛЕНИЕ ПОЛИТИКОЙ И АККОРДЕОНОМ ---
     let privacyReturnFocus = null;
     window.togglePrivacy = function() {
@@ -58,12 +36,14 @@
             if(c !== content && c.classList.contains('open')) {
                 c.classList.remove('open'); c.previousElementSibling.querySelector('.rotate-icon').classList.remove('open');
                 c.setAttribute('aria-hidden', 'true');
+                c.inert = true;
                 c.previousElementSibling.setAttribute('aria-expanded', 'false');
             }
         });
         content.classList.toggle('open'); icon.classList.toggle('open');
         const isOpen = content.classList.contains('open');
         content.setAttribute('aria-hidden', String(!isOpen));
+        content.inert = !isOpen;
         btn.setAttribute('aria-controls', content.id);
         btn.setAttribute('aria-expanded', String(isOpen));
     }
@@ -74,6 +54,7 @@
         btn.setAttribute('aria-controls', content.id);
         btn.setAttribute('aria-expanded', String(content.classList.contains('open')));
         content.setAttribute('aria-hidden', String(!content.classList.contains('open')));
+        content.inert = !content.classList.contains('open');
     });
 
     window.toggleEvolution = function(btn) {
@@ -537,6 +518,7 @@
 
             const STORAGE_KEY = 'markovmade-lab-v1';
             const MODEL_VERSIONS = Object.freeze({ body:'1.0.0', nutrition:'1.0.0', overfeeding:'1.0.0', recovery:'1.0.0', progress:'1.0.0', strategy:'1.0.0' });
+            const {mifflin,tenHaaf,tenHaafFFM,navyBodyFat,ffmi,weightedTef,glycogenRange,average:avg,movingAverage,regressionSlope,plateauStatus} = window.MarkovMadeModels;
             const K = Object.freeze({
                 kcalPerKgFatEquivalent: 7700,
                 navySee: 3.6,
@@ -658,6 +640,7 @@
                 wrap.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b===btn?'true':'false'));
                 handleSegment(wrap.dataset.segment,btn.dataset.value);
             })));
+            if(['balanced','higher-carb','higher-fat'].includes(state.nutrition.macroScenario)) $$('[data-segment="nutri-macro-scenario"] button').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.value===state.nutrition.macroScenario)));
             function handleSegment(name,value){
                 if(name==='body-bf-method'){
                     $$('[data-bf-known]').forEach(n=>display(n,value==='known'));
@@ -670,6 +653,7 @@
                     $$('[data-fat-maint-auto]').forEach(n=>display(n,value==='auto'));
                 }
                 if(name==='fat-input-mode') $$('[data-fat-macros]').forEach(n=>display(n,value==='macros'));
+                if(name==='nutri-macro-scenario' && state.nutrition && Number.isFinite(state.nutrition.target)) renderNutritionMacros(state.nutrition,value);
             }
             handleSegment('body-bf-method',segmentValue('body-bf-method'));
             handleSegment('nutri-maint-source',segmentValue('nutri-maint-source'));
@@ -678,35 +662,20 @@
 
             el('lab-fat-comp')?.addEventListener('change',()=>display($('[data-fat-comp-custom]'),val('lab-fat-comp')==='custom'));
 
-            function mifflin(sex,age,heightCm,weightKg){
-                return 10*weightKg + 6.25*heightCm - 5*age + (sex==='male'?5:-161);
-            }
-            function tenHaaf(sex,age,heightCm,weightKg){
-                return 29.279 + 11.936*weightKg + 587.728*(heightCm/100) - 8.129*age + 191.027*(sex==='male'?1:0);
-            }
-            function tenHaafFFM(ffm){ return 22.771*ffm + 484.264; }
-            function navyBodyFat(sex,heightCm,waistCm,neckCm,hipsCm){
-                const h=heightCm/2.54, w=waistCm/2.54, n=neckCm/2.54;
-                if(sex==='male'){
-                    if(!(w>n && h>0)) return NaN;
-                    return 86.010*Math.log10(w-n)-70.041*Math.log10(h)+36.76;
-                }
-                const hip=hipsCm/2.54;
-                if(!(w+hip>n && h>0)) return NaN;
-                return 163.205*Math.log10(w+hip-n)-97.684*Math.log10(h)-78.387;
-            }
-
             function calculateBody(){
                 error('body');
                 const sex=val('lab-body-sex'), age=number('lab-body-age'), h=number('lab-body-height'), w=number('lab-body-weight');
                 if(!sex) return error('body','Выберите пол — он нужен для окружностной модели и интерпретации.'),null;
                 for(const [v,min,max,label] of [[age,18,90,'Возраст'],[h,120,230,'Рост'],[w,35,300,'Вес']]){ const m=safeRange(v,min,max,label); if(m) return error('body',m),null; }
                 const method=segmentValue('body-bf-method');
-                let bf,bfLow,bfHigh,confidence='Умеренная',quality='Базовая',source='';
+                let bf,bfLow,bfHigh,confidence='Умеренная',quality='Базовая',source='',measurementMethod='tape';
                 const waist=number('lab-body-waist'), neck=number('lab-body-neck'), hips=number('lab-body-hips');
                 if(method==='known'){
                     bf=number('lab-body-bf'); const m=safeRange(bf,3,60,'% жира'); if(m) return error('body',m),null;
-                    bfLow=bf; bfHigh=bf; source='указанное пользователем значение';
+                    measurementMethod=val('lab-body-bf-source')||'unknown';
+                    const methods={dexa:['DEXA','Выше средней'], 'multi-bia':['многочастотный BIA','Умеренная'], 'consumer-bia':['бытовой BIA','Низкая'], skinfold:['калипер / складки','Умеренная'], tape:['лента / окружности','Умеренная'], visual:['визуальная оценка','Низкая'], professional:['оценка специалиста','Умеренная'], unknown:['неизвестный метод','Низкая']};
+                    const methodInfo=methods[measurementMethod]||methods.unknown;
+                    bfLow=bf; bfHigh=bf; source=`введено пользователем · метод: ${methodInfo[0]}`; confidence=methodInfo[1];
                     quality=currentMode('body')==='pro'?'Хорошая':'Базовая';
                 } else {
                     for(const [v,min,max,label] of [[waist,40,200,'Талия'],[neck,20,80,'Шея']]){ const m=safeRange(v,min,max,label); if(m) return error('body',m),null; }
@@ -718,15 +687,15 @@
                     bf=clamp(bf,3,60); bfLow=clamp(bf-K.navySee,3,60); bfHigh=clamp(bf+K.navySee,3,60);
                     source='окружностная модель Hodgdon/Beckett'; quality='Хорошая';
                 }
-                const fatMass=w*bf/100, lbm=w-fatMass, hm=h/100, ffmi=lbm/(hm*hm), nffmi=ffmi+6.3*(1.80-hm), bmi=w/(hm*hm);
+                const fatMass=w*bf/100, lbm=w-fatMass, hm=h/100, baseFfmi=ffmi(w,bf,h), nffmi=baseFfmi+6.3*(1.80-hm), bmi=w/(hm*hm);
                 const whtr=Number.isFinite(waist)?waist/h:NaN;
                 const targetBF=currentMode('body')==='pro'?number('lab-body-target-bf'):NaN;
                 const goal=val('lab-body-goal')||'recomp', level=val('lab-body-level')||'intermediate';
                 const targetWeight=Number.isFinite(targetBF)&&targetBF>0&&targetBF<60 ? lbm/(1-targetBF/100) : NaN;
                 state.profile={sex,age,height:h,weight:w,bodyFat:round(bf,1)};
-                state.body={modelVersion:MODEL_VERSIONS.body,bf,bfLow,bfHigh,fatMass,lbm,ffmi,nffmi,bmi,whtr,targetBF,targetWeight,source,goal,level}; save(); applyProfile();
+                state.body={modelVersion:MODEL_VERSIONS.body,bf,bfLow,bfHigh,fatMass,lbm,ffmi:baseFfmi,nffmi,bmi,whtr,targetBF,targetWeight,source,confidence,measurementMethod,goal,level}; save(); applyProfile();
                 setText('lab-body-main',`${fmt(bf,1)}%`);
-                setText('lab-body-range',method==='tape'?`Практически честнее читать как ≈ ${fmt(bfLow,1)}–${fmt(bfHigh,1)}%. Главная ошибка — точки и техника окружностных измерений.`:`Использовано ваше значение ${fmt(bf,1)}%. Диапазон не рассчитывается: метод измерения и его индивидуальная погрешность неизвестны.`);
+                setText('lab-body-range',method==='tape'?`Практически честнее читать как ≈ ${fmt(bfLow,1)}–${fmt(bfHigh,1)}%. Главная ошибка — точки и техника окружностных измерений.`:`Сохранено введённое значение ${fmt(bf,1)}% без коррекции. Источник: ${source}. Точный диапазон ошибки без индивидуальной валидации не выводится.`);
                 setText('lab-body-fatmass',kg(fatMass)); setText('lab-body-lbm',kg(lbm)); setText('lab-body-ffmi',fmt(ffmi,1)); setText('lab-body-nffmi',fmt(nffmi,1)); setText('lab-body-bmi',fmt(bmi,1)); setText('lab-body-whtr',Number.isFinite(whtr)?fmt(whtr,2):'—');
                 let meaning=`При ${fmt(bf,1)}% жира из ${fmt(w,1)} кг примерно ${fmt(lbm,1)} кг приходится на безжировую массу. FFMI ${fmt(ffmi,1)} полезен как контекст мышечной массы, но наследует ошибку оценки % жира.`;
                 if(goal==='cut' && ffmi>=22) meaning+=' При снижении жира ключевая задача — сохранять сухую массу и силовые, а не гнаться за максимальной скоростью снижения веса.';
@@ -775,6 +744,20 @@
                 return {sex,age,h,w,bf,pro,athlete,rmr,rmrMethod,tdee,tdeeLow,tdeeHigh,tdeeMethod,confidence};
             }
 
+            function renderNutritionMacros(nutrition,scenario=segmentValue('nutri-macro-scenario')||'balanced'){
+                const {w,target,targetLow,targetHigh,pLow,pHigh,pMid}=nutrition;
+                const share=scenario==='higher-carb'?.20:scenario==='higher-fat'?.35:.25;
+                const fatFloor=w*.6;
+                const fatMid=Math.max(fatFloor,target*share/9);
+                const fatLow=Math.max(fatFloor,targetLow*share/9), fatHigh=Math.max(fatLow,targetHigh*share/9);
+                const carbMid=Math.max(0,(target-pMid*4-fatMid*9)/4);
+                const carbLow=Math.max(0,(targetLow-pHigh*4-fatHigh*9)/4), carbHigh=Math.max(0,(targetHigh-pLow*4-fatLow*9)/4);
+                nutrition.macroScenario=scenario; nutrition.fatLow=fatLow; nutrition.fatHigh=fatHigh; nutrition.fatMid=fatMid; nutrition.carbLow=carbLow; nutrition.carbHigh=carbHigh; nutrition.carbMid=carbMid;
+                setText('lab-nutri-fat',`${fmt(fatLow,0)}–${fmt(fatHigh,0)} г`); setText('lab-nutri-carb',`${fmt(carbLow,0)}–${fmt(carbHigh,0)} г`);
+                if(mmCalcSummaries.nutrition){ mmCalcSummaries.nutrition=mmCalcSummaries.nutrition.replace(/Жиры: .*\n/,`Жиры: ${fmt(fatLow,0)}–${fmt(fatHigh,0)} г\n`).replace(/Углеводы: .*\n/,`Углеводы: ${fmt(carbLow,0)}–${fmt(carbHigh,0)} г\n`); }
+                save();
+                return {fatLow,fatHigh,carbLow,carbHigh};
+            }
             function calculateNutrition(){
                 error('nutrition'); let e;
                 try{ e=energyModel(); }catch(err){ error('nutrition',err.message); return null; }
@@ -799,11 +782,14 @@
                 state.profile={sex:e.sex,age:e.age,height:e.h,weight:e.w,bodyFat:Number.isFinite(e.bf)?e.bf:state.profile.bodyFat};
                 state.nutrition={modelVersion:MODEL_VERSIONS.nutrition,...e,goal,pace,targetLow:low,target:center,targetHigh:high,pLow,pHigh,pMid,fatLow,fatHigh,fatMid,carbLow,carbHigh,carbMid}; save(); applyProfile();
                 setText('lab-nutri-main',`${fmt(low,0)}–${fmt(high,0)} ккал`); setText('lab-nutri-center',kcal(center)); setText('lab-nutri-rmr',kcal(e.rmr)); setText('lab-nutri-rmr-method',e.rmrMethod); setText('lab-nutri-tdee',`${fmt(e.tdeeLow,0)}–${fmt(e.tdeeHigh,0)}`); setText('lab-nutri-tdee-method',e.tdeeMethod);
-                setText('lab-nutri-protein',`${fmt(pLow,0)}–${fmt(pHigh,0)} г`); setText('lab-nutri-protein-note',pNote); setText('lab-nutri-fat',`${fmt(fatLow,0)}–${fmt(fatHigh,0)} г`); setText('lab-nutri-carb',`${fmt(carbLow,0)}–${fmt(carbHigh,0)} г`);
+                setText('lab-nutri-protein',`${fmt(pLow,0)}–${fmt(pHigh,0)} г`); setText('lab-nutri-protein-note',pNote);
+                const macroScenario=segmentValue('nutri-macro-scenario')||'balanced';
+                const macroRange=renderNutritionMacros(state.nutrition={modelVersion:MODEL_VERSIONS.nutrition,...e,goal,pace,targetLow:low,target:center,targetHigh:high,pLow,pHigh,pMid,fatLow,fatHigh,fatMid,carbLow,carbHigh,carbMid},macroScenario);
+                const shownFatLow=macroRange.fatLow,shownFatHigh=macroRange.fatHigh,shownCarbLow=macroRange.carbLow,shownCarbHigh=macroRange.carbHigh;
                 let meaning=`Стартуйте около ${fmt(center,0)} ккал, но считайте ${fmt(low,0)}–${fmt(high,0)} рабочим коридором. Расчётные калории поддержания сами имеют диапазон ${fmt(e.tdeeLow,0)}–${fmt(e.tdeeHigh,0)} ккал.`;
                 if(e.tdeeMethod==='фактические калории поддержания') meaning+=' Здесь ваш наблюдаемый maintenance имеет приоритет над predictive equation.';
                 setText('lab-nutri-meaning',`Что это значит: ${meaning}`);
-                setHTMLSafeList('lab-nutri-actions',[`Держите среднее около ${fmt(center,0)} ккал/сут, а не пытайтесь идеально попасть в число каждый день.`,`Белок: ${fmt(pLow,0)}–${fmt(pHigh,0)} г; жиры: ${fmt(fatLow,0)}–${fmt(fatHigh,0)} г; углеводы заполняют оставшийся энергетический бюджет.`,`Через 14–21 день сравните средний вес, талию, силовые и соблюдение. Если тренд не соответствует цели — корректируйте на 5–8%, а не переписывайте всё.`]);
+                setHTMLSafeList('lab-nutri-actions',[`Держите среднее около ${fmt(center,0)} ккал/сут, а не пытайтесь идеально попасть в число каждый день.`,`Белок: ${fmt(pLow,0)}–${fmt(pHigh,0)} г; жиры: ${fmt(shownFatLow,0)}–${fmt(shownFatHigh,0)} г; углеводы: ${fmt(shownCarbLow,0)}–${fmt(shownCarbHigh,0)} г. Сценарий меняет распределение, не качество диеты.`,`Через 14–21 день сравните средний вес, талию, силовые и соблюдение. Если тренд не соответствует цели — корректируйте на 5–8%, а не переписывайте всё.`]);
                 const cross= e.pro&&e.athlete&&Number.isFinite(lbm)?` Для справки FFM-версия ten Haaf дала бы ~${fmt(tenHaafFFM(lbm),0)} ккал RMR; значения не усредняются механически.`:'';
                 setText('lab-nutri-method',`${e.rmrMethod}: оценка RMR, не прямое измерение. ${e.tdeeMethod}. В SIMPLE используется только PAL. В PRO PAL отключён, поэтому шаги/работа/тренировки не накладываются на уже высокий activity multiplier.${cross} Диапазон TDEE отражает практическую неопределённость модели и NEAT, а не статистический confidence interval.`);
                 setBadge('nutrition',e.pro?'Высокая':'Базовая',e.confidence);
@@ -821,25 +807,6 @@
                 const pal=Number(val('lab-fat-pal')||1.5), rmr=mifflin(sex,age,h,w), m=rmr*pal;
                 return {value:m,low:m*.90,high:m*1.10,label:'рассчитан автоматически',confidence:'Низкая'};
             }
-            function weightedTef(pK,fK,cK,aK){
-                const total=pK+fK+cK+aK; if(total<=0) return {low:.05,mid:.10,high:.15};
-                const calc=idx=>(pK*K.tef.protein[idx]+fK*K.tef.fat[idx]+cK*K.tef.carbs[idx]+aK*K.tef.alcohol[idx])/total;
-                return {low:calc(0),mid:calc(1),high:calc(2)};
-            }
-            function glycogenRange(status,training,carbs){
-                let low=0,high=300;
-                if(status==='normal'){low=0;high=100}
-                if(status==='deficit'){low=75;high=250}
-                if(status==='lowcarb'){low=150;high=400}
-                if(status==='workout'){low=75;high=250}
-                if(status==='multiworkout'){low=150;high=400}
-                if(training==='strength'){high+=50}
-                if(training==='endurance'){low+=50;high+=100}
-                high=Math.min(high,500); low=Math.min(low,high);
-                if(Number.isFinite(carbs)){ high=Math.min(high,Math.max(0,carbs)); low=Math.min(low,high); }
-                return [low,high];
-            }
-
             function calculateOverfeeding(){
                 error('overfeeding'); setText('lab-fat-macro-check','');
                 const days=number('lab-fat-days'), intakeInput=number('lab-fat-intake'), sex=val('lab-fat-sex'), age=number('lab-fat-age'), h=number('lab-fat-height'), w=number('lab-fat-weight');
@@ -934,12 +901,6 @@
             }
 
             function parseDailyWeights(text){ return String(text||'').split(/[\s,;]+/).map(x=>Number(x.replace(',','.'))).filter(x=>Number.isFinite(x)&&x>30&&x<350); }
-            function avg(a){ return a.length?a.reduce((s,x)=>s+x,0)/a.length:NaN; }
-            function movingAverage(a,n=7){ const out=[]; for(let i=n-1;i<a.length;i++) out.push(avg(a.slice(i-n+1,i+1))); return out; }
-            function regressionSlope(a){
-                const n=a.length;if(n<2)return NaN; const xm=(n-1)/2,ym=avg(a); let nume=0,den=0;
-                for(let i=0;i<n;i++){nume+=(i-xm)*(a[i]-ym);den+=(i-xm)*(i-xm)} return den?nume/den:0;
-            }
             function drawProgressChart(values){
                 const wrap=el('lab-prog-chart'),path=el('lab-prog-chart-line'); if(!wrap||!path)return;
                 if(values.length<2){wrap.hidden=true;path.setAttribute('d','');return;}
@@ -958,9 +919,7 @@
                 let ma=[]; if(daily.length>=7){ ma=movingAverage(daily,7); if(ma.length>=2){weekly=regressionSlope(ma)*7;source=`7-дневное сглаживание, ${daily.length} измерений`;drawProgressChart(daily);} }
                 else drawProgressChart([]);
                 const weeklyPct=weekly/sw*100, waistDelta=finite(stw,ctw)?ctw-stw:NaN;
-                let plateau='Недостаточно данных';
-                if(daily.length>=14){ const prev=avg(daily.slice(-14,-7)),last=avg(daily.slice(-7)),chg=(last-prev)/prev*100; if(Math.abs(chg)<.15 && (!Number.isFinite(waistDelta)||Math.abs(waistDelta)<.5)) plateau='Возможен'; else plateau='Не подтверждается'; }
-                else if(weeks>=3 && Math.abs(weeklyPct)<.15 && Number.isFinite(waistDelta)&&Math.abs(waistDelta)<.5) plateau='Возможен';
+                const plateau=plateauStatus(daily,weeks,weeklyPct,waistDelta);
                 let eta=NaN; if(Number.isFinite(target)&&Math.abs(weekly)>.02 && ((target<cw&&weekly<0)||(target>cw&&weekly>0))) eta=Math.abs((target-cw)/weekly);
                 let meaning=''; const actions=[];
                 if(goal==='cut'){
@@ -1041,7 +1000,7 @@
             $$('[data-reset]').forEach(btn=>btn.addEventListener('click',()=>resetTool(btn.dataset.reset)));
             el('mm-lab-clear-all')?.addEventListener('click',()=>{
                 if(!window.confirm('Очистить локальные данные MARKOVMADE LAB на этом устройстве?')) return;
-                try{localStorage.removeItem(STORAGE_KEY)}catch(e){} state=emptyState(); if(window.MarkovMadeLab) window.MarkovMadeLab.state=state;
+                try{localStorage.removeItem(STORAGE_KEY);localStorage.removeItem(STORAGE_KEY+'-history-v1')}catch(e){} state=emptyState(); if(window.MarkovMadeLab) window.MarkovMadeLab.state=state;
                 $$('[data-profile]').forEach(x=>x.value=''); ['body','nutrition','overfeeding','recovery','progress','strategy'].forEach(resetTool); updateFemaleFields(); updateSnapshot();
             });
 
@@ -1057,7 +1016,7 @@
             // Public namespace: calculations remain deterministic and testable.
             window.MarkovMadeLab={
                 version:'1.0.0', state, constants:K,
-                engine:{mifflin,tenHaaf,tenHaafFFM,navyBodyFat,weightedTef,glycogenRange,movingAverage,regressionSlope},
+                engine:{mifflin,tenHaaf,tenHaafFFM,navyBodyFat,ffmi,weightedTef,glycogenRange,average:avg,movingAverage,regressionSlope,plateauStatus},
                 calculate:{body:calculateBody,nutrition:calculateNutrition,overfeeding:calculateOverfeeding,recovery:calculateRecovery,progress:calculateProgress,strategy:calculateStrategy},
                 runSelfTests:function(){
                     const tests=[]; const near=(a,b,t)=>Math.abs(a-b)<=t;
