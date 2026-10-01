@@ -7,7 +7,7 @@ const baselineDir = path.join(__dirname, 'visual-baselines');
 const update = process.env.UPDATE_VISUAL_BASELINES === '1';
 
 // Font metrics differ between Linux CI and Windows authoring screenshots.
-const defaultMismatch = process.platform === 'linux' ? 0.12 : 0.07;
+const defaultMismatch = process.platform === 'linux' ? 0.10 : 0.07;
 function assertVisualBaseline(name, actualPath, maxMismatch = defaultMismatch) {
   fs.mkdirSync(baselineDir, {recursive:true});
   const baselinePath = path.join(baselineDir, name);

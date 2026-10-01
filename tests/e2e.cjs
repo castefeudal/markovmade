@@ -282,6 +282,8 @@ let browser;
   await page.locator('#mm-theme-dialog').screenshot({path:pickerDesktop});
   assertVisualBaseline('theme-picker-1440x900.png',pickerDesktop);
   await page.keyboard.press('Escape');
+  await page.addStyleTag({content:'#decision-hub,#proof-system,#case-scenarios,#calculators,#calculator-decision,#app-ecosystem,#services,#method-proof,#about,#biography,#principles,#team,#quick-faq,#contact{content-visibility:visible!important;contain-intrinsic-size:none!important}html{scroll-behavior:auto!important;overflow-anchor:none!important}'});
+  await page.waitForTimeout(450);
   const screenshotSizes = viewports;
   for (const theme of ['aurum-noir','event-horizon','clarity']) {
     await page.evaluate(name => {
@@ -307,6 +309,8 @@ let browser;
         if (section==='calculators') await page.locator('[data-mm-lab-tab="body"]').click();
         await page.locator(`#${section}`).evaluate(element=>window.scrollTo(0,element.getBoundingClientRect().top+window.scrollY));
         await page.waitForTimeout(180);
+        await page.locator(`#${section}`).evaluate(element=>window.scrollTo(0,element.getBoundingClientRect().top+window.scrollY));
+        await page.waitForTimeout(80);
         const shot = path.join(visualDir,`${theme}-${section}-${width}x${height}.png`);
         await page.screenshot({path:shot,fullPage:false});
         if (section==='calculators' && width===390) assertVisualBaseline(`${theme}-lab-390x844.png`,shot);
