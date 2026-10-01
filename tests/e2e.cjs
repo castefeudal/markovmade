@@ -37,6 +37,7 @@ let browser;
   assert.match(await page.locator('#mm-lab-snapshot-empty').textContent(), /состав тела|body composition/i);
   await page.locator('.theme-switch:visible').first().click();
   assert.equal(await page.locator('#mm-theme-dialog').isVisible(), true, `native theme dialog opens; errors: ${runtimeErrors.join(' | ')}`);
+  assert.equal(await page.locator('[data-theme-value="clarity"] [data-theme-metric-label]').textContent(),'ЧЁТКО');
   for (const theme of ['event-horizon','clarity','aurum-noir']) {
     await page.locator(`[data-theme-value="${theme}"]`).click();
     await page.waitForTimeout(180);

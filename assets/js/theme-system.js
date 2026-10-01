@@ -77,7 +77,7 @@
       var content = themes[button.dataset.themeValue][language()];
       button.querySelector('[data-theme-name]').textContent = content[0];
       button.querySelector('[data-theme-description]').textContent = content[1];
-      button.querySelector('[data-theme-metric-label]').textContent = name === 'clarity' ? copy('ЧЁТКО', 'CLEAR') : copy('РЕСУРС', 'READY');
+      button.querySelector('[data-theme-metric-label]').textContent = button.dataset.themeValue === 'clarity' ? copy('ЧЁТКО', 'CLEAR') : copy('РЕСУРС', 'READY');
     });
   }
 
