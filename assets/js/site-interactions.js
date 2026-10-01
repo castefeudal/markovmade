@@ -151,6 +151,10 @@
     root.dataset.mmInsightsReady='true';
     var ids={headline:'mm-insights-headline',resource:'mm-insights-resource-note',lever:'mm-insights-lever',plan:'mm-insights-plan',avoid:'mm-insights-avoid',question:'mm-insights-question',format:'mm-insights-format',code:'mm-insights-code'};
     var current=null;
+    var steps=Array.prototype.slice.call(form.querySelectorAll('[data-insights-step]'));
+    var wizardQuery=window.matchMedia('(max-width: 767px)');
+    var stepIndex=0;
+    var wizard=null;
     function val(name,fallback){var el=form.querySelector('input[name="'+name+'"]:checked');return el?el.value:fallback;}
     function lang(){return isEnglish()?'en':'ru';}
     function setText(id,value){var el=document.getElementById(id);if(el)el.textContent=value;}
@@ -188,14 +192,57 @@
       if(label){var l=lang();label.textContent=COPY[l].copiedBtn;setTimeout(function(){label.textContent=COPY[lang()].copyBtn;},1500);}
       if(window.mmTrack){try{window.mmTrack('insight_plan_copy',{ok:!!ok});}catch(e){}}
     }
+    function renderWizard(){
+      var mobile=wizardQuery.matches;
+      if(!mobile){steps.forEach(function(step){step.hidden=false;});if(wizard)wizard.hidden=true;return;}
+      if(wizard)wizard.hidden=false;
+      steps.forEach(function(step,index){step.hidden=index!==stepIndex;});
+      if(!wizard){
+        wizard=document.createElement('nav');wizard.className='mm-insights-wizard';wizard.setAttribute('aria-label',lang()==='en'?'Insight steps':'Шаги инсайта');
+        wizard.innerHTML='<button type="button" data-wizard-back></button><span data-wizard-count aria-live="polite"></span><button type="button" data-wizard-next></button>';
+        form.insertBefore(wizard,form.querySelector('.mm-insights-local-note'));
+        wizard.querySelector('[data-wizard-back]').addEventListener('click',function(){stepIndex=Math.max(0,stepIndex-1);renderWizard();steps[stepIndex].querySelector('input')?.focus();});
+        wizard.querySelector('[data-wizard-next]').addEventListener('click',function(){stepIndex=Math.min(steps.length-1,stepIndex+1);renderWizard();steps[stepIndex].querySelector('input')?.focus();});
+      }
+      var en=lang()==='en',back=wizard.querySelector('[data-wizard-back]'),next=wizard.querySelector('[data-wizard-next]');
+      back.textContent=en?'Back':'Назад';back.disabled=stepIndex===0;
+      next.textContent=stepIndex===steps.length-1?(en?'Done':'Готово'):(en?'Next':'Далее');
+      next.disabled=stepIndex===steps.length-1;
+      wizard.querySelector('[data-wizard-count]').textContent=(en?'Step ':'Шаг ')+(stepIndex+1)+' '+(en?'of':'из')+' '+steps.length;
+      wizard.setAttribute('aria-label',en?'Insight steps':'Шаги инсайта');
+    }
     form.addEventListener('change',render);
     var copyBtn=document.getElementById('mm-insights-copy');if(copyBtn)copyBtn.addEventListener('click',copyPlan);
-    renderCopy();render();
+    renderCopy();render();renderWizard();
+    if(wizardQuery.addEventListener)wizardQuery.addEventListener('change',renderWizard);else wizardQuery.addListener(renderWizard);
     var langObserver=new MutationObserver(function(muts){
       if(!muts.some(function(m){return m.type==='attributes'&&m.attributeName==='lang';}))return;
-      renderCopy();render();updateStandaloneCopy();
+      renderCopy();render();renderWizard();updateStandaloneCopy();
     });
     langObserver.observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+  }
+
+
+  function initPersonalOsRoutes(){
+    document.querySelectorAll('[data-open-app-tab]').forEach(function(link){
+      if(link.dataset.mmAppRouteReady==='true') return;
+      link.dataset.mmAppRouteReady='true';
+      link.addEventListener('click',function(event){
+        var key=link.getAttribute('data-open-app-tab');
+        var tab=document.querySelector('#app-ecosystem [data-app-tab="'+key+'"]');
+        var section=document.getElementById('app-ecosystem');
+        if(!tab||!section) return;
+        event.preventDefault();
+        tab.click();
+        var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        section.scrollIntoView({behavior:reduced?'auto':'smooth',block:'start'});
+        try{history.replaceState(null,'','#app-ecosystem');}catch(error){}
+      });
+    });
+    if(location.hash==='#insights'){
+      var tab=document.querySelector('#app-ecosystem [data-app-tab="insights"]');
+      if(tab){tab.click();history.replaceState(null,'','#app-ecosystem');}
+    }
   }
 
   function updateStandaloneCopy(){
@@ -211,7 +258,7 @@
   function init(){
     syncHeaderMode();
     window.addEventListener('resize',syncHeaderMode,{passive:true});
-    initProductLight();updateStandaloneCopy();initInsights();
+    initProductLight();updateStandaloneCopy();initInsights();initPersonalOsRoutes();
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();

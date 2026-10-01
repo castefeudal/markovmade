@@ -81,21 +81,34 @@
       output.textContent = copy('Добавьте второй расчёт этого потока, чтобы сравнить изменения.', 'Run this model again to compare it with a second snapshot.');
       return;
     }
-    const keys = [...new Set([...Object.keys(first.result), ...Object.keys(second.result)])].filter(key => key !== 'modelVersion');
+    const fields = {
+      body:[['bf','% жира','Body fat','%',1],['fatMass','Жировая масса','Fat mass','kg',1],['lbm','Безжировая масса','Lean mass','kg',1],['ffmi','FFMI','FFMI','',1],['bmi','Индекс массы тела','Body mass index','',1],['whtr','Талия / рост','Waist / height','',2],['targetWeight','Целевой вес · сценарий','Target weight · scenario','kg',1]],
+      nutrition:[['tdee','Поддержание','Maintenance','kcal',0],['target','Цель калорий','Calorie target','kcal',0],['pMid','Белок','Protein','g',0],['fatMid','Жиры','Fats','g',0],['carbMid','Углеводы','Carbs','g',0]],
+      overfeeding:[['center','Вероятная прибавка жира','Estimated fat gain','kg',2],['scale','Изменение на весах','Scale change','kg',2]],
+      recovery:[['score','Ресурс','Readiness','/100',0]],
+      progress:[['weekly','Недельный темп','Weekly pace','kg/week',2],['delta','Изменение веса','Weight change','kg',1],['waistDelta','Изменение талии','Waist change','cm',1]],
+      strategy:[['main','Главный рычаг','Primary lever','',0]]
+    };
     const table = document.createElement('table');
     const head = table.createTHead().insertRow();
-    ['Показатель','A','B','Δ'].forEach((label,index) => addCell(head, index ? label : copy(label,'Metric'), 'th'));
+    [copy('Показатель','Metric'),new Intl.DateTimeFormat(lang()?'en-GB':'ru-RU',{day:'numeric',month:'short'}).format(new Date(first.at)),new Intl.DateTimeFormat(lang()?'en-GB':'ru-RU',{day:'numeric',month:'short'}).format(new Date(second.at)),'Δ'].forEach(label => addCell(head,label,'th'));
     const body = table.createTBody();
-    keys.forEach(key => {
+    (fields[first.tool]||[]).forEach(([key,ru,enLabel,unit,precision]) => {
       const a = first.result[key], b = second.result[key];
-      if (a === undefined || b === undefined || (typeof a === 'object' && a !== null) || (typeof b === 'object' && b !== null)) return;
+      if (typeof a === 'number' && typeof b === 'number' && (!Number.isFinite(a) || !Number.isFinite(b))) return;
+      if (a === undefined || b === undefined || a === null || b === null) return;
+      if (typeof a !== typeof b || !['number','string'].includes(typeof a)) return;
+      if (typeof a === 'number' && Math.abs(b-a)<Math.pow(10,-precision)/2) return;
+      if (typeof a === 'string' && a===b) return;
       const row = body.insertRow();
-      addCell(row, key, 'th');
-      addCell(row, String(a), 'td');
-      addCell(row, String(b), 'td');
-      addCell(row, typeof a === 'number' && typeof b === 'number' ? `${b - a >= 0 ? '+' : ''}${(b - a).toFixed(2)}` : '—', 'td');
+      addCell(row,lang()?enLabel:ru,'th');
+      const format=value=>typeof value==='number'?`${new Intl.NumberFormat(lang()?'en-GB':'ru-RU',{maximumFractionDigits:precision,minimumFractionDigits:precision}).format(value)}${unit?' '+unit:''}`:String(value);
+      addCell(row,format(a),'td');
+      addCell(row,format(b),'td');
+      addCell(row,typeof a==='number'?`${b-a>=0?'+':''}${format(b-a)}`:copy('изменилось','changed'),'td');
     });
-    output.appendChild(table);
+    if(body.rows.length)output.appendChild(table);
+    else output.textContent=copy('Сопоставимые показатели не изменились. Технические поля в сравнении не показываются.','Comparable measures are unchanged. Technical fields are omitted.');
   }
 
   function renderHistory() {
@@ -200,7 +213,9 @@
       schema:'markovmade-lab-export-v1',
       exportedAt:new Date().toISOString(),
       lab:readJson(LAB_KEY) || {},
-      history:snapshots()
+      history:snapshots(),
+      dailyCheckins:readJson('markovmade-lab-daily-v1') || [],
+      favorites:readJson('markovmade-lab-favorites-v1') || []
     };
     const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
     const url = URL.createObjectURL(blob);
@@ -222,6 +237,14 @@
       if (allowed.some(key => payload.lab[key] && typeof payload.lab[key] !== 'object')) throw new Error('data');
       const history = Array.isArray(payload.history) ? payload.history.filter(item => item && tools[item.tool] && item.result).slice(0,MAX_HISTORY) : [];
       if (!writeJson(LAB_KEY,payload.lab) || !writeJson(HISTORY_KEY,history)) throw new Error('storage');
+      if (Array.isArray(payload.dailyCheckins)) {
+        const days=payload.dailyCheckins.filter(item=>item&&/^\d{4}-\d{2}-\d{2}$/.test(item.date)&&['weight','waist','sleep','energy','calories','adherence'].every(key=>item[key]===undefined||Number.isFinite(item[key]))).slice(-180);
+        if (!writeJson('markovmade-lab-daily-v1',days)) throw new Error('storage');
+      }
+      if (Array.isArray(payload.favorites)) {
+        const favorites=payload.favorites.filter(key=>tools[key]).slice(0,6);
+        if (!writeJson('markovmade-lab-favorites-v1',favorites)) throw new Error('storage');
+      }
       status(copy('Данные восстановлены. Обновляю LAB…', 'Data restored. Refreshing LAB…'));
       window.setTimeout(() => window.location.reload(), 450);
     } catch (_) {

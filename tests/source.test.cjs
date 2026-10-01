@@ -9,14 +9,16 @@ const runtime = fs.readFileSync(path.join(root, 'assets/js/app-runtime.js'), 'ut
 
 test('the single-page shell references local modular assets and GitHub Pages canonical', () => {
   assert.match(html, /rel="canonical" href="https:\/\/castefeudal\.github\.io\/markovmade\//);
-  for (const asset of ['assets/css/legacy.css', 'assets/css/tokens.css', 'assets/css/product.css', 'assets/js/lab-models.js', 'assets/js/app-runtime.js', 'assets/js/i18n.js', 'assets/js/hero-media.js', 'assets/js/theme-system.js', 'assets/js/lab-history.js']) {
+  for (const asset of ['assets/css/fonts.css', 'assets/css/legacy.css', 'assets/css/tokens.css', 'assets/css/product.css', 'assets/css/worlds.css', 'assets/js/lab-models.js', 'assets/js/app-runtime.js', 'assets/js/i18n.js', 'assets/js/hero-media.js', 'assets/js/theme-system.js', 'assets/js/lab-history.js', 'assets/js/lab-dashboard.js']) {
     assert.ok(fs.existsSync(path.join(root, asset)), `${asset} exists`);
     assert.ok(html.includes(asset), `${asset} is referenced`);
   }
+  assert.doesNotMatch(html,/fonts\.googleapis\.com|fonts\.gstatic\.com/);
+  assert.match(html,/src="assets\/media\/hero-head2\.mp4"/);
 });
 
-test('six semantic themes define distinct media, chart, focus and surface tokens', () => {
-  for (const theme of ['aurum-noir', 'ivory-atelier', 'imperial-emerald', 'oxblood-atelier', 'titanium-midnight', 'mono-access']) {
+test('both semantic themes define distinct media, chart, focus and surface tokens', () => {
+  for (const theme of ['aurum-noir', 'event-horizon']) {
     assert.ok(tokens.includes(`data-theme="${theme}"`), theme);
   }
   for (const role of ['--mm-bg-primary', '--mm-surface-1', '--mm-text-primary', '--mm-text-muted', '--mm-accent', '--mm-border', '--mm-success', '--mm-warning', '--mm-danger', '--mm-info', '--mm-media-filter', '--mm-hero-overlay', '--mm-noise-opacity', '--mm-grid-color', '--mm-selection-bg', '--mm-selection-text', '--mm-chart-grid', '--mm-metal-highlight', '--mm-glow-primary', '--mm-focus', '--mm-input-bg', '--mm-section-divider', '--mm-shadow-surface', '--mm-radius-card', '--mm-motion-fast', '--mm-ease-premium']) assert.ok(tokens.includes(role), role);
@@ -34,7 +36,7 @@ test('interactive references and IDs are unique and resolvable', () => {
 test('calculator snapshots record the model version that produced them', () => {
   for (const model of ['body','nutrition','overfeeding','recovery','progress','strategy']) {
     assert.match(runtime, new RegExp(`${model}:\\s*'1\\.0\\.0'`));
-    assert.match(runtime, new RegExp(`state\\.${model}=\\{modelVersion:MODEL_VERSIONS\\.${model}`));
+    assert.match(runtime, new RegExp(`state\\.${model}=\\{(?:\\.\\.\\.state\\.${model},)?modelVersion:MODEL_VERSIONS\\.${model}`));
   }
 });
 
@@ -55,6 +57,8 @@ test('all content images are local WebP files with dimensions and alt text', () 
     assert.match(image, /\bwidth="\d+"/);
     assert.match(image, /\bheight="\d+"/);
     assert.match(image, /\balt="[^"]*"/);
+    assert.equal([...image.matchAll(/\bsrcset=/g)].length, 1, `image has one authoritative srcset: ${src[1]}`);
+    assert.equal([...image.matchAll(/\bsizes=/g)].length, 1, `image has one sizes hint: ${src[1]}`);
     const srcset = image.match(/\bsrcset="([^"]+)"/);
     assert.ok(srcset, `image has responsive sources: ${src[1]}`);
     assert.match(image, /\bsizes="[^"]+"/);
@@ -63,4 +67,17 @@ test('all content images are local WebP files with dimensions and alt text', () 
       assert.match(candidate, /\.webp$/);
     }
   }
+});
+
+
+test('Insights has one navigation level and no global scroll popup', () => {
+  assert.doesNotMatch(html.slice(0, html.indexOf('id="calculators"')), /href="#insights"/i);
+  assert.match(html, /id="mm-os-tab-insights"/);
+  assert.doesNotMatch(html, /id="insight-ghost"|data-insight=/i);
+  assert.doesNotMatch(runtime, /insight-ghost|data-insight/);
+});
+
+test('production classes and script IDs contain no historical version suffixes', () => {
+  assert.doesNotMatch(html, /\bclass="[^"]*\bmm-v\d+-/);
+  assert.doesNotMatch(html, /\bid="[^"]*\bv\d+-(?:dynamic|quiz|analytics|faq|product|preflight|service|seo|telegram)/i);
 });

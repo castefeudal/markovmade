@@ -1,0 +1,180 @@
+/* The two MARKOVMADE art worlds share one readable product system. */
+html[data-theme="aurum-noir"] {
+  --world-light: rgb(199 174 120 / 8%);
+  --world-rule: rgb(199 174 120 / 17%);
+}
+
+html[data-theme="event-horizon"] {
+  --world-light: rgb(86 132 196 / 13%);
+  --world-rule: rgb(189 212 233 / 17%);
+}
+
+html[data-theme="event-horizon"] body {
+  background-color: var(--mm-bg-primary);
+  background-image:
+    radial-gradient(ellipse 58rem 31rem at 82% 13%, rgb(47 81 133 / 18%), transparent 70%),
+    radial-gradient(ellipse 51rem 38rem at 7% 50%, rgb(36 69 119 / 10%), transparent 74%);
+}
+
+html[data-theme="event-horizon"] #hero {
+  isolation: isolate;
+  background: #070b14;
+}
+
+html[data-theme="event-horizon"] #hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 44% 46% at 83% 36%, rgb(149 185 228 / 12%), transparent 80%),
+    linear-gradient(90deg, rgb(5 9 19 / 49%), transparent 61%);
+}
+
+html[data-theme="event-horizon"] #hero .mm-hero-media {
+  background: radial-gradient(circle at 71% 31%, #22344f, #070b14 67%);
+}
+
+html[data-theme="event-horizon"] #hero .mm-hero-fallback,
+html[data-theme="event-horizon"] #hero .mm-hero-video {
+  filter: grayscale(32%) saturate(64%) hue-rotate(9deg) contrast(111%);
+}
+
+html[data-theme="event-horizon"] #hero .hero-content-premium {
+  position: relative;
+  z-index: 3;
+}
+
+html[data-theme="event-horizon"] #hero .hero-title-premium .accent-word {
+  color: #e3eefb;
+  text-shadow: 0 0 2.5rem rgb(132 174 224 / 12%);
+}
+
+html[data-theme="event-horizon"] :is(.mm-primary-cta,.calc-primary-btn,.calc-gold-link,.lead-action) {
+  background: linear-gradient(135deg, #e2eef8, #a9c7e3 54%, #dceaf6) !important;
+  border-color: #c8dced !important;
+  color: #07101d !important;
+  box-shadow: 0 18px 48px rgb(68 114 176 / 17%), inset 0 1px rgb(255 255 255 / 55%);
+}
+
+html[data-theme="event-horizon"] #app-ecosystem #insights .mm-insights-result {
+  background: radial-gradient(circle at 100% 0, rgb(113 165 224 / 13%), transparent 21rem), linear-gradient(150deg,#17253c,#0d1728 55%,#090f1c) !important;
+}
+
+html[data-theme="event-horizon"] #hero .hero-side-signature {
+  color: var(--mm-text-secondary);
+}
+
+html[data-theme="event-horizon"] #main-header.scrolled-up {
+  background: rgb(7 11 20 / 84%);
+  border-bottom-color: var(--world-rule);
+}
+
+html[data-theme="event-horizon"] .premium-divider,
+html[data-theme="event-horizon"] .mm-editorial-rule {
+  border-color: var(--world-rule);
+}
+
+html[data-theme="event-horizon"] #calculators {
+  background:
+    radial-gradient(ellipse 35rem 28rem at 12% 4%, rgb(55 94 149 / 12%), transparent),
+    linear-gradient(180deg, #090f1d, #0a1321 53%, #070b14);
+}
+
+html[data-theme="event-horizon"] #calculators .mm-lab-panel,
+html[data-theme="event-horizon"] #calculators .mm-lab-snapshot,
+html[data-theme="event-horizon"] .mm-lab-history-dialog {
+  border-color: var(--mm-border-strong);
+  background: linear-gradient(155deg, rgb(27 42 67 / 91%), rgb(11 19 34 / 97%));
+  box-shadow: inset 0 1px rgb(238 243 248 / 6%), 0 24px 70px rgb(0 0 0 / 22%);
+}
+
+html[data-theme="event-horizon"] #app-ecosystem {
+  --proto-bg: #090f1d;
+  --proto-surface: #101a2b;
+  --proto-surface-2: #15233a;
+  --proto-surface-3: #1b2b45;
+  --proto-border: rgb(189 212 233 / 14%);
+  --proto-border-strong: rgb(189 212 233 / 28%);
+  --proto-grid: rgb(189 212 233 / 8%);
+  --proto-shadow: 0 40px 110px rgb(0 0 0 / 38%);
+  background:
+    radial-gradient(ellipse 42rem 42rem at 82% 27%, rgb(51 88 146 / 17%), transparent 77%),
+    linear-gradient(180deg, #070b14, #0b1424 54%, #070b14);
+}
+
+html[data-theme="event-horizon"] #app-ecosystem::after {
+  content: "";
+  position: absolute;
+  width: min(68vw, 52rem);
+  aspect-ratio: 1;
+  top: 2%;
+  right: -17%;
+  border: 1px solid rgb(189 212 233 / 8%);
+  border-radius: 50%;
+  box-shadow: 0 0 0 7rem rgb(189 212 233 / 2%), 0 0 0 15rem rgb(189 212 233 / 1%);
+  pointer-events: none;
+}
+
+html[data-theme="event-horizon"] #app-ecosystem .mm-os-frame {
+  border-color: rgb(189 212 233 / 24%) !important;
+  background: linear-gradient(160deg, #17253c, #0d1626 68%, #0a1020) !important;
+  box-shadow: 0 38px 105px rgb(0 0 0 / 48%), inset 0 1px rgb(238 243 248 / 7%) !important;
+}
+
+html[data-theme="event-horizon"] #app-ecosystem .mm-os-frame::before {
+  background:
+    radial-gradient(ellipse 70% 50% at 81% 0%, rgb(113 165 224 / 11%), transparent),
+    linear-gradient(120deg, rgb(238 243 248 / 2%), transparent 42%);
+}
+
+html[data-theme="event-horizon"] #app-ecosystem .mm-os-chart-card {
+  background-image: linear-gradient(90deg, rgb(189 212 233 / 4%) 1px, transparent 1px);
+  background-size: 2rem 2rem;
+}
+
+html[data-theme="event-horizon"] #insights {
+  --ins-text: #eef3f8;
+  --ins-muted: #bdcad9;
+  --ins-faint: #9aaec4;
+  --ins-line: rgb(189 212 233 / 15%);
+  --ins-gold: #bdd4e9;
+  background: linear-gradient(180deg, #0a1221, #0e1a2d 57%, #08101e);
+}
+
+html[data-theme="event-horizon"] #insights .mm-insights-shell {
+  border-color: var(--mm-border-strong);
+  box-shadow: 0 34px 90px rgb(0 0 0 / 32%);
+}
+
+html[data-theme="event-horizon"] #insights .mm-insights-context {
+  background: linear-gradient(145deg, #17243a, #101a2b);
+}
+
+html[data-theme="event-horizon"] .mm-theme-dialog,
+html[data-theme="event-horizon"] #privacy-modal > div {
+  background: linear-gradient(155deg, #1b2a43, #0d1728);
+}
+
+@media (max-width: 767px) {
+  html[data-theme="event-horizon"] #app-ecosystem::after { width: 90vw; right: -47%; top: 18%; }
+  html[data-theme="event-horizon"] #hero::before { background: linear-gradient(90deg, rgb(5 9 19 / 48%), transparent 80%); }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .mm-head-swipe-hint { display: none !important; }
+}
+
+@media (prefers-contrast: more) {
+  :root { --mm-border: rgb(238 243 248 / 45%); --mm-border-strong: rgb(238 243 248 / 70%); }
+  :where(button, a, input, select, textarea, summary):focus-visible { outline-width: 3px; }
+  :where(.mm-lab-panel,.mm-os-frame,.mm-theme-dialog) { border-width: 2px; }
+}
+
+@media (forced-colors: active) {
+  :root { --mm-text-primary: CanvasText; --mm-text-secondary: CanvasText; --mm-bg-primary: Canvas; --mm-border: ButtonBorder; --mm-accent: LinkText; }
+  :where(button,a,input,select,textarea,summary,[role="tab"]):focus-visible { outline: 3px solid Highlight; outline-offset: 3px; }
+  .mm-theme-preview, .mm-os-chart-card { border: 1px solid CanvasText; }
+  .custom-cursor, .noise-overlay { display: none; }
+}

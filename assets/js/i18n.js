@@ -1036,7 +1036,8 @@
   'Короткие': 'Quick',
   'ответы': 'answers',
   'перед заявкой.': 'before submitting.',
-  'Персональная система тела, питания и дисциплины: сначала находим вашу точку А, затем собираем план под реальную жизнь и превращаем прогресс в': 'A personal system for body, nutrition, and discipline: first we identify your starting point, then build a plan around real life and turn progress into',
+  'Я — Павел Марков. Соединяю тренировки, питание и дисциплину в систему под вашу жизнь: начинаем с данных в LAB, затем выбираем': 'I’m Pavel Markov. I bring training, nutrition, and discipline into a system built for your life: start with data in LAB, then choose the',
+  'следующий шаг': 'next step',
   'управляемый результат': 'a controlled result',
   'Практические ориентиры композиции тела': 'Practical body-composition targets',
   'Ориентир веса': 'Weight target',
@@ -1117,7 +1118,37 @@
   'Работайте по плану. Кардио — умеренное, сон сегодня не сдвигать.': 'Follow the plan. Keep cardio moderate and do not shift sleep tonight.',
   'Интерактивный демонстрационный прототип. Состав экранов и метрик настраивается под человека.': 'Interactive demo prototype. Screens and metrics are tailored to each person.'
 
-};
+    };
+    Object.assign(DICT, {
+      'Силовой ориентир · e1RM':'Strength reference · e1RM',
+      'Расчётный максимум для сравнения динамики, а не рекомендация проверять реальный 1ПМ.':'Estimated max for tracking progress, not a recommendation to test a true one-rep max.',
+      'Упражнение':'Exercise',
+      'Рабочий вес · кг':'Working load · kg',
+      'Повторения':'Repetitions',
+      'Оценить 1ПМ':'Estimate 1RM',
+      'Укажите рабочий вес от 1 до 500 кг и 1–15 повторений.':'Enter a working load from 1 to 500 kg and 1–15 repetitions.',
+      'Запись стала начальной точкой тренда':'This is the starting point for your trend',
+      'уверенность: Умеренная':'confidence: Moderate',
+      'уверенность: Ограниченная':'confidence: Limited',
+      'уверенность: Низкая':'confidence: Low',
+      'уверенность: Высокая':'confidence: High',
+      'Умеренная':'Moderate',
+      'Целевой вес · сценарий':'Target weight · scenario',
+      'Личный baseline':'Personal baseline',
+      'Baseline формируется':'Baseline forming',
+      'качественных дней':'quality days',
+      'Сон, контекст':'Sleep context',
+      'Частота тренировок':'Training frequency',
+      'Отказная работа':'Training to failure',
+      'Дефицит энергии':'Energy deficit',
+      'Рабочая нагрузка':'Workload',
+      'RHR относительно личной нормы':'RHR vs personal baseline',
+      'HRV относительно личной нормы':'HRV vs personal baseline',
+      'RHR заметно выше baseline':'RHR notably above baseline',
+      'RHR выше baseline':'RHR above baseline',
+      'HRV заметно ниже baseline':'HRV notably below baseline',
+      'HRV ниже baseline':'HRV below baseline'
+    });
     var ATTR_DICT = {
   "Сценарий распределения макронутриентов": "Macronutrient distribution scenario",
   "Сменить тему: тёмная / светлая": "Switch theme: dark / light",

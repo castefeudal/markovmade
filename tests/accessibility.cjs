@@ -4,7 +4,7 @@ const path = require('node:path');
 const { chromium } = require('playwright');
 
 const root = path.resolve(__dirname, '..');
-const mime = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.webp':'image/webp','.mp4':'video/mp4'};
+const mime = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.webp':'image/webp','.avif':'image/avif','.woff2':'font/woff2','.mp4':'video/mp4'};
 const server = http.createServer((req,res) => {
   let pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
   if (pathname === '/') pathname = '/index.html';
@@ -14,7 +14,7 @@ const server = http.createServer((req,res) => {
   fs.createReadStream(file).on('error', () => { if (!res.headersSent) res.writeHead(404); res.end(); }).pipe(res);
 });
 
-const themes = ['aurum-noir','ivory-atelier','imperial-emerald','oxblood-atelier','titanium-midnight','mono-access'];
+const themes = ['aurum-noir','event-horizon'];
 let browser;
 (async () => {
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
@@ -26,18 +26,16 @@ let browser;
   await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
   const findings = [];
   for (const theme of themes) {
-    await page.evaluate(name => {
-      document.documentElement.dataset.theme=name;
-      document.body.classList.toggle('theme-light',name==='ivory-atelier');
-      document.body.classList.toggle('theme-contrast',name==='mono-access');
-    }, theme);
+    await page.locator('.theme-switch:visible').first().click();
+    await page.locator(`#mm-theme-dialog [data-theme-value="${theme}"]`).click();
+    await page.waitForTimeout(850);
     const result = await page.evaluate(async () => window.axe.run(document, {
       runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}
     }));
     for (const violation of result.violations) {
       findings.push({theme,id:violation.id,impact:violation.impact,help:violation.help,nodes:violation.nodes.map(node=>({target:node.target,summary:node.failureSummary}))});
     }
-    await page.locator('.theme-switch').first().click();
+    await page.locator('.theme-switch:visible').first().click();
     const picker = await page.evaluate(async () => window.axe.run(document.querySelector('#mm-theme-dialog'), {
       runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}
     }));

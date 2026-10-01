@@ -49,10 +49,7 @@
     <!-- Динамический meta theme-color для поддержки смены тем -->
     <meta name="theme-color" content="#050505" id="theme-color-meta">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700;800&family=Tenor+Sans&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-    <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700;800&family=Tenor+Sans&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="assets/css/fonts.css">
 <script type="application/ld+json" id="markovmade-seo-schema-v21">
 {
   "@context": "https://schema.org",
@@ -124,10 +121,11 @@
   ]
 }
 </script>
-<script>(function(){document.documentElement.classList.add('js');var aliases={obsidian:'aurum-noir',dark:'aurum-noir',deep:'aurum-noir',ivory:'ivory-atelier',light:'ivory-atelier',graphite:'titanium-midnight',soft:'titanium-midnight',calm:'titanium-midnight',contrast:'mono-access'};var known=['aurum-noir','ivory-atelier','imperial-emerald','oxblood-atelier','titanium-midnight','mono-access'];var resolve=function(value){return aliases[value]|| (known.indexOf(value)>=0?value:null)};var value=null;try{value=resolve(localStorage.getItem('mm.theme'))||resolve(localStorage.getItem('markov-theme'))}catch(e){}if(!value){try{value=matchMedia('(prefers-contrast: more)').matches?'mono-access':(matchMedia('(prefers-color-scheme: light)').matches?'ivory-atelier':'aurum-noir')}catch(e){value='aurum-noir'}}document.documentElement.dataset.theme=value})();</script>
+<script>(function(){document.documentElement.classList.add('js');var aliases={obsidian:'aurum-noir',dark:'aurum-noir',deep:'aurum-noir',ivory:'aurum-noir',light:'aurum-noir','ivory-atelier':'aurum-noir','imperial-emerald':'aurum-noir','oxblood-atelier':'aurum-noir',graphite:'event-horizon',soft:'event-horizon',calm:'event-horizon','titanium-midnight':'event-horizon',contrast:'aurum-noir','mono-access':'aurum-noir'};var known=['aurum-noir','event-horizon'];var resolve=function(value){return aliases[value]|| (known.indexOf(value)>=0?value:null)};var value=null;try{value=resolve(localStorage.getItem('mm.theme'))||resolve(localStorage.getItem('markov-theme'))}catch(e){}document.documentElement.dataset.theme=value||'aurum-noir'})();</script>
 <link rel="stylesheet" href="assets/css/legacy.css">
 <link rel="stylesheet" href="assets/css/tokens.css">
 <link rel="stylesheet" href="assets/css/product.css">
+<link rel="stylesheet" href="assets/css/worlds.css">
 
 
 
@@ -169,18 +167,18 @@
             preloader.setAttribute('aria-hidden', 'true');
             preloader.style.pointerEvents = 'none';
             preloader.style.transform = 'translateY(-100%)';
-            setTimeout(function(){ preloader.style.display = 'none'; }, 900);
+            setTimeout(function(){ preloader.style.display = 'none'; }, 320);
         }
     }
     window.__markovReleaseSite = unlockSite;
-    window.addEventListener('pageshow', function(){ setTimeout(unlockSite, 300); });
-    window.addEventListener('load', function(){ setTimeout(unlockSite, 700); }, { once: true });
+    window.addEventListener('pageshow', function(){ setTimeout(unlockSite, 150); });
+    window.addEventListener('load', function(){ setTimeout(unlockSite, 180); }, { once: true });
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function(){ setTimeout(unlockSite, 1200); }, { once: true });
+        document.addEventListener('DOMContentLoaded', function(){ setTimeout(unlockSite, 220); }, { once: true });
     } else {
-        setTimeout(unlockSite, 1200);
+        setTimeout(unlockSite, 220);
     }
-    setTimeout(unlockSite, 3200);
+    setTimeout(unlockSite, 300);
 })();
 </script>
 
@@ -302,7 +300,7 @@
 })();
 </script>
 
-<script id="markovmade-v16-dynamic-i18n">
+<script id="markovmade-dynamic-i18n">
 (function(){
   'use strict';
   var exact = {
@@ -426,7 +424,8 @@
     ['Сохранено введённое значение ','Saved entered value '], [' без коррекции. Источник: ',' without adjustment. Source: '], ['Точный диапазон ошибки без индивидуальной валидации не выводится.','No precise error range is reported without individual validation.'],
     ['белки —','protein —'], ['жиры —','fats —'], ['углеводы —','carbs —'], ['Тренировочный день','Training day'], ['день отдыха','rest day'],
     ['мужчина','male'], ['женщина','female'], ['сухая масса','lean mass'], ['Сухая масса','Lean mass'], ['Результат:','Result:'], ['Мои данные:','My data:'], ['Статус:','Status:'],
-    ['Здравствуйте, Павел. Я прошёл расчёт на сайте MARKOVMADE.','Hello, Pavel. I completed the MARKOVMADE assessment.'], ['Хочу получить разбор и понять, какая стратегия мне подойдёт.','I want an audit and to understand which strategy fits me.']
+    ['Здравствуйте, Павел. Я прошёл расчёт на сайте MARKOVMADE.','Hello, Pavel. I completed the MARKOVMADE assessment.'], ['Хочу получить разбор и понять, какая стратегия мне подойдёт.','I want an audit and to understand which strategy fits me.'],
+    ['Baseline формируется','Baseline forming'], ['качественных дней','quality days'], ['Личный baseline','Personal baseline'], ['внесите RHR и HRV в PRO-режиме.','enter RHR and HRV in PRO mode.'], ['Вклад сигналов в индекс самонаблюдения','Signal contributions to the self-monitoring score'], ['Силовой ориентир · e1RM','Strength reference · e1RM'], ['Расчётный максимум для сравнения динамики, а не рекомендация проверять реальный 1ПМ.','Estimated max for tracking progress, not a recommendation to test a true one-rep max.'], ['Упражнение','Exercise'], ['Рабочий вес · кг','Working load · kg'], ['Повторения','Repetitions'], ['Оценить 1ПМ','Estimate 1RM'], ['Введите вес и повторы.','Enter load and reps.'], ['Укажите рабочий вес от 1 до 500 кг и 1–15 повторений.','Enter a working load from 1 to 500 kg and 1–15 repetitions.'], ['Запись стала начальной точкой тренда','This is the starting point for your trend'], ['к предыдущей записи','vs previous entry'], ['уверенность: Умеренная','confidence: Moderate'], ['уверенность: Ограниченная','confidence: Limited'], ['уверенность: Низкая','confidence: Low'], ['уверенность: Высокая','confidence: High'], ['Умеренная','Moderate'], ['При ','At '], ['% жира ориентир ','% body fat, indicative range '], ['если безжировая масса изменится в пределах ±3%.','if lean mass changes within ±3%.'], ['Это сценарная чувствительность, не доверительный интервал и не обещание.','This shows scenario sensitivity, not a confidence interval or promise.']
   ];
   function isEn(){
     try { return document.documentElement.lang === 'en' || window.mmSafeStorage.get('markovmade_lang', 'ru') === 'en'; } catch(e){ return document.documentElement.lang === 'en'; }
@@ -439,12 +438,15 @@
     return s;
   };
   function applyVisibleCalcLang(){
-    var ids=['body-accuracy','body-confidence-label','body-fatmass','body-ffmi','body-lbm','body-nffmi','body-status','body-strategy','body-strong','body-weak','body-target-weight','body-pace','body-whtr','body-whtr-note','body-decision-explain','format-first-step','format-focus','format-reason','format-send','format-start','format-title','growth-accuracy','growth-add-label','growth-gain','growth-main-label','growth-meaning','growth-multiplier','growth-risk','growth-start-label','growth-strategy','growth-term-hint','growth-total','nutri-bmr','nutri-carbs','nutri-check','nutri-fat-result','nutri-protein','nutri-rest-day','nutri-target','nutri-tdee','nutri-training-day','nutri-warning','nutri-corridor','nutri-weekly-change','nutri-water','nutrition-accuracy','nutrition-confidence-label','rec-cardio-result','rec-nutrition-result','rec-score','rec-sleep-result','rec-status','rec-training','rec-warning','rec-decision','recovery-accuracy'];
+    var ids=['body-accuracy','body-confidence-label','body-fatmass','body-ffmi','body-lbm','body-nffmi','body-status','body-strategy','body-strong','body-weak','body-target-weight','body-pace','body-whtr','body-whtr-note','body-decision-explain','format-first-step','format-focus','format-reason','format-send','format-start','format-title','growth-accuracy','growth-add-label','growth-gain','growth-main-label','growth-meaning','growth-multiplier','growth-risk','growth-start-label','growth-strategy','growth-term-hint','growth-total','nutri-bmr','nutri-carbs','nutri-check','nutri-fat-result','nutri-protein','nutri-rest-day','nutri-target','nutri-tdee','nutri-training-day','nutri-warning','nutri-corridor','nutri-weekly-change','nutri-water','nutrition-accuracy','nutrition-confidence-label','rec-cardio-result','rec-nutrition-result','rec-score','rec-sleep-result','rec-status','rec-training','rec-warning','rec-decision','recovery-accuracy','lab-rec-baseline','lab-e1rm-result'];
     ids.push('lab-body-range');
     ids.forEach(function(id){
       var el=document.getElementById(id);
       if(!el) return;
       if(!el.dataset.ruDynamicText) el.dataset.ruDynamicText=el.textContent || '';
+      el.textContent = isEn() ? window.__mmDynamicTranslate(el.dataset.ruDynamicText) : el.dataset.ruDynamicText;
+    });
+    document.querySelectorAll('[data-ru-dynamic-text]').forEach(function(el){
       el.textContent = isEn() ? window.__mmDynamicTranslate(el.dataset.ruDynamicText) : el.dataset.ruDynamicText;
     });
   }
@@ -512,41 +514,19 @@
         </div>
     </a>
 
-    <div id="insight-ghost" class="insight-ghost">
-        <p id="insight-text" class="font-serif text-lg italic text-platinum/90 leading-relaxed tracking-wide"></p>
-        <span class="block mt-4 text-[9px] font-sans uppercase tracking-[0.3em] text-gold/80">Insight</span>
-    </div>
-
-    <!-- PRELOADER -->
-    <div id="preloader" class="fixed inset-0 z-[100] bg-obsidian flex flex-col items-center justify-between py-12 px-8 transition-transform duration-[1.2s] ease-[0.76,0,0.24,1]">
-        <div class="w-full flex justify-between text-[10px] font-sans tracking-luxury uppercase text-gold/80 animate-pulse">
-            <span>От души, душевно</span><span>В ДУШУ</span>
-        </div>
-        <div class="overflow-hidden h-32 flex items-center justify-center w-full relative">
-            <p id="preloader-text" class="font-serif text-3xl md:text-5xl italic text-platinum text-center absolute transition-all duration-700 transform translate-y-0 opacity-100 drop-shadow-[0_0_20px_rgb(var(--color-gold)/0.8)]">
-                Я тут. Сейчас. С Вами.
-            </p>
-        </div>
-        <div class="w-full flex justify-end">
-            <div id="preloader-count" class="text-8xl md:text-9xl font-sans font-thin tracking-tighter text-gold opacity-10" aria-hidden="true">0%</div>
-        </div>
-    </div>
-
     <!-- HEADER -->
     <header id="main-header" class="fixed top-0 left-0 w-full z-50 py-3 md:pt-6 md:pb-1 px-5 md:px-12 transition-all duration-300 border-b border-gold/30">
         <div class="container mx-auto flex justify-between items-center relative">
             <a href="#hero" class="interactive relative z-[60] flex items-center h-9 md:h-20 mm-header-logo-link">
-                <img src="assets/media/portfolio/02-11-TMR1hPHv.webp" srcset="assets/media/portfolio/02-11-TMR1hPHv-320w.webp 320w, assets/media/portfolio/02-11-TMR1hPHv-640w.webp 640w, assets/media/portfolio/02-11-TMR1hPHv.webp 1024w" sizes="180px" srcset="assets/media/portfolio/02-11-TMR1hPHv-320w.webp 320w, assets/media/portfolio/02-11-TMR1hPHv-640w.webp 640w, assets/media/portfolio/02-11-TMR1hPHv.webp 1024w" sizes="180px" width="1024" height="1024" alt="MARKOVMADE" decoding="async" class="h-full w-auto object-contain drop-shadow-[0_0_15px_rgb(var(--color-gold)/0.2)] transition-transform duration-500 hover:scale-105">
+                <img src="assets/media/portfolio/02-11-TMR1hPHv.webp" srcset="assets/media/portfolio/02-11-TMR1hPHv-128w.webp 128w, assets/media/portfolio/02-11-TMR1hPHv-320w.webp 320w, assets/media/portfolio/02-11-TMR1hPHv-640w.webp 640w, assets/media/portfolio/02-11-TMR1hPHv.webp 1024w" sizes="(max-width: 768px) 48px, 80px" width="1024" height="1024" alt="MARKOVMADE" decoding="async" class="h-full w-auto object-contain drop-shadow-[0_0_15px_rgb(var(--color-gold)/0.2)] transition-transform duration-500 hover:scale-105">
             </a>
 
             <nav class="hidden md:flex gap-7 lg:gap-9 items-center">
-                <a href="#calculators" class="interactive nav-link relative font-sans text-[12px] uppercase tracking-luxury transition-all duration-300 pb-1">I. Расчёт</a>
-                <a href="#services" class="interactive relative font-sans text-[12px] uppercase tracking-luxury transition-all duration-300 pb-1 menu-highlight-gold">II. Услуги</a>
-                <a href="#app-ecosystem" class="interactive nav-link header-app-link relative font-sans text-[12px] uppercase tracking-luxury transition-all duration-300 pb-1">III. Приложение</a>
-                <a href="#app-ecosystem" data-open-app-tab="insights" class="interactive nav-link header-insights-link relative font-sans text-[12px] uppercase tracking-luxury transition-all duration-300 pb-1" data-mm-copy-ru="IV. Инсайты" data-mm-copy-en="IV. Insights">IV. Инсайты</a>
-                <a href="#about" class="interactive nav-link font-sans text-[12px] uppercase tracking-luxury text-dim hover:text-platinum transition-colors">V. Обо мне</a>
-                <a href="#biography" class="interactive nav-link font-sans text-[12px] uppercase tracking-luxury text-dim hover:text-platinum transition-colors">VI. Эволюция</a>
-                <a href="#team" class="interactive nav-link font-sans text-[12px] uppercase tracking-luxury text-dim hover:text-platinum transition-colors">VII. Команда</a>
+                <a href="#calculators" class="interactive nav-link relative font-sans text-[13px] uppercase tracking-[0.08em] transition-all duration-300 pb-1">Расчёт</a>
+                <a href="#services" class="interactive relative font-sans text-[13px] uppercase tracking-[0.08em] transition-all duration-300 pb-1 menu-highlight-gold">Услуги</a>
+                <a href="#app-ecosystem" class="interactive nav-link header-app-link relative font-sans text-[13px] uppercase tracking-[0.08em] transition-all duration-300 pb-1">Приложение</a>
+                <a href="#about" class="interactive nav-link font-sans text-[13px] uppercase tracking-[0.08em] text-dim hover:text-platinum transition-colors">Обо мне</a>
+                <a href="#team" class="interactive nav-link font-sans text-[13px] uppercase tracking-[0.08em] text-dim hover:text-platinum transition-colors">Команда</a>
 
                 <div class="flex items-center ml-2 border-l border-white/10 pl-6 gap-5">
                     <button type="button" class="interactive theme-switch" title="Сменить тему" aria-label="Сменить тему">
@@ -559,7 +539,7 @@
                         <span class="lang-switch-label">EN</span>
                     </button>
 
-                    <a href="#contact" class="interactive group relative px-6 py-2 border border-gold/30 rounded-sm text-[10px] font-sans tracking-luxury uppercase text-platinum overflow-hidden transition-all duration-500 hover:shadow-[0_0_25px_rgb(var(--color-gold)/0.3)]">
+                    <a href="#contact" class="interactive group relative px-5 py-2.5 border border-gold/30 rounded-sm text-[13px] font-sans tracking-[0.06em] uppercase text-platinum overflow-hidden transition-all duration-300 min-h-11 hover:shadow-[0_0_25px_rgb(var(--color-gold)/0.3)]">
                         <span class="absolute inset-0 bg-gold translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500 ease-out -z-10"></span>
                         <span class="relative z-10 flex items-center gap-2 group-hover:text-obsidian transition-colors duration-500">
                             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -592,19 +572,17 @@
     <!-- MOBILE MENU -->
     <div id="mobile-menu" class="fixed inset-0 z-[55] bg-obsidian flex flex-col justify-center px-6 transform translate-x-full transition-transform duration-700 cubic-bezier(0.7,0,0.3,1) overflow-y-auto">
         <nav class="flex flex-col items-center gap-8 min-h-min py-16 w-full">
-            <a href="#calculators" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum transition-colors block" onclick="toggleMenu()">I. Расчёт</a>
-            <a href="#services" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-gold transition-colors block" onclick="toggleMenu()">II. Услуги</a>
-            <a href="#app-ecosystem" class="interactive mobile-app-link font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">III. Приложение</a>
-            <a href="#app-ecosystem" data-open-app-tab="insights" class="interactive mobile-insights-link font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()" data-mm-copy-ru="IV. Инсайты" data-mm-copy-en="IV. Insights">IV. Инсайты</a>
-            <a href="#about" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">V. Обо мне</a>
-            <a href="#biography" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">VI. Эволюция</a>
-            <a href="#team" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">VII. Команда</a>
-            <a href="#contact" class="interactive font-sans text-sm md:text-base font-bold tracking-[0.35em] uppercase text-platinum hover:text-gold transition-colors block" onclick="toggleMenu()">VIII. Контакты</a>
+            <a href="#calculators" class="interactive font-sans text-base md:text-lg font-semibold tracking-[0.08em] uppercase text-platinum transition-colors block min-h-11 flex items-center" onclick="toggleMenu()">Расчёт</a>
+            <a href="#services" class="interactive font-sans text-base md:text-lg font-semibold tracking-[0.08em] uppercase text-gold transition-colors block min-h-11 flex items-center" onclick="toggleMenu()">Услуги</a>
+            <a href="#app-ecosystem" class="interactive mobile-app-link font-sans text-base md:text-lg font-semibold tracking-[0.08em] uppercase text-platinum hover:text-gold transition-colors block min-h-11 flex items-center" onclick="toggleMenu()">Приложение</a>
+            <a href="#about" class="interactive font-sans text-base md:text-lg font-semibold tracking-[0.08em] uppercase text-platinum hover:text-gold transition-colors block min-h-11 flex items-center" onclick="toggleMenu()">Обо мне</a>
+            <a href="#team" class="interactive font-sans text-base md:text-lg font-semibold tracking-[0.08em] uppercase text-platinum hover:text-gold transition-colors block min-h-11 flex items-center" onclick="toggleMenu()">Команда</a>
+            <a href="#contact" class="interactive font-sans text-base md:text-lg font-semibold tracking-[0.08em] uppercase text-platinum hover:text-gold transition-colors block min-h-11 flex items-center" onclick="toggleMenu()">Контакты</a>
             <button type="button" class="interactive lang-switch lang-switch-menu" data-lang-toggle title="Switch language" aria-label="Switch language"><span class="lang-switch-flag lang-flag-en" aria-hidden="true"></span><span class="lang-switch-label">EN</span></button>
         </nav>
     </div>
 
-    <main id="main-content" class="transition-opacity duration-1000">
+    <main id="main-content" class="transition-opacity duration-300">
 
         <script>
             (function () {
@@ -623,26 +601,26 @@
                         preloader.setAttribute('aria-hidden', 'true');
                         preloader.style.transform = 'translateY(-100%)';
                         preloader.style.pointerEvents = 'none';
-                        setTimeout(function () { preloader.style.display = 'none'; }, 1400);
+                    setTimeout(function () { preloader.style.display = 'none'; }, 320);
                     }
                 }
                 window.__markovReleaseSite = releaseSite;
                 window.addEventListener('error', function () { setTimeout(releaseSite, 300); });
                 window.addEventListener('unhandledrejection', function () { setTimeout(releaseSite, 300); });
-                setTimeout(releaseSite, 6500);
+                setTimeout(releaseSite, 300);
             })();
         </script>
 
 
 
-<section id="hero" class="section-block hero-premium relative h-[100svh] w-full overflow-hidden bg-obsidian flex items-center" data-insight="Где внимание — там и результат.">
+<section id="hero" class="section-block hero-premium relative h-[100svh] w-full overflow-hidden bg-obsidian flex items-center">
             <div class="mm-luxe-bg" aria-hidden="true"></div>
             <div class="hero-visual-premium mm-hero-media" aria-hidden="true">
                 <!-- Запасное изображение остаётся видимым, пока видео не готово или если браузер не смог его открыть. -->
                 <img
                     id="hero-head-fallback"
                     class="mm-hero-fallback"
-                    src="assets/media/hero-poster.webp" srcset="assets/media/hero-poster-320w.webp 320w, assets/media/hero-poster.webp 640w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/hero-poster-320w.webp 320w, assets/media/hero-poster.webp 640w" sizes="(max-width: 768px) 100vw, 50vw"
+                    src="assets/media/hero-poster.webp" srcset="assets/media/hero-poster-320w.webp 320w, assets/media/hero-poster.webp 640w" sizes="(max-width: 768px) 100vw, 50vw"
                     alt=""
                     decoding="async"
                     fetchpriority="high"
@@ -650,14 +628,14 @@
                     height="480"
                 >
 
-                <!-- Файл hero-head2.mp4 должен лежать в корне репозитория рядом с index.html. -->
+                <!-- Локальный ролик дополняет poster на устройствах с запасом ресурсов. -->
                 <video
                     id="hero-head-video"
                     class="mm-hero-video"
                     muted
                     playsinline
                     webkit-playsinline
-                    preload="metadata"
+                    preload="none"
                     poster="assets/media/hero-poster.webp"
                     tabindex="-1"
                     disablepictureinpicture
@@ -665,7 +643,7 @@
                     controlslist="nodownload noplaybackrate nofullscreen"
                     aria-hidden="true"
                 >
-                    <source src="./hero-head2.mp4?v=20260825-1" type="video/mp4">
+                    <source src="assets/media/hero-head2.mp4" type="video/mp4">
                 </video>
 
                 <!-- Canvas выводит только цельные кадры исходного ролика без зеркалирования и масок. -->
@@ -698,7 +676,7 @@
                     </h1>
 
                     <p class="fade-in-up max-w-xl text-base md:text-lg font-sans text-dim tracking-wide leading-relaxed mb-9" style="transition-delay: 160ms;">
-                        Персональная система тела, питания и дисциплины: сначала находим вашу точку А, затем собираем план под реальную жизнь и превращаем прогресс в <span class="hero-gold-emphasis">управляемый результат</span>.
+                        Я — Павел Марков. Соединяю тренировки, питание и дисциплину в систему под вашу жизнь: начинаем с данных в LAB, затем выбираем <span class="hero-gold-emphasis">следующий шаг</span>.
                     </p>
 
                     <div class="fade-in-up flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 mb-10" style="transition-delay: 240ms;">
@@ -754,26 +732,26 @@
         <!-- CALCULATORS / РАСЧЁТ -->
 
 
-<section id="decision-hub" class="mm-v13-section mm-v15-section mm-v17-decision py-16 md:py-20" data-insight="Сильная заявка начинается с узнавания своей ситуации и честного следующего шага.">
-  <div class="mm-v13-inner">
-    <div class="mm-v13-hero-panel mm-v15-hero-panel fade-in-up">
-      <div class="mm-v13-head mm-v17-head mm-v18-compact-head" style="margin-bottom:28px">
-        <span class="mm-v13-kicker">Вы узнаёте себя, если</span>
-        <h2 class="mm-v13-title">Вы стараетесь — но тело <span class="mm-v13-goldline">не отвечает так, как должно</span>.</h2>
-        <p class="mm-v13-copy">Я смотрю на картину целиком: нагрузку, питание, сон, стресс, ограничения и поведение. Так быстрее видно, где теряется форма и какой шаг даст первый ощутимый сдвиг.</p>
-        <div class="mm-v13-chipline mm-v15-chipline" aria-label="Ситуации для персонального разбора">
-          <span class="mm-v13-chip">вес стоит</span><span class="mm-v13-chip">форма теряет чёткость</span><span class="mm-v13-chip">энергии мало</span><span class="mm-v13-chip">питание держится на воле</span><span class="mm-v13-chip">график ломает план</span><span class="mm-v13-chip">нужен честный взгляд</span>
+<section id="decision-hub" class="mm-editorial-section mm-editorial-layout-section mm-editorial-flow-decision py-16 md:py-20">
+  <div class="mm-editorial-inner">
+    <div class="mm-editorial-hero-panel mm-editorial-layout-hero-panel fade-in-up">
+      <div class="mm-editorial-head mm-editorial-flow-head mm-editorial-detail-compact-head" style="margin-bottom:28px">
+        <span class="mm-editorial-kicker">Вы узнаёте себя, если</span>
+        <h2 class="mm-editorial-title">Вы стараетесь — но тело <span class="mm-editorial-goldline">не отвечает так, как должно</span>.</h2>
+        <p class="mm-editorial-copy">Я смотрю на картину целиком: нагрузку, питание, сон, стресс, ограничения и поведение. Так быстрее видно, где теряется форма и какой шаг даст первый ощутимый сдвиг.</p>
+        <div class="mm-editorial-chipline mm-editorial-layout-chipline" aria-label="Ситуации для персонального разбора">
+          <span class="mm-editorial-chip">вес стоит</span><span class="mm-editorial-chip">форма теряет чёткость</span><span class="mm-editorial-chip">энергии мало</span><span class="mm-editorial-chip">питание держится на воле</span><span class="mm-editorial-chip">график ломает план</span><span class="mm-editorial-chip">нужен честный взгляд</span>
         </div>
       </div>
-      <div class="mm-v13-grid mm-v17-situation-grid">
-        <article class="mm-v13-card mm-v15-card mm-v17-card"><span class="mm-v13-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"/><path d="M12 4v16"/><circle cx="12" cy="12" r="7"/></svg></span><h3>Старание есть, отдачи мало</h3><p>Когда усилий много, а визуальный результат слабый, нужно искать не «ещё мотивацию», а слабое звено в общей связке.</p></article>
-        <article class="mm-v13-card mm-v15-card mm-v17-card"><span class="mm-v13-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5v14"/><path d="M5 19h14"/><path d="M8 15l3-3 3 2 5-7"/></svg></span><h3>График постоянно вмешивается</h3><p>Работа, дорога, усталость, поездки и сон меняют условия. План должен выдерживать это, а не требовать идеальной жизни.</p></article>
-        <article class="mm-v13-card mm-v15-card mm-v17-card"><span class="mm-v13-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z"/><path d="M9 12l2 2 4-4"/></svg></span><h3>Самому трудно увидеть слепые зоны</h3><p>Со стороны быстрее видно, где вы переусложняете, где недокручиваете и какой рычаг даст первый понятный результат.</p></article>
-        <article class="mm-v13-card mm-v15-card mm-v17-card"><span class="mm-v13-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M7 12h10"/><path d="M10 17h4"/><path d="M12 3v18"/></svg></span><h3>Нужны приоритеты, а не список дел</h3><p>Не всё важно одновременно. Я помогаю отделить действия, которые двигают форму, от того, что только забирает ресурс.</p></article>
+      <div class="mm-editorial-grid mm-editorial-flow-situation-grid">
+        <article class="mm-editorial-card mm-editorial-layout-card mm-editorial-flow-card"><span class="mm-editorial-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16"/><path d="M12 4v16"/><circle cx="12" cy="12" r="7"/></svg></span><h3>Старание есть, отдачи мало</h3><p>Когда усилий много, а визуальный результат слабый, нужно искать не «ещё мотивацию», а слабое звено в общей связке.</p></article>
+        <article class="mm-editorial-card mm-editorial-layout-card mm-editorial-flow-card"><span class="mm-editorial-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5v14"/><path d="M5 19h14"/><path d="M8 15l3-3 3 2 5-7"/></svg></span><h3>График постоянно вмешивается</h3><p>Работа, дорога, усталость, поездки и сон меняют условия. План должен выдерживать это, а не требовать идеальной жизни.</p></article>
+        <article class="mm-editorial-card mm-editorial-layout-card mm-editorial-flow-card"><span class="mm-editorial-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z"/><path d="M9 12l2 2 4-4"/></svg></span><h3>Самому трудно увидеть слепые зоны</h3><p>Со стороны быстрее видно, где вы переусложняете, где недокручиваете и какой рычаг даст первый понятный результат.</p></article>
+        <article class="mm-editorial-card mm-editorial-layout-card mm-editorial-flow-card"><span class="mm-editorial-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16"/><path d="M7 12h10"/><path d="M10 17h4"/><path d="M12 3v18"/></svg></span><h3>Нужны приоритеты, а не список дел</h3><p>Не всё важно одновременно. Я помогаю отделить действия, которые двигают форму, от того, что только забирает ресурс.</p></article>
       </div>
-      <div class="mm-v13-cta-row" style="justify-content:center">
-        <a href="#calculators" class="mm-v13-cta interactive" data-analytics="v18_hub_calculators">Пройти расчёт</a>
-        <a href="#contact" class="mm-v13-cta secondary interactive" data-analytics="v18_hub_contact">Разобрать мою ситуацию</a>
+      <div class="mm-editorial-cta-row" style="justify-content:center">
+        <a href="#calculators" class="mm-editorial-cta interactive" data-analytics="v18_hub_calculators">Пройти расчёт</a>
+        <a href="#contact" class="mm-editorial-cta secondary interactive" data-analytics="v18_hub_contact">Разобрать мою ситуацию</a>
       </div>
     </div>
   </div>
@@ -781,59 +759,59 @@
 
 
 
-<section id="proof-system" class="mm-v13-section mm-v18-proof py-14 md:py-18" data-insight="Доверие строится на фактах, а не на громких обещаниях.">
-  <div class="mm-v13-inner">
-    <div class="mm-v13-head mm-v18-compact-head fade-in-up">
-      <span class="mm-v13-kicker">На чём держится подход</span>
-      <h2 class="mm-v13-title">Не громкие обещания — <span class="mm-v13-goldline">рабочие опоры</span>.</h2>
-      <p class="mm-v13-copy">Я не продаю универсальный шаблон. Работа держится на вводных человека, наблюдении, цифрах, обратной связи и корректировках — поэтому движение становится не вспышкой мотивации, а управляемым процессом.</p>
+<section id="proof-system" class="mm-editorial-section mm-editorial-detail-proof py-14 md:py-18">
+  <div class="mm-editorial-inner">
+    <div class="mm-editorial-head mm-editorial-detail-compact-head fade-in-up">
+      <span class="mm-editorial-kicker">На чём держится подход</span>
+      <h2 class="mm-editorial-title">Не громкие обещания — <span class="mm-editorial-goldline">рабочие опоры</span>.</h2>
+      <p class="mm-editorial-copy">Я не продаю универсальный шаблон. Работа держится на вводных человека, наблюдении, цифрах, обратной связи и корректировках — поэтому движение становится не вспышкой мотивации, а управляемым процессом.</p>
     </div>
-    <div class="mm-v18-proof-grid fade-in-up">
-      <article class="mm-v18-proof-card"><strong>16+ лет личной практики</strong><span>Тренировки, форма, откаты, возвращение в режим и сборка дисциплины не из теории, а из прожитого пути.</span></article>
-      <article class="mm-v18-proof-card"><strong>Факты вместо образа</strong><span>Вес, замеры, фото, питание, энергия, сон и самочувствие показывают больше правды, чем настроение.</span></article>
-      <article class="mm-v18-proof-card"><strong>План под реальный график</strong><span>Решения собираются под работу, сон, стресс, поездки, ограничения и ресурс, который есть сейчас.</span></article>
-      <article class="mm-v18-proof-card"><strong>Коррекция по динамике</strong><span>Если меняется жизнь, меняется и схема: нагрузка, питание, контрольные точки и первые действия.</span></article>
+    <div class="mm-editorial-detail-proof-grid fade-in-up">
+      <article class="mm-editorial-detail-proof-card"><strong>16+ лет личной практики</strong><span>Тренировки, форма, откаты, возвращение в режим и сборка дисциплины не из теории, а из прожитого пути.</span></article>
+      <article class="mm-editorial-detail-proof-card"><strong>Факты вместо образа</strong><span>Вес, замеры, фото, питание, энергия, сон и самочувствие показывают больше правды, чем настроение.</span></article>
+      <article class="mm-editorial-detail-proof-card"><strong>План под реальный график</strong><span>Решения собираются под работу, сон, стресс, поездки, ограничения и ресурс, который есть сейчас.</span></article>
+      <article class="mm-editorial-detail-proof-card"><strong>Коррекция по динамике</strong><span>Если меняется жизнь, меняется и схема: нагрузка, питание, контрольные точки и первые действия.</span></article>
     </div>
-    <div class="mm-v18-trust-line fade-in-up" aria-label="Факторы доверия">
-      <span class="mm-v18-trust-pill">без фейковой магии</span>
-      <span class="mm-v18-trust-pill">без копирования чужого графика</span>
-      <span class="mm-v18-trust-pill">без давления вместо анализа</span>
+    <div class="mm-editorial-detail-trust-line fade-in-up" aria-label="Факторы доверия">
+      <span class="mm-editorial-detail-trust-pill">без фейковой магии</span>
+      <span class="mm-editorial-detail-trust-pill">без копирования чужого графика</span>
+      <span class="mm-editorial-detail-trust-pill">без давления вместо анализа</span>
     </div>
   </div>
 </section>
 
 
-<section id="case-scenarios" class="mm-v13-section mm-v19-cases mm-v21-cases py-14 md:py-18" data-insight="Доверие усиливается, когда человек видит не абстрактное обещание, а конкретный формат работы.">
-  <div class="mm-v13-inner">
-    <div class="mm-v13-head mm-v18-compact-head fade-in-up">
-      <span class="mm-v13-kicker">Кейсы по направлениям</span>
-      <h2 class="mm-v13-title">В каждом формате есть свой <span class="mm-v13-goldline">понятный результат</span>.</h2>
-      <p class="mm-v13-copy">Я собрал кейсы не отдельным рекламным блоком, а как продолжение услуг: человек сразу видит, с каким запросом приходит, что разбирается внутри и какой практический выход получает.</p>
+<section id="case-scenarios" class="mm-editorial-section mm-case-study-cases mm-case-study-layout-cases py-14 md:py-18">
+  <div class="mm-editorial-inner">
+    <div class="mm-editorial-head mm-editorial-detail-compact-head fade-in-up">
+      <span class="mm-editorial-kicker">Кейсы по направлениям</span>
+      <h2 class="mm-editorial-title">В каждом формате есть свой <span class="mm-editorial-goldline">понятный результат</span>.</h2>
+      <p class="mm-editorial-copy">Я собрал кейсы не отдельным рекламным блоком, а как продолжение услуг: человек сразу видит, с каким запросом приходит, что разбирается внутри и какой практический выход получает.</p>
     </div>
-    <div class="mm-v21-cases-grid fade-in-up">
-      <article class="mm-v21-case-card">
-        <div class="mm-v21-case-image"><img src="assets/media/portfolio/04-1-XkjZ4N71.webp" srcset="assets/media/portfolio/04-1-XkjZ4N71-320w.webp 320w, assets/media/portfolio/04-1-XkjZ4N71-640w.webp 640w, assets/media/portfolio/04-1-XkjZ4N71-1024w.webp 1024w, assets/media/portfolio/04-1-XkjZ4N71.webp 1448w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/04-1-XkjZ4N71-320w.webp 320w, assets/media/portfolio/04-1-XkjZ4N71-640w.webp 640w, assets/media/portfolio/04-1-XkjZ4N71-1024w.webp 1024w, assets/media/portfolio/04-1-XkjZ4N71.webp 1448w" sizes="(max-width: 768px) 100vw, 50vw" width="1448" height="1086" alt="Кейс мужской силы MARKOVMADE" loading="lazy" decoding="async"></div>
-        <div class="mm-v21-case-body"><span class="mm-v19-case-kicker">Мужская сила</span><h3>Тело, которое считывается без объяснений</h3><ul class="mm-v19-case-list"><li><b>Запрос</b><span>Нужна форма, силовой вектор, уверенность и понятная структура тренировок.</span></li><li><b>Разбор</b><span>Тренировки, питание, техника, восстановление, цель и слабые места в режиме.</span></li><li><b>Выход</b><span>Силовой план, питание, первые действия и опора на тело, которое вызывает уважение.</span></li></ul></div>
+    <div class="mm-case-study-layout-cases-grid fade-in-up">
+      <article class="mm-case-study-layout-case-card">
+        <div class="mm-case-study-layout-case-image"><img src="assets/media/portfolio/04-1-XkjZ4N71.webp" srcset="assets/media/portfolio/04-1-XkjZ4N71-320w.webp 320w, assets/media/portfolio/04-1-XkjZ4N71-640w.webp 640w, assets/media/portfolio/04-1-XkjZ4N71-1024w.webp 1024w, assets/media/portfolio/04-1-XkjZ4N71.webp 1448w" sizes="(max-width: 768px) 100vw, 50vw" width="1448" height="1086" alt="Кейс мужской силы MARKOVMADE" loading="lazy" decoding="async"></div>
+        <div class="mm-case-study-layout-case-body"><span class="mm-case-study-case-kicker">Мужская сила</span><h3>Тело, которое считывается без объяснений</h3><ul class="mm-case-study-case-list"><li><b>Запрос</b><span>Нужна форма, силовой вектор, уверенность и понятная структура тренировок.</span></li><li><b>Разбор</b><span>Тренировки, питание, техника, восстановление, цель и слабые места в режиме.</span></li><li><b>Выход</b><span>Силовой план, питание, первые действия и опора на тело, которое вызывает уважение.</span></li></ul></div>
       </article>
-      <article class="mm-v21-case-card">
-        <div class="mm-v21-case-image"><img src="assets/media/portfolio/05-3-d0YD8q2V.webp" srcset="assets/media/portfolio/05-3-d0YD8q2V-320w.webp 320w, assets/media/portfolio/05-3-d0YD8q2V-640w.webp 640w, assets/media/portfolio/05-3-d0YD8q2V-1024w.webp 1024w, assets/media/portfolio/05-3-d0YD8q2V.webp 1448w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/05-3-d0YD8q2V-320w.webp 320w, assets/media/portfolio/05-3-d0YD8q2V-640w.webp 640w, assets/media/portfolio/05-3-d0YD8q2V-1024w.webp 1024w, assets/media/portfolio/05-3-d0YD8q2V.webp 1448w" sizes="(max-width: 768px) 100vw, 50vw" width="1448" height="1086" alt="Кейс женской эстетики MARKOVMADE" loading="lazy" decoding="async"></div>
-        <div class="mm-v21-case-body"><span class="mm-v19-case-kicker">Женская эстетика</span><h3>Стройность без голодовок и откатов</h3><ul class="mm-v19-case-list"><li><b>Запрос</b><span>Хочется легче, собраннее и красивее, но без изнурительных диет и вечной вины.</span></li><li><b>Разбор</b><span>БЖУ, цикл, самочувствие, режим, привычки, ограничения и комфортный темп.</span></li><li><b>Выход</b><span>Питание без насилия, контроль формы и система, которую можно держать в обычной жизни.</span></li></ul></div>
+      <article class="mm-case-study-layout-case-card">
+        <div class="mm-case-study-layout-case-image"><img src="assets/media/portfolio/05-3-d0YD8q2V.webp" srcset="assets/media/portfolio/05-3-d0YD8q2V-320w.webp 320w, assets/media/portfolio/05-3-d0YD8q2V-640w.webp 640w, assets/media/portfolio/05-3-d0YD8q2V-1024w.webp 1024w, assets/media/portfolio/05-3-d0YD8q2V.webp 1448w" sizes="(max-width: 768px) 100vw, 50vw" width="1448" height="1086" alt="Кейс женской эстетики MARKOVMADE" loading="lazy" decoding="async"></div>
+        <div class="mm-case-study-layout-case-body"><span class="mm-case-study-case-kicker">Женская эстетика</span><h3>Стройность без голодовок и откатов</h3><ul class="mm-case-study-case-list"><li><b>Запрос</b><span>Хочется легче, собраннее и красивее, но без изнурительных диет и вечной вины.</span></li><li><b>Разбор</b><span>БЖУ, цикл, самочувствие, режим, привычки, ограничения и комфортный темп.</span></li><li><b>Выход</b><span>Питание без насилия, контроль формы и система, которую можно держать в обычной жизни.</span></li></ul></div>
       </article>
-      <article class="mm-v21-case-card">
-        <div class="mm-v21-case-image"><img src="assets/media/portfolio/06-2-TD3tmtjQ.webp" srcset="assets/media/portfolio/06-2-TD3tmtjQ-320w.webp 320w, assets/media/portfolio/06-2-TD3tmtjQ-640w.webp 640w, assets/media/portfolio/06-2-TD3tmtjQ-1024w.webp 1024w, assets/media/portfolio/06-2-TD3tmtjQ.webp 1448w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/06-2-TD3tmtjQ-320w.webp 320w, assets/media/portfolio/06-2-TD3tmtjQ-640w.webp 640w, assets/media/portfolio/06-2-TD3tmtjQ-1024w.webp 1024w, assets/media/portfolio/06-2-TD3tmtjQ.webp 1448w" sizes="(max-width: 768px) 100vw, 50vw" width="1448" height="1086" alt="Кейс нутрициологии MARKOVMADE — трансформация девушки" loading="lazy" decoding="async"></div>
-        <div class="mm-v21-case-body"><span class="mm-v19-case-kicker">Нутрициология</span><h3>Энергия, восстановление и питание по фактам</h3><ul class="mm-v19-case-list"><li><b>Запрос</b><span>Нет энергии, сон хуже, кожа или восстановление проседают, питание собрано случайно.</span></li><li><b>Разбор</b><span>Рацион, дефициты, самочувствие, режим, нагрузка и биохимическая логика питания.</span></li><li><b>Выход</b><span>Коррекция питания, понимание организма и план, который поддерживает форму и ресурс.</span></li></ul></div>
+      <article class="mm-case-study-layout-case-card">
+        <div class="mm-case-study-layout-case-image"><img src="assets/media/portfolio/06-2-TD3tmtjQ.webp" srcset="assets/media/portfolio/06-2-TD3tmtjQ-320w.webp 320w, assets/media/portfolio/06-2-TD3tmtjQ-640w.webp 640w, assets/media/portfolio/06-2-TD3tmtjQ-1024w.webp 1024w, assets/media/portfolio/06-2-TD3tmtjQ.webp 1448w" sizes="(max-width: 768px) 100vw, 50vw" width="1448" height="1086" alt="Кейс нутрициологии MARKOVMADE — трансформация девушки" loading="lazy" decoding="async"></div>
+        <div class="mm-case-study-layout-case-body"><span class="mm-case-study-case-kicker">Нутрициология</span><h3>Энергия, восстановление и питание по фактам</h3><ul class="mm-case-study-case-list"><li><b>Запрос</b><span>Нет энергии, сон хуже, кожа или восстановление проседают, питание собрано случайно.</span></li><li><b>Разбор</b><span>Рацион, дефициты, самочувствие, режим, нагрузка и биохимическая логика питания.</span></li><li><b>Выход</b><span>Коррекция питания, понимание организма и план, который поддерживает форму и ресурс.</span></li></ul></div>
       </article>
-      <article class="mm-v21-case-card">
-        <div class="mm-v21-case-image"><img src="assets/media/portfolio/07-markovmade-PzwZMP8H.webp" srcset="assets/media/portfolio/07-markovmade-PzwZMP8H-320w.webp 320w, assets/media/portfolio/07-markovmade-PzwZMP8H-640w.webp 640w, assets/media/portfolio/07-markovmade-PzwZMP8H-1024w.webp 1024w, assets/media/portfolio/07-markovmade-PzwZMP8H.webp 1378w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/07-markovmade-PzwZMP8H-320w.webp 320w, assets/media/portfolio/07-markovmade-PzwZMP8H-640w.webp 640w, assets/media/portfolio/07-markovmade-PzwZMP8H-1024w.webp 1024w, assets/media/portfolio/07-markovmade-PzwZMP8H.webp 1378w" sizes="(max-width: 768px) 100vw, 50vw" width="1378" height="1280" alt="Кейс психологии и менторства MARKOVMADE" loading="lazy" decoding="async"></div>
-        <div class="mm-v21-case-body"><span class="mm-v19-case-kicker">Менторство</span><h3>Дисциплина, решения и масштаб личности</h3><ul class="mm-v19-case-list"><li><b>Запрос</b><span>Есть цель, но мешают откаты, зависание, кризисы, слабая опора и размытый фокус.</span></li><li><b>Разбор</b><span>Решения, среда, привычки, мышление, отношения с собой и честная обратная связь.</span></li><li><b>Выход</b><span>Приоритеты, действие без самообмана и личная система, которая возвращает в движение.</span></li></ul></div>
+      <article class="mm-case-study-layout-case-card">
+        <div class="mm-case-study-layout-case-image"><img src="assets/media/portfolio/07-markovmade-PzwZMP8H.webp" srcset="assets/media/portfolio/07-markovmade-PzwZMP8H-320w.webp 320w, assets/media/portfolio/07-markovmade-PzwZMP8H-640w.webp 640w, assets/media/portfolio/07-markovmade-PzwZMP8H-1024w.webp 1024w, assets/media/portfolio/07-markovmade-PzwZMP8H.webp 1378w" sizes="(max-width: 768px) 100vw, 50vw" width="1378" height="1280" alt="Кейс психологии и менторства MARKOVMADE" loading="lazy" decoding="async"></div>
+        <div class="mm-case-study-layout-case-body"><span class="mm-case-study-case-kicker">Менторство</span><h3>Дисциплина, решения и масштаб личности</h3><ul class="mm-case-study-case-list"><li><b>Запрос</b><span>Есть цель, но мешают откаты, зависание, кризисы, слабая опора и размытый фокус.</span></li><li><b>Разбор</b><span>Решения, среда, привычки, мышление, отношения с собой и честная обратная связь.</span></li><li><b>Выход</b><span>Приоритеты, действие без самообмана и личная система, которая возвращает в движение.</span></li></ul></div>
       </article>
     </div>
-    <div class="mm-v21-cases-cta fade-in-up"><p>Каждый кейс начинается не с шаблона, а с вашей ситуации. Поэтому первый шаг — оставить вводные и понять, какой формат даст самый быстрый понятный сдвиг.</p><a href="#contact" class="mm-v13-cta interactive" data-analytics="v21_cases_contact">Разобрать мой запрос</a></div>
+    <div class="mm-case-study-layout-cases-cta fade-in-up"><p>Каждый кейс начинается не с шаблона, а с вашей ситуации. Поэтому первый шаг — оставить вводные и понять, какой формат даст самый быстрый понятный сдвиг.</p><a href="#contact" class="mm-editorial-cta interactive" data-analytics="v21_cases_contact">Разобрать мой запрос</a></div>
   </div>
 </section>
 
 
-<section id="calculators" class="section-block py-24 md:py-32" data-insight="Сложная физиология внутри. Простое решение снаружи.">
+<section id="calculators" class="section-block py-24 md:py-32">
   <div class="mm-lab-wrap">
     <header class="mm-lab-intro fade-in-up">
       <span class="mm-lab-kicker">MARKOVMADE / LAB</span>
@@ -869,6 +847,34 @@
           <input type="file" id="mm-lab-import-file" accept="application/json,.json" hidden aria-label="Импортировать резервную копию MARKOVMADE LAB">
           <span class="mm-lab-data-status" id="mm-lab-data-status" role="status" aria-live="polite"></span>
         </div>
+      </section>
+
+      <section class="mm-lab-daily" id="mm-lab-daily" aria-labelledby="mm-lab-daily-title" data-no-translate>
+        <div class="mm-lab-daily-head">
+          <div><span class="mm-lab-kicker" data-checkin-ru="ВАШ LAB · СЕГОДНЯ" data-checkin-en="YOUR LAB · TODAY">ВАШ LAB · СЕГОДНЯ</span><h3 id="mm-lab-daily-title" data-checkin-ru="Одна минута для ясной динамики" data-checkin-en="One minute for a clearer trend">Одна минута для ясной динамики</h3><p data-checkin-ru="Запишите сопоставимые сигналы. Вес за день шумит; решение опирается на период." data-checkin-en="Log comparable signals. Daily weight is noisy; decisions use a period.">Запишите сопоставимые сигналы. Вес за день шумит; решение опирается на период.</p></div>
+          <div class="mm-lab-periods" role="group" aria-label="Период тренда"><button type="button" data-checkin-period="7" aria-pressed="true">7</button><button type="button" data-checkin-period="14" aria-pressed="false">14</button><button type="button" data-checkin-period="28" aria-pressed="false">28</button><span data-checkin-ru="ДНЕЙ" data-checkin-en="DAYS">ДНЕЙ</span></div>
+        </div>
+        <div class="mm-lab-daily-grid">
+          <form id="mm-lab-checkin-form" class="mm-lab-checkin-form">
+            <div class="mm-lab-checkin-fields">
+              <label><span data-checkin-ru="Дата" data-checkin-en="Date">Дата</span><input id="mm-checkin-date" type="date" required></label>
+              <label><span data-checkin-ru="Вес · кг" data-checkin-en="Weight · kg">Вес · кг</span><input id="mm-checkin-weight" type="number" min="35" max="300" step="0.1" inputmode="decimal" placeholder="98.6"></label>
+              <label><span data-checkin-ru="Талия · см" data-checkin-en="Waist · cm">Талия · см</span><input id="mm-checkin-waist" type="number" min="40" max="200" step="0.1" inputmode="decimal" placeholder="86"></label>
+              <label><span data-checkin-ru="Сон · ч" data-checkin-en="Sleep · h">Сон · ч</span><input id="mm-checkin-sleep" type="number" min="0" max="16" step="0.25" inputmode="decimal" placeholder="7.5"></label>
+              <label><span data-checkin-ru="Энергия · 1–10" data-checkin-en="Energy · 1–10">Энергия · 1–10</span><input id="mm-checkin-energy" type="number" min="1" max="10" step="1" inputmode="numeric" placeholder="7"></label>
+              <label><span data-checkin-ru="Калории · ккал" data-checkin-en="Calories · kcal">Калории · ккал</span><input id="mm-checkin-calories" type="number" min="1000" max="8000" step="1" inputmode="numeric" placeholder="2600"></label>
+              <label><span data-checkin-ru="Соблюдение · %" data-checkin-en="Adherence · %">Соблюдение · %</span><input id="mm-checkin-adherence" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="90"></label>
+            </div>
+            <div class="mm-lab-daily-actions"><button type="submit" class="mm-lab-primary" data-checkin-ru="Сохранить день" data-checkin-en="Save day">Сохранить день</button><span id="mm-checkin-status" role="status" aria-live="polite"></span></div>
+          </form>
+          <div class="mm-lab-daily-readout">
+            <p class="mm-lab-daily-summary" id="mm-checkin-summary" aria-live="polite"></p>
+            <div class="mm-lab-daily-trends"><div><small data-checkin-ru="Вес · изменение" data-checkin-en="Weight · change">Вес · изменение</small><strong id="mm-checkin-weight-trend">—</strong></div><div><small data-checkin-ru="Талия · изменение" data-checkin-en="Waist · change">Талия · изменение</small><strong id="mm-checkin-waist-trend">—</strong></div><div><small data-checkin-ru="Энергия · среднее / сдвиг" data-checkin-en="Energy · mean / change">Энергия · среднее / сдвиг</small><strong id="mm-checkin-energy-trend">—</strong></div><div><small data-checkin-ru="Сон · среднее / сдвиг" data-checkin-en="Sleep · mean / change">Сон · среднее / сдвиг</small><strong id="mm-checkin-sleep-trend">—</strong></div></div>
+            <p class="mm-lab-daily-calibration" id="mm-checkin-maintenance" data-checkin-ru="Адаптивное поддержание появится после 14 последовательных дней с весом и калориями." data-checkin-en="Adaptive maintenance needs 14 consecutive days with weight and calories.">Адаптивное поддержание появится после 14 последовательных дней с весом и калориями.</p>
+            <button type="button" class="mm-lab-secondary" id="mm-checkin-use-calibration" hidden data-checkin-ru="Перенести данные в Питание" data-checkin-en="Use data in Nutrition">Перенести данные в Питание</button>
+          </div>
+        </div>
+        <div class="mm-lab-quick-tools"><span data-checkin-ru="БЫСТРЫЙ ПЕРЕХОД" data-checkin-en="QUICK ACCESS">БЫСТРЫЙ ПЕРЕХОД</span><div id="mm-lab-quick-list" role="group" aria-label="Инструменты LAB"></div><button type="button" id="mm-lab-repeat-last" class="mm-lab-secondary" data-checkin-ru="Повторить последний расчёт" data-checkin-en="Repeat last calculation">Повторить последний расчёт</button></div>
       </section>
 
       <dialog class="mm-lab-history-dialog" id="mm-lab-history-dialog" aria-labelledby="mm-lab-history-title">
@@ -923,13 +929,13 @@
               <h4 class="mm-lab-section-title">Исходные данные</h4>
               <div class="mm-lab-fields">
                 <div class="mm-lab-field"><label for="lab-body-sex">Пол</label><select id="lab-body-sex" class="mm-lab-select" data-profile="sex"><option value="">Выберите</option><option value="male">Мужчина</option><option value="female">Женщина</option></select></div>
-                <div class="mm-lab-field"><label for="lab-body-age">Возраст <em>лет</em></label><input id="lab-body-age" class="mm-lab-input" type="number" min="18" max="90" inputmode="numeric" placeholder="29" data-profile="age"></div>
+
                 <div class="mm-lab-field"><label for="lab-body-height">Рост <em>см</em></label><input id="lab-body-height" class="mm-lab-input" type="number" min="120" max="230" step="0.1" inputmode="decimal" placeholder="188" data-profile="height"></div>
                 <div class="mm-lab-field"><label for="lab-body-weight">Вес <em>кг</em></label><input id="lab-body-weight" class="mm-lab-input" type="number" min="35" max="300" step="0.1" inputmode="decimal" placeholder="100" data-profile="weight"></div>
                 <div class="mm-lab-field wide"><label>Как определить % жира?</label><div class="mm-lab-segment" data-segment="body-bf-method"><button type="button" aria-pressed="true" data-value="known">Я знаю % жира</button><button type="button" aria-pressed="false" data-value="tape">Рассчитать по замерам</button></div></div>
                 <div class="mm-lab-field wide" data-bf-known><label for="lab-body-bf">Процент жира <em>%</em></label><input id="lab-body-bf" class="mm-lab-input" type="number" min="3" max="60" step="0.1" inputmode="decimal" placeholder="15" data-profile="bodyFat"><label for="lab-body-bf-source">Как получена оценка</label><select id="lab-body-bf-source" class="mm-lab-select"><option value="unknown" selected>Не знаю / неизвестно</option><option value="dexa">DEXA</option><option value="multi-bia">Многочастотный BIA</option><option value="consumer-bia">Бытовой BIA</option><option value="skinfold">Калипер / складки</option><option value="tape">Лента / окружности</option><option value="visual">Визуальная оценка</option><option value="professional">Оценка специалиста</option></select><small>Метод влияет на формулировку уверенности, но введённый вами процент не корректируется.</small></div>
-                <div class="mm-lab-field" data-bf-tape hidden><label for="lab-body-waist">Талия / живот <em>см</em></label><input id="lab-body-waist" class="mm-lab-input" type="number" min="40" max="200" step="0.1" inputmode="decimal" placeholder="86"></div>
-                <div class="mm-lab-field" data-bf-tape hidden><label for="lab-body-neck">Шея <em>см</em></label><input id="lab-body-neck" class="mm-lab-input" type="number" min="20" max="80" step="0.1" inputmode="decimal" placeholder="40"></div>
+                <div class="mm-lab-field" data-bf-tape hidden><label for="lab-body-waist" data-waist-label>Окружность живота <em>см</em></label><input id="lab-body-waist" class="mm-lab-input" type="number" min="40" max="200" step="0.1" inputmode="decimal" placeholder="86"><small data-waist-hint>Лента горизонтально на уровне пупка; не втягивайте живот.</small></div>
+                <div class="mm-lab-field" data-bf-tape hidden><label for="lab-body-neck">Окружность шеи <em>см</em></label><input id="lab-body-neck" class="mm-lab-input" type="number" min="20" max="80" step="0.1" inputmode="decimal" placeholder="40"><small>Шея входит в формулу US Navy как поправка к окружности живота, поэтому её нельзя пропустить.</small></div>
                 <div class="mm-lab-field wide" data-bf-tape data-female-only hidden><label for="lab-body-hips">Бёдра <em>см</em></label><input id="lab-body-hips" class="mm-lab-input" type="number" min="50" max="200" step="0.1" inputmode="decimal" placeholder="98"></div>
               </div>
               <div class="mm-lab-pro" data-pro="body" hidden>
@@ -940,13 +946,13 @@
                   <div class="mm-lab-field wide"><label for="lab-body-target-bf">Целевой % жира <em>%</em></label><input id="lab-body-target-bf" class="mm-lab-input" type="number" min="5" max="45" step="0.5" inputmode="decimal" placeholder="12"><small>Используется только для ориентировочного веса при сохранении текущей безжировой массы.</small></div>
                 </div>
               </div>
-              <details class="mm-lab-details" data-bf-tape hidden><summary>Как правильно измерить?</summary><div class="mm-lab-details-body"><p>Используйте мягкую сантиметровую ленту, не втягивайте живот и не перетягивайте кожу. Сделайте 2–3 измерения в одинаковом положении и возьмите среднее.</p><ul><li>Мужчины: живот на уровне пупка; шея — ниже гортани.</li><li>Женщины: талия в наиболее узкой части; бёдра — по наиболее выступающей части; шея — ниже гортани.</li><li>Лучше сравнивать повторные измерения в одинаковое время суток и одним способом.</li></ul></div></details>
+              <details class="mm-lab-details" data-bf-tape hidden><summary>Как правильно измерить?</summary><div class="mm-lab-details-body"><p>Используйте мягкую ленту без натяжения и не втягивайте живот. Повторите каждую окружность 2–3 раза; если результаты близки, используйте среднее.</p><ul><li>Мужская формула: окружность живота на уровне пупка и шея ниже гортани.</li><li>Женская формула: талия в наиболее узкой части, бёдра по наиболее выступающей части и шея ниже гортани.</li><li>Шея помогает учесть распределение окружностей в модели; это не отдельная оценка здоровья.</li><li>Для сравнения измеряйте себя одним способом и примерно в одно время суток.</li></ul></div></details>
               <div class="mm-lab-actions"><button type="button" class="mm-lab-primary" data-calc="body">Рассчитать состав тела</button><button type="button" class="mm-lab-secondary" data-reset="body">Сбросить</button></div><p class="mm-lab-error" id="lab-body-error" aria-live="polite"></p>
             </div>
             <div class="mm-lab-result" id="lab-body-result" aria-live="polite">
               <div class="mm-lab-result-head"><span>Результат</span><div class="mm-lab-badges"><span class="mm-lab-badge" data-quality="body">Полнота: —</span><span class="mm-lab-badge" data-confidence="body">Уверенность: —</span></div></div>
               <div class="mm-lab-hero-result"><small>Оценка процента жира</small><strong id="lab-body-main">—</strong><p id="lab-body-range">Заполните данные — здесь появится диапазон и источник основной неопределённости.</p></div>
-              <div class="mm-lab-metrics"><div class="mm-lab-metric"><small>Жировая масса</small><b id="lab-body-fatmass">—</b></div><div class="mm-lab-metric"><small>Безжировая масса</small><b id="lab-body-lbm">—</b></div><div class="mm-lab-metric"><small>FFMI</small><b id="lab-body-ffmi">—</b></div><div class="mm-lab-metric"><small>Нормализованный FFMI</small><b id="lab-body-nffmi">—</b></div><div class="mm-lab-metric"><small>BMI</small><b id="lab-body-bmi">—</b></div><div class="mm-lab-metric"><small>Талия ÷ рост</small><b id="lab-body-whtr">—</b></div></div>
+              <div class="mm-lab-metrics"><div class="mm-lab-metric"><small>Жировая масса</small><b id="lab-body-fatmass">—</b></div><div class="mm-lab-metric"><small>Безжировая масса</small><b id="lab-body-lbm">—</b></div><div class="mm-lab-metric"><small>FFMI</small><b id="lab-body-ffmi">—</b></div><div class="mm-lab-metric"><small>Нормализованный FFMI</small><b id="lab-body-nffmi">—</b></div><div class="mm-lab-metric"><small>BMI</small><b id="lab-body-bmi">—</b></div><div class="mm-lab-metric"><small>Талия ÷ рост</small><b id="lab-body-whtr">—</b></div><div class="mm-lab-metric"><small>Целевой вес · сценарий</small><b id="lab-body-target-weight">—</b></div></div>
               <div class="mm-lab-insight" id="lab-body-meaning"><strong>Что это значит:</strong> сначала рассчитайте показатели.</div>
               <div class="mm-lab-decision"><h4>Следующее решение</h4><ol id="lab-body-actions"><li>Введите данные и выполните расчёт.</li></ol></div>
               <details class="mm-lab-details"><summary>Как это посчитано?</summary><div class="mm-lab-details-body" id="lab-body-method">LBM и FFMI рассчитываются только после получения % жира. При замерах применяется окружностная модель Hodgdon/Beckett; её результат — оценка, а не лабораторное измерение.</div></details>
@@ -957,7 +963,7 @@
 
         <!-- 02 NUTRITION -->
         <section class="mm-lab-panel" id="mm-lab-nutrition" data-mm-lab-panel="nutrition" role="tabpanel" hidden>
-          <div class="mm-lab-toolhead"><div><span class="eyebrow">02 / КАЛОРИИ И БЖУ</span><h3>Рабочий коридор калорий, а не магическая цифра</h3><p>Сначала оценим расход, затем дадим стартовый диапазон под цель и БЖУ. Если вы знаете фактические калории поддержания по стабильному тренду — он имеет приоритет над формулой.</p></div><div class="mm-lab-mode" data-mode-switch="nutrition"><button type="button" aria-pressed="true" data-mode="quick">Быстро</button><button type="button" aria-pressed="false" data-mode="pro">PRO</button></div></div>
+          <div class="mm-lab-toolhead"><div><span class="eyebrow">02 / КАЛОРИИ И БЖУ</span><h3>Рабочий коридор калорий, а не магическая цифра</h3><p>Сначала оценим расход, затем дадим стартовый диапазон под цель и БЖУ. Если вы знаете фактические калории поддержания по стабильному тренду — он имеет приоритет над формулой.</p></div><div class="mm-lab-mode" data-mode-switch="nutrition"><button type="button" aria-pressed="true" data-mode="quick">Быстро</button><button type="button" aria-pressed="false" data-mode="pro">PRO</button><button type="button" aria-pressed="false" data-mode="calibrated">По данным</button></div></div>
           <div class="mm-lab-layout"><div class="mm-lab-form"><h4 class="mm-lab-section-title">Профиль и цель</h4><div class="mm-lab-fields">
             <div class="mm-lab-field"><label for="lab-nutri-sex">Пол</label><select id="lab-nutri-sex" class="mm-lab-select" data-profile="sex"><option value="">Выберите</option><option value="male">Мужчина</option><option value="female">Женщина</option></select></div>
             <div class="mm-lab-field"><label for="lab-nutri-age">Возраст <em>лет</em></label><input id="lab-nutri-age" class="mm-lab-input" type="number" min="18" max="90" placeholder="29" data-profile="age"></div>
@@ -968,7 +974,13 @@
             <div class="mm-lab-field wide"><label for="lab-nutri-pal">Активность в обычный день</label><select id="lab-nutri-pal" class="mm-lab-select"><option value="1.35">В основном сижу, мало хожу</option><option value="1.5" selected>Сижу, но регулярно хожу / тренируюсь</option><option value="1.65">Много двигаюсь или тренируюсь почти ежедневно</option><option value="1.8">Очень высокая повседневная активность</option></select><small>В быстром режиме расход = RMR × PAL. Шаги и тренировки отдельно поверх этого не добавляются.</small></div>
           </div>
           <div class="mm-lab-pro" data-pro="nutrition" hidden><h4 class="mm-lab-section-title">PRO — детализированная модель</h4><div class="mm-lab-fields">
-            <div class="mm-lab-field wide"><label>Источник калорий поддержания</label><div class="mm-lab-segment" data-segment="nutri-maint-source"><button type="button" aria-pressed="true" data-value="model">Рассчитать</button><button type="button" aria-pressed="false" data-value="measured">Знаю фактический</button></div></div>
+            <div class="mm-lab-field wide"><label>Источник калорий поддержания</label><div class="mm-lab-segment" data-segment="nutri-maint-source"><button type="button" aria-pressed="true" data-value="model">Рассчитать</button><button type="button" aria-pressed="false" data-value="measured">Знаю фактический</button><button type="button" aria-pressed="false" data-value="calibrated">Калибровать 14–28 дней</button></div></div>
+            <div class="mm-lab-field wide" data-maint-calibrated hidden><label for="lab-nutri-calibration-weights">Ежедневный утренний вес <em>кг · 14–28 значений</em></label><textarea id="lab-nutri-calibration-weights" class="mm-lab-input" rows="5" placeholder="80.2&#10;80.1&#10;80.3&#10;…" aria-describedby="lab-nutri-calibration-help"></textarea><small id="lab-nutri-calibration-help">Вводите один вес на строку в хронологическом порядке. Локально хранится только в этом браузере.</small></div>
+            <div class="mm-lab-field" data-maint-calibrated hidden><label for="lab-nutri-calibration-calories">Средние калории за те же дни <em>ккал/сут</em></label><input id="lab-nutri-calibration-calories" class="mm-lab-input" type="number" min="1000" max="8000" step="10" placeholder="2800"></div>
+            <div class="mm-lab-field" data-maint-calibrated hidden><label for="lab-nutri-calibration-completeness">Полнота записей <em>%</em></label><input id="lab-nutri-calibration-completeness" class="mm-lab-input" type="number" min="0" max="100" value="100"></div>
+            <div class="mm-lab-field" data-maint-calibrated hidden><label for="lab-nutri-calibration-adherence">Соблюдение плана <em>%</em></label><input id="lab-nutri-calibration-adherence" class="mm-lab-input" type="number" min="0" max="100" value="90"></div>
+            <div class="mm-lab-field" data-maint-calibrated hidden><label for="lab-nutri-calibration-waist">Изменение талии за период <em>см · можно пропустить</em></label><input id="lab-nutri-calibration-waist" class="mm-lab-input" type="number" min="-20" max="20" step=".1" placeholder="0"></div>
+            <div class="mm-lab-field wide" data-maint-calibrated hidden><small>При менее чем 14 весах расчёт остановится. Низкая полнота, соблюдение или сильный шум понизят уверенность. Изменение массы пересчитывается как чувствительный диапазон 7000–9000 ккал/кг, а не как точная константа.</small></div>
             <div class="mm-lab-field wide" data-maint-measured hidden><label for="lab-nutri-measured">Фактические калории поддержания <em>ккал/сут</em></label><input id="lab-nutri-measured" class="mm-lab-input" type="number" min="1000" max="8000" step="10" placeholder="3000"><small>Используйте только если вес и талия были примерно стабильны при таком среднем рационе хотя бы 2–3 недели.</small></div>
             <div class="mm-lab-field"><label for="lab-nutri-athlete">Профиль</label><select id="lab-nutri-athlete" class="mm-lab-select"><option value="general" selected>Общий</option><option value="athlete">Спортсмен / много силовых</option></select></div>
             <div class="mm-lab-field"><label for="lab-nutri-bf">Процент жира <em>%</em></label><input id="lab-nutri-bf" class="mm-lab-input" type="number" min="3" max="60" step=".1" placeholder="необязательно" data-profile="bodyFat"></div>
@@ -983,7 +995,7 @@
           <div class="mm-lab-actions"><button type="button" class="mm-lab-primary" data-calc="nutrition">Рассчитать КБЖУ</button><button type="button" class="mm-lab-secondary" data-reset="nutrition">Сбросить</button></div><p class="mm-lab-error" id="lab-nutrition-error" aria-live="polite"></p></div>
           <div class="mm-lab-result" aria-live="polite"><div class="mm-lab-result-head"><span>Рабочий старт</span><div class="mm-lab-badges"><span class="mm-lab-badge" data-quality="nutrition">Полнота: —</span><span class="mm-lab-badge" data-confidence="nutrition">Уверенность: —</span></div></div>
             <div class="mm-lab-hero-result"><small>Целевой коридор</small><strong id="lab-nutri-main">—</strong><p id="lab-nutri-sub">Формула — стартовая гипотеза. Реальный тренд за 2–3 недели важнее одной расчётной цифры.</p></div>
-            <div class="mm-lab-metrics"><div class="mm-lab-metric"><small>RMR / BMR</small><b id="lab-nutri-rmr">—</b><em id="lab-nutri-rmr-method">—</em></div><div class="mm-lab-metric"><small>TDEE / поддержание</small><b id="lab-nutri-tdee">—</b><em id="lab-nutri-tdee-method">—</em></div><div class="mm-lab-metric"><small>Центр коридора</small><b id="lab-nutri-center">—</b></div></div>
+            <div class="mm-lab-metrics"><div class="mm-lab-metric"><small>RMR / BMR</small><b id="lab-nutri-rmr">—</b><em id="lab-nutri-rmr-method">—</em></div><div class="mm-lab-metric"><small>TDEE / поддержание</small><b id="lab-nutri-tdee">—</b><em id="lab-nutri-tdee-method">—</em></div><div class="mm-lab-metric"><small>Центр коридора</small><b id="lab-nutri-center">—</b></div><div class="mm-lab-metric" data-calibration-output hidden><small>Формульная оценка</small><b id="lab-nutri-formula-estimate">—</b><em id="lab-nutri-formula-note">—</em></div></div>
             <div class="mm-lab-field wide"><p class="mm-lab-section-title">Организация тех же калорий</p><div class="mm-lab-segment" data-segment="nutri-macro-scenario" role="group" aria-label="Сценарий распределения макронутриентов"><button type="button" aria-pressed="true" data-value="balanced">Сбалансировано</button><button type="button" aria-pressed="false" data-value="higher-carb">Больше углеводов</button><button type="button" aria-pressed="false" data-value="higher-fat">Больше жиров</button></div><small>Калории и белок остаются неизменными. Жиры не опускаются ниже 0,6 г/кг.</small></div>
             <div class="mm-lab-metrics" style="margin-top:8px"><div class="mm-lab-metric"><small>Белок</small><b id="lab-nutri-protein">—</b><em id="lab-nutri-protein-note">рабочий диапазон</em></div><div class="mm-lab-metric"><small>Жиры</small><b id="lab-nutri-fat">—</b><em>минимум → рабочая зона</em></div><div class="mm-lab-metric"><small>Углеводы</small><b id="lab-nutri-carb">—</b><em>остаток энергии</em></div></div>
             <div class="mm-lab-insight" id="lab-nutri-meaning"><strong>Что это значит:</strong> выполните расчёт.</div><div class="mm-lab-decision"><h4>Как применять</h4><ol id="lab-nutri-actions"><li>Используйте среднее за неделю, а не один идеальный день.</li><li>Пересмотрите расчёт после 14–21 дня по тренду веса и талии.</li></ol></div>
@@ -1091,22 +1103,22 @@
       </div>
     </div>
   </div>
-</section><section id="calculator-decision" class="mm-v13-section mm-v15-section mm-v17-calc-bridge py-14 md:py-18" data-insight="Расчёт ценен тогда, когда превращается в решение.">
-  <div class="mm-v13-inner">
-    <div class="mm-v13-bridge mm-v15-bridge fade-in-up">
-      <div class="mm-v13-bridge-main mm-v15-bridge-main">
-        <span class="mm-v13-kicker">После расчёта</span>
+</section><section id="calculator-decision" class="mm-editorial-section mm-editorial-layout-section mm-editorial-flow-calc-bridge py-14 md:py-18">
+  <div class="mm-editorial-inner">
+    <div class="mm-editorial-bridge mm-editorial-layout-bridge fade-in-up">
+      <div class="mm-editorial-bridge-main mm-editorial-layout-bridge-main">
+        <span class="mm-editorial-kicker">После расчёта</span>
         <h2>Цифры уже показали картину. Теперь нужен точный следующий шаг.</h2>
         <p>FFMI, КБЖУ, восстановление и динамика полезны только тогда, когда из них понятно, что менять первым: питание, нагрузку, режим, темп или формат работы. Я перевожу показатели в решение, которое можно выполнять.</p>
-        <div class="mm-v13-cta-row">
-          <a href="#contact" class="mm-v13-cta interactive" data-analytics="v18_calc_contact">Разобрать мои показатели</a>
-          <a href="#services" class="mm-v13-cta secondary interactive" data-analytics="v18_calc_services">Подобрать формат</a>
+        <div class="mm-editorial-cta-row">
+          <a href="#contact" class="mm-editorial-cta interactive" data-analytics="v18_calc_contact">Разобрать мои показатели</a>
+          <a href="#services" class="mm-editorial-cta secondary interactive" data-analytics="v18_calc_services">Подобрать формат</a>
         </div>
       </div>
-      <div class="mm-v13-mini-list mm-v15-mini-list">
-        <div class="mm-v13-mini"><b>Что видно</b>Состав тела, питание, энергия, восстановление и темп движения.</div>
-        <div class="mm-v13-mini"><b>Что менять</b>Главный рычаг, который даст сдвиг без лишнего давления.</div>
-        <div class="mm-v13-mini"><b>Что отслеживать</b>Метрики, по которым понятно: вы продвигаетесь или просто устали.</div>
+      <div class="mm-editorial-mini-list mm-editorial-layout-mini-list">
+        <div class="mm-editorial-mini"><b>Что видно</b>Состав тела, питание, энергия, восстановление и темп движения.</div>
+        <div class="mm-editorial-mini"><b>Что менять</b>Главный рычаг, который даст сдвиг без лишнего давления.</div>
+        <div class="mm-editorial-mini"><b>Что отслеживать</b>Метрики, по которым понятно: вы продвигаетесь или просто устали.</div>
       </div>
     </div>
   </div>
@@ -1115,7 +1127,7 @@
 
 
 
-<section id="app-ecosystem" class="section-block mm-os-section" data-insight="Персональная система превращает данные в следующий понятный шаг.">
+<section id="app-ecosystem" class="section-block mm-os-section">
   <div class="mm-os-wrap">
     <div class="mm-os-layout">
       <div class="mm-os-story fade-in-up">
@@ -1253,6 +1265,7 @@
           <small data-ins-copy="contextHint">3 сигнала → 1 рабочий вектор</small>
         </div>
 
+        <div data-insights-step>
         <fieldset class="mm-insights-fieldset">
           <legend data-ins-copy="qGoal">Что сейчас важнее всего?</legend>
           <div class="mm-insights-options mm-insights-options--goals">
@@ -1264,7 +1277,9 @@
             <label><input type="radio" name="insight-goal" value="confidence"><span data-ins-copy="goalConfidence">Уверенность / масштаб</span></label>
           </div>
         </fieldset>
+        </div>
 
+        <div data-insights-step>
         <fieldset class="mm-insights-fieldset">
           <legend data-ins-copy="qBlocker">Что сильнее всего тормозит?</legend>
           <div class="mm-insights-options mm-insights-options--blockers">
@@ -1276,7 +1291,9 @@
             <label><input type="radio" name="insight-blocker" value="support"><span data-ins-copy="blockSupport">Нет обратной связи</span></label>
           </div>
         </fieldset>
+        </div>
 
+        <div data-insights-step>
         <fieldset class="mm-insights-fieldset mm-insights-fieldset--resource">
           <legend data-ins-copy="qResource">Сколько ресурса сейчас?</legend>
           <div class="mm-insights-resource">
@@ -1285,6 +1302,7 @@
             <label><input type="radio" name="insight-resource" value="high"><span><b data-ins-copy="resHigh">Высокий</b><small data-ins-copy="resHighSub">готов к нагрузке</small></span></label>
           </div>
         </fieldset>
+        </div>
 
         <div class="mm-insights-local-note">
           <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.3 8-8 9-4.7-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>
@@ -1338,7 +1356,7 @@
 
 
 
-<section id="services" class="section-block relative py-24 bg-obsidian text-platinum" data-insight="Инвестируйте в единственное, что нельзя отнять — в себя.">
+<section id="services" class="section-block relative py-24 bg-obsidian text-platinum">
             <div class="container mx-auto px-6 md:px-12">
                 <div class="mb-20 fade-in-up text-center flex flex-col items-center">
     <span class="text-[10px] font-sans tracking-luxury text-gold uppercase mb-4 block">02. УСЛУГИ</span>
@@ -1396,7 +1414,7 @@
                                         </div>
                                         <div class="relative">
                                             <div class="w-full overflow-hidden bg-charcoal mb-6 relative group/image rounded-sm border border-white/5">
-                                                <img decoding="async" src="assets/media/portfolio/08-markovmade-0VvVNjjG.webp" srcset="assets/media/portfolio/08-markovmade-0VvVNjjG-320w.webp 320w, assets/media/portfolio/08-markovmade-0VvVNjjG.webp 604w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/08-markovmade-0VvVNjjG-320w.webp 320w, assets/media/portfolio/08-markovmade-0VvVNjjG.webp 604w" sizes="(max-width: 768px) 100vw, 50vw" width="604" height="454" loading="lazy" class="relative w-full h-auto object-contain grayscale group-hover/image:grayscale-0 transition-all duration-700" alt="Мужской тренинг">
+                                                <img decoding="async" src="assets/media/portfolio/08-markovmade-0VvVNjjG.webp" srcset="assets/media/portfolio/08-markovmade-0VvVNjjG-320w.webp 320w, assets/media/portfolio/08-markovmade-0VvVNjjG.webp 604w" sizes="(max-width: 768px) 100vw, 50vw" width="604" height="454" loading="lazy" class="relative w-full h-auto object-contain grayscale group-hover/image:grayscale-0 transition-all duration-700" alt="Мужской тренинг">
                                                 <div class="service-badge">Системный подход</div>
                                             </div>
                                             <div class="font-sans text-platinum/90 text-sm leading-relaxed pl-6 border-l-[3px] border-gold transition-opacity duration-500">
@@ -1445,7 +1463,7 @@
                                         </div>
                                         <div class="relative">
                                             <div class="w-full overflow-hidden bg-charcoal mb-6 relative group/image rounded-sm border border-white/5">
-                                                <img decoding="async" src="assets/media/portfolio/09-markovmade-kscX2Zzv.webp" srcset="assets/media/portfolio/09-markovmade-kscX2Zzv-320w.webp 320w, assets/media/portfolio/09-markovmade-kscX2Zzv.webp 604w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/09-markovmade-kscX2Zzv-320w.webp 320w, assets/media/portfolio/09-markovmade-kscX2Zzv.webp 604w" sizes="(max-width: 768px) 100vw, 50vw" width="604" height="398" loading="lazy" class="relative w-full h-auto object-contain grayscale group-hover/image:grayscale-0 transition-all duration-700" alt="Женский тренинг">
+                                                <img decoding="async" src="assets/media/portfolio/09-markovmade-kscX2Zzv.webp" srcset="assets/media/portfolio/09-markovmade-kscX2Zzv-320w.webp 320w, assets/media/portfolio/09-markovmade-kscX2Zzv.webp 604w" sizes="(max-width: 768px) 100vw, 50vw" width="604" height="398" loading="lazy" class="relative w-full h-auto object-contain grayscale group-hover/image:grayscale-0 transition-all duration-700" alt="Женский тренинг">
                                                 <div class="service-badge">Индивидуальный подход</div>
                                             </div>
                                             <div class="font-sans text-platinum/90 text-sm leading-relaxed pl-6 border-l-[3px] border-gold transition-opacity duration-500">
@@ -1494,7 +1512,7 @@
                                         </div>
                                         <div class="relative">
                                             <div class="w-full overflow-hidden bg-charcoal mb-6 relative group/image rounded-sm border border-white/5">
-                                                <img decoding="async" src="assets/media/portfolio/10-markovmade-v4zj2YZ0.webp" srcset="assets/media/portfolio/10-markovmade-v4zj2YZ0-320w.webp 320w, assets/media/portfolio/10-markovmade-v4zj2YZ0-640w.webp 640w, assets/media/portfolio/10-markovmade-v4zj2YZ0-1024w.webp 1024w, assets/media/portfolio/10-markovmade-v4zj2YZ0.webp 1121w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/10-markovmade-v4zj2YZ0-320w.webp 320w, assets/media/portfolio/10-markovmade-v4zj2YZ0-640w.webp 640w, assets/media/portfolio/10-markovmade-v4zj2YZ0-1024w.webp 1024w, assets/media/portfolio/10-markovmade-v4zj2YZ0.webp 1121w" sizes="(max-width: 768px) 100vw, 50vw" width="1121" height="806" loading="lazy" class="relative w-full h-auto object-contain grayscale group-hover/image:grayscale-0 transition-all duration-700" alt="Нутрициология">
+                                                <img decoding="async" src="assets/media/portfolio/10-markovmade-v4zj2YZ0.webp" srcset="assets/media/portfolio/10-markovmade-v4zj2YZ0-320w.webp 320w, assets/media/portfolio/10-markovmade-v4zj2YZ0-640w.webp 640w, assets/media/portfolio/10-markovmade-v4zj2YZ0-1024w.webp 1024w, assets/media/portfolio/10-markovmade-v4zj2YZ0.webp 1121w" sizes="(max-width: 768px) 100vw, 50vw" width="1121" height="806" loading="lazy" class="relative w-full h-auto object-contain grayscale group-hover/image:grayscale-0 transition-all duration-700" alt="Нутрициология">
                                                 <div class="service-badge">Данные и питание</div>
                                             </div>
                                             <div class="font-sans text-platinum/90 text-sm leading-relaxed pl-6 border-l-[3px] border-gold transition-opacity duration-500">
@@ -1552,7 +1570,7 @@
                                         </div>
                                         <div class="flex flex-col gap-8">
                                             <div class="w-full overflow-hidden bg-charcoal relative group/image rounded-sm border border-white/5">
-                                                <img decoding="async" src="assets/media/portfolio/07-markovmade-PzwZMP8H.webp" srcset="assets/media/portfolio/07-markovmade-PzwZMP8H-320w.webp 320w, assets/media/portfolio/07-markovmade-PzwZMP8H-640w.webp 640w, assets/media/portfolio/07-markovmade-PzwZMP8H-1024w.webp 1024w, assets/media/portfolio/07-markovmade-PzwZMP8H.webp 1378w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/07-markovmade-PzwZMP8H-320w.webp 320w, assets/media/portfolio/07-markovmade-PzwZMP8H-640w.webp 640w, assets/media/portfolio/07-markovmade-PzwZMP8H-1024w.webp 1024w, assets/media/portfolio/07-markovmade-PzwZMP8H.webp 1378w" sizes="(max-width: 768px) 100vw, 50vw" width="1378" height="1280" loading="lazy" class="w-full h-auto object-contain grayscale group-hover/image:grayscale-0 transition-all duration-700" alt="Психология">
+                                                <img decoding="async" src="assets/media/portfolio/07-markovmade-PzwZMP8H.webp" srcset="assets/media/portfolio/07-markovmade-PzwZMP8H-320w.webp 320w, assets/media/portfolio/07-markovmade-PzwZMP8H-640w.webp 640w, assets/media/portfolio/07-markovmade-PzwZMP8H-1024w.webp 1024w, assets/media/portfolio/07-markovmade-PzwZMP8H.webp 1378w" sizes="(max-width: 768px) 100vw, 50vw" width="1378" height="1280" loading="lazy" class="w-full h-auto object-contain grayscale group-hover/image:grayscale-0 transition-all duration-700" alt="Психология">
                                                 <div class="service-badge">100% Конфиденциально</div>
                                             </div>
                                             <div class="font-sans text-platinum/90 text-sm leading-relaxed pl-6 border-l-[3px] border-gold transition-colors duration-500">
@@ -1578,36 +1596,36 @@
 
 
 
-<section id="method-proof" class="mm-v13-section mm-v15-section mm-v17-method py-16 md:py-22" data-insight="Короткий путь: вводные, диагностика, рабочий план, действие.">
-  <div class="mm-v13-inner">
-    <div class="mm-v13-head fade-in-up">
-      <span class="mm-v13-kicker">Как это работает</span>
-      <h2 class="mm-v13-title">Меньше разговоров — больше <span class="mm-v13-goldline">точных действий</span>.</h2>
-      <p class="mm-v13-copy">Первый контакт нужен для ясности: увидеть текущую картину, отделить главное от второстепенного и собрать действия, которые реально помещаются в ваш день.</p>
+<section id="method-proof" class="mm-editorial-section mm-editorial-layout-section mm-editorial-flow-method py-16 md:py-22">
+  <div class="mm-editorial-inner">
+    <div class="mm-editorial-head fade-in-up">
+      <span class="mm-editorial-kicker">Как это работает</span>
+      <h2 class="mm-editorial-title">Меньше разговоров — больше <span class="mm-editorial-goldline">точных действий</span>.</h2>
+      <p class="mm-editorial-copy">Первый контакт нужен для ясности: увидеть текущую картину, отделить главное от второстепенного и собрать действия, которые реально помещаются в ваш день.</p>
     </div>
-    <div class="mm-v13-process mm-v15-process">
-      <div class="mm-v13-steps mm-v15-steps fade-in-up">
-        <div class="mm-v13-step mm-v15-step mm-v17-step"><span class="mm-v13-step-num">01</span><div><strong><span class="mm-v15-step-mark">Оставляете вводные</span></strong><span><em class="mm-v16-key mm-v17-step-tag">контекст</em> цель, график, ограничения, питание и тренировки — чтобы разбор шёл по вашей ситуации, а не по общей фразе «хочу форму».</span></div></div>
-        <div class="mm-v13-step mm-v15-step mm-v17-step"><span class="mm-v13-step-num">02</span><div><strong><span class="mm-v15-step-mark">Я разбираю картину</span></strong><span><em class="mm-v16-key mm-v17-step-tag">факты</em> смотрю тело, восстановление, поведение, риски и слабые места — становится понятно, где теряется результат.</span></div></div>
-        <div class="mm-v13-step mm-v15-step mm-v17-step"><span class="mm-v13-step-num">03</span><div><strong><span class="mm-v15-step-mark">Собираем рабочий план</span></strong><span><em class="mm-v16-key mm-v17-step-tag">действие</em> первые шаги, точки наблюдения и формат работы — без ставки на идеальные условия.</span></div></div>
+    <div class="mm-editorial-process mm-editorial-layout-process">
+      <div class="mm-editorial-steps mm-editorial-layout-steps fade-in-up">
+        <div class="mm-editorial-step mm-editorial-layout-step mm-editorial-flow-step"><span class="mm-editorial-step-num">01</span><div><strong><span class="mm-editorial-layout-step-mark">Оставляете вводные</span></strong><span><em class="mm-editorial-key-key mm-editorial-flow-step-tag">контекст</em> цель, график, ограничения, питание и тренировки — чтобы разбор шёл по вашей ситуации, а не по общей фразе «хочу форму».</span></div></div>
+        <div class="mm-editorial-step mm-editorial-layout-step mm-editorial-flow-step"><span class="mm-editorial-step-num">02</span><div><strong><span class="mm-editorial-layout-step-mark">Я разбираю картину</span></strong><span><em class="mm-editorial-key-key mm-editorial-flow-step-tag">факты</em> смотрю тело, восстановление, поведение, риски и слабые места — становится понятно, где теряется результат.</span></div></div>
+        <div class="mm-editorial-step mm-editorial-layout-step mm-editorial-flow-step"><span class="mm-editorial-step-num">03</span><div><strong><span class="mm-editorial-layout-step-mark">Собираем рабочий план</span></strong><span><em class="mm-editorial-key-key mm-editorial-flow-step-tag">действие</em> первые шаги, точки наблюдения и формат работы — без ставки на идеальные условия.</span></div></div>
       </div>
       <div class="fade-in-up">
-        <div class="mm-v13-compare mm-v15-compare mm-v17-compare">
-          <div class="mm-v13-col"><h3>До</h3><div class="mm-v13-row">Слепые попытки</div><div class="mm-v13-row">Разрозненные решения</div><div class="mm-v13-row">Откаты после нагрузки</div><div class="mm-v13-row">Ставка на настроение</div></div>
-          <div class="mm-v13-col"><h3>После</h3><div class="mm-v13-row">Ясная картина</div><div class="mm-v13-row">Точный старт</div><div class="mm-v13-row">Настройки по фактам</div><div class="mm-v13-row">План, который держится</div></div>
+        <div class="mm-editorial-compare mm-editorial-layout-compare mm-editorial-flow-compare">
+          <div class="mm-editorial-col"><h3>До</h3><div class="mm-editorial-row">Слепые попытки</div><div class="mm-editorial-row">Разрозненные решения</div><div class="mm-editorial-row">Откаты после нагрузки</div><div class="mm-editorial-row">Ставка на настроение</div></div>
+          <div class="mm-editorial-col"><h3>После</h3><div class="mm-editorial-row">Ясная картина</div><div class="mm-editorial-row">Точный старт</div><div class="mm-editorial-row">Настройки по фактам</div><div class="mm-editorial-row">План, который держится</div></div>
         </div>
-        <div class="mm-v13-promise mm-v15-promise mm-v17-promise"><b>Честная рамка:</b> я не обещаю чудо за 7 дней. Я даю трезвую оценку, порядок действий, обратную связь и корректировки, которые возвращают движение, когда идеальные условия заканчиваются.</div>
+        <div class="mm-editorial-promise mm-editorial-layout-promise mm-editorial-flow-promise"><b>Честная рамка:</b> я не обещаю чудо за 7 дней. Я даю трезвую оценку, порядок действий, обратную связь и корректировки, которые возвращают движение, когда идеальные условия заканчиваются.</div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="about" class="section-block relative w-full bg-obsidian overflow-hidden" data-insight="Ваш опыт = Ваш капитал">
+<section id="about" class="section-block relative w-full bg-obsidian overflow-hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 items-center">
                 <div class="relative w-full h-[60vh] lg:h-[85vh] overflow-hidden group border-r border-white/5 order-1 lg:order-none">
                     <div class="absolute inset-0 z-20 opacity-20 pointer-events-none mix-blend-overlay bg-noise"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent z-10 opacity-30 transition-colors duration-500"></div>
-                    <img src="assets/media/portfolio/03-image-fGFdFRLn.webp" srcset="assets/media/portfolio/03-image-fGFdFRLn-320w.webp 320w, assets/media/portfolio/03-image-fGFdFRLn-640w.webp 640w, assets/media/portfolio/03-image-fGFdFRLn-1024w.webp 1024w, assets/media/portfolio/03-image-fGFdFRLn.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/03-image-fGFdFRLn-320w.webp 320w, assets/media/portfolio/03-image-fGFdFRLn-640w.webp 640w, assets/media/portfolio/03-image-fGFdFRLn-1024w.webp 1024w, assets/media/portfolio/03-image-fGFdFRLn.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="1600" loading="lazy" decoding="async" alt="Павел Марков" class="w-full h-full object-cover grayscale opacity-90 transition-all duration-[2s] ease-out group-hover:grayscale-0 group-hover:scale-105 transform will-change-transform">
+                    <img src="assets/media/portfolio/03-image-fGFdFRLn.webp" srcset="assets/media/portfolio/03-image-fGFdFRLn-320w.webp 320w, assets/media/portfolio/03-image-fGFdFRLn-640w.webp 640w, assets/media/portfolio/03-image-fGFdFRLn-1024w.webp 1024w, assets/media/portfolio/03-image-fGFdFRLn.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="1600" loading="lazy" decoding="async" alt="Павел Марков" class="w-full h-full object-cover grayscale opacity-90 transition-all duration-[2s] ease-out group-hover:grayscale-0 group-hover:scale-105 transform will-change-transform">
                 </div>
 
                 <div class="relative flex flex-col justify-center w-full px-6 md:px-16 lg:px-24 py-10 lg:py-14 bg-obsidian z-10 order-2 lg:order-none">
@@ -1660,7 +1678,7 @@
 
 
 
-<section id="biography" class="section-block relative py-24 md:py-32 bg-obsidian border-t border-white/5 evolution-shell" data-insight="История — это не прошлое. Это фундамент будущего.">
+<section id="biography" class="section-block relative py-24 md:py-32 bg-obsidian border-t border-white/5 evolution-shell">
             <div class="container mx-auto px-6 md:px-12 relative z-10">
                 <div class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-10 items-end mb-14">
                     <div class="fade-in-up">
@@ -1688,8 +1706,8 @@
                             <div>
                                 <div class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-0 border-t border-white/5">
                                     <div class="grid grid-cols-2 gap-0 overflow-hidden">
-                                        <img src="assets/media/portfolio/11-img-5985-v6DhgDQz.webp" srcset="assets/media/portfolio/11-img-5985-v6DhgDQz-320w.webp 320w, assets/media/portfolio/11-img-5985-v6DhgDQz-640w.webp 640w, assets/media/portfolio/11-img-5985-v6DhgDQz-1024w.webp 1024w, assets/media/portfolio/11-img-5985-v6DhgDQz.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/11-img-5985-v6DhgDQz-320w.webp 320w, assets/media/portfolio/11-img-5985-v6DhgDQz-640w.webp 640w, assets/media/portfolio/11-img-5985-v6DhgDQz-1024w.webp 1024w, assets/media/portfolio/11-img-5985-v6DhgDQz.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="2498" loading="lazy" decoding="async" class="evolution-photo border-r border-white/5" alt="Павел Марков — Рождение Мафии">
-                                        <img src="assets/media/portfolio/12-img-5963-Dg4T5BZW.webp" srcset="assets/media/portfolio/12-img-5963-Dg4T5BZW-320w.webp 320w, assets/media/portfolio/12-img-5963-Dg4T5BZW-640w.webp 640w, assets/media/portfolio/12-img-5963-Dg4T5BZW-1024w.webp 1024w, assets/media/portfolio/12-img-5963-Dg4T5BZW.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/12-img-5963-Dg4T5BZW-320w.webp 320w, assets/media/portfolio/12-img-5963-Dg4T5BZW-640w.webp 640w, assets/media/portfolio/12-img-5963-Dg4T5BZW-1024w.webp 1024w, assets/media/portfolio/12-img-5963-Dg4T5BZW.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="3104" loading="lazy" decoding="async" class="evolution-photo" alt="Павел Марков — Рождение Мафии">
+                                        <img src="assets/media/portfolio/11-img-5985-v6DhgDQz.webp" srcset="assets/media/portfolio/11-img-5985-v6DhgDQz-320w.webp 320w, assets/media/portfolio/11-img-5985-v6DhgDQz-640w.webp 640w, assets/media/portfolio/11-img-5985-v6DhgDQz-1024w.webp 1024w, assets/media/portfolio/11-img-5985-v6DhgDQz.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="2498" loading="lazy" decoding="async" class="evolution-photo border-r border-white/5" alt="Павел Марков — Рождение Мафии">
+                                        <img src="assets/media/portfolio/12-img-5963-Dg4T5BZW.webp" srcset="assets/media/portfolio/12-img-5963-Dg4T5BZW-320w.webp 320w, assets/media/portfolio/12-img-5963-Dg4T5BZW-640w.webp 640w, assets/media/portfolio/12-img-5963-Dg4T5BZW-1024w.webp 1024w, assets/media/portfolio/12-img-5963-Dg4T5BZW.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="3104" loading="lazy" decoding="async" class="evolution-photo" alt="Павел Марков — Рождение Мафии">
                                     </div>
                                     <div class="p-6 md:p-10 flex flex-col justify-center">
                                         <p class="font-sans text-dim text-sm md:text-base leading-loose">Путь начался не с поддержки, а с вызова. В 13 — первый бизнес на дропшиппинге и создание ЗОЖ-движения в поселке. В 14 — профессиональный футбол и вызов в сборную, который обернулся жестким уроком: травля, коррупция и травма закрыли двери в большой спорт. Но именно это «непризнание» сверстниками заставило уйти в глубокое саморазвитие. Зал стал храмом, а личный бренд Young Athlete — манифестом силы. Так родилась Markov Made Mafia.</p>
@@ -1711,8 +1729,8 @@
                             <div>
                                 <div class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-0 border-t border-white/5">
                                     <div class="grid grid-cols-2 gap-0 overflow-hidden">
-                                        <img src="assets/media/portfolio/13-img-5973-hRYJfLdp.webp" srcset="assets/media/portfolio/13-img-5973-hRYJfLdp-320w.webp 320w, assets/media/portfolio/13-img-5973-hRYJfLdp-640w.webp 640w, assets/media/portfolio/13-img-5973-hRYJfLdp-1024w.webp 1024w, assets/media/portfolio/13-img-5973-hRYJfLdp.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/13-img-5973-hRYJfLdp-320w.webp 320w, assets/media/portfolio/13-img-5973-hRYJfLdp-640w.webp 640w, assets/media/portfolio/13-img-5973-hRYJfLdp-1024w.webp 1024w, assets/media/portfolio/13-img-5973-hRYJfLdp.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="908" loading="lazy" decoding="async" class="evolution-photo border-r border-white/5" alt="Павел Марков — Взлет и Признание">
-                                        <img src="assets/media/portfolio/14-img-5975-Q7422PZw.webp" srcset="assets/media/portfolio/14-img-5975-Q7422PZw-320w.webp 320w, assets/media/portfolio/14-img-5975-Q7422PZw-640w.webp 640w, assets/media/portfolio/14-img-5975-Q7422PZw-1024w.webp 1024w, assets/media/portfolio/14-img-5975-Q7422PZw.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/14-img-5975-Q7422PZw-320w.webp 320w, assets/media/portfolio/14-img-5975-Q7422PZw-640w.webp 640w, assets/media/portfolio/14-img-5975-Q7422PZw-1024w.webp 1024w, assets/media/portfolio/14-img-5975-Q7422PZw.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="1608" loading="lazy" decoding="async" class="evolution-photo" alt="Павел Марков — Взлет и Признание">
+                                        <img src="assets/media/portfolio/13-img-5973-hRYJfLdp.webp" srcset="assets/media/portfolio/13-img-5973-hRYJfLdp-320w.webp 320w, assets/media/portfolio/13-img-5973-hRYJfLdp-640w.webp 640w, assets/media/portfolio/13-img-5973-hRYJfLdp-1024w.webp 1024w, assets/media/portfolio/13-img-5973-hRYJfLdp.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="908" loading="lazy" decoding="async" class="evolution-photo border-r border-white/5" alt="Павел Марков — Взлет и Признание">
+                                        <img src="assets/media/portfolio/14-img-5975-Q7422PZw.webp" srcset="assets/media/portfolio/14-img-5975-Q7422PZw-320w.webp 320w, assets/media/portfolio/14-img-5975-Q7422PZw-640w.webp 640w, assets/media/portfolio/14-img-5975-Q7422PZw-1024w.webp 1024w, assets/media/portfolio/14-img-5975-Q7422PZw.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="1608" loading="lazy" decoding="async" class="evolution-photo" alt="Павел Марков — Взлет и Признание">
                                     </div>
                                     <div class="p-6 md:p-10 flex flex-col justify-center">
                                         <p class="font-sans text-dim text-sm md:text-base leading-loose">Жажда масштаба. Время проверки амбиций на прочность. Победы в бодибилдинге, переезд в Петербург в 18 лет и работа в крупнейшей сети Sport Life. Исследование жизни во всех проявлениях: от медицины и маркетинга до участия в «Дом-2». Запуск стоматологической клиники и кальянного бизнеса. В 20 лет — пик медийности, накопления в 5.5 млн и ощущение, что мир принадлежит тебе. Но это была лишь подготовка к главному экзамену.</p>
@@ -1734,8 +1752,8 @@
                             <div>
                                 <div class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-0 border-t border-white/5">
                                     <div class="grid grid-cols-2 gap-0 overflow-hidden">
-                                        <img src="assets/media/portfolio/15-img-5979-mZLXhnK.webp" srcset="assets/media/portfolio/15-img-5979-mZLXhnK-320w.webp 320w, assets/media/portfolio/15-img-5979-mZLXhnK-640w.webp 640w, assets/media/portfolio/15-img-5979-mZLXhnK-1024w.webp 1024w, assets/media/portfolio/15-img-5979-mZLXhnK.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/15-img-5979-mZLXhnK-320w.webp 320w, assets/media/portfolio/15-img-5979-mZLXhnK-640w.webp 640w, assets/media/portfolio/15-img-5979-mZLXhnK-1024w.webp 1024w, assets/media/portfolio/15-img-5979-mZLXhnK.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="2400" loading="lazy" decoding="async" class="evolution-photo border-r border-white/5" alt="Павел Марков — Перерождение">
-                                        <img src="assets/media/portfolio/16-img-6006-0RxhWJjp.webp" srcset="assets/media/portfolio/16-img-6006-0RxhWJjp-320w.webp 320w, assets/media/portfolio/16-img-6006-0RxhWJjp-640w.webp 640w, assets/media/portfolio/16-img-6006-0RxhWJjp-1024w.webp 1024w, assets/media/portfolio/16-img-6006-0RxhWJjp.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/16-img-6006-0RxhWJjp-320w.webp 320w, assets/media/portfolio/16-img-6006-0RxhWJjp-640w.webp 640w, assets/media/portfolio/16-img-6006-0RxhWJjp-1024w.webp 1024w, assets/media/portfolio/16-img-6006-0RxhWJjp.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="1200" loading="lazy" decoding="async" class="evolution-photo" alt="Павел Марков — Перерождение">
+                                        <img src="assets/media/portfolio/15-img-5979-mZLXhnK.webp" srcset="assets/media/portfolio/15-img-5979-mZLXhnK-320w.webp 320w, assets/media/portfolio/15-img-5979-mZLXhnK-640w.webp 640w, assets/media/portfolio/15-img-5979-mZLXhnK-1024w.webp 1024w, assets/media/portfolio/15-img-5979-mZLXhnK.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="2400" loading="lazy" decoding="async" class="evolution-photo border-r border-white/5" alt="Павел Марков — Перерождение">
+                                        <img src="assets/media/portfolio/16-img-6006-0RxhWJjp.webp" srcset="assets/media/portfolio/16-img-6006-0RxhWJjp-320w.webp 320w, assets/media/portfolio/16-img-6006-0RxhWJjp-640w.webp 640w, assets/media/portfolio/16-img-6006-0RxhWJjp-1024w.webp 1024w, assets/media/portfolio/16-img-6006-0RxhWJjp.webp 1600w" sizes="(max-width: 768px) 100vw, 50vw" width="1600" height="1200" loading="lazy" decoding="async" class="evolution-photo" alt="Павел Марков — Перерождение">
                                     </div>
                                     <div class="p-6 md:p-10 flex flex-col justify-center">
                                         <p class="font-sans text-dim text-sm md:text-base leading-loose">Момент, когда рушится всё. Предательство близкого друга и партнера оставило с долгами в 1.5 млн и разбитыми смыслами. Продажа всех активов, уход из соцсетей и тяжелая депрессия. Выходом стал тотальный побег — переезд в Китай. Год в другой культуре, изучение языка, модельные контракты и призовые места на международных турнирах стали духовным монастырем, где личность была собрана заново из осколков.</p>
@@ -1757,8 +1775,8 @@
                             <div>
                                 <div class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-0 border-t border-white/5">
                                     <div class="grid grid-cols-2 gap-0 overflow-hidden">
-                                        <img src="assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H.webp" srcset="assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H-320w.webp 320w, assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H-640w.webp 640w, assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H-1024w.webp 1024w, assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H.webp 1280w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H-320w.webp 320w, assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H-640w.webp 640w, assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H-1024w.webp 1024w, assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H.webp 1280w" sizes="(max-width: 768px) 100vw, 50vw" width="1280" height="772" loading="lazy" decoding="async" class="evolution-photo border-r border-white/5" alt="Павел Марков — Архитектура Смыслов">
-                                        <img src="assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh.webp" srcset="assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh-320w.webp 320w, assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh-640w.webp 640w, assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh-1024w.webp 1024w, assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh.webp 1280w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh-320w.webp 320w, assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh-640w.webp 640w, assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh-1024w.webp 1024w, assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh.webp 1280w" sizes="(max-width: 768px) 100vw, 50vw" width="1280" height="854" loading="lazy" decoding="async" class="evolution-photo" alt="Павел Марков — Архитектура Смыслов">
+                                        <img src="assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H.webp" srcset="assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H-320w.webp 320w, assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H-640w.webp 640w, assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H-1024w.webp 1024w, assets/media/portfolio/17-photo-2024-05-04-22-11-21-B27ys88H.webp 1280w" sizes="(max-width: 768px) 100vw, 50vw" width="1280" height="772" loading="lazy" decoding="async" class="evolution-photo border-r border-white/5" alt="Павел Марков — Архитектура Смыслов">
+                                        <img src="assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh.webp" srcset="assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh-320w.webp 320w, assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh-640w.webp 640w, assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh-1024w.webp 1024w, assets/media/portfolio/18-photo-2022-05-14-20-50-41-pDnCyZh.webp 1280w" sizes="(max-width: 768px) 100vw, 50vw" width="1280" height="854" loading="lazy" decoding="async" class="evolution-photo" alt="Павел Марков — Архитектура Смыслов">
                                     </div>
                                     <div class="p-6 md:p-10 flex flex-col justify-center">
                                         <p class="font-sans text-dim text-sm md:text-base leading-loose">Возвращение в Россию с новым фундаментом. Запуск агентства BrandYouMade и погружение в психологию, продажи и маркетинг. От руководящих постов в недвижимости Сочи до выступления на BlockChain Life перед 12 000 человек. Это период синтеза: когда умение вести переговоры и управлять персоналом соединилось с глубоким пониманием человеческой природы и маркетинга.</p>
@@ -1780,8 +1798,8 @@
                             <div>
                                 <div class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-0 border-t border-white/5">
                                     <div class="grid grid-cols-2 gap-0 overflow-hidden">
-                                        <img src="assets/media/portfolio/19-img-5946-wFxj5S7G.webp" srcset="assets/media/portfolio/19-img-5946-wFxj5S7G-320w.webp 320w, assets/media/portfolio/19-img-5946-wFxj5S7G-640w.webp 640w, assets/media/portfolio/19-img-5946-wFxj5S7G-1024w.webp 1024w, assets/media/portfolio/19-img-5946-wFxj5S7G.webp 1533w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/19-img-5946-wFxj5S7G-320w.webp 320w, assets/media/portfolio/19-img-5946-wFxj5S7G-640w.webp 640w, assets/media/portfolio/19-img-5946-wFxj5S7G-1024w.webp 1024w, assets/media/portfolio/19-img-5946-wFxj5S7G.webp 1533w" sizes="(max-width: 768px) 100vw, 50vw" width="1533" height="2462" loading="lazy" decoding="async" class="evolution-photo border-r border-white/5" alt="Павел Марков — MARKOVMAFIA">
-                                        <img src="assets/media/portfolio/20-img-2494-fd59hkd3.webp" srcset="assets/media/portfolio/20-img-2494-fd59hkd3-320w.webp 320w, assets/media/portfolio/20-img-2494-fd59hkd3-640w.webp 640w, assets/media/portfolio/20-img-2494-fd59hkd3-1024w.webp 1024w, assets/media/portfolio/20-img-2494-fd59hkd3.webp 1126w" sizes="(max-width: 768px) 100vw, 50vw" srcset="assets/media/portfolio/20-img-2494-fd59hkd3-320w.webp 320w, assets/media/portfolio/20-img-2494-fd59hkd3-640w.webp 640w, assets/media/portfolio/20-img-2494-fd59hkd3-1024w.webp 1024w, assets/media/portfolio/20-img-2494-fd59hkd3.webp 1126w" sizes="(max-width: 768px) 100vw, 50vw" width="1126" height="1512" loading="lazy" decoding="async" class="evolution-photo" alt="Павел Марков — MARKOVMAFIA">
+                                        <img src="assets/media/portfolio/19-img-5946-wFxj5S7G.webp" srcset="assets/media/portfolio/19-img-5946-wFxj5S7G-320w.webp 320w, assets/media/portfolio/19-img-5946-wFxj5S7G-640w.webp 640w, assets/media/portfolio/19-img-5946-wFxj5S7G-1024w.webp 1024w, assets/media/portfolio/19-img-5946-wFxj5S7G.webp 1533w" sizes="(max-width: 768px) 100vw, 50vw" width="1533" height="2462" loading="lazy" decoding="async" class="evolution-photo border-r border-white/5" alt="Павел Марков — MARKOVMAFIA">
+                                        <img src="assets/media/portfolio/20-img-2494-fd59hkd3.webp" srcset="assets/media/portfolio/20-img-2494-fd59hkd3-320w.webp 320w, assets/media/portfolio/20-img-2494-fd59hkd3-640w.webp 640w, assets/media/portfolio/20-img-2494-fd59hkd3-1024w.webp 1024w, assets/media/portfolio/20-img-2494-fd59hkd3.webp 1126w" sizes="(max-width: 768px) 100vw, 50vw" width="1126" height="1512" loading="lazy" decoding="async" class="evolution-photo" alt="Павел Марков — MARKOVMAFIA">
                                     </div>
                                     <div class="p-6 md:p-10 flex flex-col justify-center">
                                         <p class="font-sans text-dim text-sm md:text-base leading-loose">Пройдя через иллюзию комфорта, финансовые штормы и токсичные связи, я пришел к моменту истины. Опыт жизни стал финальным фрагментом пазла: я научился не просто смотреть, а видеть суть людей. Сегодня мой путь — это не погоня за атрибутами, а создание «Цифровых монументов» — наследия, которое останется после.<br><br>Я больше не строю бизнес — я строю экосистему осознанности. Мой статус Амбассадора и преданный шпиц рядом — это фундамент новой, честной реальности. Старое не стерто — оно переплавлено в золото высшей пробы.</p>
@@ -1794,7 +1812,7 @@
             </div>
         </section>
 
-        <section id="principles" class="section-block relative py-24 md:py-36 bg-obsidian text-platinum overflow-hidden" data-insight="Внешность привлекает. Принципы удерживают.">
+        <section id="principles" class="section-block relative py-24 md:py-36 bg-obsidian text-platinum overflow-hidden">
             <div class="absolute inset-0 abstract-bg opacity-30 pointer-events-none"></div>
             <div class="container mx-auto px-6 md:px-12 relative z-10">
                 <div class="text-center max-w-4xl mx-auto mb-28 fade-in-up">
@@ -1877,7 +1895,7 @@
         <!-- BIOGRAPHY -->
 
 
-<section id="team" class="section-block relative py-20 bg-obsidian overflow-hidden" data-insight="Сила в окружении. Результат в дисциплине.">
+<section id="team" class="section-block relative py-20 bg-obsidian overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gold/20 to-transparent"></div>
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,_rgba(var(--color-gold),0.03),_transparent_70%)] pointer-events-none transition-colors duration-500"></div>
 
@@ -1919,31 +1937,31 @@
                 </div>
 
 
-<div id="request-quiz" class="mm-v13-quiz mm-v17-quiz mm-v18-final-cta fade-in-up">
+<div id="request-quiz" class="mm-editorial-quiz mm-editorial-flow-quiz mm-editorial-detail-final-cta fade-in-up">
   <h3>Соберите заявку за 7 секунд</h3>
   <p>Отметьте цель и главный стопор — я получу контекст, а вы сразу перейдёте от размышлений к первому действию.</p>
-  <div class="mm-v13-quiz-label">Главная цель</div>
-  <div class="mm-v13-quiz-grid" data-quiz-group="goal">
-    <button type="button" class="mm-v13-option interactive" data-value="снизить вес">снизить вес</button>
-    <button type="button" class="mm-v13-option interactive" data-value="набрать мышцы">набрать мышцы</button>
-    <button type="button" class="mm-v13-option interactive" data-value="вернуть режим">вернуть режим</button>
-    <button type="button" class="mm-v13-option interactive" data-value="наладить питание">наладить питание</button>
-    <button type="button" class="mm-v13-option interactive" data-value="собрать дисциплину">собрать дисциплину</button>
-    <button type="button" class="mm-v13-option interactive" data-value="понять формат">понять формат</button>
+  <div class="mm-editorial-quiz-label">Главная цель</div>
+  <div class="mm-editorial-quiz-grid" data-quiz-group="goal">
+    <button type="button" class="mm-editorial-option interactive" data-value="снизить вес">снизить вес</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="набрать мышцы">набрать мышцы</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="вернуть режим">вернуть режим</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="наладить питание">наладить питание</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="собрать дисциплину">собрать дисциплину</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="понять формат">понять формат</button>
   </div>
-  <div class="mm-v13-quiz-label">Что мешает</div>
-  <div class="mm-v13-quiz-grid" data-quiz-group="blocker">
-    <button type="button" class="mm-v13-option interactive" data-value="вес стоит">вес стоит</button>
-    <button type="button" class="mm-v13-option interactive" data-value="срывы">срывы</button>
-    <button type="button" class="mm-v13-option interactive" data-value="мало энергии">мало энергии</button>
-    <button type="button" class="mm-v13-option interactive" data-value="нет плана">нет плана</button>
-    <button type="button" class="mm-v13-option interactive" data-value="есть ограничения">есть ограничения</button>
-    <button type="button" class="mm-v13-option interactive" data-value="нехватка времени">нехватка времени</button>
+  <div class="mm-editorial-quiz-label">Что мешает</div>
+  <div class="mm-editorial-quiz-grid" data-quiz-group="blocker">
+    <button type="button" class="mm-editorial-option interactive" data-value="вес стоит">вес стоит</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="срывы">срывы</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="мало энергии">мало энергии</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="нет плана">нет плана</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="есть ограничения">есть ограничения</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="нехватка времени">нехватка времени</button>
   </div>
-  <div class="mm-v13-quiz-result" id="quiz-summary">Отметьте пункты выше — и заявка станет конкретной.</div>
-  <div class="mm-v13-cta-row" style="justify-content:center;margin-top:20px">
-    <a id="quiz-telegram-link" href="https://t.me/markovmade?text=Здравствуйте!%20Хочу%20разобрать%20мою%20ситуацию%20и%20понять%20формат%20работы%20MARKOVMADE." target="_blank" rel="noopener noreferrer" class="mm-v13-cta interactive" data-analytics="v17_quiz_telegram">Отправить заявку в Telegram</a>
-    <a href="https://wa.me/79819722516" target="_blank" rel="noopener noreferrer" class="mm-v13-cta secondary interactive" data-analytics="v17_quiz_whatsapp">Написать в WhatsApp</a>
+  <div class="mm-editorial-quiz-result" id="quiz-summary">Отметьте пункты выше — и заявка станет конкретной.</div>
+  <div class="mm-editorial-cta-row" style="justify-content:center;margin-top:20px">
+    <a id="quiz-telegram-link" href="https://t.me/markovmade?text=Здравствуйте!%20Хочу%20разобрать%20мою%20ситуацию%20и%20понять%20формат%20работы%20MARKOVMADE." target="_blank" rel="noopener noreferrer" class="mm-editorial-cta interactive" data-analytics="v17_quiz_telegram">Отправить заявку в Telegram</a>
+    <a href="https://wa.me/79819722516" target="_blank" rel="noopener noreferrer" class="mm-editorial-cta secondary interactive" data-analytics="v17_quiz_whatsapp">Написать в WhatsApp</a>
   </div>
 </div>
 
@@ -2072,24 +2090,24 @@
 
 
 
-<section id="quick-faq" class="mm-v13-section mm-v18-faq py-14 md:py-18" data-insight="Коротко закрываем главные сомнения перед заявкой.">
-  <div class="mm-v13-inner">
-    <div class="mm-v13-head mm-v18-compact-head fade-in-up">
-      <span class="mm-v13-kicker">Коротко перед заявкой</span>
-      <h2 class="mm-v13-title">Короткие <span class="mm-v13-goldline">ответы</span> перед заявкой.</h2>
+<section id="quick-faq" class="mm-editorial-section mm-editorial-detail-faq py-14 md:py-18">
+  <div class="mm-editorial-inner">
+    <div class="mm-editorial-head mm-editorial-detail-compact-head fade-in-up">
+      <span class="mm-editorial-kicker">Коротко перед заявкой</span>
+      <h2 class="mm-editorial-title">Короткие <span class="mm-editorial-goldline">ответы</span> перед заявкой.</h2>
     </div>
-    <div class="mm-v18-faq-grid fade-in-up">
-      <article class="mm-v18-faq-card"><h3>Это только про тренировки?</h3><p>Нет. Я смотрю на тело, питание, режим, восстановление, дисциплину и ограничения — иначе форма быстро упирается в быт.</p></article>
-      <article class="mm-v18-faq-card"><h3>Можно начать без идеальной формы?</h3><p>Да. Разбор как раз нужен, чтобы увидеть старт и первые действия без перегруза.</p></article>
-      <article class="mm-v18-faq-card"><h3>Нужно сразу брать сопровождение?</h3><p>Нет. Сначала можно пройти разбор и понять, какой формат имеет смысл именно под вашу задачу.</p></article>
-      <article class="mm-v18-faq-card"><h3>Если мало времени?</h3><p>Тогда особенно важно собрать план под реальный график, а не под чужую идеальную жизнь.</p></article>
-      <article class="mm-v18-faq-card"><h3>Что я получаю на выходе?</h3><p>Понимание ситуации, первые шаги, точки наблюдения и формат, с которого логично начать.</p></article>
+    <div class="mm-editorial-detail-faq-grid fade-in-up">
+      <article class="mm-editorial-detail-faq-card"><h3>Это только про тренировки?</h3><p>Нет. Я смотрю на тело, питание, режим, восстановление, дисциплину и ограничения — иначе форма быстро упирается в быт.</p></article>
+      <article class="mm-editorial-detail-faq-card"><h3>Можно начать без идеальной формы?</h3><p>Да. Разбор как раз нужен, чтобы увидеть старт и первые действия без перегруза.</p></article>
+      <article class="mm-editorial-detail-faq-card"><h3>Нужно сразу брать сопровождение?</h3><p>Нет. Сначала можно пройти разбор и понять, какой формат имеет смысл именно под вашу задачу.</p></article>
+      <article class="mm-editorial-detail-faq-card"><h3>Если мало времени?</h3><p>Тогда особенно важно собрать план под реальный график, а не под чужую идеальную жизнь.</p></article>
+      <article class="mm-editorial-detail-faq-card"><h3>Что я получаю на выходе?</h3><p>Понимание ситуации, первые шаги, точки наблюдения и формат, с которого логично начать.</p></article>
     </div>
   </div>
 </section>
 
 
-<section id="contact" class="section-block relative w-full py-24 md:py-36 overflow-hidden contact-container" data-insight="Принятое решение — это и есть начало трансформации.">
+<section id="contact" class="section-block relative w-full py-24 md:py-36 overflow-hidden contact-container">
     <div class="absolute inset-0 bg-gradient-to-b from-obsidian to-charcoal transition-colors duration-500"></div>
     <canvas id="gold-dust" class="absolute inset-0 w-full h-full pointer-events-none z-10 opacity-40 mix-blend-screen"></canvas>
 
@@ -2238,15 +2256,15 @@
         </div>
     </div>
 
-<script src="assets/js/lab-models.js"></script>
-<script src="assets/js/app-runtime.js"></script>
+<script defer src="assets/js/lab-models.js"></script>
+<script defer src="assets/js/app-runtime.js"></script>
 
 <script id="markovmade-final-guards">
 (function(){
   function sanitizeNumbers(){
     document.querySelectorAll('#calculators [id$="result"], #calculators .result-shell, #calculators .metric-card, #calculators .macro-grid').forEach(function(node){
-      if (!node || !node.innerHTML) return;
-      node.innerHTML = node.innerHTML.replace(/NaN|Infinity|-Infinity/g, '—');
+      if (!node || !/NaN|-?Infinity/.test(node.textContent || '')) return;
+      node.innerHTML = node.innerHTML.replace(/NaN|-?Infinity/g, '—');
     });
   }
   window.addEventListener('DOMContentLoaded', function(){
@@ -2485,8 +2503,8 @@
 
     function sanitizeResults(){
         $all('#calculators .result-shell, #calculators .metric-card, #calculators .macro-grid, #calculators [id$="result"]').forEach(function(node){
-            if (!node || !node.innerHTML) return;
-            node.innerHTML = node.innerHTML.replace(/NaN|Infinity|-Infinity/g, '—');
+            if (!node || !/NaN|-?Infinity/.test(node.textContent || '')) return;
+            node.innerHTML = node.innerHTML.replace(/NaN|-?Infinity/g, '—');
         });
     }
 
@@ -2531,9 +2549,6 @@
         initCalcTabs();
         sanitizeResults();
         audit();
-        setTimeout(unlockScroll, 150);
-        setTimeout(function(){ sanitizeResults(); audit(); unlockScroll(); }, 900);
-        setTimeout(function(){ sanitizeResults(); audit(); unlockScroll(); }, 2200);
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
@@ -2584,7 +2599,7 @@
     function updateThemeColor(){
         var meta = $('#theme-color-meta');
         if (!meta) return;
-        var colors = {'aurum-noir':'#080807','ivory-atelier':'#f1ede4','imperial-emerald':'#08100d','oxblood-atelier':'#10090b','titanium-midnight':'#090d12','mono-access':'#000000'};
+        var colors = {'aurum-noir':'#080807','event-horizon':'#070b14'};
         meta.setAttribute('content', colors[document.documentElement.dataset.theme] || '#080807');
     }
 
@@ -2896,7 +2911,7 @@
 
 
 
-<script id="markovmade-v13-quiz-js">
+<script id="markovmade-situation-quiz">
 (function(){
   'use strict';
   var EN_VALUE = {
@@ -2926,7 +2941,7 @@
     var summary=document.getElementById('quiz-summary');
     var tg=document.getElementById('quiz-telegram-link');
     function collect(group){
-      return Array.prototype.slice.call(root.querySelectorAll('[data-quiz-group="'+group+'"] .mm-v13-option.active')).map(function(btn){
+      return Array.prototype.slice.call(root.querySelectorAll('[data-quiz-group="'+group+'"] .mm-editorial-option.active')).map(function(btn){
         var raw=(btn.getAttribute('data-value')||btn.textContent||'').trim();
         return formatValue(raw);
       });
@@ -2947,15 +2962,15 @@
         var line = en
           ? 'Request context: goal — '+(goals.length?goals.join(', '):emptyGoal)+'; main blocker — '+(blockers.length?blockers.join(', '):emptyBlocker)+'.'
           : 'Контекст заявки: цель — '+(goals.length?goals.join(', '):emptyGoal)+'; главный стопор — '+(blockers.length?blockers.join(', '):emptyBlocker)+'.';
-        summary.classList.toggle('mm-v18-quiz-ready', !!ready);
+        summary.classList.toggle('mm-editorial-detail-quiz-ready', !!ready);
         summary.innerHTML = ready
-          ? (en ? '<b>Your details are ready.</b><span class="mm-v18-thank-note">Now send them in Telegram — so I can reply based on your actual situation, not with generic advice.</span><span class="mm-v18-thank-note">'+line+'</span>' : '<b>Вводные собраны.</b><span class="mm-v18-thank-note">Теперь отправьте их в Telegram — так я отвечу не общими словами, а по вашей ситуации.</span><span class="mm-v18-thank-note">'+line+'</span>')
+          ? (en ? '<b>Your details are ready.</b><span class="mm-editorial-detail-thank-note">Now send them in Telegram — so I can reply based on your actual situation, not with generic advice.</span><span class="mm-editorial-detail-thank-note">'+line+'</span>' : '<b>Вводные собраны.</b><span class="mm-editorial-detail-thank-note">Теперь отправьте их в Telegram — так я отвечу не общими словами, а по вашей ситуации.</span><span class="mm-editorial-detail-thank-note">'+line+'</span>')
           : line;
       }
       if(tg) { tg.href='https://t.me/markovmade?text='+encodeURIComponent(text); tg.textContent = en ? 'Send to Pavel' : 'Отправить Павлу'; }
     }
     window.mmV13QuizUpdate = update;
-    root.querySelectorAll('.mm-v13-option').forEach(function(btn){
+    root.querySelectorAll('.mm-editorial-option').forEach(function(btn){
       btn.addEventListener('click',function(){
         btn.classList.toggle('active');
         update();
@@ -2972,7 +2987,7 @@
 </script>
 
 
-<script id="markovmade-v17-analytics-hooks">
+<script id="markovmade-analytics-hooks">
 (function(){
   'use strict';
   window.mmTrack = window.mmTrack || function(eventName, payload){
@@ -2990,10 +3005,10 @@
 })();
 </script>
 
-<script id="markovmade-bilingual-script" src="assets/js/i18n.js"></script>
+<script id="markovmade-bilingual-script" src="assets/js/i18n.js" defer></script>
 
 
-<script type="application/ld+json" id="markovmade-v18-faq-schema">
+<script type="application/ld+json" id="markovmade-faq-schema">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -3006,7 +3021,7 @@
   ]
 }
 </script>
-<script id="markovmade-v18-product-analytics-and-preflight">
+<script id="markovmade-product-preflight">
 (function(){
   'use strict';
   var oldTrack = window.mmTrack;
@@ -3043,7 +3058,7 @@
 
 
 
-<script id="markovmade-v19-final-preflight">
+<script id="markovmade-site-preflight">
 (function(){
   function track(name, params){
     params = params || {};
@@ -3060,14 +3075,14 @@
     if(a.matches('[href*="t.me"], [href*="telegram"]')) track('telegram_click', { cta: label });
     if(a.matches('[href*="wa.me"], [href*="whatsapp"]')) track('whatsapp_click', { cta: label });
     if(a.matches('[data-lang-toggle]')) track('language_switch', { cta: label });
-    if(a.matches('[data-analytics], .mm-v13-cta, .calc-primary-btn, .calc-gold-link')) track('cta_click', { cta: label, id: a.id || '', analytics: a.dataset.analytics || '' });
+    if(a.matches('[data-analytics], .mm-editorial-cta, .calc-primary-btn, .calc-gold-link')) track('cta_click', { cta: label, id: a.id || '', analytics: a.dataset.analytics || '' });
   }, true);
   window.markovmadeTrack = track;
 })();
 </script>
 
 
-<script id="markovmade-v20-service-cues-and-tracking">
+<script id="markovmade-service-interactions">
 (function(){
   function syncAccordionHints(){
     document.querySelectorAll('#services button').forEach(function(btn){
@@ -3084,7 +3099,7 @@
 </script>
 
 
-<script id="markovmade-v21-seo-runtime">
+<script id="markovmade-seo-runtime">
 (function(){
   var SEO_IMAGE = 'https://castefeudal.github.io/markovmade/assets/media/portfolio/01-11-20Z6SwTz.webp';
   function setMeta(selector, value){ var el=document.querySelector(selector); if(el) el.setAttribute('content', value); }
@@ -3103,9 +3118,9 @@
 
 
 
-<script id="markovmade-hero-head-controller-v8" src="assets/js/hero-media.js"></script>
+<script id="markovmade-hero-head-controller" src="assets/js/hero-media.js" defer></script>
 
-<script id="markovmade-v24-product-interactions">
+<script id="markovmade-product-interactions">
 (function () {
     'use strict';
 
@@ -3170,7 +3185,7 @@
 })();
 </script>
 
-<script id="markovmade-direct-telegram-lead-v25">
+<script id="markovmade-telegram-lead">
 (function () {
     'use strict';
     var tgUser = 'markovmade';
@@ -3229,38 +3244,50 @@
 
 <script id="markovmade-corrective-interactions-v31" src="assets/js/site-interactions.js"></script>
 
-<script id="markovmade-post-production-interactions-v32">
+<script defer src="assets/js/theme-system.js"></script>
+<script defer src="assets/js/lab-history.js"></script>
+<script>
+/* Daily LAB code is needed when the user approaches the LAB, not on the first screen. */
 (function(){
-  'use strict';
-  function openAppTab(name, shouldScroll){
-    var tab=document.querySelector('#app-ecosystem [data-app-tab="'+name+'"]');
-    var app=document.getElementById('app-ecosystem');
-    if(tab){ tab.click(); }
-    if(shouldScroll&&app){
-      var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      app.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
-    }
-  }
-  function initIntegratedInsightsNav(){
-    document.querySelectorAll('[data-open-app-tab]').forEach(function(link){
-      if(link.dataset.mmAppRouteReady==='true')return;
-      link.dataset.mmAppRouteReady='true';
-      link.addEventListener('click',function(e){
-        var name=link.getAttribute('data-open-app-tab');
-        if(!name)return;
-        e.preventDefault();
-        openAppTab(name,true);
-        try{history.replaceState(null,'','#'+(name==='insights'?'insights':'app-ecosystem'));}catch(err){}
-      });
+  var pending,ready=false,observer;
+  function loadDaily(){
+    if(pending)return pending;
+    pending=new Promise(function(resolve,reject){
+      var script=document.createElement('script');
+      script.src='assets/js/lab-dashboard.js';
+      script.onload=function(){ready=true;resolve();};
+      script.onerror=function(){reject(new Error('Daily LAB could not load'));};
+      document.body.appendChild(script);
     });
-    if(location.hash==='#insights'){setTimeout(function(){openAppTab('insights',false);},60);}
+    if(observer)observer.disconnect();
+    return pending;
   }
-  function init(){initIntegratedInsightsNav();}
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+  function watch(){
+    var section=document.getElementById('calculators');
+    if(!section)return;
+    if(location.hash==='#calculators'||!('IntersectionObserver' in window)){loadDaily();return;}
+    observer=new IntersectionObserver(function(entries){
+      if(entries.some(function(entry){return entry.isIntersecting;}))loadDaily();
+    },{rootMargin:'1200px 0px'});
+    observer.observe(section);
+    var form=document.getElementById('mm-lab-checkin-form');
+    if(form)form.addEventListener('submit',function(event){
+      if(ready)return;
+      event.preventDefault();event.stopImmediatePropagation();
+      loadDaily().then(function(){form.requestSubmit();});
+    },true);
+    section.addEventListener('click',function(event){
+      if(ready||!event.target.closest('#mm-lab-daily button'))return;
+      var button=event.target.closest('button');
+      event.preventDefault();event.stopImmediatePropagation();
+      loadDaily().then(function(){button.click();});
+    },true);
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',watch,{once:true});else watch();
+  document.addEventListener('pointerdown',function(event){
+    if(event.target.closest('a[href="#calculators"]'))loadDaily();
+  },{passive:true});
 })();
 </script>
-
-<script src="assets/js/theme-system.js"></script>
-<script src="assets/js/lab-history.js"></script>
 </body>
 </html>

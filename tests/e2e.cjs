@@ -6,7 +6,7 @@ const { chromium } = require('playwright');
 const { assertVisualBaseline } = require('./visual-regression.cjs');
 
 const root = path.resolve(__dirname, '..');
-const mime = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.webp':'image/webp','.mp4':'video/mp4','.png':'image/png','.jpg':'image/jpeg','.svg':'image/svg+xml'};
+const mime = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.webp':'image/webp','.avif':'image/avif','.woff2':'font/woff2','.mp4':'video/mp4','.png':'image/png','.jpg':'image/jpeg','.svg':'image/svg+xml'};
 const server = http.createServer((req,res) => {
   let pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
   if (pathname === '/') pathname = '/index.html';
@@ -37,18 +37,18 @@ let browser;
   assert.match(await page.locator('#mm-lab-snapshot-empty').textContent(), /состав тела|body composition/i);
   await page.locator('.theme-switch:visible').first().click();
   assert.equal(await page.locator('#mm-theme-dialog').isVisible(), true, `native theme dialog opens; errors: ${runtimeErrors.join(' | ')}`);
-  for (const theme of ['ivory-atelier','imperial-emerald','oxblood-atelier','titanium-midnight','mono-access','aurum-noir']) {
+  for (const theme of ['event-horizon','aurum-noir']) {
     await page.locator(`[data-theme-value="${theme}"]`).click();
     await page.waitForTimeout(180);
     assert.equal(await page.locator('#mm-theme-dialog').isVisible(), false, `dialog closes after selecting ${theme}`);
     assert.equal(await page.locator('html').getAttribute('data-theme'), theme);
     assert.equal(await page.evaluate(() => localStorage.getItem('mm.theme')), theme);
-    if (theme !== 'aurum-noir') await page.locator('.theme-switch').first().click();
+    if (theme !== 'aurum-noir') await page.locator('.theme-switch:visible').first().click();
   }
 
-  await page.locator('.theme-switch').first().click();
-  await page.locator('[data-theme-value="imperial-emerald"]').hover();
-  assert.equal(await page.locator('html').getAttribute('data-theme'), 'imperial-emerald', 'hover previews without saving');
+  await page.locator('.theme-switch:visible').first().click();
+  await page.locator('[data-theme-value="event-horizon"]').hover();
+  assert.equal(await page.locator('html').getAttribute('data-theme'), 'event-horizon', 'hover previews without saving');
   await page.keyboard.press('Escape');
   assert.equal(await page.locator('html').getAttribute('data-theme'), 'aurum-noir', 'Escape restores the committed theme');
   assert.equal(await page.evaluate(() => localStorage.getItem('mm.theme')), 'aurum-noir', 'preview is not persisted');
@@ -63,8 +63,16 @@ let browser;
   await page.locator('.lang-switch:not(.lang-switch-mobile):not(.lang-switch-menu)').evaluate(button => button.click());
   assert.equal(await page.locator('html').getAttribute('lang'), 'ru');
 
+  assert.equal(await page.locator('#mm-checkin-maintenance').isVisible(),true,'daily LAB surface explains when adaptive maintenance becomes available');
+  await page.locator('#mm-checkin-weight').fill('99.8');
+  await page.locator('#mm-checkin-energy').fill('7');
+  await page.locator('#mm-lab-checkin-form button[type="submit"]').click();
+  assert.match(await page.locator('#mm-checkin-status').textContent(),/сохранён локально/);
+  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-daily-v1')).length),1,'daily check-in is stored on device');
+  assert.match(await page.locator('#mm-checkin-summary').textContent(),/1 из 7 дней/);
+
   await page.locator('#lab-body-sex').selectOption('male');
-  await page.locator('#lab-body-age').fill('29');
+  assert.equal(await page.locator('#lab-body-age').count(), 0, 'body composition must not request age when the selected model does not use it');
   await page.locator('#lab-body-height').fill('188');
   await page.locator('#lab-body-weight').fill('100');
   await page.locator('#lab-body-bf').fill('15');
@@ -73,6 +81,14 @@ let browser;
   assert.match(await page.locator('#lab-body-main').textContent(), /15[,.]0?%/);
   assert.match(await page.locator('[data-confidence="body"]').textContent(), /Выше средней/);
   assert.match(await page.locator('#lab-body-range').textContent(), /сохранено введённое значение 15(?:[,.]0)?%/i, 'measurement method changes confidence without altering user-entered body-fat percent');
+  assert.ok(await page.locator('#mm-lab-snapshot [data-snap="bf"]').isVisible());
+  await page.locator('[data-segment="body-bf-method"] [data-value="tape"]').click();
+  await page.locator('#lab-body-waist').fill('86');
+  await page.locator('#lab-body-neck').fill('');
+  await page.locator('[data-calc="body"]').click();
+  assert.equal(await page.locator('#lab-body-main').textContent(), 'Не оценивается');
+  assert.match(await page.locator('#lab-body-whtr').textContent(), /0[,.]46/);
+  assert.match(await page.locator('#lab-body-method').textContent(), /только WHtR/i);
 
   await page.locator('[data-mm-lab-tab="nutrition"]').click();
   await page.locator('#lab-nutri-sex').selectOption('male');
@@ -95,8 +111,27 @@ let browser;
   assert.ok(higherFat[0] < higherCarb[0], 'higher-fat and higher-carb scenarios produce distinct distributions');
   assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('markovmade-lab-v1')).nutrition.macroScenario), 'higher-fat', 'macro preference is stored with the nutrition model');
   assert.ok((maintenance.match(/\d/g) || []).length >= 8, 'nutrition returns a formatted maintenance range');
+  await page.locator('[data-mode-switch="nutrition"] [data-mode="calibrated"]').click();
+  await page.locator('#lab-nutri-calibration-weights').fill(Array(13).fill('80').join('\n'));
+  await page.locator('#lab-nutri-calibration-calories').fill('2800');
+  await page.locator('[data-calc="nutrition"]').click();
+  assert.match(await page.locator('#lab-nutrition-error').textContent(), /ещё 1 день/i, 'calibration does not return high-confidence maintenance before 14 days');
+  await page.locator('#lab-nutri-calibration-weights').fill(Array(14).fill('80').join('\n'));
+  await page.locator('[data-calc="nutrition"]').click();
+  assert.equal(await page.locator('#lab-nutrition-error').textContent(), '');
+  assert.equal(await page.locator('[data-calibration-output]').isVisible(), true);
+  assert.match(await page.locator('#lab-nutri-tdee-method').textContent(), /14–28 дней/);
+  assert.equal(await page.evaluate(() => JSON.parse(localStorage.getItem('markovmade-lab-v1')).nutrition.calibrationInput.weights.length), 14, 'calibration inputs are retained locally with the model');
+  await page.locator('[data-mode-switch="nutrition"] [data-mode="quick"]').click();
+  assert.equal(await page.locator('[data-calibration-output]').isVisible(), false, 'switching away from calibrated mode hides the model comparison');
   assert.equal(await page.locator('#mm-lab-snapshot').isVisible(), true);
-  assert.ok(await page.locator('#mm-lab-snapshot [data-snap="bf"]').isVisible());
+  await page.evaluate(()=>{const now=new Date();const entries=Array.from({length:14},(_,index)=>{const day=new Date(now);day.setDate(day.getDate()-(13-index));return {date:`${day.getFullYear()}-${String(day.getMonth()+1).padStart(2,'0')}-${String(day.getDate()).padStart(2,'0')}`,weight:80-index*.04,waist:82-index*.03,energy:7,calories:2700,adherence:90}});localStorage.setItem('markovmade-lab-daily-v1',JSON.stringify(entries));});
+  await page.locator('[data-checkin-period="14"]').click();
+  assert.equal(await page.locator('#mm-checkin-use-calibration').isVisible(),true,'14 consecutive paired days unlock adaptive maintenance');
+  assert.match(await page.locator('#mm-checkin-maintenance').textContent(),/Наблюдаемое поддержание/);
+  await page.locator('#mm-checkin-use-calibration').click();
+  assert.equal(await page.locator('#lab-nutri-calibration-weights').inputValue().then(value=>value.trim().split('\n').length),14,'check-in data transfers to Nutrition');
+  assert.match(await page.locator('#lab-nutri-calibration-weights').inputValue(),/79\.48/);
   assert.ok(await page.locator('#mm-lab-snapshot [data-snap="tdee"]').isVisible());
 
   await page.locator('[data-mm-lab-tab="overfeeding"]').click();
@@ -117,14 +152,41 @@ let browser;
   await page.locator('[data-calc="recovery"]').click();
   assert.match(await page.locator('#lab-rec-main').textContent(), /17\s*\/\s*100/, 'low readiness fixture returns the expected weighted score');
   assert.match(await page.locator('#lab-rec-status').textContent(), /Ресурс низкий/);
+  await page.locator('[data-mode-switch="recovery"] [data-mode="pro"]').click();
+  await page.locator('#lab-rec-rhr').fill('58'); await page.locator('#lab-rec-hrv').fill('52');
+  await page.locator('[data-calc="recovery"]').click();
+  assert.match(await page.locator('#lab-rec-baseline').textContent(), /1\s*\/\s*14/, 'recovery clearly reports that personal baseline is still forming');
+  assert.ok(await page.locator('#lab-rec-breakdown .mm-lab-metric').count() >= 6, 'readiness output explains score contributions');
 
   await page.locator('[data-mm-lab-tab="progress"]').click();
   const today = new Date(); const start = new Date(today); start.setDate(start.getDate()-14);
   const iso = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
   for (const [id,value] of [['lab-prog-start-date',iso(start)],['lab-prog-end-date',iso(today)],['lab-prog-start-weight','100'],['lab-prog-current-weight','99'],['lab-prog-start-waist','90'],['lab-prog-current-waist','89']]) await page.locator('#'+id).fill(value);
+  await page.locator('[data-mode-switch="progress"] [data-mode="pro"]').click();
+  const weights=[90,89.9,89.8,92,89.6,89.5,89.4,89.3,89.2,89.1,89,88.9,88.8,88.7];
+  await page.locator('#lab-prog-daily').fill(weights.join(', '));
+  await page.locator('#lab-prog-adherence').fill('90');
   await page.locator('[data-calc="progress"]').click();
   assert.equal(await page.locator('#lab-progress-error').textContent(), '');
   assert.notEqual(await page.locator('#lab-prog-main').textContent(), '—');
+  assert.equal(await page.locator('#lab-prog-outliers label').count(), 1, 'isolated spike is surfaced for review');
+  await page.locator('#lab-prog-outliers input').uncheck();
+  const progressState=await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-v1')).progress);
+  assert.equal(progressState.dailyWeights.length,weights.length,'outlier choice never deletes raw readings');
+  assert.equal(progressState.outlierChoices[3],'exclude');
+  await page.locator('#lab-e1rm-exercise').selectOption({label:'Жим лёжа'});
+  await page.locator('#lab-e1rm-load').fill('80'); await page.locator('#lab-e1rm-reps').fill('5');
+  await page.locator('#lab-e1rm-calculate').click();
+  assert.match(await page.locator('#lab-e1rm-result').textContent(),/e1RM ≈ 91,7 кг.*уверенность: Умеренная/);
+  assert.match(await page.locator('#lab-e1rm-load-plan').textContent(),/70% ≈ .*80% ≈ .*90% ≈/,'rounded training load references follow e1RM');
+  await page.locator('.lang-switch:not(.lang-switch-mobile):not(.lang-switch-menu)').evaluate(button => button.click());
+  await page.waitForFunction(() => document.documentElement.lang === 'en' && document.querySelector('#lab-e1rm-title')?.textContent.includes('Strength reference'));
+  assert.match(await page.locator('#lab-e1rm-result').textContent(),/confidence: Moderate/,'dynamic e1RM output is translated to English');
+  assert.match(await page.locator('#lab-rec-baseline').textContent(),/Baseline forming.*quality days/,'dynamic recovery baseline is translated to English');
+  await page.locator('.lang-switch:not(.lang-switch-mobile):not(.lang-switch-menu)').evaluate(button => button.click());
+  await page.waitForFunction(() => document.documentElement.lang === 'ru' && document.querySelector('#lab-e1rm-title')?.textContent.includes('Силовой ориентир'));
+  await page.locator('#lab-e1rm-calculate').click();
+  assert.match(await page.locator('#lab-e1rm-result').textContent(),/\+0,0 кг к предыдущей записи/,'same-lift estimates expose a local trend');
 
   await page.locator('[data-mm-lab-tab="strategy"]').click();
   await page.locator('[data-calc="strategy"]').click();
@@ -141,7 +203,7 @@ let browser;
   assert.notEqual(await page.locator('[data-os-model="readiness"]').textContent(), '—', 'Personal OS readiness comes from the current recovery calculation');
   await page.locator('[data-lab-history-open]').click();
   assert.equal(await page.locator('#mm-lab-history-dialog').isVisible(), true, 'local calculation history opens');
-  assert.equal(await page.locator('#mm-lab-history-list li').count(), 8, 'history stores each calculated snapshot');
+  assert.equal(await page.locator('#mm-lab-history-list li').count(), 12, 'history stores each calculated snapshot');
   const bodyIds = await page.evaluate(() => JSON.parse(localStorage.getItem('markovmade-lab-history-v1')).filter(item => item.tool==='body').map(item=>item.id));
   await page.locator('#mm-lab-history-a').selectOption(bodyIds[0]);
   await page.locator('#mm-lab-history-b').selectOption(bodyIds[1]);
@@ -150,7 +212,7 @@ let browser;
 
   await page.evaluate(() => { localStorage.removeItem('mm.theme'); localStorage.setItem('markov-theme','graphite'); });
   await page.reload({ waitUntil: 'domcontentloaded' });
-  assert.equal(await page.locator('html').getAttribute('data-theme'), 'titanium-midnight', 'legacy graphite choice migrates to the closest new theme');
+  assert.equal(await page.locator('html').getAttribute('data-theme'), 'event-horizon', 'legacy graphite choice migrates to the closest new theme');
   assert.equal(await page.locator('[data-segment="nutri-macro-scenario"] [data-value="higher-fat"]').getAttribute('aria-pressed'), 'true', 'saved macro preference is restored after reload');
   await page.evaluate(() => localStorage.setItem('mm.theme','aurum-noir'));
   await page.reload({ waitUntil: 'domcontentloaded' });
@@ -165,7 +227,8 @@ let browser;
   const restored = page.waitForNavigation({waitUntil:'domcontentloaded'});
   await page.locator('#mm-lab-import-file').setInputFiles({name:backup.suggestedFilename(),mimeType:'application/json',buffer:fs.readFileSync(backupPath)});
   await restored;
-  await page.waitForFunction(() => JSON.parse(localStorage.getItem('markovmade-lab-history-v1') || '[]').length === 8);
+  await page.waitForFunction(() => JSON.parse(localStorage.getItem('markovmade-lab-history-v1') || '[]').length === 12);
+  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-daily-v1')).length),14,'JSON backup restores daily check-ins');
 
   const accordion = page.locator('[onclick="toggleAccordion(this)"]').first();
   await accordion.click();
@@ -192,21 +255,35 @@ let browser;
   assert.deepEqual(overflow, [], 'no horizontal page or hero-heading overflow at tested widths');
   assert.deepEqual(runtimeErrors, [], 'no uncaught page errors');
 
+  const touchPage=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:'reduce'});
+  await touchPage.route(/^https?:\/\/(?!127\.0\.0\.1)/,route=>route.abort());
+  await touchPage.goto(`http://127.0.0.1:${address.port}/`,{waitUntil:'domcontentloaded',timeout:30000});
+  assert.equal(await touchPage.locator('.mm-hero-media').evaluate(node=>node.classList.contains('mm-static-poster')),true,'coarse-pointer devices keep the optimized static hero');
+  assert.equal(await touchPage.locator('#hero-head-video').evaluate(node=>getComputedStyle(node).display),'none','mobile first paint does not decode the decorative video');
+  assert.ok(Number(await touchPage.locator('#hero-head-fallback').evaluate(node=>getComputedStyle(node).opacity))>.1,'mobile poster becomes visible without waiting for the video');
+  assert.equal(await touchPage.locator('.mm-head-swipe-hint').evaluate(node=>getComputedStyle(node).display),'none','touch hero does not advertise disabled video gestures');
+  await touchPage.close();
+
   const visualDir = path.join(root,'test-results','visual');
   fs.mkdirSync(visualDir,{recursive:true});
+  await page.evaluate(()=>{const theme=localStorage.getItem('mm.theme');localStorage.clear();if(theme)localStorage.setItem('mm.theme',theme)});
+  await page.reload({waitUntil:'domcontentloaded'});
+  await page.waitForTimeout(500);
   await page.setViewportSize({width:390,height:844});
   await page.locator('.theme-switch:visible').first().click();
   const pickerShot = path.join(visualDir,'theme-picker-390x844.png');
   await page.locator('#mm-theme-dialog').screenshot({path:pickerShot});
   assertVisualBaseline('theme-picker-390x844.png',pickerShot);
+  await page.setViewportSize({width:1440,height:900});
+  const pickerDesktop=path.join(visualDir,'theme-picker-1440x900.png');
+  await page.locator('#mm-theme-dialog').screenshot({path:pickerDesktop});
+  assertVisualBaseline('theme-picker-1440x900.png',pickerDesktop);
   await page.keyboard.press('Escape');
   const screenshotSizes = viewports;
-  for (const theme of ['aurum-noir','ivory-atelier','imperial-emerald','oxblood-atelier','titanium-midnight','mono-access']) {
+  for (const theme of ['aurum-noir','event-horizon']) {
     await page.evaluate(name => {
       document.documentElement.dataset.theme=name;
-      document.body.classList.toggle('theme-light',name==='ivory-atelier');
-      document.body.classList.toggle('theme-soft',false);
-      document.body.classList.toggle('theme-contrast',name==='mono-access');
+      document.body.classList.toggle('theme-cosmos',name==='event-horizon');
     }, theme);
     await page.evaluate(() => window.scrollTo(0,0));
     for (const [width,height] of screenshotSizes) {
@@ -215,6 +292,7 @@ let browser;
       const shot = path.join(visualDir,`${theme}-hero-${width}x${height}.png`);
       await page.screenshot({path:shot,fullPage:false});
       if (width===390 && height===844) assertVisualBaseline(`${theme}-hero-390x844.png`,shot);
+      if (theme==='aurum-noir' && width===1440 && height===900) assertVisualBaseline('aurum-noir-hero-1440x900.png',shot);
     }
     for (const [width,height] of [[390,844],[1440,900]]) {
       await page.setViewportSize({width,height});
@@ -226,11 +304,29 @@ let browser;
         await page.screenshot({path:shot,fullPage:false});
         if (section==='calculators' && width===390) assertVisualBaseline(`${theme}-lab-390x844.png`,shot);
         if (section==='app-ecosystem' && width===390) assertVisualBaseline(`${theme}-os-390x844.png`,shot);
+        if (theme==='aurum-noir' && section==='calculators' && width===1440) assertVisualBaseline('aurum-noir-lab-1440x900.png',shot);
+        if (theme==='aurum-noir' && section==='app-ecosystem' && width===1440) assertVisualBaseline('aurum-noir-os-1440x900.png',shot);
+      }
+      if(theme==='aurum-noir'&&width===1440){
+        await page.locator('#mm-os-tab-insights').click();
+        await page.locator('#app-ecosystem').scrollIntoViewIfNeeded();
+        const shot=path.join(visualDir,'aurum-noir-insights-1440x900.png');
+        await page.screenshot({path:shot,fullPage:false});
+        assertVisualBaseline('aurum-noir-insights-1440x900.png',shot);
+        await page.locator('#mm-os-tab-today').click();
       }
     }
   }
+  await page.setViewportSize({width:390,height:844});
+  await page.locator('#mm-os-tab-insights').click();
+  assert.equal(await page.locator('#insights .mm-insights-wizard').isVisible(),true,'mobile Insights exposes the three-step navigation');
+  assert.equal(await page.locator('#insights [data-insights-step]').nth(0).isVisible(),true);
+  assert.equal(await page.locator('#insights [data-insights-step]').nth(1).isVisible(),false);
+  await page.locator('#insights .mm-insights-wizard [data-wizard-next]').click();
+  assert.equal(await page.locator('#insights [data-insights-step]').nth(0).isVisible(),false);
+  assert.equal(await page.locator('#insights [data-insights-step]').nth(1).isVisible(),true);
   await browser.close(); browser=null;
   await new Promise(resolve => server.close(resolve));
   fs.mkdirSync(path.join(root,'test-results'),{recursive:true});
-  console.log('Browser QA passed: six theme worlds and preview rollback, RU/EN, body/nutrition/overfeeding/recovery/progress/strategy, summary, privacy, accordions, and 13 exact responsive viewports.');
+  console.log('Browser QA passed: two themes, mobile Insights wizard, no-neck WHtR mode, calculators, history, import/export, and 13 responsive viewports.');
 })().catch(async error => { console.error(error); if(browser) await browser.close().catch(()=>{}); server.close(); process.exitCode=1; });

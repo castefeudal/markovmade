@@ -47,9 +47,69 @@ test('weight trend smoothing and regression return expected daily slope', () => 
 });
 
 test('plateau logic requires sufficient trend data and separates stable from moving trends', () => {
-  assert.equal(model.plateauStatus(Array(7).fill(90), 1, 0, 0), 'Недостаточно данных');
-  assert.equal(model.plateauStatus(Array(14).fill(90), 2, 0, 0), 'Возможен');
+  assert.equal(model.plateauStatus(Array(7).fill(90), 1, 0, 0, 90), 'Недостаточно данных');
+  assert.equal(model.plateauStatus(Array(14).fill(90), 2, 0, 0, 90), 'Возможен');
   const moving = [...Array(7).fill(90), ...Array(7).fill(91)];
-  assert.equal(model.plateauStatus(moving, 2, 1.1, 0), 'Не подтверждается');
-  assert.equal(model.plateauStatus([], 3, 0, 0), 'Возможен');
+  assert.equal(model.plateauStatus(moving, 2, 1.1, 0, 90), 'Не подтверждается');
+  assert.equal(model.plateauStatus(Array(14).fill(90), 2, 0, 0, 60), 'Недостаточно данных');
+  assert.equal(model.plateauStatus([], 3, 0, 0, 90), 'Недостаточно данных');
+});
+
+test('conservative weight outliers are surfaced without mutating raw data and robust trend resists spikes', () => {
+  const raw=[80,79.9,79.8,82,79.6,79.5,79.4];
+  assert.deepEqual(model.detectWeightOutliers(raw).map(item=>item.index),[3]);
+  assert.equal(raw[3],82);
+  near(model.robustDailySlope(raw),-.1,.001);
+  near(model.robustDailySlope(raw,[3]),-.1,.001);
+});
+
+
+test('maintenance calibration requires 14–28 days and reports assumptions and data quality', () => {
+  assert.throws(() => model.maintenanceCalibration(Array(13).fill(80),2800), /14–28/);
+  const stable=model.maintenanceCalibration(Array(14).fill(80),2800,100,90,0);
+  assert.equal(stable.stable,true);
+  near(stable.value,2800,.01);
+  assert.equal(stable.quality,'Хорошая');
+  assert.equal(stable.confidence,'Умеренная');
+  const losing=Array.from({length:21},(_,index)=>80-index*.05);
+  const observed=model.maintenanceCalibration(losing,2800,98,94);
+  assert.ok(observed.value>2800,'weight loss makes observed maintenance higher than intake');
+  assert.match(observed.energyAssumption,/7000–9000/);
+  const sparse=model.maintenanceCalibration(Array(14).fill(80),2800,60,55);
+  assert.equal(sparse.confidence,'Низкая');
+  assert.equal(sparse.quality,'Низкая');
+});
+
+test('e1RM fixtures are bounded by rep count and reduce confidence as reps rise', () => {
+  assert.equal(model.estimate1RM(100,1).value,100);
+  near(model.estimate1RM(100,5).value,114.58,.02);
+  assert.equal(model.estimate1RM(100,5).confidence,'Умеренная');
+  assert.equal(model.estimate1RM(100,10).confidence,'Низкая');
+  assert.throws(()=>model.estimate1RM(100,16),/1–15/);
+  assert.throws(()=>model.estimate1RM(0,5),/positive load/);
+});
+
+test('personal recovery baseline waits for 14 valid paired measurements and uses medians', () => {
+  const entries=Array.from({length:13},(_,i)=>({rhr:55+i%2,hrv:50+i%2}));
+  assert.deepEqual(model.personalRecoveryBaseline(entries),{ready:false,days:13,required:14,rhr:null,hrv:null});
+  const ready=model.personalRecoveryBaseline([...entries,{rhr:70,hrv:20}]);
+  assert.equal(ready.ready,true);
+  assert.equal(ready.days,14);
+  assert.equal(ready.rhr,55.5);
+  assert.equal(ready.hrv,50);
+  assert.equal(model.personalRecoveryBaseline([...entries,{rhr:NaN,hrv:60}]).days,13);
+});
+
+test('daily check-in trends require multiple spaced readings and preserve window boundaries', () => {
+  const entries=Array.from({length:14},(_,index)=>({date:`2026-09-${String(index+17).padStart(2,'0')}`,weight:100-index*.1,waist:90-index*.05,energy:6+index%3,sleep:7}));
+  const first=model.checkinTrends(entries,7,new Date('2026-09-30T12:00:00'));
+  assert.equal(first.count,7);
+  near(first.weight.delta,-.5,.001);
+  assert.equal(first.energy.average>6,true);
+  const wider=model.checkinTrends(entries,14,new Date('2026-09-30T12:00:00'));
+  assert.equal(wider.count,14);
+  assert.ok(wider.weight.delta<first.weight.delta);
+  const sparse=model.checkinTrends(entries.slice(-2),7,new Date('2026-09-30T12:00:00'));
+  assert.equal(sparse.weight.delta,null);
+  assert.throws(()=>model.checkinTrends(entries,10),/7, 14 or 28/);
 });

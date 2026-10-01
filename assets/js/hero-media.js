@@ -1,6 +1,13 @@
 (function () {
     'use strict';
 
+    /* Keep the authored poster as the mobile hero: frame extraction is desktop-only and not part of first paint. */
+    if (window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches) {
+        var staticHero = document.querySelector('.mm-hero-media');
+        if (staticHero) staticHero.classList.add('mm-static-poster');
+        return;
+    }
+
     function initMarkovmadeHeroHead2Natural() {
         var hero = document.getElementById('hero');
         var media = hero ? hero.querySelector('.mm-hero-media') : null;
@@ -16,6 +23,7 @@
         video.defaultMuted = true;
         video.playsInline = true;
         video.controls = false;
+        video.preload = 'metadata';
 
         var settings = {
             referenceDuration: 8.041667,
@@ -301,7 +309,7 @@
             decoder.preload = 'metadata';
             decoder.disablePictureInPicture = true;
             decoder.src = video.currentSrc ||
-                ((video.querySelector('source') && video.querySelector('source').src) || './hero-head2.mp4');
+                ((video.querySelector('source') && video.querySelector('source').src) || 'assets/media/hero-head2.mp4');
             decoder.style.cssText = 'position:fixed;width:2px;height:2px;opacity:0;pointer-events:none;left:-10px;bottom:-10px;';
             document.body.appendChild(decoder);
 
