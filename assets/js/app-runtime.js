@@ -517,13 +517,12 @@
                     const breakdown=document.createElement('div');breakdown.id='lab-rec-breakdown';breakdown.className='mm-lab-metrics';breakdown.setAttribute('aria-label','Вклад сигналов в индекс самонаблюдения');details.before(breakdown);
                 }
             }
-            const progressMethod=el('lab-prog-method');
-            if(progressMethod){
-                const details=progressMethod.closest('.mm-lab-details');
-                if(details&&!el('lab-e1rm-tool')){
+            const strengthMount=el('lab-strength-mount');
+            if(strengthMount){
+                if(!el('lab-e1rm-tool')){
                     const tool=document.createElement('section');tool.id='lab-e1rm-tool';tool.className='mm-lab-e1rm';tool.setAttribute('aria-labelledby','lab-e1rm-title');
                     tool.innerHTML='<h4 id="lab-e1rm-title" data-no-translate data-ru-dynamic-text="Силовой ориентир · e1RM">Силовой ориентир · e1RM</h4><p>Расчётный максимум для сравнения динамики, а не рекомендация проверять реальный 1ПМ.</p><div class="mm-lab-fields"><div class="mm-lab-field"><label for="lab-e1rm-exercise">Упражнение</label><select id="lab-e1rm-exercise" class="mm-lab-select"><option>Присед</option><option>Жим лёжа</option><option>Становая тяга</option><option>Другое</option></select></div><div class="mm-lab-field"><label for="lab-e1rm-load">Рабочий вес · кг</label><input id="lab-e1rm-load" class="mm-lab-input" type="number" min="1" max="500" step="0.5" inputmode="decimal"></div><div class="mm-lab-field"><label for="lab-e1rm-reps">Повторения</label><input id="lab-e1rm-reps" class="mm-lab-input" type="number" min="1" max="15" step="1" inputmode="numeric"></div></div><div class="mm-lab-actions"><button type="button" class="mm-lab-primary" id="lab-e1rm-calculate">Оценить 1ПМ</button></div><p id="lab-e1rm-result" class="mm-lab-insight" aria-live="polite">Введите вес и повторы.</p>';
-                    details.after(tool);
+                    strengthMount.appendChild(tool);
                     const loadPlan=document.createElement('div');loadPlan.className='mm-lab-load-plan';loadPlan.setAttribute('data-no-translate','');loadPlan.innerHTML='<label for="lab-e1rm-increment" id="lab-e1rm-increment-label">Шаг округления · кг</label><select id="lab-e1rm-increment" class="mm-lab-select"><option value="2.5">2,5 кг</option><option value="5">5 кг</option></select><p id="lab-e1rm-load-plan" aria-live="polite"></p>';tool.appendChild(loadPlan);
                     let lastEstimate=null;
                     const renderLoads=()=>{
@@ -609,6 +608,13 @@
                 });
             });
             showTab('body');
+            $$('[data-lab-guide]').forEach(button=>button.addEventListener('click',()=>{
+                const key=button.dataset.labGuide;
+                if(!tabs.some(tab=>tab.dataset.mmLabTab===key))return;
+                showTab(key,true);
+                const panel=$(`[data-mm-lab-panel="${key}"]`);
+                panel?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
+            }));
 
             $$('[data-mode-switch]').forEach(wrap=>{
                 const tool=wrap.dataset.modeSwitch;

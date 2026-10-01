@@ -17,6 +17,15 @@
   "👑 MARKOVMADE / ТЕЛО / МЫШЛЕНИЕ / СИСТЕМА": "👑 MARKOVMADE / BODY / MINDSET / SYSTEM",
   "Трансформация": "Transformation",
   "Вне Шаблонов": "Beyond Templates",
+  "ПАВЕЛ МАРКОВ · MARKOVMADE": "PAVEL MARKOV · MARKOVMADE",
+  "Тело и питание": "Body and nutrition",
+  "под вашу жизнь.": "for your life.",
+  "Открыть LAB": "Open LAB",
+  "Работать со мной": "Work with me",
+  "состав тела": "body composition",
+  "питание и прогресс": "nutrition and progress",
+  "личная работа": "personal coaching",
+  "под ваш график": "around your schedule",
   "Я здесь, чтобы оставить после себя имя и поколения людей с крепкими ценностями. Каждый день проживая ради одного: помогать и быть по‑настоящему полезным.": "I am here to leave a name behind me and generations of people with strong values. Every day is lived for one thing: to help and to be truly useful.",
   "Я здесь, чтобы оставить после себя имя и поколения людей с крепкими ценностями. Каждый день проживая ради одного:": "I am here to leave behind a name and generations of people with strong values. Every day is lived for one thing:",
   "помогать": "to help",
@@ -1037,6 +1046,7 @@
   'ответы': 'answers',
   'перед заявкой.': 'before submitting.',
   'Я — Павел Марков. Соединяю тренировки, питание и дисциплину в систему под вашу жизнь: начинаем с данных в LAB, затем выбираем': 'I’m Pavel Markov. I bring training, nutrition, and discipline into a system built for your life: start with data in LAB, then choose the',
+  'Я — Павел Марков. Здесь вы можете оценить состав тела, рассчитать питание и увидеть динамику. Для личной работы соберём тренировки и режим': 'I’m Pavel Markov. Use the tools here to assess body composition, plan nutrition, and follow your progress. If we work together, we will build training and routines',
   'следующий шаг': 'next step',
   'управляемый результат': 'a controlled result',
   'Практические ориентиры композиции тела': 'Practical body-composition targets',
@@ -1223,10 +1233,28 @@
     DICT['Только рассчитанные показатели'] = 'Calculated metrics only';
     DICT['Заполните состав тела или питание — сводка соберёт расчётные сигналы в одном месте.'] = 'Complete body composition or nutrition to bring your calculated signals together here.';
     DICT['Следующий шаг'] = 'Next step';
+    Object.assign(DICT,{
+      'Бесплатные инструменты для тела, питания и прогресса.':'Free tools for body, nutrition and progress.',
+      'Что хотите узнать?':'What would you like to find out?',
+      'Выберите задачу. Нужный инструмент откроется сразу.':'Choose a question to open the right tool.',
+      'Процент жира и состав тела':'Body fat and composition',
+      'Сколько мне есть':'How much should I eat?',
+      'Почему изменился вес':'Why did my weight change?',
+      'Как я восстанавливаюсь':'How well am I recovering?',
+      'Есть ли прогресс':'Am I making progress?',
+      'Какие веса взять на тренировку':'Which weights should I use?',
+      'Что делать дальше':'What should I do next?',
+      'Ваша цель.':'Your goal.',
+      'Ваш следующий шаг.':'Your next step.',
+      'Прототип соединяет питание, тренировки, восстановление и прогресс. Каждый экран помогает понять текущую динамику и выбрать':'The prototype connects nutrition, training, recovery and progress. Each screen helps you understand your trend and choose',
+      'Один следующий шаг на основе ваших данных.':'One next step based on your data.',
+      'Выберите одно действие и заранее определите, как оцените результат.':'Choose one action and decide in advance how you will measure the result.',
+      'Я – Павел Марков. Здесь вы можете оценить состав тела, рассчитать питание и увидеть динамику. Для личной работы соберём тренировки и режим':'I am Pavel Markov. Here you can assess body composition, calculate nutrition and see your progress. For personal coaching, we will build training and routine'
+    });
     var META = {
         ru: {
-            title: 'MARKOVMADE | Павел Марков — тело, питание, дисциплина и персональное приложение',
-            description: 'MARKOVMADE — персональная система Павла Маркова: расчёт FFMI, КБЖУ, восстановления и прогресса, разбор тела, питания, мышления, режима и приложение под цель.'
+            title: 'MARKOVMADE | Тело и питание под вашу жизнь — Павел Марков',
+            description: 'Бесплатный MARKOVMADE LAB: состав тела, питание, восстановление, сила и тренд прогресса. Персональная работа с Павлом Марковым и прототип приложения.'
         },
         en: {
             title: 'MARKOVMADE | Pavel Markov — body, nutrition, discipline and personal app',

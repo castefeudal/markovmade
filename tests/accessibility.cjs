@@ -14,7 +14,7 @@ const server = http.createServer((req,res) => {
   fs.createReadStream(file).on('error', () => { if (!res.headersSent) res.writeHead(404); res.end(); }).pipe(res);
 });
 
-const themes = ['aurum-noir','event-horizon'];
+const themes = ['aurum-noir','event-horizon','clarity'];
 let browser;
 (async () => {
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));

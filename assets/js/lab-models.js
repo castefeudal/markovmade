@@ -135,9 +135,16 @@
     const metric=(key,min,max)=>{
       const values=sample.filter(entry=>Number.isFinite(entry[key])&&entry[key]>=min&&entry[key]<=max);
       const span=values.length>1?(new Date(values.at(-1).date)-new Date(values[0].date))/86400000:0;
-      if(values.length<3||span<Math.min(days-2,4))return {count:values.length,delta:null,average:null};
-      const edge=Math.min(3,Math.max(1,Math.floor(values.length/3)));
-      return {count:values.length,delta:average(values.slice(-edge).map(entry=>entry[key]))-average(values.slice(0,edge).map(entry=>entry[key])),average:average(values.map(entry=>entry[key]))};
+      const points=values.map(entry=>({date:entry.date,value:entry[key]}));
+      if(values.length<3||span<Math.min(days-2,4))return {count:values.length,delta:null,average:null,points};
+      const slopes=[];
+      for(let i=0;i<values.length;i++)for(let j=i+1;j<values.length;j++){
+        const distance=(new Date(values[j].date)-new Date(values[i].date))/86400000;
+        if(distance>0)slopes.push((values[j][key]-values[i][key])/distance);
+      }
+      slopes.sort((a,b)=>a-b);
+      const mid=Math.floor(slopes.length/2),slope=slopes.length%2?slopes[mid]:(slopes[mid-1]+slopes[mid])/2;
+      return {count:values.length,delta:slope*span,average:average(values.map(entry=>entry[key])),points};
     };
     return {days,count:sample.length,weight:metric('weight',35,300),waist:metric('waist',40,200),energy:metric('energy',1,10),sleep:metric('sleep',0,16),entries:sample};
   }

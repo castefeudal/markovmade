@@ -104,7 +104,11 @@ test('daily check-in trends require multiple spaced readings and preserve window
   const entries=Array.from({length:14},(_,index)=>({date:`2026-09-${String(index+17).padStart(2,'0')}`,weight:100-index*.1,waist:90-index*.05,energy:6+index%3,sleep:7}));
   const first=model.checkinTrends(entries,7,new Date('2026-09-30T12:00:00'));
   assert.equal(first.count,7);
-  near(first.weight.delta,-.5,.001);
+  near(first.weight.delta,-.6,.001);
+  assert.equal(first.weight.points.length,7);
+  const withSpike=entries.map(item=>({...item}));withSpike.at(-3).weight+=4;
+  const stable=model.checkinTrends(withSpike,7,new Date('2026-09-30T12:00:00'));
+  near(stable.weight.delta,-.6,.001);
   assert.equal(first.energy.average>6,true);
   const wider=model.checkinTrends(entries,14,new Date('2026-09-30T12:00:00'));
   assert.equal(wider.count,14);

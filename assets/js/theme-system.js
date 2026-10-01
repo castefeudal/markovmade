@@ -10,17 +10,21 @@
     'event-horizon': {
       ru: ['Event Horizon / Cosmos', 'Полночная глубина · платина · орбитальная точность'],
       en: ['Event Horizon / Cosmos', 'Midnight depth · platinum · orbital precision']
+    },
+    clarity: {
+      ru: ['Clarity / Vision Assist', 'Крупнее текст · ясные границы · спокойный свет'],
+      en: ['Clarity / Vision Assist', 'Larger text · clear edges · softer light']
     }
   };
   var aliases = {
     obsidian: 'aurum-noir', dark: 'aurum-noir', deep: 'aurum-noir',
-    ivory: 'aurum-noir', light: 'aurum-noir', 'ivory-atelier': 'aurum-noir',
+    ivory: 'clarity', light: 'clarity', 'ivory-atelier': 'clarity',
     'imperial-emerald': 'aurum-noir', 'oxblood-atelier': 'aurum-noir',
     graphite: 'event-horizon', soft: 'event-horizon', calm: 'event-horizon',
-    'titanium-midnight': 'event-horizon', contrast: 'aurum-noir', 'mono-access': 'aurum-noir'
+    'titanium-midnight': 'event-horizon', contrast: 'clarity', 'mono-access': 'clarity'
   };
   var legacyValues = {
-    'aurum-noir': 'deep', 'event-horizon': 'soft'
+    'aurum-noir': 'deep', 'event-horizon': 'soft', clarity: 'light'
   };
   var selected = 'aurum-noir';
   var preview = null;
@@ -36,16 +40,18 @@
   function apply(name) {
     var theme = resolve(name) || 'aurum-noir';
     document.documentElement.dataset.theme = theme;
-    document.documentElement.style.colorScheme = 'dark';
+    document.documentElement.style.colorScheme = theme === 'clarity' ? 'light' : 'dark';
     var body = document.body;
     if (body) {
-      body.classList.remove('theme-light', 'theme-soft', 'theme-contrast', 'theme-cosmos');
+      body.classList.remove('theme-light', 'theme-soft', 'theme-contrast', 'theme-cosmos', 'theme-clarity');
       body.classList.toggle('theme-cosmos', theme === 'event-horizon');
+      body.classList.toggle('theme-light', theme === 'clarity');
+      body.classList.toggle('theme-clarity', theme === 'clarity');
     }
     var meta = document.getElementById('theme-color-meta');
     if (meta) {
       var colors = {
-        'aurum-noir':'#080807', 'event-horizon':'#070b14'
+        'aurum-noir':'#080807', 'event-horizon':'#070b14', clarity:'#f6f5f1'
       };
       meta.setAttribute('content', colors[theme]);
     }
@@ -64,14 +70,14 @@
     });
     if (!dialog) return;
     dialog.querySelector('[data-theme-title]').textContent = copy('Атмосфера MARKOVMADE', 'The MARKOVMADE atmosphere');
-    dialog.querySelector('[data-theme-intro]').textContent = copy('Два визуальных мира. Один и тот же точный продукт.', 'Two visual worlds. The same considered product.');
+    dialog.querySelector('[data-theme-intro]').textContent = copy('Три визуальных мира. Выберите тот, в котором вам удобно.', 'Three visual worlds. Choose the one that works for you.');
     dialog.querySelector('[data-theme-note]').textContent = copy('Наведите или сфокусируйтесь, чтобы посмотреть тему. Выбор сохраняется только по нажатию.', 'Hover or focus to preview. A theme is saved only when selected.');
     dialog.querySelector('[data-theme-close]').setAttribute('aria-label', copy('Закрыть без сохранения', 'Close without saving'));
     dialog.querySelectorAll('[data-theme-value]').forEach(function (button) {
       var content = themes[button.dataset.themeValue][language()];
       button.querySelector('[data-theme-name]').textContent = content[0];
       button.querySelector('[data-theme-description]').textContent = content[1];
-      button.querySelector('[data-theme-metric-label]').textContent = copy('РЕСУРС', 'READY');
+      button.querySelector('[data-theme-metric-label]').textContent = name === 'clarity' ? copy('ЧЁТКО', 'CLEAR') : copy('РЕСУРС', 'READY');
     });
   }
 

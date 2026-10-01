@@ -37,7 +37,7 @@ let browser;
   assert.match(await page.locator('#mm-lab-snapshot-empty').textContent(), /состав тела|body composition/i);
   await page.locator('.theme-switch:visible').first().click();
   assert.equal(await page.locator('#mm-theme-dialog').isVisible(), true, `native theme dialog opens; errors: ${runtimeErrors.join(' | ')}`);
-  for (const theme of ['event-horizon','aurum-noir']) {
+  for (const theme of ['event-horizon','clarity','aurum-noir']) {
     await page.locator(`[data-theme-value="${theme}"]`).click();
     await page.waitForTimeout(180);
     assert.equal(await page.locator('#mm-theme-dialog').isVisible(), false, `dialog closes after selecting ${theme}`);
@@ -174,6 +174,7 @@ let browser;
   const progressState=await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-v1')).progress);
   assert.equal(progressState.dailyWeights.length,weights.length,'outlier choice never deletes raw readings');
   assert.equal(progressState.outlierChoices[3],'exclude');
+  await page.locator('[data-mm-lab-tab="strength"]').click();
   await page.locator('#lab-e1rm-exercise').selectOption({label:'Жим лёжа'});
   await page.locator('#lab-e1rm-load').fill('80'); await page.locator('#lab-e1rm-reps').fill('5');
   await page.locator('#lab-e1rm-calculate').click();
@@ -270,20 +271,24 @@ let browser;
   await page.reload({waitUntil:'domcontentloaded'});
   await page.waitForTimeout(500);
   await page.setViewportSize({width:390,height:844});
-  await page.locator('.theme-switch:visible').first().click();
+  await page.evaluate(()=>window.scrollTo(0,0));
+  await page.locator('.theme-switch:visible').first().evaluate(button=>button.click());
   const pickerShot = path.join(visualDir,'theme-picker-390x844.png');
   await page.locator('#mm-theme-dialog').screenshot({path:pickerShot});
   assertVisualBaseline('theme-picker-390x844.png',pickerShot);
   await page.setViewportSize({width:1440,height:900});
+  await page.waitForTimeout(450);
   const pickerDesktop=path.join(visualDir,'theme-picker-1440x900.png');
   await page.locator('#mm-theme-dialog').screenshot({path:pickerDesktop});
   assertVisualBaseline('theme-picker-1440x900.png',pickerDesktop);
   await page.keyboard.press('Escape');
   const screenshotSizes = viewports;
-  for (const theme of ['aurum-noir','event-horizon']) {
+  for (const theme of ['aurum-noir','event-horizon','clarity']) {
     await page.evaluate(name => {
       document.documentElement.dataset.theme=name;
       document.body.classList.toggle('theme-cosmos',name==='event-horizon');
+      document.body.classList.toggle('theme-light',name==='clarity');
+      document.body.classList.toggle('theme-clarity',name==='clarity');
     }, theme);
     await page.evaluate(() => window.scrollTo(0,0));
     for (const [width,height] of screenshotSizes) {
@@ -293,19 +298,22 @@ let browser;
       await page.screenshot({path:shot,fullPage:false});
       if (width===390 && height===844) assertVisualBaseline(`${theme}-hero-390x844.png`,shot);
       if (theme==='aurum-noir' && width===1440 && height===900) assertVisualBaseline('aurum-noir-hero-1440x900.png',shot);
+      if (theme==='clarity' && width===1440 && height===900) assertVisualBaseline(`${theme}-hero-${width}x${height}.png`,shot);
     }
     for (const [width,height] of [[390,844],[1440,900]]) {
       await page.setViewportSize({width,height});
       await page.waitForTimeout(300);
       for (const section of ['case-scenarios','calculators','app-ecosystem','services','biography','contact']) {
         if (section==='calculators') await page.locator('[data-mm-lab-tab="body"]').click();
-        await page.locator(`#${section}`).scrollIntoViewIfNeeded();
+        await page.locator(`#${section}`).evaluate(element=>window.scrollTo(0,element.getBoundingClientRect().top+window.scrollY));
+        await page.waitForTimeout(180);
         const shot = path.join(visualDir,`${theme}-${section}-${width}x${height}.png`);
         await page.screenshot({path:shot,fullPage:false});
         if (section==='calculators' && width===390) assertVisualBaseline(`${theme}-lab-390x844.png`,shot);
         if (section==='app-ecosystem' && width===390) assertVisualBaseline(`${theme}-os-390x844.png`,shot);
         if (theme==='aurum-noir' && section==='calculators' && width===1440) assertVisualBaseline('aurum-noir-lab-1440x900.png',shot);
         if (theme==='aurum-noir' && section==='app-ecosystem' && width===1440) assertVisualBaseline('aurum-noir-os-1440x900.png',shot);
+        if (theme==='clarity' && width===1440 && ['calculators','app-ecosystem'].includes(section)) assertVisualBaseline(`${theme}-${section}-${width}x${height}.png`,shot);
       }
       if(theme==='aurum-noir'&&width===1440){
         await page.locator('#mm-os-tab-insights').click();
@@ -328,5 +336,5 @@ let browser;
   await browser.close(); browser=null;
   await new Promise(resolve => server.close(resolve));
   fs.mkdirSync(path.join(root,'test-results'),{recursive:true});
-  console.log('Browser QA passed: two themes, mobile Insights wizard, no-neck WHtR mode, calculators, history, import/export, and 13 responsive viewports.');
+  console.log('Browser QA passed: three themes, mobile Insights wizard, no-neck WHtR mode, calculators, history, import/export, and 13 responsive viewports.');
 })().catch(async error => { console.error(error); if(browser) await browser.close().catch(()=>{}); server.close(); process.exitCode=1; });

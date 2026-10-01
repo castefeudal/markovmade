@@ -4,7 +4,7 @@
   const DAILY_KEY='markovmade-lab-daily-v1';
   const FAV_KEY='markovmade-lab-favorites-v1';
   const HISTORY_KEY='markovmade-lab-history-v1';
-  const tools={body:['Состав тела','Body'],nutrition:['Питание','Nutrition'],overfeeding:['Переедание','Overfeeding'],recovery:['Ресурс','Recovery'],progress:['Прогресс','Progress'],strategy:['Решение','Decision']};
+  const tools={body:['Состав тела','Body'],nutrition:['Питание','Nutrition'],overfeeding:['Переедание','Overfeeding'],recovery:['Ресурс','Recovery'],progress:['Прогресс','Progress'],strength:['Сила','Strength'],strategy:['Решение','Decision']};
   const $=id=>document.getElementById(id);
   const en=()=>document.documentElement.lang==='en';
   const copy=(ru,english)=>en()?english:ru;
@@ -82,6 +82,22 @@
     return `${metric.delta>=0?'+':''}${fmt(metric.delta)} ${unit}`;
   }
 
+  function renderSparkline(id,metric){
+    const value=$(id),card=value?.parentElement;
+    if(!card)return;
+    card.querySelector('.mm-trend-line')?.remove();
+    const points=metric.points||[];
+    if(points.length<2)return;
+    const min=Math.min(...points.map(point=>point.value)),max=Math.max(...points.map(point=>point.value));
+    const start=new Date(points[0].date).getTime(),span=new Date(points.at(-1).date).getTime()-start||1;
+    const coords=points.map(point=>`${8+((new Date(point.date).getTime()-start)/span)*184},${36-((point.value-min)/(max-min||1))*28}`).join(' ');
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 200 44');svg.setAttribute('class','mm-trend-line');svg.setAttribute('aria-hidden','true');
+    const line=document.createElementNS('http://www.w3.org/2000/svg','polyline');
+    line.setAttribute('points',coords);line.setAttribute('fill','none');line.setAttribute('stroke','currentColor');line.setAttribute('stroke-width','2.5');line.setAttribute('stroke-linecap','round');line.setAttribute('stroke-linejoin','round');
+    svg.append(line);card.append(svg);
+  }
+
   function renderTrends(){
     const records=entries(),model=window.MarkovMadeModels;
     if(!model)return;
@@ -91,6 +107,7 @@
     set('mm-checkin-waist-trend',trendText(trend.waist,copy('см','cm')));
     set('mm-checkin-energy-trend',trend.energy.average===null?copy(`Нужно ≥3 оценки · ${trend.energy.count} есть`,`Need ≥3 ratings · ${trend.energy.count} logged`):`${fmt(trend.energy.average)}/10 · ${trendText(trend.energy,copy('п.','pt'))}`);
     set('mm-checkin-sleep-trend',trend.sleep.average===null?copy(`Нужно ≥3 записи · ${trend.sleep.count} есть`,`Need ≥3 readings · ${trend.sleep.count} logged`):`${fmt(trend.sleep.average)} ${copy('ч','h')} · ${trendText(trend.sleep,copy('ч','h'))}`);
+    for(const key of ['weight','waist','energy','sleep'])renderSparkline(`mm-checkin-${key}-trend`,trend[key]);
     const observed=calibration(records),use=$('mm-checkin-use-calibration');
     if(observed.ready){
       const {result}=observed;

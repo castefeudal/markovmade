@@ -40,7 +40,7 @@
 .mm-theme-head h2 { margin:0; color:var(--mm-text-primary); font:500 clamp(1.6rem, 4vw, 2rem)/1.1 var(--mm-font-display); }
 .mm-theme-head p { margin:.4rem 0 0; color:var(--mm-text-secondary); font:500 .9375rem/1.5 var(--mm-font-body); }
 .mm-theme-close { display:grid; place-items:center; width:2.75rem; height:2.75rem; flex:0 0 auto; border:1px solid var(--mm-border); border-radius:50%; color:var(--mm-text-secondary); background:transparent; cursor:pointer; }
-.mm-theme-options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.75rem; }
+.mm-theme-options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.75rem; }
 .mm-theme-option {
   display:grid; grid-template-columns:5rem minmax(0,1fr); gap:.9rem; align-items:center;
   min-height:6.25rem; padding:.75rem; text-align:left; border:1px solid var(--mm-border);
@@ -62,6 +62,8 @@
 .mm-theme-option small[data-theme-description] { display:block; margin-top:.25rem; color:var(--mm-text-secondary); font:500 .8125rem/1.35 var(--mm-font-body); }
 .mm-theme-option[data-theme-value="aurum-noir"] { --preview-bg:#090908;--preview-surface:#211f1b;--preview-accent:#d5bd88;--preview-text:#f2f0e9;--preview-border:rgb(242 240 233 / .15); }
 .mm-theme-option[data-theme-value="event-horizon"] { --preview-bg:#070b14;--preview-surface:#182640;--preview-accent:#bdd4e9;--preview-text:#eef3f8;--preview-border:rgb(189 212 233 / .23); }
+.mm-theme-option[data-theme-value="clarity"] { --preview-bg:#f6f5f1;--preview-surface:#fff;--preview-accent:#205a70;--preview-text:#17232b;--preview-border:#7e929b; }
+.mm-theme-option[data-theme-value="clarity"] .mm-theme-preview { box-shadow:inset 0 0 0 1px #fff; }
 .mm-theme-option[data-theme-value="event-horizon"] .mm-theme-preview::after { content:""; position:absolute; inset:-2rem -1rem auto auto; width:4rem; height:4rem; border:1px solid var(--preview-border); border-radius:50%; box-shadow:0 0 0 1.2rem rgb(189 212 233 / .035); }
 .mm-theme-note { margin:.9rem 0 0; color:var(--mm-text-secondary); font:500 .8125rem/1.5 var(--mm-font-body); }
 .mm-line-icon { display:inline-block; width:1.15em; height:1.15em; flex:0 0 auto; vertical-align:-.16em; fill:none; stroke:currentColor; stroke-width:1.45; stroke-linecap:round; stroke-linejoin:round; color:var(--mm-accent); }
@@ -200,4 +202,17 @@ html:not(.js) #main-content { opacity:1 !important; }
 .mm-lab-quick-tools>#mm-lab-repeat-last:disabled{opacity:.55;cursor:not-allowed}
 @media(max-width:1150px){.mm-lab-daily-grid{grid-template-columns:1fr}.mm-lab-checkin-fields{grid-template-columns:repeat(4,minmax(0,1fr))}}
 @media(max-width:700px){.mm-lab-daily-head{align-items:flex-start;flex-direction:column}.mm-lab-checkin-fields{grid-template-columns:repeat(2,minmax(0,1fr))}.mm-lab-daily-trends{grid-template-columns:1fr}.mm-lab-quick-tools>#mm-lab-repeat-last{margin-left:0}}
+
+.mm-lab-guide{margin:clamp(1.5rem,3vw,3rem) 0;padding:clamp(1rem,2vw,2rem);border:1px solid var(--mm-border);border-radius:var(--mm-radius-card);background:var(--mm-surface-1)}
+.mm-lab-guide-head{max-width:48rem;margin-bottom:1.25rem}
+.mm-lab-guide-head h3{font:700 clamp(1.5rem,3vw,2.5rem)/1.15 var(--mm-font-display);margin:.4rem 0}
+.mm-lab-guide-head p{color:var(--mm-text-secondary);line-height:1.6}
+.mm-lab-guide-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.6rem}
+.mm-lab-guide-grid button{display:flex;align-items:flex-start;gap:.65rem;min-height:4rem;padding:.85rem;text-align:left;color:var(--mm-text-primary);background:var(--mm-surface-2);border:1px solid var(--mm-border);border-radius:.75rem;font:600 .9rem/1.4 var(--mm-font-body);cursor:pointer}
+.mm-lab-guide-grid button span{color:var(--mm-accent);font-variant-numeric:tabular-nums}
+.mm-lab-guide-grid button:hover,.mm-lab-guide-grid button:focus-visible{border-color:var(--mm-accent);background:var(--mm-surface-3)}
+#calculators .mm-lab-tabs{grid-template-columns:repeat(7,minmax(0,1fr))}
+@media(max-width:960px){.mm-lab-guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#calculators .mm-lab-tabs{display:flex;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:.5rem}#calculators .mm-lab-tab{flex:0 0 min(9rem,42vw);scroll-snap-align:start}}
+@media(max-width:480px){.mm-lab-guide-grid{grid-template-columns:1fr}}
+.mm-trend-line{display:block;width:100%;height:2.75rem;margin-top:.4rem;color:var(--mm-accent);overflow:visible}
 @media(max-width:360px){#calculators .mm-lab-daily{padding:16px}.mm-lab-checkin-fields{gap:.55rem}.mm-lab-checkin-fields label{font-size:.76rem}}

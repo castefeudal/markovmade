@@ -9,7 +9,7 @@ const runtime = fs.readFileSync(path.join(root, 'assets/js/app-runtime.js'), 'ut
 
 test('the single-page shell references local modular assets and GitHub Pages canonical', () => {
   assert.match(html, /rel="canonical" href="https:\/\/castefeudal\.github\.io\/markovmade\//);
-  for (const asset of ['assets/css/fonts.css', 'assets/css/legacy.css', 'assets/css/tokens.css', 'assets/css/product.css', 'assets/css/worlds.css', 'assets/js/lab-models.js', 'assets/js/app-runtime.js', 'assets/js/i18n.js', 'assets/js/hero-media.js', 'assets/js/theme-system.js', 'assets/js/lab-history.js', 'assets/js/lab-dashboard.js']) {
+  for (const asset of ['assets/css/fonts.css', 'assets/css/legacy.css', 'assets/css/tokens.css', 'assets/css/product.css', 'assets/css/worlds.css', 'assets/css/clarity.css', 'assets/js/lab-models.js', 'assets/js/app-runtime.js', 'assets/js/i18n.js', 'assets/js/hero-media.js', 'assets/js/theme-system.js', 'assets/js/lab-history.js', 'assets/js/lab-dashboard.js']) {
     assert.ok(fs.existsSync(path.join(root, asset)), `${asset} exists`);
     assert.ok(html.includes(asset), `${asset} is referenced`);
   }
@@ -17,8 +17,8 @@ test('the single-page shell references local modular assets and GitHub Pages can
   assert.match(html,/src="assets\/media\/hero-head2\.mp4"/);
 });
 
-test('both semantic themes define distinct media, chart, focus and surface tokens', () => {
-  for (const theme of ['aurum-noir', 'event-horizon']) {
+test('three semantic themes define distinct media, chart, focus and surface tokens', () => {
+  for (const theme of ['aurum-noir', 'event-horizon', 'clarity']) {
     assert.ok(tokens.includes(`data-theme="${theme}"`), theme);
   }
   for (const role of ['--mm-bg-primary', '--mm-surface-1', '--mm-text-primary', '--mm-text-muted', '--mm-accent', '--mm-border', '--mm-success', '--mm-warning', '--mm-danger', '--mm-info', '--mm-media-filter', '--mm-hero-overlay', '--mm-noise-opacity', '--mm-grid-color', '--mm-selection-bg', '--mm-selection-text', '--mm-chart-grid', '--mm-metal-highlight', '--mm-glow-primary', '--mm-focus', '--mm-input-bg', '--mm-section-divider', '--mm-shadow-surface', '--mm-radius-card', '--mm-motion-fast', '--mm-ease-premium']) assert.ok(tokens.includes(role), role);

@@ -1,4 +1,4 @@
-/* The two MARKOVMADE art worlds share one readable product system. */
+/* Three MARKOVMADE art worlds share one readable product system. */
 html[data-theme="aurum-noir"] {
   --world-light: rgb(199 174 120 / 8%);
   --world-rule: rgb(199 174 120 / 17%);
@@ -30,6 +30,21 @@ html[data-theme="event-horizon"] #hero::before {
   background:
     radial-gradient(ellipse 44% 46% at 83% 36%, rgb(149 185 228 / 12%), transparent 80%),
     linear-gradient(90deg, rgb(5 9 19 / 49%), transparent 61%);
+}
+
+html[data-theme="event-horizon"] #hero::after {
+  content:"";
+  position:absolute;
+  width:min(66vw,54rem);
+  aspect-ratio:1;
+  right:-18%;
+  top:9%;
+  z-index:1;
+  pointer-events:none;
+  border:1px solid rgb(189 212 233 / 9%);
+  border-radius:50%;
+  box-shadow:0 0 0 5rem rgb(189 212 233 / 2%),0 0 0 11rem rgb(189 212 233 / 1%);
+  background:radial-gradient(circle at 29% 26%,rgb(223 237 255 / 52%) 0 1px,transparent 2px),radial-gradient(circle at 72% 17%,rgb(223 237 255 / 45%) 0 1px,transparent 2px),radial-gradient(circle at 21% 69%,rgb(223 237 255 / 36%) 0 1px,transparent 2px);
 }
 
 html[data-theme="event-horizon"] #hero .mm-hero-media {
