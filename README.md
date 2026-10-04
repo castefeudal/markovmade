@@ -44,6 +44,7 @@ npm test
 npm run test:e2e
 npm run test:a11y
 npm run test:visual
+npm run test:paint
 npm run test:lighthouse
 ```
 
@@ -67,6 +68,8 @@ Lighthouse запускается последовательно, без пар�
 Численные fixtures фиксируют Mifflin–St Jeor, Navy, FFMI, TDEE, TEF, гликогеновый сценарий, тренды, плато, e1RM и baseline восстановления. При изменении моделей обновляйте modelVersion и проверяйте assumptions. Это ориентиры самонаблюдения, без медицинской диагностики и обещаний результата.
 
 ## Публикация
+
+`test:paint` доставляет hero двумя HTML-чанками с паузой 700 ms и задерживает шрифты на 1200 ms: RU/EN × три темы × 320/768/1350/2560 px, CLS <0,01. Текст и header показываются после разбора полного hero; picture загружается сразу. Manrope `font-display: optional` сохраняет читаемый метрический fallback при медленном соединении, без поздних переносов строк. Объединённое подмножество содержит исходные глифы Manrope 4.504 ([источник](https://github.com/google/fonts/tree/8f9a401dbb3793e0d1264b15d96aa253f05280f5/ofl/manrope)); ширины и контуры сверены на весах 400/500/800, SIL OFL приложена к ассету.
 
 Pages публикует корень `main`. Перед push нужны сборка, проверки и `git diff --check`. После push проверяйте SHA опубликованной сборки, HTTP и загрузку production-ассетов. Quality workflow сохраняет отчёты браузеров, accessibility и Lighthouse как artifacts.
 

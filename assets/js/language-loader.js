@@ -46,4 +46,5 @@
     document.addEventListener('focusin',event=>{if(event.target.closest('main')&&!event.target.closest('#hero'))full();});
     if(location.hash)full();
   }
+  document.documentElement.dataset.criticalReady = 'true';
 })();

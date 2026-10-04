@@ -27,3 +27,4 @@
 #mobile-menu [data-menu-close] { position: absolute; right: 1.25rem; top: 1rem; width: 2.75rem; height: 2.75rem; background: transparent; color: var(--mm-text-primary); border: 1px solid var(--mm-border-strong); border-radius: .5rem; font-size: 1.5rem; cursor: pointer; }
 @media (max-width: 1180px) { #main-header { padding-block: .625rem; } #main-header > .container > nav { display: none; } #main-header .mm-header-mobile-controls { display: flex; } }
 @media (prefers-reduced-motion: reduce) { #main-header, #mobile-menu { transition: none; } }
+html.js:not([data-critical-ready]) #main-header { visibility: hidden; }

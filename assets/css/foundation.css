@@ -1297,7 +1297,6 @@ body:not(.theme-light) .glass-panel p, body:not(.theme-light) .lead-panel p, bod
 /* Final visibility guard: no section remains dim/invisible if animation observer is delayed. */
 .fade-in-up, .reveal-text {
     opacity: 1 !important;
-    visibility: visible !important;
     transform: none !important;
     filter: none !important;
 }

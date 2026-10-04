@@ -10,7 +10,8 @@
     "test:e2e": "node tests/e2e.cjs",
     "test:a11y": "node tests/accessibility.cjs",
     "test:visual": "node tests/product-contracts.cjs",
-    "test:ci": "npm run build && npm test && npm run test:e2e && npm run test:a11y && npm run test:visual",
+    "test:paint": "node tests/streaming-paint.cjs",
+    "test:ci": "npm run build && npm test && npm run test:e2e && npm run test:a11y && npm run test:visual && npm run test:paint",
     "serve": "node scripts/serve.cjs",
     "test:lighthouse": "node scripts/lighthouse.cjs",
     "test:production": "node tests/production-smoke.cjs"

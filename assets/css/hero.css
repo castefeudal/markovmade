@@ -1,6 +1,9 @@
 /* Hero owns its layout and media. Every drawable uses the same authored crop.
    hero-portrait is 960 × 648: the bottom 72 source pixels are excluded BEFORE
    encoding, extraction or paint, so no pose, breakpoint or fallback reveals them. */
+/* A streamed document may paint a half-parsed, vertically centred text block.
+   Reveal the completed first screen atomically; the portrait paints immediately. */
+html.js:not([data-critical-ready]) #hero > .container { visibility: hidden; }
 #hero {
   position: relative;
   isolation: isolate;
