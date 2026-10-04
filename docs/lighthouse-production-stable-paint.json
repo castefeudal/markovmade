@@ -1,0 +1,271 @@
+[
+  {
+    "name": "mobile-1",
+    "scene": "mobile",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 94,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1134.268,
+      "largest-contentful-paint": 1766.268,
+      "total-blocking-time": 254,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.1 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "2.9 s"
+      },
+      {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "detail": "250 ms"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "180 ms"
+      },
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 89 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 450
+        }
+      }
+    ]
+  },
+  {
+    "name": "desktop-1",
+    "scene": "desktop",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 730.98,
+      "largest-contentful-paint": 813.98,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "0.7 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "0.8 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "1.0 s"
+      },
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 89 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 50
+        }
+      }
+    ]
+  },
+  {
+    "name": "mobile-2",
+    "scene": "mobile",
+    "sample": 2,
+    "url": "https://castefeudal.github.io/markovmade/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1074.395,
+      "largest-contentful-paint": 1612.395,
+      "total-blocking-time": 73,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.1 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.6 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "2.2 s"
+      },
+      {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "detail": "70 ms"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "120 ms"
+      },
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 89 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 450
+        }
+      }
+    ]
+  },
+  {
+    "name": "desktop-2",
+    "scene": "desktop",
+    "sample": 2,
+    "url": "https://castefeudal.github.io/markovmade/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 506.25300000000004,
+      "largest-contentful-paint": 530.253,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 89 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "mobile-3",
+    "scene": "mobile",
+    "sample": 3,
+    "url": "https://castefeudal.github.io/markovmade/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 94,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1304.309,
+      "largest-contentful-paint": 1746.309,
+      "total-blocking-time": 289.5,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.3 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.7 s"
+      },
+      {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "detail": "290 ms"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "210 ms"
+      },
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 89 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 400
+        }
+      }
+    ]
+  },
+  {
+    "name": "desktop-3",
+    "scene": "desktop",
+    "sample": 3,
+    "url": "https://castefeudal.github.io/markovmade/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 92
+    },
+    "metrics": {
+      "first-contentful-paint": 427.38,
+      "largest-contentful-paint": 506.38,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "robots-txt",
+        "title": "robots.txt is not valid"
+      },
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 89 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 50
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "url": "https://castefeudal.github.io/markovmade/",
+  "lighthouseVersion": "13.5.0",
+  "scores": {
+    "seo": 100
+  },
+  "robots": {
+    "id": "robots-txt",
+    "title": "robots.txt is valid",
+    "description": "If your robots.txt file is malformed, crawlers may not be able to understand how you want your website to be crawled or indexed. [Learn more about robots.txt](https://developer.chrome.com/docs/lighthouse/seo/invalid-robots-txt/).",
+    "score": null,
+    "scoreDisplayMode": "notApplicable"
+  }
+}

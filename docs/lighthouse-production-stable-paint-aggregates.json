@@ -1,0 +1,24 @@
+[
+  {
+    "scene": "mobile",
+    "samples": 3,
+    "scores": {
+      "performance": 94,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": false
+  },
+  {
+    "scene": "desktop",
+    "samples": 3,
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": false
+  }
+]
