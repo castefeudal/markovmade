@@ -2,6 +2,14 @@
 
 Проверенный код: `23e9f6952d686d1fcf2fae16d67cb6fa2bf5611a`. [Production](https://castefeudal.github.io/markovmade/). [CI ветки](https://github.com/castefeudal/markovmade/actions/runs/37214521559) и [повторный CI main](https://github.com/castefeudal/markovmade/actions/runs/37215094868) полностью прошли. GitHub Pages опубликовал этот код; последующий коммит отчётов не меняет исполняемые файлы сайта.
 
+## Повторный аудит репозитория и Production — 2026-10-05
+
+Повторно проверен `main` (`4d8cd620e9deeefe9dc3a80b51328268612160f0`), включая уже опубликованные байты. `npm run build` воспроизводит HTML 180819 B, critical CSS 40579 B и full CSS 288321 B без diff. `npm run test:ci` прошёл полностью: 21 тест, E2E, axe, visual/contracts в Chromium/Firefox/WebKit и 24 потоковых first-paint сценария. Повторные production smoke-прогоны RU/EN × три темы подтвердили совпадение HTML/CSS/fonts/media/fragments с текущей сборкой, рабочий LAB и отсутствие runtime errors или горизонтального overflow. `npm audit` сообщает 0 уязвимостей.
+
+Свежая одна холодная Lighthouse-выборка каждого из 12 production-сценариев сохранена в [JSON-отчёте](lighthouse-production-audit-2026-10-05.json). Performance desktop — 100 во всех сценах; mobile: RU Aurum Noir 99, Event Horizon 100, Clarity 100; EN Aurum Noir 98, Event Horizon 99, Clarity 100. Accessibility, Best Practices и SEO — 100 во всех 12 измерениях, CLS — 0. Mobile LCP составил 1,326–1,749 ms при TBT 0–53 ms. Это подтверждающий срез из одного запуска, а не три повтора.
+
+Во всех сценах единственный Lighthouse audit с предполагаемой экономией времени указывает на кеширование: GitHub Pages отдаёт `Cache-Control: max-age=600`, примерно 48–89 KiB и расчётную экономию LCP 150–400 ms на mobile. Это настраивается хостингом, не проектным репозиторием; клиентская имитация заголовка не исправила бы сетевое поведение. Повторяемые 100/100 на production поэтому остаются открытой целью. CSS debt также остаётся: в поддерживаемых таблицах стилей 1573 `!important`; массовое удаление без покомпонентной проверки каскада небезопасно и не было замаскировано как завершённая миграция.
+
 Буквальные повторяемые 100/100 во всех категориях на публичном сайте **не достигнуты**. Ниже сохранены реальные результаты, включая неудачные измерения. Прохождение регрессионного порога CI не выдаётся за выполнение этого критерия DoD.
 
 ## Изменения продукта

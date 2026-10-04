@@ -1,0 +1,457 @@
+[
+  {
+    "name": "ru-aurum-noir-mobile",
+    "scene": "ru-aurum-noir-mobile",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/?lang=ru&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1294.8600000000001,
+      "largest-contentful-paint": 1748.8600000000001,
+      "total-blocking-time": 7,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.3 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.7 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "2.6 s"
+      },
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 89 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 400
+        }
+      }
+    ]
+  },
+  {
+    "name": "ru-aurum-noir-desktop",
+    "scene": "ru-aurum-noir-desktop",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/?lang=ru&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 487.39099999999996,
+      "largest-contentful-paint": 550.391,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 89 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 50
+        }
+      }
+    ]
+  },
+  {
+    "name": "ru-event-horizon-mobile",
+    "scene": "ru-event-horizon-mobile",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/?lang=ru&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1198.254,
+      "largest-contentful-paint": 1658.254,
+      "total-blocking-time": 49,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.2 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.7 s"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "190 ms"
+      },
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 89 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 350
+        }
+      }
+    ]
+  },
+  {
+    "name": "ru-event-horizon-desktop",
+    "scene": "ru-event-horizon-desktop",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/?lang=ru&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 406.556,
+      "largest-contentful-paint": 483.556,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 89 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 50
+        }
+      }
+    ]
+  },
+  {
+    "name": "ru-clarity-mobile",
+    "scene": "ru-clarity-mobile",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/?lang=ru&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1200.613,
+      "largest-contentful-paint": 1350.613,
+      "total-blocking-time": 26,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.2 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "2.7 s"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "80 ms"
+      },
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 48 KiB",
+        "savings": {
+          "FCP": 150,
+          "LCP": 150
+        }
+      }
+    ]
+  },
+  {
+    "name": "ru-clarity-desktop",
+    "scene": "ru-clarity-desktop",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/?lang=ru&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 369.46,
+      "largest-contentful-paint": 407.46,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 49 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "en-aurum-noir-mobile",
+    "scene": "en-aurum-noir-mobile",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/?lang=en&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 98,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1272.9859999999999,
+      "largest-contentful-paint": 1647.9859999999999,
+      "total-blocking-time": 53,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.3 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.6 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "4.1 s"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "160 ms"
+      },
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 84 KiB",
+        "savings": {
+          "FCP": 150,
+          "LCP": 300
+        }
+      }
+    ]
+  },
+  {
+    "name": "en-aurum-noir-desktop",
+    "scene": "en-aurum-noir-desktop",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/?lang=en&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 388.724,
+      "largest-contentful-paint": 463.724,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 84 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 50
+        }
+      }
+    ]
+  },
+  {
+    "name": "en-event-horizon-mobile",
+    "scene": "en-event-horizon-mobile",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/?lang=en&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1246.933,
+      "largest-contentful-paint": 1678.933,
+      "total-blocking-time": 21,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.2 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.7 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "2.6 s"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "70 ms"
+      },
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 84 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 350
+        }
+      }
+    ]
+  },
+  {
+    "name": "en-event-horizon-desktop",
+    "scene": "en-event-horizon-desktop",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/?lang=en&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 414.717,
+      "largest-contentful-paint": 452.717,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 84 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "en-clarity-mobile",
+    "scene": "en-clarity-mobile",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/?lang=en&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1108.926,
+      "largest-contentful-paint": 1325.926,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.1 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "2.6 s"
+      },
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 49 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 150
+        }
+      }
+    ]
+  },
+  {
+    "name": "en-clarity-desktop",
+    "scene": "en-clarity-desktop",
+    "sample": 1,
+    "url": "https://castefeudal.github.io/markovmade/?lang=en&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 378.817,
+      "largest-contentful-paint": 416.817,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "cache-insight",
+        "title": "Use efficient cache lifetimes",
+        "detail": "Est savings of 49 KiB",
+        "savings": {
+          "FCP": 0,
+          "LCP": 0
+        }
+      }
+    ]
+  }
+]
