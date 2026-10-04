@@ -36,8 +36,12 @@ legacy.css удалён. Правила распределены по владе
 | en-clarity-mobile | 93 / 100 / 100 / 100 | 1.98 | 221 | 0.0000 |
 | en-clarity-desktop | 100 / 100 / 100 / 100 | 0.38 | 0 | 0.0008 |
 
-Оставшиеся аудиты перечислены в [lighthouse-local.json](lighthouse-local.json). Практический blocker повторяемых 100 — нестабильное CPU-время Style/Layout в совместно используемом окружении и задержки self-hosted шрифтов при cold load. Нет сторонних font origins или render-blocking stylesheet на первом экране; ниже цели остаются измеряемые FCP/LCP/TBT. GitHub Actions запускает ту же матрицу отдельно и сохраняет полные отчёты.
+Оставшиеся аудиты перечислены в [lighthouse-local.json](lighthouse-local.json). Практический blocker повторяемых 100 — нестабильное CPU-время Style/Layout в совместно используемом окружении и cold-start браузерной инфраструктуры. После добавления ранних preload для реально используемых шрифтов аудит network dependency tree больше не содержит замечаний. Нет сторонних font origins или render-blocking stylesheet на первом экране; ниже цели остаются измеряемые FCP/LCP/TBT. GitHub Actions запускает ту же матрицу отдельно и сохраняет полные отчёты.
 
 ## Production
 
 Публикуется проверенный main через GitHub Pages. npm run test:production сравнивает served bytes с локальной сборкой и crop-ассетами, затем проверяет обе локализации/три темы, touch CTA, LAB/OS и отсутствие runtime errors на mobile/desktop. Результат CI и production дописывается после публикации.
+
+Первый Linux CI: [полная матрица](lighthouse-ci-initial.json). Desktop 100 во всех сценах; mobile 99–100 кроме первого прогона Aurum Noir (85, TBT 546 ms; наибольшая задача 463 ms отнесена к Unattributable/Other). Следующий запуск предварительно инициализирует браузер на about:blank с нейтральным системным шрифтом; ни одного ресурса сайта при этом не загружается, site cache остаётся холодным. Локальные повторные замеры сохранены отдельно в [lighthouse-local-repeat.json](lighthouse-local-repeat.json).
+
+Theme change завершает только цветовые CSS transitions, чтобы фон и текст новой палитры появлялись вместе. Аудит ждёт завершения перевода, готовности шрифтов и двух кадров; при нарушении сохраняется диагностический screenshot. Visual contracts дополнительно проверяют контраст сразу после выбора каждой темы.

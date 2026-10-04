@@ -25,6 +25,15 @@ async function assertComposition(page,label) {
   if(result.viewport>1180)assert.ok(result.heading.right<=result.face.left+2,`${label}: text overlaps the face`);
   else assert.ok(result.heading.top>=result.media.bottom,`${label}: mobile text overlaps the portrait`);
 }
+async function assertPalette(page,label) {
+  const colors=await page.evaluate(()=>{
+    const hero=document.querySelector('#hero'),heading=hero.querySelector('h1'),intro=hero.querySelector('.hero-intro'),cta=hero.querySelector('.mm-primary-cta');
+    return {bg:getComputedStyle(hero).backgroundColor,heading:getComputedStyle(heading).color,intro:getComputedStyle(intro).color,ctaBg:getComputedStyle(cta).backgroundColor,ctaFg:getComputedStyle(cta.querySelector('span')).color};
+  });
+  assert.ok(contrast(colors.heading,colors.bg)>=3,label+': heading palette changes atomically');
+  assert.ok(contrast(colors.intro,colors.bg)>=4.5,label+': body palette changes atomically');
+  assert.ok(contrast(colors.ctaFg,colors.ctaBg)>=4.5,label+': CTA palette changes atomically');
+}
 async function assertCta(page,label) {
   const cta=page.locator('#hero .mm-primary-cta');
   for(const state of ['default','hover','focus','active','disabled']){
@@ -60,6 +69,7 @@ async function assertCta(page,label) {
         for(const theme of themes) {
           await page.locator('.theme-switch:visible').first().click();
           await page.locator(`[data-theme-value="${theme}"]`).click();
+          await assertPalette(page,`${name}/${lang}/${theme}`);
           for(const width of widths){
             await page.setViewportSize({width,height:width<=430?844:900});
             await page.evaluate(()=>scrollTo(0,0));

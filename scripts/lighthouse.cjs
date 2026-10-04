@@ -33,6 +33,11 @@ async function runProfile(profile,url,name){
   let failed=false;const summaries=[];
   try {
     if(server)await waitReady();
+    // Cold SITE resources remain cold. Warm only the freshly installed browser
+    // process/font infrastructure, so its one-time setup is not charged to URL 1.
+    const executable=[process.env.CHROME_PATH,process.platform==='linux'?'/usr/bin/google-chrome':null,chromium.executablePath()].find(file=>file&&fs.existsSync(file));
+    const warmup=await chromium.launch({executablePath:executable,headless:true});
+    try{const blank=await warmup.newPage();await blank.goto('about:blank');await blank.setContent('<p style="font:16px Arial,sans-serif">Browser readiness · ABC 123 · АБВ</p>');await blank.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));}finally{await warmup.close();}
     const scenes=process.env.LIGHTHOUSE_MATRIX?['ru','en'].flatMap(lang=>['aurum-noir','event-horizon','clarity'].map(theme=>({lang,theme}))):[null];
     const runs=Number(process.env.LIGHTHOUSE_RUNS||1);
     for(let run=1;run<=runs;run++)for(const scene of scenes)for(const profile of ['mobile','desktop']) {

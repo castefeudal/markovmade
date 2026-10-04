@@ -39,6 +39,7 @@
 
   function apply(name) {
     var theme = resolve(name) || 'aurum-noir';
+    var previous = document.documentElement.dataset.theme;
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme === 'clarity' ? 'light' : 'dark';
     var body = document.body;
@@ -54,6 +55,15 @@
         'aurum-noir':'#080807', 'event-horizon':'#070b14', clarity:'#f6f5f1'
       };
       meta.setAttribute('content', colors[theme]);
+    }
+    // A palette change is atomic. Hover transitions may blend nearby shades,
+    // but a light/dark switch must never mix the old background and new text.
+    if (previous !== theme && document.getAnimations) {
+      document.getAnimations().forEach(function(animation) {
+        if (/color|fill|stroke/.test(animation.transitionProperty || '')) {
+          try { animation.finish(); } catch (_) {}
+        }
+      });
     }
     return theme;
   }
