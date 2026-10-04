@@ -9,8 +9,9 @@ const update = process.env.UPDATE_VISUAL_BASELINES === '1';
 // Font metrics differ between Linux CI and Windows authoring screenshots.
 const defaultMismatch = process.platform === 'linux' ? 0.10 : 0.07;
 function assertVisualBaseline(name, actualPath, maxMismatch = defaultMismatch) {
-  fs.mkdirSync(baselineDir, {recursive:true});
-  const baselinePath = path.join(baselineDir, name);
+  const directory=process.platform==='linux'&&name.startsWith('contract-')?path.join(baselineDir,'linux'):baselineDir;
+  fs.mkdirSync(directory, {recursive:true});
+  const baselinePath = path.join(directory, name);
   if (update) {
     fs.copyFileSync(actualPath, baselinePath);
     console.log(`Updated visual baseline: ${name}`);

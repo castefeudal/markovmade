@@ -765,7 +765,7 @@
         }
         #principles h2, #biography h2, #services h2, #contact h2 { font-size: clamp(2.15rem, 5vw, 4.6rem) !important; line-height: 1.08 !important; }
         .font-serif.italic, .premium-stat strong {
-            font-family: 'Cormorant Garamond','MM Display Fallback',Georgia, serif !important;
+            font-family: var(--mm-font-display);
         }
         p, li { line-height: 1.68; }
         .text-dim { color: var(--mm-text-muted); }

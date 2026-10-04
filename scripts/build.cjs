@@ -54,7 +54,8 @@ function extractComponent(html, className, name) {
     });
     matches = await page.evaluate(selectors => {
       const used=new Set();
-      for(const theme of ['aurum-noir','event-horizon','clarity']) {
+      for(const theme of ['aurum-noir','event-horizon','clarity']) for(const lang of ['ru','en']) {
+        document.documentElement.lang=lang;
         document.documentElement.dataset.theme=theme;
         document.body.className=theme==='clarity'?'theme-light theme-clarity':theme==='event-horizon'?'theme-cosmos':'';
         for(const selector of selectors) {

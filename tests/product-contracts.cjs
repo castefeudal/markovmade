@@ -1,6 +1,8 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const {chromium,firefox,webkit}=require('playwright');
 const {startServer,root}=require('./browser-helpers.cjs');
+const captureLinux=process.platform==='linux'&&!fs.existsSync(path.join(__dirname,'visual-baselines/linux/contract-ru-aurum-noir-320.png'));
+if(captureLinux)process.env.UPDATE_VISUAL_BASELINES='1';
 const {assertVisualBaseline}=require('./visual-regression.cjs');
 const widths=[320,360,375,390,430,768,1024,1280,1366,1440,1600,1920,2560];
 const themes=['aurum-noir','event-horizon','clarity'];
@@ -132,6 +134,7 @@ async function assertCta(page,label) {
       if(lang==='en')await first.waitForFunction(()=>document.querySelector('#hero .mm-primary-cta').textContent.includes('Open LAB'));
       assert.equal(await first.locator('html').getAttribute('data-theme'),theme);
       await assertComposition(first,`first-paint/${theme}/${lang}`);
+      if(theme!=='clarity'){const family=await first.locator('#hero h1').evaluate(el=>getComputedStyle(el).fontFamily);assert.ok(family.startsWith(lang==='ru'?'"Cormorant RU"':'"Cormorant Garamond"'),`${theme}/${lang}: first paint uses its locale font`);}
       const colors=await first.locator('#hero .mm-primary-cta').evaluate(el=>({fg:getComputedStyle(el.querySelector('span')).color,bg:getComputedStyle(el).backgroundColor}));
       assert.ok(contrast(colors.fg,colors.bg)>=4.5,`critical CSS CTA is legible in ${theme}/${lang}`);
       assert.ok(!fetched.some(u=>/site\.css|\.mp4|lab-runtime|personal-os\.html|lab\.html/.test(u)),`${theme}/${lang}: first paint is independent of below-fold assets`);
@@ -189,6 +192,7 @@ async function assertCta(page,label) {
       }
     }
     await bilingual.close();
+    if(captureLinux)throw new Error('Linux baselines captured for review. Commit the reviewed contract screenshots under tests/visual-baselines/linux before acceptance.');
     console.log('Pointer turn/nod/neutral, touch entry and dynamic reduced motion passed.');
   } finally {await browser?.close();await server.close();}
 })().catch(error=>{console.error(error);process.exitCode=1});

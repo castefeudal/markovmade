@@ -46,7 +46,7 @@
   position: absolute; top: 0; left: 50%; width: auto; height: 104%; max-width: none;
   aspect-ratio: 40 / 27; object-fit: contain;
   transform: translate3d(calc(-50% + var(--mm-hero-x)), var(--mm-hero-y), 0);
-  transform-origin: center; filter: var(--mm-media-filter); pointer-events: none;
+  transform-origin: center; filter: none; pointer-events: none;
   transition: opacity 160ms linear;
 }
 .mm-hero-fallback { z-index: 0; opacity: 1; }

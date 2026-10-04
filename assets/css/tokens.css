@@ -53,7 +53,7 @@
   --mm-motion-panel: 340ms;
   --mm-motion-editorial: 600ms;
   --mm-ease-premium: cubic-bezier(.2, .75, .25, 1);
-  --mm-font-display: 'Cormorant Garamond','MM Display Fallback',Georgia, serif;
+  --mm-font-display: 'Cormorant RU','Cormorant Garamond','MM Display Fallback',Georgia, serif;
   --mm-font-body: 'Manrope','MM Body Fallback',Arial, sans-serif;
   --mm-type-display: clamp(3.4rem, 8.8vw, 8.8rem);
   --mm-type-h1: clamp(2.7rem, 6vw, 6.5rem);
@@ -74,6 +74,8 @@
   --lab-panel: var(--mm-surface-1);
   --lab-muted: var(--mm-text-muted);
 }
+
+html:lang(en) { --mm-font-display:'Cormorant Garamond','MM Display Fallback',Georgia,serif; }
 
 html[data-theme="aurum-noir"], html[data-theme="obsidian"] {
   color-scheme: dark;

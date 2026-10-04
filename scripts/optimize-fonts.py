@@ -29,7 +29,7 @@ for path in (root/'assets/media/fonts').glob('*.woff2'):
     sub=subset.Subsetter(options=options)
     # Both locales, Western names and punctuation; retain the existing subset
     # split so Russian never downloads unused extended-Latin letterforms.
-    codepoints=range(0x400,0x460) if 'cyrillic' in path.name else list(range(0x20,0x100))+list(range(0x2000,0x2070))+[0x20ac,0x2116,0x2122,0x2191,0x2193,0x2212]
+    codepoints=(list(range(0x400,0x460))+list(range(0x20,0x41))+list(range(0x2000,0x2070))+[0x2116]) if '-ru.' in path.name else range(0x400,0x460) if 'cyrillic' in path.name else list(range(0x20,0x100))+list(range(0x2000,0x2070))+[0x20ac,0x2116,0x2122,0x2191,0x2193,0x2212]
     sub.populate(unicodes=codepoints)
     sub.subset(font)
     original=path.stat().st_size
