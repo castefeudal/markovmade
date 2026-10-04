@@ -1,0 +1,134 @@
+[
+  {
+    "scene": "ru-aurum-noir-mobile",
+    "samples": 3,
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": false
+  },
+  {
+    "scene": "ru-aurum-noir-desktop",
+    "samples": 3,
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": true
+  },
+  {
+    "scene": "ru-event-horizon-mobile",
+    "samples": 3,
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": false
+  },
+  {
+    "scene": "ru-event-horizon-desktop",
+    "samples": 3,
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": true
+  },
+  {
+    "scene": "ru-clarity-mobile",
+    "samples": 3,
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": true
+  },
+  {
+    "scene": "ru-clarity-desktop",
+    "samples": 3,
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": true
+  },
+  {
+    "scene": "en-aurum-noir-mobile",
+    "samples": 3,
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": false
+  },
+  {
+    "scene": "en-aurum-noir-desktop",
+    "samples": 3,
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": true
+  },
+  {
+    "scene": "en-event-horizon-mobile",
+    "samples": 3,
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": true
+  },
+  {
+    "scene": "en-event-horizon-desktop",
+    "samples": 3,
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": true
+  },
+  {
+    "scene": "en-clarity-mobile",
+    "samples": 3,
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": true
+  },
+  {
+    "scene": "en-clarity-desktop",
+    "samples": 3,
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "allRuns100": true
+  }
+]

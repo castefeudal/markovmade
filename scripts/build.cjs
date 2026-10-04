@@ -74,6 +74,12 @@ function extractComponent(html, className, name) {
   });
   // Below-fold keyframes are not needed to paint the shell.
   critical.walkAtRules(rule => { if (/keyframes/.test(rule.name) || (rule.nodes && !rule.nodes.length)) rule.remove(); });
+  // The shell uses Cormorant RU or the English Latin faces. Legacy section
+  // typography must not fetch Cyrillic Garamond while EN copy is still parsed.
+  // Those faces remain available in the intent-loaded full stylesheet.
+  critical.walkAtRules('font-face', rule => {
+    if (/cormorant-(?:normal|italic)-cyrillic\.woff2/.test(rule.toString())) rule.remove();
+  });
   critical.walkComments(c=>c.remove());
   const criticalCss=minCss(critical.toString().replace(/\.\.\/media\//g,'assets/media/'));
   const fullCss=minCss(css);

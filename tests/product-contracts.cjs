@@ -138,6 +138,7 @@ async function assertCta(page,label) {
       const colors=await first.locator('#hero .mm-primary-cta').evaluate(el=>({fg:getComputedStyle(el.querySelector('span')).color,bg:getComputedStyle(el).backgroundColor}));
       assert.ok(contrast(colors.fg,colors.bg)>=4.5,`critical CSS CTA is legible in ${theme}/${lang}`);
       assert.ok(!fetched.some(u=>/site\.css|\.mp4|lab-runtime|personal-os\.html|lab\.html/.test(u)),`${theme}/${lang}: first paint is independent of below-fold assets`);
+      assert.ok(!fetched.some(u=>/cormorant-(normal|italic)-cyrillic\.woff2/.test(u)),`${theme}/${lang}: section-only display faces stay outside first paint`);
       await first.close();
     }
     const failure=await browser.newPage({viewport:{width:1440,height:900}});
