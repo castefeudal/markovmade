@@ -29,7 +29,15 @@ for path in (root/'assets/media/fonts').glob('*.woff2'):
     sub=subset.Subsetter(options=options)
     # The RU display face includes Latin/common glyphs to avoid a second
     # webfont-family fallback. Original split faces remain for EN/components.
-    codepoints=(list(range(0x400,0x460))+list(range(0x20,0x100))+list(range(0x2000,0x2070))+[0x20ac,0x2116,0x2122,0x2191,0x2193,0x2212]) if '-ru.' in path.name or '-combined.' in path.name else range(0x400,0x460) if 'cyrillic' in path.name else list(range(0x20,0x100))+list(range(0x2000,0x2070))+[0x20ac,0x2116,0x2122,0x2191,0x2193,0x2212]
+    common=list(range(0x2000,0x2070))+[0xa0,0xab,0xbb,0xb0,0xd7,0x20ac,0x2116,0x2122,0x2191,0x2193,0x2212]
+    if '-ru.' in path.name:
+        codepoints=list(range(0x400,0x460))+list(range(0x20,0x7f))+common
+    elif '-combined.' in path.name:
+        codepoints=list(range(0x400,0x460))+list(range(0x20,0x100))+common
+    elif 'cyrillic' in path.name:
+        codepoints=range(0x400,0x460)
+    else:
+        codepoints=list(range(0x20,0x100))+common
     sub.populate(unicodes=codepoints)
     sub.subset(font)
     original=path.stat().st_size
