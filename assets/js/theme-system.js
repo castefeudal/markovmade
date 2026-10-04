@@ -43,7 +43,7 @@
     document.documentElement.style.colorScheme = theme === 'clarity' ? 'light' : 'dark';
     var body = document.body;
     if (body) {
-      body.classList.remove('theme-light', 'theme-soft', 'theme-contrast', 'theme-cosmos', 'theme-clarity');
+      body.classList.remove('theme-soft', 'theme-contrast');
       body.classList.toggle('theme-cosmos', theme === 'event-horizon');
       body.classList.toggle('theme-light', theme === 'clarity');
       body.classList.toggle('theme-clarity', theme === 'clarity');
@@ -118,6 +118,11 @@
         apply(name);
         safeSet('mm.theme', name);
         safeSet('markov-theme', legacyValues[name]);
+        var sharedUrl = new URL(location.href);
+        if (sharedUrl.searchParams.has('theme')) {
+          sharedUrl.searchParams.set('theme', name);
+          history.replaceState(null, '', sharedUrl);
+        }
         syncSelected();
         dialog.close();
       });
@@ -148,7 +153,7 @@
       var boot = document.documentElement.dataset.theme;
       saved = resolve(boot) || 'aurum-noir';
     }
-    selected = apply(saved);
+    selected = apply(resolve(new URLSearchParams(location.search).get('theme')) || saved);
     document.querySelectorAll('.theme-switch').forEach(function (button) { button.addEventListener('click', open); });
     document.addEventListener('click', function (event) {
       if (event.target.closest && event.target.closest('[data-lang-toggle]')) window.setTimeout(updateLabels, 0);

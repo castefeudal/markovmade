@@ -1,0 +1,29 @@
+/* Calm, single-level navigation. The logo has its own cell at every width. */
+#main-header { position: fixed; inset: 0 0 auto; z-index: 50; padding: .75rem clamp(1.25rem, 5.5vw, 6rem); background: var(--mm-bg-primary); border: 0; border-bottom: 1px solid var(--mm-border); transition: transform 180ms ease; }
+#main-header > .container { display: flex; align-items: center; justify-content: space-between; gap: 2rem; width: 100%; max-width: 1408px; margin-inline: auto; padding: 0; }
+#main-header.scrolled-down { transform: translateY(-100%); }
+#main-header.scrolled-up { transform: translateY(0); }
+#main-header .mm-header-logo-link { flex: 0 0 3rem; display: flex; align-items: center; justify-content: center; width: 3rem; height: 3.25rem; overflow: hidden; }
+#main-header .mm-header-logo-link img { width: 3rem; height: 3.25rem; max-width: 3rem; object-fit: contain; filter: none; }
+#main-header nav { display: flex; align-items: center; gap: clamp(1rem, 2vw, 2rem); background: none; border: 0; border-radius: 0; padding: 0; box-shadow: none; }
+#main-header .nav-link { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .5rem 0; color: var(--mm-text-secondary); font: 650 .8125rem/1.4 var(--mm-font-body); letter-spacing: .025em; text-transform: none; text-decoration: none; border: 0; background: none; }
+#main-header .nav-link:hover, #main-header .nav-link:focus-visible { color: var(--mm-text-primary); }
+#main-header .nav-link::after { content: none; }
+#main-header nav > div { display: flex; align-items: center; gap: .5rem; padding-left: 1rem; border-left: 1px solid var(--mm-border); }
+#main-header a[href="#contact"] { display: inline-flex; align-items: center; justify-content: center; min-width: 2.75rem; min-height: 2.75rem; padding: .5rem .75rem; color: var(--mm-text-primary); border: 1px solid var(--mm-border-strong); border-radius: .5rem; text-decoration: none; }
+#main-header a[href="#contact"] > .absolute { display: none; }
+#main-header a[href="#contact"] > .relative { color: inherit; font-size: .8125rem; }
+#main-header .mm-header-mobile-controls { display: none; align-items: center; gap: .5rem; }
+.theme-switch, .lang-switch { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-width: 2.75rem; min-height: 2.75rem; padding: .5rem .75rem; background: transparent; border: 1px solid var(--mm-border-strong); border-radius: .5rem; color: var(--mm-text-primary); font: 700 .8125rem/1.3 var(--mm-font-body); cursor: pointer; }
+.theme-switch:hover, .lang-switch:hover { background: var(--mm-accent-soft); border-color: var(--mm-accent); }
+.theme-switch-text, .lang-switch-flag { display: none; }
+.theme-switch-icon { width: 1rem; height: 1rem; border: 1.5px solid currentColor; border-radius: 50%; background: linear-gradient(90deg, transparent 50%, currentColor 50%); }
+#burger-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 2.75rem; height: 2.75rem; padding: .5rem; color: var(--mm-text-primary); border: 1px solid var(--mm-border-strong); border-radius: .5rem; background: transparent; }
+#burger-btn span { display: block; width: 1.125rem; height: 1px; background: currentColor; }
+#mobile-menu { position: fixed; inset: 0; z-index: 55; padding: 5rem 1.5rem 2rem; background: var(--mm-bg-primary); overflow-y: auto; }
+#mobile-menu[inert] { visibility: hidden; pointer-events: none; }
+#mobile-menu nav { display: flex; flex-direction: column; align-items: stretch; gap: .5rem; max-width: 28rem; margin: auto; }
+#mobile-menu nav a { justify-content: flex-start; padding: .75rem 0; min-height: 3rem; border-bottom: 1px solid var(--mm-border); color: var(--mm-text-primary); font: 650 1.125rem/1.4 var(--mm-font-body); letter-spacing: 0; text-transform: none; }
+#mobile-menu [data-menu-close] { position: absolute; right: 1.25rem; top: 1rem; width: 2.75rem; height: 2.75rem; background: transparent; color: var(--mm-text-primary); border: 1px solid var(--mm-border-strong); border-radius: .5rem; font-size: 1.5rem; cursor: pointer; }
+@media (max-width: 1180px) { #main-header { padding-block: .625rem; } #main-header > .container > nav { display: none; } #main-header .mm-header-mobile-controls { display: flex; } }
+@media (prefers-reduced-motion: reduce) { #main-header, #mobile-menu { transition: none; } }

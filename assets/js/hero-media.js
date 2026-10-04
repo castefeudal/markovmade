@@ -2,7 +2,7 @@
     'use strict';
 
     /* Keep the authored poster as the mobile hero: frame extraction is desktop-only and not part of first paint. */
-    if (window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse)').matches) {
+    if (window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)').matches) {
         var staticHero = document.querySelector('.mm-hero-media');
         if (staticHero) staticHero.classList.add('mm-static-poster');
         return;
@@ -37,11 +37,11 @@
             nod2PeakTime: 6.24,
             nod2EndTime: 7.72,
 
-            desktopWidth: 520,
+            desktopWidth: 640,
             mobileWidth: 360,
             lowMemoryWidth: 300,
-            desktopTurnFrames: 16,
-            desktopNodFrames: 8,
+            desktopTurnFrames: 32,
+            desktopNodFrames: 16,
             mobileTurnFrames: 12,
             mobileNodFrames: 7,
             lowMemoryTurnFrames: 8,
@@ -66,11 +66,16 @@
 
         var reducedMotion = !!(window.matchMedia &&
             window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+        window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', function (event) {
+            reducedMotion = event.matches;
+            if (reducedMotion) returnToNeutral(0);
+        });
         var coarsePointer = !!(window.matchMedia &&
-            window.matchMedia('(hover: none), (pointer: coarse)').matches);
+            window.matchMedia('(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)').matches);
         var lowMemory = (typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4) ||
             (typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 4);
 
+        var heroRect = hero.getBoundingClientRect();
         var context = canvas.getContext('2d', { alpha: false, desynchronized: true });
         if (!context) return;
 
@@ -309,7 +314,7 @@
             decoder.preload = 'metadata';
             decoder.disablePictureInPicture = true;
             decoder.src = video.currentSrc ||
-                ((video.querySelector('source') && video.querySelector('source').src) || 'assets/media/hero-head2.mp4');
+                ((video.querySelector('source') && video.querySelector('source').src) || 'assets/media/hero-portrait.mp4');
             decoder.style.cssText = 'position:fixed;width:2px;height:2px;opacity:0;pointer-events:none;left:-10px;bottom:-10px;';
             document.body.appendChild(decoder);
 
@@ -571,14 +576,14 @@
         }
 
         function updateParallax() {
-            var shiftX = (displayPointerX - 0.5) * (coarsePointer ? settings.mobileShiftX : settings.desktopShiftX);
-            var shiftY = (displayPointerY - 0.5) * (coarsePointer ? settings.mobileShiftY : settings.desktopShiftY);
+            var shiftX = (displayPointerX - 0.78) * (coarsePointer ? settings.mobileShiftX : settings.desktopShiftX);
+            var shiftY = (displayPointerY - 0.48) * (coarsePointer ? settings.mobileShiftY : settings.desktopShiftY);
             media.style.setProperty('--mm-hero-x', shiftX.toFixed(2) + 'px');
             media.style.setProperty('--mm-hero-y', shiftY.toFixed(2) + 'px');
         }
 
         function scheduleRender(force) {
-            if (destroyed || autoPlaying || !heroVisible) return;
+            if (destroyed || autoPlaying || !heroVisible || document.hidden) return;
             if (force) lastRenderKey = '';
             if (!animationFrame) {
                 animationFrame = window.requestAnimationFrame(renderLoop);
@@ -587,7 +592,7 @@
 
         function renderLoop(timestamp) {
             animationFrame = 0;
-            if (destroyed || autoPlaying || !heroVisible) return;
+            if (destroyed || autoPlaying || !heroVisible || document.hidden) return;
 
             var dt = lastFrameTime ? clamp(timestamp - lastFrameTime, 8, 42) : 16.7;
             var poseTau = coarsePointer ? 78 : 104;
@@ -620,7 +625,7 @@
         function setFromPointer(clientX, clientY, immediate) {
             if (autoPlaying) return;
 
-            var rect = hero.getBoundingClientRect();
+            var rect = heroRect;
             pointerX = clamp((clientX - rect.left) / Math.max(1, rect.width), 0, 1);
             pointerY = clamp((clientY - rect.top) / Math.max(1, rect.height), 0, 1);
 
@@ -641,7 +646,6 @@
                 scheduleRender(false);
             }
 
-            updateParallax();
         }
 
         function returnToNeutral(delay) {
@@ -652,7 +656,6 @@
                 pointerY = 0.48;
                 targetTurn = 0;
                 targetNod = 0;
-                updateParallax();
                 scheduleRender(false);
             }, Math.max(0, delay || 0));
         }
@@ -688,22 +691,6 @@
             if (!destroyed && heroVisible) drawFrame(frames[frames.length - 1], prefix + ':last', true);
         }
 
-        async function playTurnDemo() {
-            if (!cacheReady || autoPlaying || destroyed || reducedMotion) return;
-            autoPlaying = true;
-            media.dataset.mmPose = 'turn';
-
-            var forward = bank.turn.slice();
-            var backward = bank.turn.slice(0, -1).reverse();
-            await playFrameSequence(forward, 'demo-turn-f', 34);
-            await playFrameSequence(backward, 'demo-turn-b', 34);
-
-            autoPlaying = false;
-            currentTurn = targetTurn = 0;
-            currentNod = targetNod = 0;
-            drawInteractivePose(true);
-        }
-
         async function playDoubleNod(markAsInteraction) {
             if (!cacheReady || autoPlaying || destroyed || reducedMotion) return;
             if (markAsInteraction) markInteracted();
@@ -725,23 +712,10 @@
             drawInteractivePose(true);
         }
 
-        async function playIntro() {
-            if (userInteracted || autoPlaying || destroyed || reducedMotion || !heroVisible || !cacheReady) return;
-            await playTurnDemo();
-            if (userInteracted || destroyed) return;
-            await wait(160);
-            await playDoubleNod(false);
-        }
-
-        function scheduleIntro() {
-            window.clearTimeout(introTimer);
-            introTimer = window.setTimeout(playIntro, settings.introDelay);
-        }
-
         function handleVideoError(error) {
             media.classList.add('mm-video-error');
             media.classList.remove('mm-direct-ready', 'mm-frames-ready');
-            console.warn('[MARKOVMADE] hero-head2.mp4 не загрузился:', error || 'unknown error');
+            console.warn('[MARKOVMADE] hero-portrait.mp4 не загрузился:', error || 'unknown error');
         }
 
         async function boot() {
@@ -765,10 +739,8 @@
                     cacheReady = true;
                     media.classList.add('mm-frames-ready');
                     media.classList.remove('mm-direct-ready');
-                    currentTurn = targetTurn = 0;
-                    currentNod = targetNod = 0;
                     drawInteractivePose(true);
-                    scheduleIntro();
+                    scheduleRender(true);
                 } catch (cacheError) {
                     console.warn('[MARKOVMADE] Кэш цельных кадров недоступен; используется прямая перемотка:', cacheError);
                     cacheReady = false;
@@ -781,8 +753,8 @@
         }
 
         window.addEventListener('pointermove', function (event) {
-            if (event.pointerType === 'touch' || !heroVisible) return;
-            var rect = hero.getBoundingClientRect();
+            if (event.pointerType === 'touch' || !heroVisible || reducedMotion || media.classList.contains('mm-static-poster')) return;
+            var rect = heroRect;
             if (event.clientY < rect.top || event.clientY > rect.bottom) return;
             markInteracted();
             setFromPointer(event.clientX, event.clientY, false);
@@ -790,7 +762,7 @@
 
         hero.addEventListener('pointerleave', function (event) {
             if (event.pointerType === 'touch') return;
-            returnToNeutral(320);
+            returnToNeutral(0);
         }, { passive: true });
 
         hero.addEventListener('click', function (event) {
@@ -798,57 +770,6 @@
             if (coarsePointer) return;
             playDoubleNod(true);
         });
-
-        hero.addEventListener('touchstart', function (event) {
-            if (!event.touches || !event.touches.length) return;
-            var touch = event.touches[0];
-            touchActive = true;
-            touchStartX = touchLastX = touch.clientX;
-            touchStartY = touchLastY = touch.clientY;
-            touchDirection = 'pending';
-            markInteracted();
-        }, { passive: true });
-
-        hero.addEventListener('touchmove', function (event) {
-            if (!touchActive || !event.touches || !event.touches.length) return;
-            var touch = event.touches[0];
-            touchLastX = touch.clientX;
-            touchLastY = touch.clientY;
-            var deltaX = touch.clientX - touchStartX;
-            var deltaY = touch.clientY - touchStartY;
-
-            if (touchDirection === 'pending' && Math.max(Math.abs(deltaX), Math.abs(deltaY)) >= 8) {
-                touchDirection = Math.abs(deltaX) > Math.abs(deltaY) * 1.10 ? 'horizontal' : 'vertical';
-            }
-
-            if (touchDirection === 'vertical') {
-                touchActive = false;
-                return;
-            }
-
-            if (touchDirection === 'horizontal') {
-                event.preventDefault();
-                setFromPointer(touch.clientX, hero.getBoundingClientRect().top + hero.clientHeight * 0.47, false);
-            }
-        }, { passive: false });
-
-        function finishTouch() {
-            if (!touchActive) return;
-            var movedX = Math.abs(touchLastX - touchStartX);
-            var movedY = Math.abs(touchLastY - touchStartY);
-            var wasTap = touchDirection === 'pending' && movedX < 9 && movedY < 9;
-            touchActive = false;
-            touchDirection = 'pending';
-
-            if (wasTap) {
-                playDoubleNod(true);
-            } else {
-                returnToNeutral(settings.touchReturnDelay);
-            }
-        }
-
-        hero.addEventListener('touchend', finishTouch, { passive: true });
-        hero.addEventListener('touchcancel', finishTouch, { passive: true });
 
         if ('IntersectionObserver' in window) {
             observer = new IntersectionObserver(function (entries) {
@@ -862,11 +783,17 @@
             observer.observe(hero);
         }
 
-        window.addEventListener('resize', function () {
-            updateParallax();
-        }, { passive: true });
+        function measureHero() { heroRect = hero.getBoundingClientRect(); }
+        window.addEventListener('resize', measureHero, { passive: true });
+        window.addEventListener('scroll', measureHero, { passive: true });
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden) { if (animationFrame) cancelAnimationFrame(animationFrame); animationFrame = 0; }
+            else { measureHero(); returnToNeutral(0); }
+        });
+        window.addEventListener('pageshow', function () { measureHero(); returnToNeutral(0); });
 
-        window.addEventListener('pagehide', function () {
+        window.addEventListener('pagehide', function (event) {
+            if (event.persisted) return;
             destroyed = true;
             window.clearTimeout(introTimer);
             window.clearTimeout(returnTimer);

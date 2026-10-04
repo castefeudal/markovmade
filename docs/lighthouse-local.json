@@ -1,0 +1,513 @@
+[
+  {
+    "name": "ru-aurum-noir-mobile",
+    "url": "http://127.0.0.1:4174/?lang=ru&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1357.4172996639218,
+      "largest-contentful-paint": 2055.8345993278435,
+      "total-blocking-time": 41,
+      "cumulative-layout-shift": 0.0001600061718726786
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.4 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "2.1 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "2.4 s"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "90 ms"
+      },
+      {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "detail": "2.1 s"
+      },
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "savings": {
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "ru-aurum-noir-desktop",
+    "url": "http://127.0.0.1:4174/?lang=ru&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 332.39099897231,
+      "largest-contentful-paint": 506.78199794461995,
+      "total-blocking-time": 100.79324922923246,
+      "cumulative-layout-shift": 0.0001942990219910982
+    },
+    "remainingAudits": [
+      {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "detail": "100 ms"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "150 ms"
+      },
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "savings": {
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "ru-event-horizon-mobile",
+    "url": "http://127.0.0.1:4174/?lang=ru&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 91,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1455.237,
+      "largest-contentful-paint": 2290.474,
+      "total-blocking-time": 301,
+      "cumulative-layout-shift": 0.0001600061718726786
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.5 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "2.3 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "2.4 s"
+      },
+      {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "detail": "300 ms"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "340 ms"
+      },
+      {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "detail": "2.3 s"
+      },
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "savings": {
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "ru-event-horizon-desktop",
+    "url": "http://127.0.0.1:4174/?lang=ru&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 349.39815,
+      "largest-contentful-paint": 494.59259999999995,
+      "total-blocking-time": 2,
+      "cumulative-layout-shift": 0.0001942990219910982
+    },
+    "remainingAudits": [
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "120 ms"
+      },
+      {
+        "id": "forced-reflow-insight",
+        "title": "Forced reflow"
+      },
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "savings": {
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "ru-clarity-mobile",
+    "url": "http://127.0.0.1:4174/?lang=ru&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 91,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1526,
+      "largest-contentful-paint": 2159.5,
+      "total-blocking-time": 289.5,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.5 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "2.2 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "3.9 s"
+      },
+      {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "detail": "290 ms"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "350 ms"
+      },
+      {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "detail": "2.2 s"
+      },
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "savings": {
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "ru-clarity-desktop",
+    "url": "http://127.0.0.1:4174/?lang=ru&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 266.8225821572718,
+      "largest-contentful-paint": 390.2903286290873,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0.0001942990219910982
+    },
+    "remainingAudits": [
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "savings": {
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "en-aurum-noir-mobile",
+    "url": "http://127.0.0.1:4174/?lang=en&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 86,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1588.74,
+      "largest-contentful-paint": 2295.9799999999996,
+      "total-blocking-time": 394.86999999999966,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.6 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "2.3 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "3.8 s"
+      },
+      {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "detail": "390 ms"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "460 ms"
+      },
+      {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "detail": "2.3 s"
+      },
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "savings": {
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "en-aurum-noir-desktop",
+    "url": "http://127.0.0.1:4174/?lang=en&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 321.15,
+      "largest-contentful-paint": 438.5874999999999,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0.0008348453276638723
+    },
+    "remainingAudits": [
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "savings": {
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "en-event-horizon-mobile",
+    "url": "http://127.0.0.1:4174/?lang=en&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 92,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1452.020264716533,
+      "largest-contentful-paint": 2157.040529433066,
+      "total-blocking-time": 253.51013235826645,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.5 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "2.2 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "3.9 s"
+      },
+      {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "detail": "250 ms"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "320 ms"
+      },
+      {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "detail": "2.2 s"
+      },
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "savings": {
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "en-event-horizon-desktop",
+    "url": "http://127.0.0.1:4174/?lang=en&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 377.12657540694926,
+      "largest-contentful-paint": 496.2847946656357,
+      "total-blocking-time": 23.968356148262757,
+      "cumulative-layout-shift": 0.0008348453276638723
+    },
+    "remainingAudits": [
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "80 ms"
+      },
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "savings": {
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "en-clarity-mobile",
+    "url": "http://127.0.0.1:4174/?lang=en&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 93,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1404.5269700056583,
+      "largest-contentful-paint": 1982.435682512731,
+      "total-blocking-time": 221.38174250141458,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.4 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "2.0 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "3.8 s"
+      },
+      {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "detail": "220 ms"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "290 ms"
+      },
+      {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "detail": "2.0 s"
+      },
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "savings": {
+          "LCP": 0
+        }
+      }
+    ]
+  },
+  {
+    "name": "en-clarity-desktop",
+    "url": "http://127.0.0.1:4174/?lang=en&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 258.03754020268366,
+      "largest-contentful-paint": 384.15016081073463,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0.0008312145602720483
+    },
+    "remainingAudits": [
+      {
+        "id": "network-dependency-tree-insight",
+        "title": "Network dependency tree",
+        "savings": {
+          "LCP": 0
+        }
+      }
+    ]
+  }
+]

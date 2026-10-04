@@ -1,0 +1,1 @@
+(function(){"use strict";window.mmSafeStorage=window.mmSafeStorage||{get:function(t,e){try{var r=window.localStorage.getItem(t);return r===null?e:r}catch{return e}},set:function(t,e){try{return window.localStorage.setItem(t,String(e)),!0}catch{return!1}},remove:function(t){try{return window.localStorage.removeItem(t),!0}catch{return!1}}}})();

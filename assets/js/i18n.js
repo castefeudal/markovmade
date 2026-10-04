@@ -1,6 +1,23 @@
 (function() {
     'use strict';
     var DICT = {
+"Расчёт": "Assessment",
+"Услуги": "Services",
+"Обо мне": "About me",
+"Команда": "Team",
+"Инструменты загружаются при открытии раздела.": "The tools load when you open this section.",
+"Прототип загружается при открытии раздела.": "The prototype loads when you open this section.",
+"Рабочий процесс": "Review process",
+"Границы работы": "Scope of work",
+"Согласуем тренировочную нагрузку и питание под ваш график. Заранее определяем, какие показатели отслеживать и когда пересматривать план.": "We agree on training load and nutrition that fit your schedule. We decide which measures to track and when to review the plan.",
+"Сопоставляем цель с тренировочным опытом, самочувствием и доступным временем. Нагрузку меняем постепенно и оцениваем по динамике.": "We relate your goal to training experience, wellbeing and available time. Load changes gradually and is evaluated using trends.",
+"Разбор питания не является медицинской диагностикой или лечением. При симптомах и вопросах о дефицитах нужны обследование и профильный врач.": "Nutrition review is not medical diagnosis or treatment. Symptoms and questions about deficiencies require assessment by a qualified clinician.",
+"Обсуждаем цели, привычки и решения, с которыми вы хотите работать. Этот формат не заменяет психотерапию или психиатрическую помощь.": "We discuss the goals, habits and decisions you want to work on. This format does not replace psychotherapy or psychiatric care.",
+
+  "Ваши данные. Ваш следующий шаг.": "Your data. Your next step.",
+  "Как строится работа": "How we work",
+  "Личная работа": "Personal work",
+  "Фиксируем исходные данные, согласуем план и сроки проверки. Отслеживаем динамику и корректируем питание, тренировки и режим по вашим данным. Результат зависит от исходной ситуации, соблюдения плана и индивидуальной реакции; конкретные изменения и сроки не гарантируются.": "We record your starting data and agree on a plan and review dates. We track changes and adjust nutrition, training and routine using your data. Outcomes depend on your starting situation, adherence and individual response; specific changes and timelines are not guaranteed.",
   "Плавающая кнопка связи": "Floating contact button",
   "От души, душевно": "From the soul, with soul",
   "В ДУШУ": "STRAIGHT TO THE CORE",
@@ -1257,24 +1274,13 @@
             description: 'Бесплатный MARKOVMADE LAB: состав тела, питание, восстановление, сила и тренд прогресса. Персональная работа с Павлом Марковым и прототип приложения.'
         },
         en: {
-            title: 'MARKOVMADE | Pavel Markov — body, nutrition, discipline and personal app',
-            description: 'MARKOVMADE is Pavel Markov’s personal system: FFMI, macros, recovery and progress assessment, body, nutrition, mindset, routine and a custom app built around the goal.'
+            title: 'MARKOVMADE | Pavel Markov — body and nutrition for your life',
+            description: 'MARKOVMADE is Pavel Markov’s personal system: FFMI, macros, recovery and progress assessment, body, nutrition, mindset, routine and the Personal OS prototype.'
         }
     };
     var currentLang = window.mmSafeStorage.get('markovmade_lang', 'ru') || 'ru';
-    var textOriginals = new WeakMap();
+    var textOriginals = window.mmTextOriginals || new WeakMap();
     var attrOriginals = new WeakMap();
-    var partialKeys = Object.keys(DICT).filter(function(k) { return k.length > 7; });
-    var partialMatchers = Object.create(null);
-    function tokenOf(value) { var m = String(value).toLocaleLowerCase().match(/[a-zа-яё0-9]+/i); return m ? m[0] : ''; }
-    partialKeys.forEach(function(key) {
-        var token = tokenOf(key); if (!token) return;
-        (partialMatchers[token] || (partialMatchers[token] = [])).push(key);
-    });
-    Object.keys(partialMatchers).forEach(function(token) {
-        var keys = partialMatchers[token].sort(function(a,b) { return b.length-a.length; });
-        partialMatchers[token] = new RegExp(keys.map(function(k) { return k.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }).join('|'), 'g');
-    });
     function normalize(s) { return String(s || '').replace(/\s+/g, ' ').trim(); }
     function translateString(s) {
         var raw = String(s);
@@ -1283,9 +1289,9 @@
         var core = normalize(raw);
         if (!core) return s;
         if (Object.prototype.hasOwnProperty.call(DICT, core)) return leading + DICT[core] + trailing;
-        if (core.length < 8) return leading + core.replace(/\bкг\b/g, 'kg').replace(/\bсм\b/g, 'cm').replace(/\bккал\b/g, 'kcal').replace(/\bБЖУ\b/g, 'macros').replace(/\bЦНС\b/g, 'CNS') + trailing;
+        if (core.length < 8) return leading + core.replace(/(^|[^А-Яа-яA-Za-z])кг(?=$|[^А-Яа-яA-Za-z])/g, '$1kg').replace(/(^|[^А-Яа-яA-Za-z])см(?=$|[^А-Яа-яA-Za-z])/g, '$1cm').replace(/(^|[^А-Яа-яA-Za-z])ккал(?=$|[^А-Яа-яA-Za-z])/g, '$1kcal').replace(/(^|[^А-Яа-яA-Za-z])БЖУ(?=$|[^А-Яа-яA-Za-z])/g, '$1macros').replace(/(^|[^А-Яа-яA-Za-z])ЦНС(?=$|[^А-Яа-яA-Za-z])/g, '$1CNS') + trailing;
         var out = core;
-        out = out.replace(/\bкг\b/g, 'kg').replace(/\bсм\b/g, 'cm').replace(/\bккал\b/g, 'kcal').replace(/\bБЖУ\b/g, 'macros').replace(/\bЦНС\b/g, 'CNS');
+        out = out.replace(/(^|[^А-Яа-яA-Za-z])кг(?=$|[^А-Яа-яA-Za-z])/g, '$1kg').replace(/(^|[^А-Яа-яA-Za-z])см(?=$|[^А-Яа-яA-Za-z])/g, '$1cm').replace(/(^|[^А-Яа-яA-Za-z])ккал(?=$|[^А-Яа-яA-Za-z])/g, '$1kcal').replace(/(^|[^А-Яа-яA-Za-z])БЖУ(?=$|[^А-Яа-яA-Za-z])/g, '$1macros').replace(/(^|[^А-Яа-яA-Za-z])ЦНС(?=$|[^А-Яа-яA-Za-z])/g, '$1CNS');
         return leading + out + trailing;
     }
     function shouldSkipNode(node) {
@@ -1337,7 +1343,7 @@
                 flag.classList.toggle('lang-flag-en', lang !== 'en');
             }
             if (label) label.textContent = lang === 'en' ? 'RU' : 'EN';
-            btn.setAttribute('aria-label', lang === 'en' ? 'Switch to Russian' : 'Switch to English');
+            btn.setAttribute('aria-label', lang === 'en' ? 'RU — Switch to Russian' : 'EN — Switch to English');
             btn.setAttribute('title', lang === 'en' ? 'Switch to Russian' : 'Switch to English');
         });
     }
@@ -1354,8 +1360,9 @@
                 return shouldSkipNode(node) || !normalize(node.nodeValue) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
             }
         });
+        return new Promise(function(resolve) {
         function flush() {
-            if (run !== languageRun) return;
+            if (run !== languageRun) { resolve(); return; }
             var count = 0, node;
             while (count < 180 && (node = walker.nextNode())) {
                 if (!textOriginals.has(node)) textOriginals.set(node, node.nodeValue);
@@ -1365,8 +1372,10 @@
                 count++;
             }
             if (count === 180) window.setTimeout(flush, 0);
+            else resolve();
         }
         window.setTimeout(flush, 0);
+        });
     }
     function applyLanguage(lang) {
         currentLang = lang;
@@ -1376,12 +1385,19 @@
         updateMeta(lang);
         updateButtons(lang);
         document.body.classList.toggle('lang-en', lang === 'en');
-        window.setTimeout(function() {
+        document.documentElement.dataset.languageReady = '';
+        window.mmLanguageReady = translateTree(document.body, lang, run).then(function() {
             if (run !== languageRun) return;
-            translateTree(document.body, lang, run);
             applyAttrs(document, lang);
-        }, 0);
+            document.documentElement.dataset.languageReady = lang;
+        });
+        return window.mmLanguageReady;
     }
+    window.mmTranslate = function(root) {
+        applyAttrs(root, currentLang);
+        return translateTree(root, currentLang, languageRun);
+    };
+    window.mmLanguageReady = Promise.resolve();
     function initBilingual() {
         document.querySelectorAll('[data-lang-toggle]').forEach(function(btn) {
             if (btn.__langReady) return;

@@ -1,0 +1,31 @@
+/* Shared controls use explicit foreground tokens, including every descendant. */
+html { --mm-action-text: #17140e; --mm-action-bg: var(--mm-accent); --mm-action-hover: var(--mm-accent-hover); }
+html[data-theme="event-horizon"] { --mm-action-text: #07101d; }
+html[data-theme="clarity"] { --mm-action-text: #fff; }
+.mm-primary-cta, .mm-secondary-cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: .75rem;
+  min-height: 3.25rem; padding: .875rem 1.6rem; border: 1px solid transparent; border-radius: .625rem;
+  font: 750 .8125rem/1.4 var(--mm-font-body); letter-spacing: .04em; text-transform: none;
+  text-decoration: none; cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease;
+}
+#hero .mm-primary-cta { background: var(--mm-action-bg); color: var(--mm-action-text); border-color: var(--mm-action-bg); box-shadow: none; }
+#hero .mm-primary-cta :is(span,svg,path) { color: inherit; -webkit-text-fill-color: currentColor; }
+#hero .mm-primary-cta:hover { background: var(--mm-action-hover); border-color: var(--mm-action-hover); }
+#hero .mm-primary-cta:active { background: var(--mm-action-bg); }
+#hero .mm-primary-cta:is(:disabled,[aria-disabled="true"]) { background: var(--mm-action-bg); color: var(--mm-action-text); opacity: 1; cursor: not-allowed; border-style: dashed; }
+#hero .mm-secondary-cta { color: var(--mm-text-primary); border-color: var(--mm-border-strong); background: var(--mm-bg-primary); }
+#hero .mm-secondary-cta:hover { border-color: var(--mm-accent); background: var(--mm-accent-soft); }
+#hero :is(.mm-primary-cta,.mm-secondary-cta):focus-visible { outline: 3px solid var(--mm-focus); outline-offset: 4px; }
+#hero :is(.mm-primary-cta,.mm-secondary-cta)::after { content: none; }
+#hero .mm-primary-cta svg { width: 1.125rem; height: 1.125rem; }
+body { cursor: auto; }
+#cursor { display: none; }
+#mm-scroll-progress { width: 100%; transform-origin: left; }
+#mm-quick-actions { bottom: max(1rem, env(safe-area-inset-bottom)); }
+#mm-quick-actions .mm-quick-btn { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+body.menu-open { overflow: hidden; }
+@media (max-width: 600px) {
+  #hero :is(.mm-primary-cta,.mm-secondary-cta) { width: 100%; min-height: 3rem; }
+  #mm-quick-actions { display: none; }
+}

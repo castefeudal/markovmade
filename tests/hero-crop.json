@@ -1,0 +1,25 @@
+{
+  "source": {
+    "width": 960,
+    "height": 720
+  },
+  "crop": {
+    "x": 0,
+    "y": 0,
+    "width": 960,
+    "height": 648
+  },
+  "excludedWatermark": {
+    "x": 808,
+    "y": 674,
+    "width": 140,
+    "height": 36
+  },
+  "assets": {
+    "assets/media/hero-portrait-320w.avif": "bc6590501e4ab3340198681562ac5674974a022d2c3fa13b5674d8db4e000938",
+    "assets/media/hero-portrait-320w.webp": "cca568d01047ade430a118f87a9288afaadc29feb8faa28e7b08d7cb7685ffaf",
+    "assets/media/hero-portrait.avif": "44882c1adca916715a7635f89e02fed4f9e774a39e16f35bbd8bb4ff957110ff",
+    "assets/media/hero-portrait.mp4": "91c5037da33bf2d9b8d737f8c0a0bafb1b622ccf22ff34f224846363acce7ada",
+    "assets/media/hero-portrait.webp": "83d3c09502a42ef91d8927f418ae8e39f40377a6dfb4df8ace8f3f98e53db5c4"
+  }
+}

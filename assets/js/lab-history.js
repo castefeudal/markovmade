@@ -259,6 +259,7 @@
   }
 
   function init() {
+    window.mmRefreshPersonalOS = renderPersonalOS;
     const dialog = document.getElementById('mm-lab-history-dialog');
     const trigger = document.querySelector('[data-lab-history-open]');
     const close = document.querySelector('[data-lab-history-close]');

@@ -360,8 +360,23 @@
     "height": 1376
   },
   {
-    "path": "assets/media/hero-poster-320w.webp",
+    "path": "assets/media/hero-portrait.webp",
+    "width": 640,
+    "height": 432
+  },
+  {
+    "path": "assets/media/hero-portrait-320w.webp",
     "width": 320,
-    "height": 240
+    "height": 216
+  },
+  {
+    "path": "assets/media/hero-portrait.avif",
+    "width": 640,
+    "height": 432
+  },
+  {
+    "path": "assets/media/hero-portrait-320w.avif",
+    "width": 320,
+    "height": 216
   }
 ]

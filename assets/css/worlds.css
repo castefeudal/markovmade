@@ -16,57 +16,7 @@ html[data-theme="event-horizon"] body {
     radial-gradient(ellipse 51rem 38rem at 7% 50%, rgb(36 69 119 / 10%), transparent 74%);
 }
 
-html[data-theme="event-horizon"] #hero {
-  isolation: isolate;
-  background: #070b14;
-}
-
-html[data-theme="event-horizon"] #hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background:
-    radial-gradient(ellipse 44% 46% at 83% 36%, rgb(149 185 228 / 12%), transparent 80%),
-    linear-gradient(90deg, rgb(5 9 19 / 49%), transparent 61%);
-}
-
-html[data-theme="event-horizon"] #hero::after {
-  content:"";
-  position:absolute;
-  width:min(66vw,54rem);
-  aspect-ratio:1;
-  right:-18%;
-  top:9%;
-  z-index:1;
-  pointer-events:none;
-  border:1px solid rgb(189 212 233 / 9%);
-  border-radius:50%;
-  box-shadow:0 0 0 5rem rgb(189 212 233 / 2%),0 0 0 11rem rgb(189 212 233 / 1%);
-  background:radial-gradient(circle at 29% 26%,rgb(223 237 255 / 52%) 0 1px,transparent 2px),radial-gradient(circle at 72% 17%,rgb(223 237 255 / 45%) 0 1px,transparent 2px),radial-gradient(circle at 21% 69%,rgb(223 237 255 / 36%) 0 1px,transparent 2px);
-}
-
-html[data-theme="event-horizon"] #hero .mm-hero-media {
-  background: radial-gradient(circle at 71% 31%, #22344f, #070b14 67%);
-}
-
-html[data-theme="event-horizon"] #hero .mm-hero-fallback,
-html[data-theme="event-horizon"] #hero .mm-hero-video {
-  filter: grayscale(32%) saturate(64%) hue-rotate(9deg) contrast(111%);
-}
-
-html[data-theme="event-horizon"] #hero .hero-content-premium {
-  position: relative;
-  z-index: 3;
-}
-
-html[data-theme="event-horizon"] #hero .hero-title-premium .accent-word {
-  color: #e3eefb;
-  text-shadow: 0 0 2.5rem rgb(132 174 224 / 12%);
-}
-
-html[data-theme="event-horizon"] :is(.mm-primary-cta,.calc-primary-btn,.calc-gold-link,.lead-action) {
+html[data-theme="event-horizon"] :is(.calc-primary-btn,.calc-gold-link,.lead-action) {
   background: linear-gradient(135deg, #e2eef8, #a9c7e3 54%, #dceaf6) !important;
   border-color: #c8dced !important;
   color: #07101d !important;
@@ -77,17 +27,7 @@ html[data-theme="event-horizon"] #app-ecosystem #insights .mm-insights-result {
   background: radial-gradient(circle at 100% 0, rgb(113 165 224 / 13%), transparent 21rem), linear-gradient(150deg,#17253c,#0d1728 55%,#090f1c) !important;
 }
 
-html[data-theme="event-horizon"] #hero .hero-side-signature {
-  color: var(--mm-text-secondary);
-}
-
-html[data-theme="event-horizon"] #main-header.scrolled-up {
-  background: rgb(7 11 20 / 84%);
-  border-bottom-color: var(--world-rule);
-}
-
-html[data-theme="event-horizon"] .premium-divider,
-html[data-theme="event-horizon"] .mm-editorial-rule {
+html[data-theme="event-horizon"] .premium-divider, html[data-theme="event-horizon"] .mm-editorial-rule {
   border-color: var(--world-rule);
 }
 
@@ -97,9 +37,7 @@ html[data-theme="event-horizon"] #calculators {
     linear-gradient(180deg, #090f1d, #0a1321 53%, #070b14);
 }
 
-html[data-theme="event-horizon"] #calculators .mm-lab-panel,
-html[data-theme="event-horizon"] #calculators .mm-lab-snapshot,
-html[data-theme="event-horizon"] .mm-lab-history-dialog {
+html[data-theme="event-horizon"] #calculators .mm-lab-panel, html[data-theme="event-horizon"] #calculators .mm-lab-snapshot, html[data-theme="event-horizon"] .mm-lab-history-dialog {
   border-color: var(--mm-border-strong);
   background: linear-gradient(155deg, rgb(27 42 67 / 91%), rgb(11 19 34 / 97%));
   box-shadow: inset 0 1px rgb(238 243 248 / 6%), 0 24px 70px rgb(0 0 0 / 22%);
@@ -167,18 +105,12 @@ html[data-theme="event-horizon"] #insights .mm-insights-context {
   background: linear-gradient(145deg, #17243a, #101a2b);
 }
 
-html[data-theme="event-horizon"] .mm-theme-dialog,
-html[data-theme="event-horizon"] #privacy-modal > div {
+html[data-theme="event-horizon"] .mm-theme-dialog, html[data-theme="event-horizon"] #privacy-modal > div {
   background: linear-gradient(155deg, #1b2a43, #0d1728);
 }
 
 @media (max-width: 767px) {
   html[data-theme="event-horizon"] #app-ecosystem::after { width: 90vw; right: -47%; top: 18%; }
-  html[data-theme="event-horizon"] #hero::before { background: linear-gradient(90deg, rgb(5 9 19 / 48%), transparent 80%); }
-}
-
-@media (hover: none), (pointer: coarse) {
-  .mm-head-swipe-hint { display: none !important; }
 }
 
 @media (prefers-contrast: more) {

@@ -1,65 +1,54 @@
-const http = require('node:http');
-const fs = require('node:fs');
-const path = require('node:path');
-const { chromium } = require('playwright');
-
-const root = path.resolve(__dirname, '..');
-const mime = {'.html':'text/html; charset=utf-8','.css':'text/css; charset=utf-8','.js':'text/javascript; charset=utf-8','.webp':'image/webp','.avif':'image/avif','.woff2':'font/woff2','.mp4':'video/mp4'};
-const server = http.createServer((req,res) => {
-  let pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
-  if (pathname === '/') pathname = '/index.html';
-  const file = path.resolve(root, '.' + pathname);
-  if (!file.startsWith(root)) { res.writeHead(403).end(); return; }
-  res.setHeader('Content-Type', mime[path.extname(file)] || 'application/octet-stream');
-  fs.createReadStream(file).on('error', () => { if (!res.headersSent) res.writeHead(404); res.end(); }).pipe(res);
-});
-
-const themes = ['aurum-noir','event-horizon','clarity'];
-let browser;
-(async () => {
-  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
-  browser = await chromium.launch({headless:true});
-  const page = await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
-  await page.route(/^https?:\/\/(?!127\.0\.0\.1)/, route => route.abort());
-  await page.goto(`http://127.0.0.1:${server.address().port}/`, {waitUntil:'domcontentloaded',timeout:30000});
-  await page.waitForTimeout(1400);
-  await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
-  const findings = [];
-  for (const theme of themes) {
-    await page.locator('.theme-switch:visible').first().click();
-    await page.locator(`#mm-theme-dialog [data-theme-value="${theme}"]`).click();
-    await page.waitForTimeout(850);
-    const result = await page.evaluate(async () => window.axe.run(document, {
-      runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}
-    }));
-    for (const violation of result.violations) {
-      findings.push({theme,id:violation.id,impact:violation.impact,help:violation.help,nodes:violation.nodes.map(node=>({target:node.target,summary:node.failureSummary}))});
+const fs=require('node:fs'),path=require('node:path');
+const {chromium}=require('playwright');
+const {startServer,root}=require('./browser-helpers.cjs');
+const themes=['aurum-noir','event-horizon','clarity'];
+(async()=>{
+  const server=await startServer();let browser;
+  const findings=[];
+  try {
+    browser=await chromium.launch({headless:true});
+    const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+    await page.goto(server.url,{waitUntil:'load'});
+    await page.evaluate(()=>Promise.all([window.mmLoadLab(),window.mmLoadOS(),window.mmLoadContent()]));
+    // Audit off-screen sections too; Chromium otherwise skips their paint with
+    // content-visibility:auto and axe samples the canvas behind them.
+    await page.addStyleTag({content:'section { content-visibility:visible !important; contain-intrinsic-size:none !important; }'});
+    await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
+    async function audit(label,selector) {
+      const result=await page.evaluate(async selector=>window.axe.run(selector?document.querySelector(selector):document,{
+        runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']},
+        rules:{'heading-order':{enabled:true},'label-content-name-mismatch':{enabled:true}}
+      }),selector);
+      for(const v of result.violations)findings.push({label,id:v.id,impact:v.impact,help:v.help,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))});
     }
-    await page.locator('.theme-switch:visible').first().click();
-    const picker = await page.evaluate(async () => window.axe.run(document.querySelector('#mm-theme-dialog'), {
-      runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}
-    }));
-    for (const violation of picker.violations) {
-      findings.push({theme,component:'theme-picker',id:violation.id,impact:violation.impact,help:violation.help,nodes:violation.nodes.map(node=>({target:node.target,summary:node.failureSummary}))});
+    for(const lang of ['ru','en']) {
+      if(lang==='en'){await page.locator('[data-lang-toggle]:visible').first().click();await page.waitForFunction(()=>document.documentElement.lang==='en');await page.waitForTimeout(800);}
+      for(const theme of themes) {
+        await page.locator('.theme-switch:visible').first().click();await page.locator(`[data-theme-value="${theme}"]`).click();
+        for(const width of [320,390,768,1440]){
+          await page.setViewportSize({width,height:1000});await page.waitForTimeout(100);
+          await audit(`${lang}/${theme}/${width}`);
+        }
+        await page.locator('#calculators').scrollIntoViewIfNeeded();await page.waitForTimeout(100);
+        for(const tab of await page.locator('[data-mm-lab-tab]').all()){
+          await tab.click();await audit(`${lang}/${theme}/LAB/${await tab.getAttribute('data-mm-lab-tab')}`,'#calculators');
+        }
+        await page.locator('#app-ecosystem').scrollIntoViewIfNeeded();await page.waitForTimeout(100);
+        for(const tab of await page.locator('[data-app-tab]').all()){
+          await tab.click();await audit(`${lang}/${theme}/OS/${await tab.getAttribute('data-app-tab')}`,'#app-ecosystem');
+        }
+        await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(200);
+        await page.locator('.theme-switch:visible').first().click();await audit(`${lang}/${theme}/theme-picker`,'#mm-theme-dialog');await page.keyboard.press('Escape');
+        await page.locator('[data-lab-history-open]').click();await audit(`${lang}/${theme}/history`,'#mm-lab-history-dialog');await page.keyboard.press('Escape');
+        await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(200);
+        fs.mkdirSync(path.join(root,'test-results/accessibility'),{recursive:true});
+        fs.writeFileSync(path.join(root,'test-results/accessibility/findings.json'),JSON.stringify(findings,null,2));
+        console.log(`Axe inspected ${lang}/${theme}: 4 widths, 7 LAB tabs, 5 OS tabs, dialogs.`);
+      }
     }
-    await page.keyboard.press('Escape');
-  }
-  await page.locator('[data-lab-history-open]').click();
-  const history = await page.evaluate(async () => window.axe.run(document.querySelector('#mm-lab-history-dialog'), {
-    runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']}
-  }));
-  for (const violation of history.violations) {
-    findings.push({component:'lab-history-dialog',id:violation.id,impact:violation.impact,help:violation.help,nodes:violation.nodes.map(node=>({target:node.target,summary:node.failureSummary}))});
-  }
-  await page.keyboard.press('Escape');
-  await browser.close(); browser=null; await new Promise(resolve => server.close(resolve));
-  if (findings.length) {
-    console.error(JSON.stringify(findings,null,2));
-    process.exitCode=1;
-  } else console.log(`Axe passed WCAG 2.2 AA checks across ${themes.length} themes.`);
-})().catch(async error => {
-  console.error(error);
-  if (browser) await browser.close().catch(()=>{});
-  server.close();
-  process.exitCode=1;
-});
+    fs.mkdirSync(path.join(root,'test-results/accessibility'),{recursive:true});
+    fs.writeFileSync(path.join(root,'test-results/accessibility/findings.json'),JSON.stringify(findings,null,2));
+    if(findings.length){console.error(JSON.stringify(findings,null,2));process.exitCode=1;}
+    else console.log('Axe WCAG 2.2 AA, heading hierarchy and visible-label names passed across RU/EN and all three themes.');
+  }finally{await browser?.close();await server.close();}
+})().catch(error=>{console.error(error);process.exitCode=1});

@@ -3,18 +3,21 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
-const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+const html = fs.readFileSync(path.join(root, 'src/index.html'), 'utf8');
+const output = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const tokens = fs.readFileSync(path.join(root, 'assets/css/tokens.css'), 'utf8');
-const runtime = fs.readFileSync(path.join(root, 'assets/js/app-runtime.js'), 'utf8');
+const runtime = fs.readFileSync(path.join(root, 'assets/js/lab-runtime.js'), 'utf8');
 
 test('the single-page shell references local modular assets and GitHub Pages canonical', () => {
   assert.match(html, /rel="canonical" href="https:\/\/castefeudal\.github\.io\/markovmade\//);
-  for (const asset of ['assets/css/fonts.css', 'assets/css/legacy.css', 'assets/css/tokens.css', 'assets/css/product.css', 'assets/css/worlds.css', 'assets/css/clarity.css', 'assets/js/lab-models.js', 'assets/js/app-runtime.js', 'assets/js/i18n.js', 'assets/js/hero-media.js', 'assets/js/theme-system.js', 'assets/js/lab-history.js', 'assets/js/lab-dashboard.js']) {
+  for (const asset of ['assets/css/fonts.css', 'assets/css/foundation.css', 'assets/css/editorial.css', 'assets/css/lab.css', 'assets/css/personal-os.css', 'assets/css/hero.css', 'assets/css/controls.css', 'assets/css/header.css', 'assets/css/tokens.css', 'assets/css/product.css', 'assets/css/worlds.css', 'assets/css/clarity.css', 'assets/js/app-runtime.js', 'assets/js/hero-loader.js', 'assets/js/lab-loader.js', 'assets/js/language-loader.js', 'assets/js/theme-system.js']) {
     assert.ok(fs.existsSync(path.join(root, asset)), `${asset} exists`);
-    assert.ok(html.includes(asset), `${asset} is referenced`);
+    assert.ok(html.includes(asset) || (asset==='assets/js/app-runtime.js' && html.includes('assets/js/content-loader.js')), `${asset} is referenced directly or by the content loader`);
   }
   assert.doesNotMatch(html,/fonts\.googleapis\.com|fonts\.gstatic\.com/);
-  assert.match(html,/src="assets\/media\/hero-head2\.mp4"/);
+  assert.match(html,/src="assets\/media\/hero-portrait\.mp4"/);
+  assert.match(output, /id="critical-css"/);
+  assert.doesNotMatch(output, /<link rel="stylesheet" href="assets\/css\//);
 });
 
 test('three semantic themes define distinct media, chart, focus and surface tokens', () => {

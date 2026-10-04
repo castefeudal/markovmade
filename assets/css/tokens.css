@@ -53,8 +53,8 @@
   --mm-motion-panel: 340ms;
   --mm-motion-editorial: 600ms;
   --mm-ease-premium: cubic-bezier(.2, .75, .25, 1);
-  --mm-font-display: 'Cormorant Garamond', Georgia, serif;
-  --mm-font-body: 'Manrope', Arial, sans-serif;
+  --mm-font-display: 'Cormorant Garamond','MM Display Fallback',Georgia, serif;
+  --mm-font-body: 'Manrope','MM Body Fallback',Arial, sans-serif;
   --mm-type-display: clamp(3.4rem, 8.8vw, 8.8rem);
   --mm-type-h1: clamp(2.7rem, 6vw, 6.5rem);
   --mm-type-h2: clamp(2.15rem, 4.2vw, 4.8rem);
@@ -124,7 +124,7 @@ html[data-theme="clarity"] {
   --mm-media-filter:none; --mm-hero-overlay:none; --mm-noise-opacity:0; --mm-grid-color:transparent; --mm-glow-primary:transparent;
   --mm-shadow-surface:0 1px 3px rgb(21 35 43 / 8%); --mm-shadow-floating:0 8px 30px rgb(21 35 43 / 12%); --mm-shadow-hero:none;
   --mm-radius-card:14px; --mm-radius-feature:20px;
-  --mm-font-display:'Manrope',Arial,sans-serif; --mm-font-body:'Manrope',Arial,sans-serif;
+  --mm-font-display:'Manrope','MM Body Fallback',Arial,sans-serif; --mm-font-body:'Manrope','MM Body Fallback',Arial,sans-serif;
   --mm-type-body:clamp(1.0625rem,1rem + .2vw,1.1875rem);
   --mm-bg-obsidian:246 245 241; --mm-bg-charcoal:238 239 237; --mm-text-platinum:23 35 43; --mm-color-gold:32 90 112;
   --lab-bg:#f6f5f1; --lab-panel:#fff; --lab-muted:#4e5c65;
@@ -137,7 +137,6 @@ body { background-color: var(--mm-bg-primary); color: var(--mm-text-primary); }
 }
 :where(button, a, input, select, textarea) { accent-color: var(--mm-accent); }
 ::selection { background: var(--mm-selection-bg); color: var(--mm-selection-text); }
-#main-header.scrolled-up { border-color: var(--mm-border); backdrop-filter: blur(10px); }
 img, video { filter: var(--mm-media-filter); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

@@ -37,14 +37,19 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run build
       - run: npm run test:e2e
       - run: npm run test:a11y
+      - run: npm run test:visual
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: markovmade-browser-evidence
-          path: test-results/visual/
+          path: |
+            test-results/visual/
+            test-results/contracts/
+            test-results/accessibility/
           if-no-files-found: ignore
           retention-days: 14
 
@@ -59,8 +64,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+      - run: npm run build
       - run: npm run test:lighthouse
-        continue-on-error: true
+        env:
+          LIGHTHOUSE_MATRIX: 1
       - uses: actions/upload-artifact@v4
         if: always()
         with:
