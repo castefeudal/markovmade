@@ -4,7 +4,7 @@ const root=path.resolve(__dirname,'..');
 const base=process.env.BASE_URL||'https://castefeudal.github.io/markovmade/';
 (async()=>{
   // Verify the served bytes, including the crop, rather than a cached old build.
-  for(const file of ['index.html','assets/dist/site.css','assets/dist/lab.html','assets/dist/personal-os.html','assets/dist/hero-media.js',...Object.keys(require('./hero-crop.json').assets)]){
+  for(const file of ['index.html','assets/dist/site.css','assets/dist/lab.html','assets/dist/personal-os.html','assets/dist/hero-media.js','assets/media/fonts/manrope-combined.woff2',...Object.keys(require('./hero-crop.json').assets)]){
     const url=new URL(file,base);url.searchParams.set('qa',process.env.COMMIT_SHA||Date.now());
     const response=await fetch(url);assert.equal(response.status,200,file);
     const actual=Buffer.from(await response.arrayBuffer());

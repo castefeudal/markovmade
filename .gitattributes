@@ -12,3 +12,4 @@
 *.avif binary
 *.mp4 binary
 *.woff2 binary
+*.txt text eol=lf
