@@ -1,0 +1,851 @@
+[
+  {
+    "name": "ru-aurum-noir-mobile-1",
+    "scene": "ru-aurum-noir-mobile",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 66,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1739.4349,
+      "largest-contentful-paint": 2573.4348999999997,
+      "total-blocking-time": 2038.5,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.7 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "2.6 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "3.9 s"
+      },
+      {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "detail": "2,040 ms"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "650 ms"
+      },
+      {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "detail": "4.4 s"
+      },
+      {
+        "id": "mainthread-work-breakdown",
+        "title": "Minimize main-thread work",
+        "detail": "5.4 s",
+        "savings": {
+          "TBT": 2050
+        }
+      }
+    ]
+  },
+  {
+    "name": "ru-aurum-noir-desktop-1",
+    "scene": "ru-aurum-noir-desktop",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 222.19125,
+      "largest-contentful-paint": 415.95624999999995,
+      "total-blocking-time": 17.99999999999997,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "70 ms"
+      }
+    ]
+  },
+  {
+    "name": "ru-event-horizon-mobile-1",
+    "scene": "ru-event-horizon-mobile",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 845.96045,
+      "largest-contentful-paint": 1807.9209,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      }
+    ]
+  },
+  {
+    "name": "ru-event-horizon-desktop-1",
+    "scene": "ru-event-horizon-desktop",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 225.969,
+      "largest-contentful-paint": 411.907,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "ru-clarity-mobile-1",
+    "scene": "ru-clarity-mobile",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 828.80885,
+      "largest-contentful-paint": 1655.6177,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.7 s"
+      }
+    ]
+  },
+  {
+    "name": "ru-clarity-desktop-1",
+    "scene": "ru-clarity-desktop",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 222.21835,
+      "largest-contentful-paint": 373.87339999999995,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "en-aurum-noir-mobile-1",
+    "scene": "en-aurum-noir-mobile",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 839.01585,
+      "largest-contentful-paint": 1810.0317,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      }
+    ]
+  },
+  {
+    "name": "en-aurum-noir-desktop-1",
+    "scene": "en-aurum-noir-desktop",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 225.28745,
+      "largest-contentful-paint": 418.86235,
+      "total-blocking-time": 5.000000000000028,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "en-event-horizon-mobile-1",
+    "scene": "en-event-horizon-mobile",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 841.6889,
+      "largest-contentful-paint": 1805.3778000000002,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      }
+    ]
+  },
+  {
+    "name": "en-event-horizon-desktop-1",
+    "scene": "en-event-horizon-desktop",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 225.34505,
+      "largest-contentful-paint": 414.03514999999993,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "en-clarity-mobile-1",
+    "scene": "en-clarity-mobile",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 826.7073,
+      "largest-contentful-paint": 1505.4146,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "en-clarity-desktop-1",
+    "scene": "en-clarity-desktop",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 222.5868,
+      "largest-contentful-paint": 380.34720000000004,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "ru-aurum-noir-mobile-2",
+    "scene": "ru-aurum-noir-mobile",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 834.3951,
+      "largest-contentful-paint": 1806.7901999999997,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      }
+    ]
+  },
+  {
+    "name": "ru-aurum-noir-desktop-2",
+    "scene": "ru-aurum-noir-desktop",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 225.98175,
+      "largest-contentful-paint": 413.94525,
+      "total-blocking-time": 6.000000000000028,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "ru-event-horizon-mobile-2",
+    "scene": "ru-event-horizon-mobile",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 835.234,
+      "largest-contentful-paint": 1810.4679999999998,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      }
+    ]
+  },
+  {
+    "name": "ru-event-horizon-desktop-2",
+    "scene": "ru-event-horizon-desktop",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 225.9506,
+      "largest-contentful-paint": 419.75300000000004,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "ru-clarity-mobile-2",
+    "scene": "ru-clarity-mobile",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 826.47055,
+      "largest-contentful-paint": 1504.9411,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "ru-clarity-desktop-2",
+    "scene": "ru-clarity-desktop",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 225.27795,
+      "largest-contentful-paint": 383.11179999999996,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "en-aurum-noir-mobile-2",
+    "scene": "en-aurum-noir-mobile",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 835.99035,
+      "largest-contentful-paint": 1805.9807,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      }
+    ]
+  },
+  {
+    "name": "en-aurum-noir-desktop-2",
+    "scene": "en-aurum-noir-desktop",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 222.96985,
+      "largest-contentful-paint": 416.90955,
+      "total-blocking-time": 2,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "en-event-horizon-mobile-2",
+    "scene": "en-event-horizon-mobile",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 832.19905,
+      "largest-contentful-paint": 1808.3980999999999,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      }
+    ]
+  },
+  {
+    "name": "en-event-horizon-desktop-2",
+    "scene": "en-event-horizon-desktop",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 224.39965,
+      "largest-contentful-paint": 413.19895,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "en-clarity-mobile-2",
+    "scene": "en-clarity-mobile",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 830.4864,
+      "largest-contentful-paint": 1654.9728,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.7 s"
+      }
+    ]
+  },
+  {
+    "name": "en-clarity-desktop-2",
+    "scene": "en-clarity-desktop",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 225.57965,
+      "largest-contentful-paint": 380.31859999999995,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "ru-aurum-noir-mobile-3",
+    "scene": "ru-aurum-noir-mobile",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 836.13875,
+      "largest-contentful-paint": 1806.2775000000001,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      }
+    ]
+  },
+  {
+    "name": "ru-aurum-noir-desktop-3",
+    "scene": "ru-aurum-noir-desktop",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 225.41395,
+      "largest-contentful-paint": 422.24185,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "ru-event-horizon-mobile-3",
+    "scene": "ru-event-horizon-mobile",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 830.2733,
+      "largest-contentful-paint": 1804.5466000000001,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      }
+    ]
+  },
+  {
+    "name": "ru-event-horizon-desktop-3",
+    "scene": "ru-event-horizon-desktop",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 224.1964,
+      "largest-contentful-paint": 418.58920000000006,
+      "total-blocking-time": 2.842170943040401e-14,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "ru-clarity-mobile-3",
+    "scene": "ru-clarity-mobile",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 831.98215,
+      "largest-contentful-paint": 1659.9643,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.7 s"
+      }
+    ]
+  },
+  {
+    "name": "ru-clarity-desktop-3",
+    "scene": "ru-clarity-desktop",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/?lang=ru&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 222.7271,
+      "largest-contentful-paint": 405.4542,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "en-aurum-noir-mobile-3",
+    "scene": "en-aurum-noir-mobile",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 833.0216,
+      "largest-contentful-paint": 1806.0432,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      }
+    ]
+  },
+  {
+    "name": "en-aurum-noir-desktop-3",
+    "scene": "en-aurum-noir-desktop",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=aurum-noir",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 223.1861,
+      "largest-contentful-paint": 412.55830000000003,
+      "total-blocking-time": 1,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "en-event-horizon-mobile-3",
+    "scene": "en-event-horizon-mobile",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 828.5786,
+      "largest-contentful-paint": 1805.1572000000003,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      }
+    ]
+  },
+  {
+    "name": "en-event-horizon-desktop-3",
+    "scene": "en-event-horizon-desktop",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=event-horizon",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 320.4541,
+      "largest-contentful-paint": 427.68114999999995,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "en-clarity-mobile-3",
+    "scene": "en-clarity-mobile",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 835.0922,
+      "largest-contentful-paint": 1506.1844,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "en-clarity-desktop-3",
+    "scene": "en-clarity-desktop",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/?lang=en&theme=clarity",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 228.07259874959078,
+      "largest-contentful-paint": 406.14519749918156,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  }
+]

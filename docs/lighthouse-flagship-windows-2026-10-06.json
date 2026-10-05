@@ -1,0 +1,198 @@
+[
+  {
+    "name": "mobile-1",
+    "scene": "mobile",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1222.772,
+      "largest-contentful-paint": 1802.772,
+      "total-blocking-time": 53,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.2 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "100 ms"
+      }
+    ]
+  },
+  {
+    "name": "desktop-1",
+    "scene": "desktop",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 315.459,
+      "largest-contentful-paint": 422.1885,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "80 ms"
+      }
+    ]
+  },
+  {
+    "name": "mobile-2",
+    "scene": "mobile",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 891.3465,
+      "largest-contentful-paint": 1802.6930000000002,
+      "total-blocking-time": 48,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "100 ms"
+      }
+    ]
+  },
+  {
+    "name": "desktop-2",
+    "scene": "desktop",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 339.82252085468076,
+      "largest-contentful-paint": 443.73378128202114,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "110 ms"
+      }
+    ]
+  },
+  {
+    "name": "mobile-3",
+    "scene": "mobile",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 96,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1209.564,
+      "largest-contentful-paint": 1811.9099999999999,
+      "total-blocking-time": 176,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.2 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      },
+      {
+        "id": "speed-index",
+        "title": "Speed Index",
+        "detail": "3.7 s"
+      },
+      {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "detail": "180 ms"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "230 ms"
+      }
+    ]
+  },
+  {
+    "name": "desktop-3",
+    "scene": "desktop",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 94,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 250.066,
+      "largest-contentful-paint": 425.1980000000001,
+      "total-blocking-time": 199.5,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "total-blocking-time",
+        "title": "Total Blocking Time",
+        "detail": "200 ms"
+      },
+      {
+        "id": "max-potential-fid",
+        "title": "Max Potential First Input Delay",
+        "detail": "260 ms"
+      }
+    ]
+  }
+]
