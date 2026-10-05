@@ -2,16 +2,22 @@
    share the full translator's WeakMap, so RU restoration stays exact. */
 (function () {
   let pending, ready = false;
+  const locales=new Map();window.mmLocaleCopy={};
+  window.mmLoadLocale=function(name){
+    if(locales.has(name))return locales.get(name);
+    const task=fetch('assets/dist/locales/'+name+'.en.json').then(response=>{if(!response.ok)throw new Error('Locale not available');return response.json();}).then(copy=>{Object.assign(window.mmLocaleCopy,copy);window.mmAddTranslations?.(copy);}).catch(error=>{locales.delete(name);throw error;});
+    locales.set(name,task);return task;
+  };
   document.querySelectorAll('[data-lang-toggle]').forEach(button => button.setAttribute('aria-label', 'EN — Switch to English'));
   function load() {
     if (pending) return pending;
-    pending = new Promise((resolve, reject) => {
+    pending = window.mmLoadLocale('shared').then(()=>new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = 'assets/js/i18n.js';
       script.onload = () => { ready = true; resolve(); };
       script.onerror = () => { pending = null; reject(new Error('Translation could not load')); };
       document.body.appendChild(script);
-    });
+    }));
     return pending;
   }
   document.addEventListener('click', event => {

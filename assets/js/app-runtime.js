@@ -17,6 +17,7 @@
             if (privacyReturnFocus && privacyReturnFocus.isConnected) privacyReturnFocus.focus();
         }
     }
+    document.addEventListener('click',event=>{if(event.target.closest('[data-privacy-toggle]'))window.togglePrivacy();});
     document.addEventListener('keydown', event => {
         const modal = document.getElementById('privacy-modal');
         if (!modal || modal.classList.contains('hidden')) return;
@@ -48,7 +49,8 @@
         btn.setAttribute('aria-expanded', String(isOpen));
     }
 
-    document.querySelectorAll('button[onclick="toggleAccordion(this)"]').forEach(btn => {
+    document.querySelectorAll('button[data-accordion]').forEach(btn => {
+        btn.addEventListener('click',()=>window.toggleAccordion(btn));
         const content = btn.nextElementSibling;
         if (!content || !content.classList.contains('accordion-content')) return;
         btn.setAttribute('aria-controls', content.id);
@@ -76,6 +78,7 @@
     }
 
     // --- ОСНОВНАЯ ИНИЦИАЛИЗАЦИЯ И СКРОЛЛ ---
+    document.querySelectorAll('[data-evolution]').forEach(btn=>btn.addEventListener('click',()=>window.toggleEvolution(btn)));
     function initContactForm() {
         // Форма заявки MARKOVMADE: без backend, с Telegram / WhatsApp / копированием.
         const formEl = document.getElementById('manifest-form');
@@ -181,6 +184,7 @@
                 const uniqueId = `${nameInitial}-${dateStr}-${randNum}`;
                 leadState.id = uniqueId;
                 leadState.text = leadBuildMessage(uniqueId);
+                const preview=document.getElementById('lead-message-preview');if(preview)preview.textContent=leadState.text;
                 const cardWrapper = document.getElementById('access-card');
                 const cardId = document.getElementById('card-id');
                 if (cardId) cardId.innerText = uniqueId;
@@ -199,12 +203,12 @@
             if (telegramBtn) telegramBtn.addEventListener('click', () => {
                 const text = leadState.text || leadBuildMessage(leadState.id || 'GEN-000');
                 if(window.mmTrack) window.mmTrack('lead_telegram_click',{source:'form'});
-                window.open('https://t.me/markovmade?text=' + encodeURIComponent(text), '_blank', 'noopener,noreferrer');
+                window.mmPreviewShare(text,'https://t.me/markovmade?text=' + encodeURIComponent(text));
             });
             if (whatsappBtn) whatsappBtn.addEventListener('click', () => {
                 const text = leadState.text || leadBuildMessage(leadState.id || 'GEN-000');
                 if(window.mmTrack) window.mmTrack('lead_whatsapp_click',{source:'form'});
-                window.open('https://wa.me/79819722516?text=' + encodeURIComponent(text), '_blank', 'noopener,noreferrer');
+                window.mmPreviewShare(text,'https://wa.me/79819722516?text=' + encodeURIComponent(text));
             });
             if (copyBtn) copyBtn.addEventListener('click', async () => {
                 const text = leadState.text || leadBuildMessage(leadState.id || 'GEN-000');

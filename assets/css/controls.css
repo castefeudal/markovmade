@@ -1,4 +1,5 @@
-/* Shared controls use explicit foreground tokens, including every descendant. */
+/* Explicit cascade: base declarations, component owners, then legacy priority contracts. No importance flags. */
+@layer base {/* Shared controls use explicit foreground tokens, including every descendant. */
 html { --mm-action-text: #17140e; --mm-action-bg: var(--mm-accent); --mm-action-hover: var(--mm-accent-hover); }
 html[data-theme="event-horizon"] { --mm-action-text: #07101d; }
 html[data-theme="clarity"] { --mm-action-text: #fff; }
@@ -28,4 +29,4 @@ body.menu-open { overflow: hidden; }
 @media (max-width: 600px) {
   #hero :is(.mm-primary-cta,.mm-secondary-cta) { width: 100%; min-height: 3rem; }
   #mm-quick-actions { display: none; }
-}
+} }

@@ -7,7 +7,7 @@
     "build": "node scripts/build.cjs",
     "optimize:images": "node scripts/optimize-local-images.cjs && node scripts/build-image-variants.cjs",
     "test": "node --test tests/*.test.cjs",
-    "test:e2e": "node tests/e2e.cjs",
+    "test:e2e": "node tests/e2e.cjs && node tests/toolkit-browser.cjs",
     "test:a11y": "node tests/accessibility.cjs",
     "test:visual": "node tests/product-contracts.cjs",
     "test:paint": "node tests/streaming-paint.cjs",

@@ -1,4 +1,5 @@
-/* Three MARKOVMADE art worlds share one readable product system. */
+/* Explicit cascade: base declarations, component owners, then legacy priority contracts. No importance flags. */
+@layer base {/* Three MARKOVMADE art worlds share one readable product system. */
 html[data-theme="aurum-noir"] {
   --world-light: rgb(199 174 120 / 8%);
   --world-rule: rgb(199 174 120 / 17%);
@@ -17,14 +18,7 @@ html[data-theme="event-horizon"] body {
 }
 
 html[data-theme="event-horizon"] :is(.calc-primary-btn,.calc-gold-link,.lead-action) {
-  background: linear-gradient(135deg, #e2eef8, #a9c7e3 54%, #dceaf6) !important;
-  border-color: #c8dced !important;
-  color: #07101d !important;
   box-shadow: 0 18px 48px rgb(68 114 176 / 17%), inset 0 1px rgb(255 255 255 / 55%);
-}
-
-html[data-theme="event-horizon"] #app-ecosystem #insights .mm-insights-result {
-  background: radial-gradient(circle at 100% 0, rgb(113 165 224 / 13%), transparent 21rem), linear-gradient(150deg,#17253c,#0d1728 55%,#090f1c) !important;
 }
 
 html[data-theme="event-horizon"] .premium-divider, html[data-theme="event-horizon"] .mm-editorial-rule {
@@ -68,12 +62,6 @@ html[data-theme="event-horizon"] #app-ecosystem::after {
   border-radius: 50%;
   box-shadow: 0 0 0 7rem rgb(189 212 233 / 2%), 0 0 0 15rem rgb(189 212 233 / 1%);
   pointer-events: none;
-}
-
-html[data-theme="event-horizon"] #app-ecosystem .mm-os-frame {
-  border-color: rgb(189 212 233 / 24%) !important;
-  background: linear-gradient(160deg, #17253c, #0d1626 68%, #0a1020) !important;
-  box-shadow: 0 38px 105px rgb(0 0 0 / 48%), inset 0 1px rgb(238 243 248 / 7%) !important;
 }
 
 html[data-theme="event-horizon"] #app-ecosystem .mm-os-frame::before {
@@ -124,4 +112,23 @@ html[data-theme="event-horizon"] .mm-theme-dialog, html[data-theme="event-horizo
   :where(button,a,input,select,textarea,summary,[role="tab"]):focus-visible { outline: 3px solid Highlight; outline-offset: 3px; }
   .mm-theme-preview, .mm-os-chart-card { border: 1px solid CanvasText; }
   .custom-cursor, .noise-overlay { display: none; }
+}
+}
+@layer priority {
+
+html[data-theme="event-horizon"] :is(.calc-primary-btn,.calc-gold-link,.lead-action) {
+  background: linear-gradient(135deg, #e2eef8, #a9c7e3 54%, #dceaf6);
+  border-color: #c8dced;
+  color: #07101d;
+}
+
+html[data-theme="event-horizon"] #app-ecosystem #insights .mm-insights-result {
+  background: radial-gradient(circle at 100% 0, rgb(113 165 224 / 13%), transparent 21rem), linear-gradient(150deg,#17253c,#0d1728 55%,#090f1c);
+}
+
+html[data-theme="event-horizon"] #app-ecosystem .mm-os-frame {
+  border-color: rgb(189 212 233 / 24%);
+  background: linear-gradient(160deg, #17253c, #0d1626 68%, #0a1020);
+  box-shadow: 0 38px 105px rgb(0 0 0 / 48%), inset 0 1px rgb(238 243 248 / 7%);
+}
 }

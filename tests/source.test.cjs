@@ -3,10 +3,10 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
-const html = fs.readFileSync(path.join(root, 'src/index.html'), 'utf8');
+const html = require('../scripts/source-components.cjs').documentSource();
 const output = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const tokens = fs.readFileSync(path.join(root, 'assets/css/tokens.css'), 'utf8');
-const runtime = fs.readFileSync(path.join(root, 'assets/js/lab-runtime.js'), 'utf8');
+const runtime = require('../scripts/source-components.cjs').scriptSource('lab-runtime.js');
 
 test('the single-page shell references local modular assets and GitHub Pages canonical', () => {
   assert.match(html, /rel="canonical" href="https:\/\/castefeudal\.github\.io\/markovmade\//);
@@ -83,4 +83,16 @@ test('Insights has one navigation level and no global scroll popup', () => {
 test('production classes and script IDs contain no historical version suffixes', () => {
   assert.doesNotMatch(html, /\bclass="[^"]*\bmm-v\d+-/);
   assert.doesNotMatch(html, /\bid="[^"]*\bv\d+-(?:dynamic|quiz|analytics|faq|product|preflight|service|seo|telegram)/i);
+});
+
+test('static source has component ownership, no inline click handlers and an explicit cascade',()=>{
+  const shell=fs.readFileSync(path.join(root,'src/index.html'),'utf8');
+  for(const name of ['hero','trust','lab','personal-os','services','method','about','community','contact'])assert.ok(shell.includes('components/'+name+'.html'));
+  assert.doesNotMatch(html,/\bonclick=/);
+  assert.ok(html.includes('id="community"'));assert.doesNotMatch(html,/id="team"|href="#team"/);
+  const postcss=require('postcss');
+  for(const file of fs.readdirSync(path.join(root,'assets/css')).filter(name=>name.endsWith('.css'))){
+    postcss.parse(fs.readFileSync(path.join(root,'assets/css',file),'utf8')).walkDecls(decl=>assert.equal(Boolean(decl.important),false,file+': '+decl.prop));
+  }
+  assert.ok(tokens.includes('@layer base'));
 });

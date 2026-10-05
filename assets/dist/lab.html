@@ -4,18 +4,7 @@
         <button type="button" class="mm-lab-clear" id="mm-lab-clear-all">Очистить мои данные</button>
       </div>
 
-      <section class="mm-lab-guide" aria-labelledby="mm-lab-guide-title">
-        <div class="mm-lab-guide-head"><span class="mm-lab-kicker">БЫСТРЫЙ СТАРТ</span><h3 id="mm-lab-guide-title">Что хотите узнать?</h3><p>Выберите задачу. Нужный инструмент откроется сразу.</p></div>
-        <div class="mm-lab-guide-grid">
-          <button type="button" data-lab-guide="body"><span>01</span>Процент жира и состав тела</button>
-          <button type="button" data-lab-guide="nutrition"><span>02</span>Сколько мне есть</button>
-          <button type="button" data-lab-guide="overfeeding"><span>03</span>Почему изменился вес</button>
-          <button type="button" data-lab-guide="recovery"><span>04</span>Как я восстанавливаюсь</button>
-          <button type="button" data-lab-guide="progress"><span>05</span>Есть ли прогресс</button>
-          <button type="button" data-lab-guide="strength"><span>06</span>Какие веса взять на тренировку</button>
-          <button type="button" data-lab-guide="strategy"><span>07</span>Что делать дальше</button>
-        </div>
-      </section>
+
 
 
 
@@ -25,7 +14,7 @@
         <div class="mm-lab-history-head"><div><span class="mm-lab-kicker" data-copy-ru="ИСТОРИЯ · ЛОКАЛЬНО" data-copy-en="HISTORY · ON DEVICE">ИСТОРИЯ · ЛОКАЛЬНО</span><h3 id="mm-lab-history-title" data-copy-ru="Снимки модели" data-copy-en="Model snapshots">Снимки модели</h3><p data-copy-ru="Сравните результаты одного расчётного потока. История хранится только в этом браузере." data-copy-en="Compare runs of the same model. History stays in this browser.">Сравните результаты одного расчётного потока. История хранится только в этом браузере.</p></div><button type="button" class="mm-theme-close" data-lab-history-close aria-label="Закрыть историю">×</button></div>
         <div class="mm-lab-history-compare"><label><span data-copy-ru="Снимок A" data-copy-en="Snapshot A">Снимок A</span><select id="mm-lab-history-a"></select></label><label><span data-copy-ru="Снимок B" data-copy-en="Snapshot B">Снимок B</span><select id="mm-lab-history-b"></select></label></div>
         <div class="mm-lab-history-output" id="mm-lab-history-output" aria-live="polite"></div>
-        <h4 data-copy-ru="Недавние расчёты" data-copy-en="Recent calculations">Недавние расчёты</h4><ol id="mm-lab-history-list"></ol>
+        <h4 id="mm-lab-recent-title" data-copy-ru="Недавние расчёты" data-copy-en="Recent calculations">Недавние расчёты</h4><ol id="mm-lab-history-list" tabindex="0" aria-labelledby="mm-lab-recent-title"></ol>
         <p class="mm-lab-history-note" data-copy-ru="Для удаления истории используйте «Очистить мои данные». Экспорт создаёт JSON-файл на вашем устройстве." data-copy-en="Use “Clear my data” to delete history. Export creates a JSON file on your device.">Для удаления истории используйте «Очистить мои данные». Экспорт создаёт JSON-файл на вашем устройстве.</p>
       </dialog>
 

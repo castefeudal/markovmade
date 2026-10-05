@@ -240,11 +240,10 @@ let browser;
   await page.waitForFunction(() => JSON.parse(localStorage.getItem('markovmade-lab-history-v1') || '[]').length === 12);
   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-daily-v1')).length),14,'JSON backup restores daily check-ins');
 
-  const accordion = page.locator('[onclick="toggleAccordion(this)"]').first();
+  const accordion = page.locator('.mm-service summary').first();
   await accordion.click();
-  assert.equal(await accordion.getAttribute('aria-expanded'), 'true');
-  assert.equal(await page.locator('#'+await accordion.getAttribute('aria-controls')).getAttribute('aria-hidden'), 'false');
-  const privacyTrigger = page.locator('[onclick="togglePrivacy()"]').first();
+  assert.equal(await accordion.evaluate(el=>el.parentElement.open),true);
+  const privacyTrigger = page.locator('[data-privacy-toggle]').first();
   await privacyTrigger.click();
   assert.equal(await page.locator('#privacy-modal').getAttribute('aria-modal'), 'true');
   await page.keyboard.press('Escape');

@@ -7,11 +7,15 @@ const { transform } = require('lightningcss');
 const esbuild = require('esbuild');
 const { chromium } = require('playwright');
 const root = path.resolve(__dirname, '..');
-const productCopy=JSON.parse(fs.readFileSync(path.join(root,'src/locales/product.en.json'),'utf8'));
+const {documentSource,scriptSource}=require('./source-components.cjs');
+const namespaces=['shared','lab','personal-os'];
+const productCopy=Object.assign({},...namespaces.map(name=>JSON.parse(fs.readFileSync(path.join(root,'src/locales',name+'.en.json'),'utf8'))));
 const translationSource=fs.readFileSync(path.join(root,'assets/js/i18n.js'),'utf8').replace('var META =',`Object.assign(DICT,${JSON.stringify(productCopy)}); var META =`);
-const cssFiles = ['fonts','foundation','editorial','lab','personal-os','tokens','product','worlds','clarity','hero','controls','header'];
+const cssFiles = ['fonts','foundation','editorial','lab','personal-os','tokens','product','worlds','clarity','hero','controls','header','author','toolkit'];
 const out = path.join(root,'assets/dist');
 fs.mkdirSync(out,{recursive:true});
+fs.mkdirSync(path.join(out,'locales'),{recursive:true});
+for(const name of namespaces)fs.writeFileSync(path.join(out,'locales',name+'.en.json'),JSON.stringify(JSON.parse(fs.readFileSync(path.join(root,'src/locales',name+'.en.json'),'utf8'))));
 const minCss = source => transform({ filename:'site.css', code:Buffer.from(source), minify:true }).code.toString();
 function extractComponent(html, className, name) {
   const marker = new RegExp('<div\\b[^>]*class="[^"\\n]*\\b'+className+'\\b[^"\\n]*"[^>]*>');
@@ -31,7 +35,7 @@ function extractComponent(html, className, name) {
   return html.slice(0,start)+placeholder+html.slice(tags.lastIndex);
 }
 (async () => {
-  const template = fs.readFileSync(path.join(root,'src/index.html'),'utf8');
+  const template = documentSource();
   const css = cssFiles.map(name => fs.readFileSync(path.join(root,'assets/css',name+'.css'),'utf8')).join('\n');
   const tree = postcss.parse(css), selectors = [];
   tree.walkRules(rule => { if (rule.parent.type==='atrule' && /keyframes/.test(rule.parent.name)) return; selectors.push(rule.selector); });
@@ -85,8 +89,8 @@ function extractComponent(html, className, name) {
   const fullCss=minCss(css);
   fs.writeFileSync(path.join(out,'site.css'),fullCss);
   for(const name of fs.readdirSync(path.join(root,'assets/js')).filter(f=>f.endsWith('.js'))) {
-    let source=fs.readFileSync(path.join(root,'assets/js',name),'utf8');
-    if(name==='i18n.js')source=translationSource;
+    let source=scriptSource(name);
+
     source=source.replace(/assets\/js\//g,'assets/dist/');
     const result=await esbuild.transform(source,{minify:true,target:['es2020'],charset:'utf8',legalComments:'none'});
     fs.writeFileSync(path.join(out,name),result.code);

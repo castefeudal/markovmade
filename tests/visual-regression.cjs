@@ -9,6 +9,12 @@ const update = process.env.UPDATE_VISUAL_BASELINES === '1';
 // Font metrics differ between Linux CI and Windows authoring screenshots.
 const defaultMismatch = process.platform === 'linux' ? 0.10 : 0.07;
 function assertVisualBaseline(name, actualPath, maxMismatch = defaultMismatch) {
+  if(process.env.CAPTURE_VISUAL_CANDIDATES==='1') {
+    // Capture is deliberately a failing run until a reviewer approves the images.
+    process.exitCode=1;
+    console.log(`Candidate captured (not validated): ${name}`);
+    return;
+  }
   const directory=process.platform==='linux'&&name.startsWith('contract-')?path.join(baselineDir,'linux'):baselineDir;
   fs.mkdirSync(directory, {recursive:true});
   const baselinePath = path.join(directory, name);

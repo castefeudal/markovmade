@@ -43,9 +43,10 @@
     const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'mm-secondary-cta'; retry.textContent = en ? 'Try again' : 'Повторить'; retry.addEventListener('click', () => { retry.disabled = true; load().catch(() => {}); }); status.append(retry);
   }
   const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
-    if (entries.some(entry => entry.isIntersecting)) load().catch(() => {});
+    if (scrollY>0 && entries.some(entry => entry.isIntersecting)) load().catch(() => {});
   }, { rootMargin: '900px 0px' }) : null;
   observer?.observe(section);
+  addEventListener('scroll',()=>{if(!ready&&!document.getElementById('mm-os-load-error')&&scrollY>0&&section.getBoundingClientRect().top<innerHeight+180)load().catch(showFailure);},{passive:true});
   window.mmLoadOS = load;
   document.addEventListener('click', event => {
     const target = event.target.closest('[data-open-app-tab], [data-app-tab], #insights button, #insights input');

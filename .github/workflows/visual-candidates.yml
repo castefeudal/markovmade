@@ -1,0 +1,41 @@
+name: Visual candidates (review only)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/flagship-lab]
+
+permissions:
+  contents: read
+
+jobs:
+  capture:
+    name: Capture Linux candidates without approving baselines
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run build
+      - name: Capture UI candidates (capture deliberately returns nonzero)
+        run: node tests/e2e.cjs
+        continue-on-error: true
+        env:
+          CAPTURE_VISUAL_CANDIDATES: 1
+      - name: Capture hero contracts (capture deliberately returns nonzero)
+        run: npm run test:visual
+        continue-on-error: true
+        env:
+          CAPTURE_VISUAL_CANDIDATES: 1
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: linux-visual-candidates
+          path: |
+            test-results/visual/
+            test-results/contracts/
+          retention-days: 7

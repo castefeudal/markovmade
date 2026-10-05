@@ -1,0 +1,156 @@
+<section id="personal-request" class="mm-editorial-section"><div class="mm-editorial-inner"><div class="text-center mb-14 fade-in-up max-w-4xl mx-auto lead-application-intro">
+                    <p class="font-serif text-2xl md:text-3xl text-platinum leading-snug tracking-wide uppercase mb-4">Обсудим вашу задачу</p>
+                    <p class="guarantee-beacon lead-application-beacon font-sans text-[10px] md:text-[11px] font-black tracking-[0.22em] uppercase text-gold text-center">Заполните короткую заявку.</p>
+                    <p class="font-sans text-sm md:text-base text-platinum/70 leading-relaxed max-w-2xl mx-auto mt-5">
+                        Достаточно цели и главного ограничения. Остальные поля необязательны.
+                    </p>
+                </div>
+
+<div id="request-quiz" class="mm-editorial-quiz mm-editorial-flow-quiz mm-editorial-detail-final-cta fade-in-up">
+  <h3>Подготовьте короткую заявку</h3>
+  <p>Отметьте цель и главный стопор — я получу контекст, а вы сразу перейдёте от размышлений к первому действию.</p>
+  <div class="mm-editorial-quiz-label">Главная цель</div>
+  <div class="mm-editorial-quiz-grid" data-quiz-group="goal">
+    <button type="button" class="mm-editorial-option interactive" data-value="снизить вес">снизить вес</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="набрать мышцы">набрать мышцы</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="вернуть режим">вернуть режим</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="наладить питание">наладить питание</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="собрать дисциплину">собрать дисциплину</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="понять формат">понять формат</button>
+  </div>
+  <div class="mm-editorial-quiz-label">Что мешает</div>
+  <div class="mm-editorial-quiz-grid" data-quiz-group="blocker">
+    <button type="button" class="mm-editorial-option interactive" data-value="вес стоит">вес стоит</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="срывы">срывы</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="мало энергии">мало энергии</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="нет плана">нет плана</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="есть ограничения">есть ограничения</button>
+    <button type="button" class="mm-editorial-option interactive" data-value="нехватка времени">нехватка времени</button>
+  </div>
+  <div class="mm-editorial-quiz-result" id="quiz-summary">Отметьте пункты выше — и заявка станет конкретной.</div>
+  <div class="mm-editorial-cta-row" style="justify-content:center;margin-top:20px">
+    <a id="quiz-telegram-link" href="https://t.me/markovmade?text=Здравствуйте!%20Хочу%20разобрать%20мою%20ситуацию%20и%20понять%20формат%20работы%20MARKOVMADE." target="_blank" rel="noopener noreferrer" class="mm-editorial-cta interactive" data-analytics="v17_quiz_telegram">Отправить заявку в Telegram</a>
+    <a href="https://wa.me/79819722516" target="_blank" rel="noopener noreferrer" class="mm-editorial-cta secondary interactive" data-analytics="v17_quiz_whatsapp">Написать в WhatsApp</a>
+  </div>
+</div>
+
+                    <div class="relative max-w-xl mx-auto min-h-[400px]">
+                    <form id="manifest-form" class="lead-form space-y-8 transition-all duration-700 ease-[0.7,0,0.3,1]" novalidate>
+                        <div class="lead-form-grid">
+                            <label class="lead-field" for="name">
+                                <span>Имя / контакт</span>
+                                <input type="text" id="name" name="name" inputmode="text" required placeholder="Павел / @telegram / WhatsApp" class="manifest-input">
+                            </label>
+                            <label class="lead-field" for="goal">
+                                <span>Главная цель</span>
+                                <input type="text" id="goal" name="goal" inputmode="text" required placeholder="Снижение веса, набор мышц, режим, питание, дисциплина" class="manifest-input">
+                            </label>
+                            <details class="lead-optional-details lead-field-wide">
+                                <summary>
+                                    <span>Добавить рост / вес / возраст / опыт</span>
+                                    <b>Необязательно</b>
+                                </summary>
+                                <div class="lead-form-grid lead-optional-grid">
+                                    <label class="lead-field" for="age">
+                                <span>Возраст</span>
+                                <input type="number" id="age" name="age" inputmode="numeric" min="14" max="90" placeholder="27" class="manifest-input">
+                             <span data-no-translate data-copy-ru="· необязательно" data-copy-en="· optional">· необязательно</span></label>
+                            <label class="lead-field" for="height">
+                                <span>Рост, см</span>
+                                <input type="number" id="height" name="height" inputmode="decimal" min="120" max="230" step="1" placeholder="188" class="manifest-input">
+                             <span data-no-translate data-copy-ru="· необязательно" data-copy-en="· optional">· необязательно</span></label>
+                            <label class="lead-field" for="weight">
+                                <span>Вес, кг</span>
+                                <input type="number" id="weight" name="weight" inputmode="decimal" min="35" max="250" step="0.1" placeholder="100" class="manifest-input">
+                             <span data-no-translate data-copy-ru="· необязательно" data-copy-en="· optional">· необязательно</span></label>
+                            <label class="lead-field" for="experience">
+                                <span>Опыт тренировок</span>
+                                <select id="experience" name="experience" class="manifest-input lead-select">
+                                    <option value="">Выберите вариант</option>
+                                    <option>С нуля</option>
+                                    <option>До 6 месяцев</option>
+                                    <option>1–2 года</option>
+                                    <option>3+ года</option>
+                                    <option>Возвращаюсь после паузы</option>
+                                </select>
+                             <span data-no-translate data-copy-ru="· необязательно" data-copy-en="· optional">· необязательно</span></label>
+                            <label class="lead-field lead-field-wide" for="limitations">
+                                <span>Ограничения / травмы / нюансы</span>
+                                <input type="text" id="limitations" name="limitations" inputmode="text" placeholder="Спина, колено, плечо, давление, график, восстановление" class="manifest-input">
+                             <span data-no-translate data-copy-ru="· необязательно" data-copy-en="· optional">· необязательно</span></label>
+                                </div>
+                            </details>
+                            <label class="lead-field lead-field-wide" for="problem">
+                                <span>Главная проблема</span>
+                                <input type="text" id="problem" name="problem" required placeholder="Вес стоит, срывы, боли, нет режима, мало энергии" class="manifest-input">
+                            </label>
+                            <label class="lead-field" for="format">
+                                <span>Желаемый формат</span>
+                                <select id="format" name="format" class="manifest-input lead-select">
+                                    <option>Персональный разбор</option>
+                                    <option>Фитнес-наставничество</option>
+                                    <option>Питание / БЖУ</option>
+                                    <option>Дисциплина / режим</option>
+                                    <option>Пока не знаю, нужен подбор</option>
+                                </select>
+                             <span data-no-translate data-copy-ru="· необязательно" data-copy-en="· optional">· необязательно</span></label>
+                            <label class="lead-field" for="contact-pref">
+                                <span>Куда удобнее ответить</span>
+                                <select id="contact-pref" name="contact-pref" class="manifest-input lead-select">
+                                    <option>Telegram</option>
+                                    <option>WhatsApp</option>
+                                    <option>Email</option>
+                                </select>
+                             <span data-no-translate data-copy-ru="· необязательно" data-copy-en="· optional">· необязательно</span></label>
+                            <label class="lead-field lead-field-wide" for="value">
+                                <span>Комментарий</span>
+                                <textarea id="value" name="value" rows="3" placeholder="Что пробовали, сроки, ограничения, график, что важно учесть" class="manifest-input"></textarea>
+                             <span data-no-translate data-copy-ru="· необязательно" data-copy-en="· optional">· необязательно</span></label>
+                        </div>
+                        <div id="lead-form-error" class="lead-form-error" role="alert" aria-live="polite"></div>
+                        <div class="pt-2 text-center">
+                            <button type="submit" class="interactive group relative w-full sm:w-auto px-8 sm:px-14 py-5 border border-gold/50 text-gold font-sans text-xs font-extrabold tracking-[0.24em] uppercase overflow-hidden transition-all duration-500 hover:shadow-[0_0_40px_rgb(var(--color-gold)/0.16)]">
+                                <span class="relative z-10 group-hover:text-obsidian transition-colors duration-500">Собрать заявку</span>
+                                <div class="absolute inset-0 bg-gold translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]"></div>
+                            </button>
+                            <p class="mt-5 text-[9px] font-sans text-dim/50 uppercase tracking-widest">Нажимая кнопку, вы принимаете условия <button type="button" data-privacy-toggle class="border-b border-dim/30 pb-0.5 hover:text-gold hover:border-gold transition-all duration-300">обработки данных</button></p>
+                        </div>
+                    </form>
+
+                    <div id="access-card" class="absolute inset-0 hidden flex-col items-center justify-center">
+                        <div class="relative w-full bg-charcoal border border-gold/30 p-7 md:p-10 shadow-[0_0_60px_rgba(0,0,0,0.55)] noise-bg overflow-hidden flex flex-col items-center text-center transition-colors duration-500">
+                            <div class="absolute top-0 left-0 w-full h-1 bg-gold"></div>
+                            <div class="absolute bottom-0 right-0 w-20 h-1 bg-gold"></div>
+                            <div class="absolute top-4 right-4 text-[8px] font-sans text-gold/70 tracking-widest border border-gold/20 px-2 py-1 rounded">ID: <span id="card-id" class="text-gold font-bold">GEN-000</span></div>
+                            <div class="relative z-10 space-y-6 w-full">
+                                <div class="w-16 h-16 mx-auto border border-gold/20 rounded-full flex items-center justify-center bg-gold/5">
+                                    <svg class="w-8 h-8 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                </div>
+                                <div>
+                                    <h3 class="font-serif text-2xl md:text-3xl text-platinum mb-2">ВВОДНЫЕ СОБРАНЫ</h3>
+                                    <p class="font-sans text-[10px] text-dim tracking-[0.24em] uppercase">Осталось отправить их удобным способом</p>
+                                </div>
+                                <div class="py-4 border-t border-white/10 border-b border-white/10">
+                                    <p class="font-sans text-xs text-gold/80 italic">Заявка уже собрана: цель, вводные, главный стопор, желаемый формат и результаты расчётов, если они были выполнены.</p>
+                                </div>
+                                <div class="lead-action-grid">
+                                    <p data-copy-ru="До явного перехода в мессенджер ничего не отправляется. Проверьте текст заявки." data-copy-en="Nothing is sent before you explicitly open a messenger. Review your request text." data-no-translate>До явного перехода в мессенджер ничего не отправляется. Проверьте текст заявки.</p><pre id="lead-message-preview" class="mm-message-preview" data-no-translate></pre><button id="telegram-btn" type="button" class="interactive lead-action lead-action-primary">
+                                        <span>Отправить в Telegram</span>
+                                    </button>
+                                    <button id="whatsapp-btn" type="button" class="interactive lead-action">
+                                        <span>Отправить в WhatsApp</span>
+                                    </button>
+                                    <button id="copy-application-btn" type="button" class="interactive lead-action">
+                                        <span>Скопировать заявку</span>
+                                    </button>
+                                    <button id="back-to-form-btn" type="button" class="interactive lead-action lead-action-ghost">
+                                        <span>Исправить данные</span>
+                                    </button>
+                                </div>
+                                <p id="lead-copy-status" class="text-[10px] text-dim/60 font-sans tracking-[0.18em] uppercase min-h-[1rem]"></p>
+                            </div>
+                            <div class="absolute inset-0 bg-gradient-to-b from-transparent via-gold/5 to-transparent h-[10px] w-full animate-scanline pointer-events-none opacity-20"></div>
+                        </div>
+                    </div>                </div>
+            </div>
+</section>

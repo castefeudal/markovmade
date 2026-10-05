@@ -177,12 +177,20 @@ async function assertCta(page,label) {
         await bilingual.locator('.theme-switch:visible').first().click();await bilingual.locator(`[data-theme-value="${theme}"]`).click();
         for(const width of [320,390,768,1440]) {
           await bilingual.setViewportSize({width,height:900});
+          await bilingual.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
           const overflows=await bilingual.evaluate(async()=>{
             const failures=[];
             for(const button of document.querySelectorAll('[data-mm-lab-tab],[data-app-tab]')) {
-              button.click();await new Promise(requestAnimationFrame);
+              button.click();await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
               const panel=document.getElementById(button.getAttribute('aria-controls'));
-              if(panel&&panel.scrollWidth>panel.clientWidth+2)failures.push(button.id+': '+panel.scrollWidth+'/'+panel.clientWidth);
+              if(panel&&panel.scrollWidth>panel.clientWidth+2)failures.push({
+                id:button.id,scrollWidth:panel.scrollWidth,clientWidth:panel.clientWidth,
+                fontStatus:document.fonts.status,
+                overflowing:[...panel.querySelectorAll('*')].map(el=>{
+                  const rect=el.getBoundingClientRect();
+                  return {tag:el.tagName,id:el.id,className:typeof el.className==='string'?el.className:'',left:Math.round(rect.left*10)/10,right:Math.round(rect.right*10)/10,width:Math.round(rect.width*10)/10,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth};
+                }).filter(el=>el.scrollWidth>el.clientWidth+2||el.right>panel.getBoundingClientRect().right+1||el.left<panel.getBoundingClientRect().left-1)
+              });
             }
             if(document.documentElement.scrollWidth>innerWidth+1)failures.push('page overflow');
             return failures;

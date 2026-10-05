@@ -13,21 +13,21 @@ npm run serve
 
 Нужен Node.js 22+. Открывайте HTTP-адрес, который печатает сервер: фрагменты LAB/OS загружаются через fetch, поэтому file:// не поддерживается.
 
-`src/index.html` — редактируемый источник. `index.html` и `assets/dist/` — воспроизводимый статический результат сборки, который необходимо коммитить для Pages. Сборка использует Chromium для отбора critical CSS, Lightning CSS и esbuild для минификации. Серверная часть production не требуется.
+`src/index.html` — оболочка; `src/components/*.html` — build-time разделы. `scripts/source-components.cjs` собирает их до выделения critical CSS и ленивых LAB/OS-фрагментов. `index.html` и `assets/dist/` — воспроизводимый статический результат сборки, который необходимо коммитить для Pages. Сборка использует Chromium для отбора critical CSS, Lightning CSS и esbuild для минификации. Серверная часть production не требуется.
 
 ## Владение компонентами
 
 - `assets/css/tokens.css`: семантические палитры Aurum Noir, Event Horizon, Clarity.
 - `hero.css`, `header.css`, `controls.css`: композиция первого экрана, навигация и CTA.
 - `editorial.css`, `lab.css`, `personal-os.css`: соответствующие разделы.
-- `foundation.css`: базовые утилиты и оставшиеся стили содержательных разделов. Миграция продолжается внутри компонентов, без нового слоя runtime-fixes.
+- `foundation.css`: базовые утилиты. `author.css` владеет trust, услугами, биографией, сообществом и контактом; `toolkit.css` — каталогом и общим evidence-компонентом. Явный порядок `base → priority → components` сохраняет прежние контракты и отдаёт новым владельцам управление. Исполняемых `!important` нет.
 - `assets/js/navigation.js`: якоря, mobile focus trap, меню, progress и floating controls.
 - `hero-loader.js` / `hero-media.js`: статический fallback и единый rAF-контроллер кадров/пространственного смещения.
 - `style-loader.js`: полноэкранная оболочка получает critical CSS сразу; остальные стили входят при намерении прокрутки/взаимодействия.
 - `content-loader.js`: контактная форма и взаимодействия содержательных разделов входят при прокрутке или keyboard intent.
 - `lab-loader.js` / `os-loader.js`: отложенная загрузка HTML и runtime соответствующих компонентов.
-- `lab-models.js`: чистые расчётные модели; `lab-runtime.js`: формы и результаты; `lab-history.js`: состояние, история, JSON и Personal OS.
-- `language-loader.js` / `i18n.js`: первый экран EN получает небольшой словарь из сборки; полный перевод входит при переключении или прокрутке. `src/locales/product.en.json` содержит тексты LAB/OS. Исходные RU-узлы сохраняются для точного обратного переключения.
+- `lab-models.js`: прежние чистые модели; `toolkit-models.js`: 17 новых моделей. `lab-runtime.js` собирается из `lab-domains/` по направлениям; `lab-toolkit.js` владеет каталогом из 24 задач, сводкой и evidence disclosure; `lab-history.js` — историей, JSON и связью с Personal OS.
+- `language-loader.js` / `i18n.js`: первый экран EN получает небольшой словарь из сборки; полный перевод входит при переключении или прокрутке. `src/locales/shared.en.json`, `lab.en.json` и `personal-os.en.json` разделены по namespace. LAB/OS-словари входят только при загрузке соответствующего раздела на EN. Исходные RU-узлы сохраняются для точного обратного переключения.
 
 Старые значения тем мигрируют в три поддерживаемые темы. Предпросмотр темы не сохраняется до явного выбора. Язык, расчёты и история сохраняются на устройстве; очистка и экспорт требуют действия пользователя.
 
@@ -46,9 +46,10 @@ npm run test:a11y
 npm run test:visual
 npm run test:paint
 npm run test:lighthouse
+npm run test:production
 ```
 
-E2E проверяет реальные модели, QUICK/PRO, историю, импорт/экспорт, Insights и responsive. Axe проверяет RU/EN × три темы × четыре ширины, семь вкладок LAB, пять вкладок OS и диалоги; дополнительно включены heading-order и label-content-name-mismatch. Для аудита вне viewport content-visibility временно отключается только в тесте.
+E2E проверяет реальные модели, QUICK/PRO, историю, импорт/экспорт, Insights и responsive. Axe проверяет RU/EN × три темы × четыре ширины, семь прежних панелей LAB, 17 новых форм с результатами, пять вкладок OS и диалоги; дополнительно включены heading-order и label-content-name-mismatch. Для аудита вне viewport content-visibility временно отключается только в тесте.
 
 Visual contracts проверяют Chromium/Firefox/WebKit, RU/EN, три темы и 13 ширин 320–2560; 30 строгих hero-baselines имеют лимит 1,5%. Отдельно проверяются crop, отсутствие пересечения лица с текстом, Clarity CTA default/hover/focus/active/disabled, touch, live reduced motion и pointer turn/nod/neutral. Проверяются также все панели LAB/OS на внутреннее переполнение, первый экран с сохранёнными настройками, ошибки сети и повторная загрузка. Скриншоты и JSON-отчёты находятся в игнорируемой `test-results/`.
 
@@ -65,7 +66,7 @@ Remove-Item Env:UPDATE_VISUAL_BASELINES
 
 Lighthouse запускается последовательно, без параллельных browser/build задач. `LIGHTHOUSE_MATRIX=1` проверяет RU/EN × три темы × mobile/desktop; `LIGHTHOUSE_RUNS=3` (по умолчанию) повторяет cold-site измерения, `BASE_URL` позволяет проверить production. `summary.json` явно перечисляет результаты ниже цели 100/100 и оставшиеся аудиты. CI требует медиану Performance ≥95 для каждого сценария и остальные категории 100 в каждом прогоне; все выбросы сохраняются, `aggregates.json` отдельно сообщает, были ли все прогоны 100; это порог обнаружения регрессий, а не объявление достижения цели 100.
 
-Численные fixtures фиксируют Mifflin–St Jeor, Navy, FFMI, TDEE, TEF, гликогеновый сценарий, тренды, плато, e1RM и baseline восстановления. При изменении моделей обновляйте modelVersion и проверяйте assumptions. Это ориентиры самонаблюдения, без медицинской диагностики и обещаний результата.
+29 unit/source тестов и fixtures новых инструментов дополняют прежние проверки. Численные fixtures фиксируют Mifflin–St Jeor, Navy, FFMI, TDEE, TEF, гликогеновый сценарий, тренды, плато, e1RM и baseline восстановления. При изменении моделей обновляйте modelVersion и проверяйте assumptions. Это ориентиры самонаблюдения, без медицинской диагностики и обещаний результата.
 
 ## Публикация
 
@@ -74,3 +75,9 @@ Lighthouse запускается последовательно, без пар�
 Pages публикует корень `main`. Перед push нужны сборка, проверки и `git diff --check`. После push проверяйте SHA опубликованной сборки, HTTP и загрузку production-ассетов. Quality workflow сохраняет отчёты браузеров, accessibility и Lighthouse как artifacts.
 
 Подробные результаты и оставшиеся ограничения: [проверка выпуска](docs/release-quality.md). Для production smoke: `npm run test:production`.
+
+## Модели, данные и выпуск
+
+[Каталог 24 инструментов и границы моделей](docs/toolkit-models.md). Поиск и шесть тематических фильтров помогают выбрать задачу; на старте видны три основных пути. Новые результаты и профиль включены в общий JSON backup и историю. Читаемая сводка скачивается в TXT. Перед переходом в мессенджер показан сформированный текст; автоматической отправки нет.
+
+`Visual candidates (review only)` — отдельный capture workflow для просмотра Linux-снимков. Capture не утверждает baseline и намеренно возвращает ненулевой код. Обновлять `tests/visual-baselines/linux` можно только после просмотра artifact. Обычный Quality workflow сохраняет строгий visual threshold 1,5% и запускается без capture-флагов.

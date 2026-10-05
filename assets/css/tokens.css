@@ -1,4 +1,5 @@
-/* MARKOVMADE semantic design system. Palette, depth, media treatment and data colors move together. */
+/* Explicit cascade: base declarations, component owners, then legacy priority contracts. No importance flags. */
+@layer base {/* MARKOVMADE semantic design system. Palette, depth, media treatment and data colors move together. */
 :root {
   color-scheme: dark;
   --mm-bg-primary: #080807;
@@ -141,14 +142,19 @@ body { background-color: var(--mm-bg-primary); color: var(--mm-text-primary); }
 ::selection { background: var(--mm-selection-bg); color: var(--mm-selection-text); }
 img, video { filter: var(--mm-media-filter); }
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: .01ms !important;
-    transition-delay: 0ms !important;
-  }
   html:focus-within { scroll-behavior: auto; }
-  .custom-cursor, [class*="parallax"], [data-parallax] { display: none !important; }
-  .reveal-text, .fade-in-up { opacity: 1 !important; transform: none !important; }
+}
+}
+@layer priority {
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto;
+    animation-duration: .01ms;
+    animation-iteration-count: 1;
+    transition-duration: .01ms;
+    transition-delay: 0ms;
+  }
+  .custom-cursor, [class*="parallax"], [data-parallax] { display: none; }
+  .reveal-text, .fade-in-up { opacity: 1; transform: none; }
+}
 }

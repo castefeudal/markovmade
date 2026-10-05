@@ -12,6 +12,7 @@
     progress:['Прогресс','Progress'],
     strategy:['Стратегия','Strategy']
   };
+  for(const definition of window.MarkovMadeToolkitModels?.definitions||[])tools[definition.id]=definition.title;
   const readJson = key => { try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch (_) { return null; } };
   const writeJson = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch (_) { return false; } };
   const lang = () => document.documentElement.lang === 'en' ? 1 : 0;
@@ -27,7 +28,7 @@
       progress: result => Number.isFinite(result.weekly) ? `${result.weekly >= 0 ? '+' : ''}${result.weekly.toFixed(2)} kg/week` : '—',
       strategy: result => result.main || '—'
     };
-    return (map[tool] || (() => '—'))(result);
+    return (map[tool] || (value => Array.isArray(value.value)?value.value[lang()]:'—'))(result);
   };
 
   function snapshots() {
@@ -37,10 +38,10 @@
 
   function record(tool) {
     const app = window.MarkovMadeLab;
-    const result = app && app.state && app.state[tool];
+    const result = app && app.state && (app.state[tool]||app.state.toolkit?.[tool]?.result);
     if (!tools[tool] || !result || !result.modelVersion) return;
     const form = document.querySelector(`[data-mm-lab-panel="${tool}"]`);
-    const inputs = {};
+    const inputs = {...(app.state.toolkit?.[tool]?.inputs||{})};
     if (form) form.querySelectorAll('input:not([type="file"]),select,textarea').forEach(field => {
       if (field.id) inputs[field.id] = field.value;
     });
@@ -150,6 +151,7 @@
   }
 
   function renderPersonalOS() {
+    document.querySelector('[data-os-provenance]')?.replaceChildren(document.createTextNode(copy('Сегодня: локальные данные LAB · остальные экраны: демо','Today: local LAB data · other screens: demo')));
     const state = window.MarkovMadeLab && window.MarkovMadeLab.state;
     if (!state) return;
     const n = value => Number.isFinite(value) ? new Intl.NumberFormat(lang() ? 'en-GB' : 'ru-RU', {maximumFractionDigits:1}).format(value) : null;
@@ -235,6 +237,16 @@
       if (!payload || payload.schema !== 'markovmade-lab-export-v1' || !payload.lab || typeof payload.lab !== 'object' || !payload.lab.profile || typeof payload.lab.profile !== 'object') throw new Error('schema');
       const allowed = ['body','nutrition','overfeeding','recovery','progress','strategy'];
       if (allowed.some(key => payload.lab[key] && typeof payload.lab[key] !== 'object')) throw new Error('data');
+      if(payload.lab.toolkit){
+        if(typeof payload.lab.toolkit!=='object'||Array.isArray(payload.lab.toolkit))throw new Error('toolkit');
+        const validated={};
+        for(const [id,entry] of Object.entries(payload.lab.toolkit)){
+          if(!entry||!entry.inputs||typeof entry.inputs!=='object')throw new Error('toolkit inputs');
+          const result=window.MarkovMadeToolkitModels.calculate(id,entry.inputs);
+          validated[id]={inputs:entry.inputs,result,modelVersion:result.modelVersion,at:typeof entry.at==='string'?entry.at:new Date().toISOString()};
+        }
+        payload.lab.toolkit=validated;
+      }
       const history = Array.isArray(payload.history) ? payload.history.filter(item => item && tools[item.tool] && item.result).slice(0,MAX_HISTORY) : [];
       if (!writeJson(LAB_KEY,payload.lab) || !writeJson(HISTORY_KEY,history)) throw new Error('storage');
       if (Array.isArray(payload.dailyCheckins)) {
@@ -276,6 +288,7 @@
       const button = event.target.closest && event.target.closest('[data-calc]');
       if (button) window.setTimeout(() => { record(button.dataset.calc); renderPersonalOS(); }, 0);
     });
+    document.getElementById('calculators')?.addEventListener('mm:toolkit-result',event=>{record(event.detail.id);renderPersonalOS();});
     new MutationObserver(localize).observe(document.documentElement, {attributes:true,attributeFilter:['lang']});
     new MutationObserver(renderPersonalOS).observe(document.documentElement, {attributes:true,attributeFilter:['lang']});
     localize();

@@ -1,6 +1,7 @@
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require('playwright');
 const {startServer,root}=require('./browser-helpers.cjs');
+const fixtures=require('./toolkit-fixtures.json');
 const themes=['aurum-noir','event-horizon','clarity'];
 (async()=>{
   const server=await startServer();let browser;
@@ -35,6 +36,14 @@ const themes=['aurum-noir','event-horizon','clarity'];
         for(const tab of await page.locator('[data-mm-lab-tab]').all()){
           await tab.click();await audit(`${lang}/${theme}/LAB/${await tab.getAttribute('data-mm-lab-tab')}`,'#calculators');
         }
+        for(const [id,values] of Object.entries(fixtures)){
+          await page.evaluate(id=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id===id)),id);
+          for(const [key,value] of Object.entries(values))await page.locator('#toolkit-'+id+'-'+key).fill(String(value));
+          await page.locator('#mm-toolkit-workspace button[type="submit"]').click();
+          await audit(`${lang}/${theme}/toolkit/${id}`,'#mm-toolkit-workspace');
+        }
+        await page.evaluate(()=>window.mmPreviewShare('Private preview','https://t.me/share/url'));
+        await audit(`${lang}/${theme}/share-preview`,'.mm-share-preview');await page.keyboard.press('Escape');
         await page.locator('#app-ecosystem').scrollIntoViewIfNeeded();await page.waitForTimeout(100);
         for(const tab of await page.locator('[data-app-tab]').all()){
           await tab.click();await audit(`${lang}/${theme}/OS/${await tab.getAttribute('data-app-tab')}`,'#app-ecosystem');

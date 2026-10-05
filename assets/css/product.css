@@ -1,4 +1,5 @@
-/* Product-specific components and responsive behavior. */
+/* Explicit cascade: base declarations, component owners, then legacy priority contracts. No importance flags. */
+@layer base {/* Product-specific components and responsive behavior. */
 .mm-theme-dialog {
   width: min(48rem, calc(100vw - 2rem));
   max-width: none;
@@ -89,10 +90,6 @@
   .mm-lab-snapshot-card { min-height:6.5rem; padding:.8rem; }
   .mm-lab-snapshot-link { white-space:normal; }
 }
-@media (prefers-reduced-motion: reduce) {
-  body { cursor:auto !important; }
-  #cursor, .custom-cursor { display:none !important; }
-}
 .theme-switch { min-height:44px; }
 #calculators :where(label,small,.mm-lab-tab small,.mm-lab-error,.mm-lab-details summary) { font-size:max(13px,1em); }
 #calculators :where(.mm-lab-field small,.mm-lab-metric small,.mm-lab-privacy,.mm-lab-foot) { font-size:max(13px,1em); }
@@ -141,7 +138,7 @@
 .mm-lab-outliers input{width:18px;height:18px;accent-color:var(--mm-accent)}
 
 /* Keep the long editorial page cheap to lay out before each section approaches view. */
-#decision-hub, #proof-system, #case-scenarios, #calculators, #calculator-decision, #app-ecosystem, #services, #method-proof, #about, #biography, #principles, #team, #quick-faq, #contact{content-visibility:auto;contain-intrinsic-size:auto 1100px}
+#decision-hub, #proof-system, #case-scenarios, #calculators, #calculator-decision, #app-ecosystem, #services, #method-proof, #about, #biography, #principles, #community, #quick-faq, #contact{content-visibility:auto;contain-intrinsic-size:auto 1100px}
 
 /* A compact, factual return surface for the LAB. */
 #calculators .mm-lab-daily {
@@ -185,7 +182,7 @@
 .mm-lab-quick-item{display:inline-flex;align-items:center;min-height:2.75rem;border:1px solid var(--mm-border);border-radius:999px;background:var(--mm-surface-1)}
 .mm-lab-quick-item button{min-height:2.75rem;border:0;background:transparent;color:var(--mm-text-primary);cursor:pointer}
 .mm-lab-quick-open{padding:.5rem .4rem .5rem .85rem;font:700 .78rem/1.2 var(--mm-font-body)}
-.mm-lab-quick-favorite{min-width:2.5rem;padding:.4rem .65rem .4rem .3rem;color:var(--mm-accent) !important;font-size:1.1rem}
+.mm-lab-quick-favorite{min-width:2.5rem;padding:.4rem .65rem .4rem .3rem;font-size:1.1rem}
 .mm-lab-quick-tools>#mm-lab-repeat-last{min-height:2.75rem;margin-left:auto}
 .mm-lab-quick-tools>#mm-lab-repeat-last:disabled{opacity:.55;cursor:not-allowed}
 @media(max-width:1150px){.mm-lab-daily-grid{grid-template-columns:1fr}.mm-lab-checkin-fields{grid-template-columns:repeat(4,minmax(0,1fr))}}
@@ -207,3 +204,11 @@
 /* Stable space while a below-fold interactive component enters. */
 [data-component][aria-busy="true"] { min-height: 30rem; }
 .mm-component-loading { position: relative; z-index: 3; padding: 2rem; color: var(--mm-text-secondary); font: 500 1rem/1.6 var(--mm-font-body); }
+}
+@layer priority {
+@media (prefers-reduced-motion: reduce) {
+  body { cursor:auto; }
+  #cursor, .custom-cursor { display:none; }
+}
+.mm-lab-quick-favorite{color:var(--mm-accent)}
+}

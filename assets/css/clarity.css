@@ -1,4 +1,5 @@
-/* Clarity / Vision Assist is a complete light reading environment. */
+/* Explicit cascade: base declarations, component owners, then legacy priority contracts. No importance flags. */
+@layer base {/* Clarity / Vision Assist is a complete light reading environment. */
 html[data-theme="clarity"] {
   background:#f6f5f1;
   scroll-behavior:auto;
@@ -20,7 +21,7 @@ html[data-theme="clarity"] :is(h1,h2,h3,h4,h5,h6) {
 }
 html[data-theme="clarity"] :is(p,li,dd,blockquote) { color:#34434d; line-height:1.68; }
 html[data-theme="clarity"] :is(.text-gold,.mm-lab-kicker,.eyebrow) { color:#205a70; }
-html[data-theme="clarity"] :is(#decision-hub,#proof-system,#case-scenarios,#calculators,#calculator-decision,#app-ecosystem,#services,#method-proof,#about,#biography,#principles,#team,#quick-faq,#contact) {
+html[data-theme="clarity"] :is(#decision-hub,#proof-system,#case-scenarios,#calculators,#calculator-decision,#app-ecosystem,#services,#method-proof,#about,#biography,#principles,#community,#quick-faq,#contact) {
   background:#f6f5f1;
   background-image:none;
   color:#17232b;
@@ -68,11 +69,6 @@ html[data-theme="clarity"] :is(button,a,input,select,textarea,summary,[role="tab
 html[data-theme="clarity"] :is(button:disabled,[aria-disabled="true"]) { opacity:.58; cursor:not-allowed; }
 html[data-theme="clarity"] :is(button[aria-pressed="true"],[role="tab"][aria-selected="true"]) { border-color:#205a70; box-shadow:inset 0 0 0 2px #205a70; }
 html[data-theme="clarity"] :is(.calc-primary-btn,.calc-gold-link,.lead-action,.mm-lab-primary,.mm-editorial-cta) {
-  background:#205a70 !important;
-  background-image:none !important;
-  color:#fff !important;
-  border:2px solid #205a70 !important;
-  box-shadow:none !important;
   text-shadow:none;
 }
 html[data-theme="clarity"] :is(.mm-lab-secondary,.mm-lab-tab,.mm-theme-option) {
@@ -90,10 +86,8 @@ html[data-theme="clarity"] #insights :is(.mm-insights-shell,.mm-insights-context
 html[data-theme="clarity"] #app-ecosystem { --proto-bg:#f6f5f1; --proto-surface:#fff; --proto-surface-2:#eeefed; --proto-surface-3:#e5e9e8; --proto-border:#8e9ca2; --proto-border-strong:#62747d; --proto-grid:#b8c2c5; --proto-shadow:none; }
 html[data-theme="clarity"] #app-ecosystem::after, html[data-theme="clarity"] #app-ecosystem .mm-os-frame::before { display:none; }
 html[data-theme="clarity"] #app-ecosystem .mm-os-frame { background:#fff; border:2px solid #8e9ca2; box-shadow:none; }
-html[data-theme="clarity"] .text-gold { color:#205a70 !important; }
-html[data-theme="clarity"] .opacity-80 { opacity:1 !important; }
 html[data-theme="clarity"] img, html[data-theme="clarity"] video { filter:none; }
-html[data-theme="clarity"] #services h3 { font-family:'Manrope','MM Body Fallback',Arial,sans-serif !important; font-style:normal; }
+html[data-theme="clarity"] #services h3 { font-style:normal; }
 html[data-theme="clarity"] :is(.fade-in-up,.reveal-text) { opacity:1; transform:none; transition:none; }
 @media (max-width:767px) {
   html[data-theme="clarity"] .mm-lab-daily-trends { grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -103,4 +97,17 @@ html[data-theme="clarity"] :is(.fade-in-up,.reveal-text) { opacity:1; transform:
 }
 @media (prefers-reduced-motion:reduce) {
   html[data-theme="clarity"] *, html[data-theme="clarity"] *::before, html[data-theme="clarity"] *::after { animation:none; transition:none; scroll-behavior:auto; }
+}
+}
+@layer priority {
+html[data-theme="clarity"] :is(.calc-primary-btn,.calc-gold-link,.lead-action,.mm-lab-primary,.mm-editorial-cta) {
+  background:#205a70;
+  background-image:none;
+  color:#fff;
+  border:2px solid #205a70;
+  box-shadow:none;
+}
+html[data-theme="clarity"] .text-gold { color:#205a70; }
+html[data-theme="clarity"] .opacity-80 { opacity:1; }
+html[data-theme="clarity"] #services h3 { font-family:'Manrope','MM Body Fallback',Arial,sans-serif; }
 }

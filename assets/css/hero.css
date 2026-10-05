@@ -1,4 +1,5 @@
-/* Hero owns its layout and media. Every drawable uses the same authored crop.
+/* Explicit cascade: base declarations, component owners, then legacy priority contracts. No importance flags. */
+@layer base {/* Hero owns its layout and media. Every drawable uses the same authored crop.
    hero-portrait is 960 × 648: the bottom 72 source pixels are excluded BEFORE
    encoding, extraction or paint, so no pose, breakpoint or fallback reveals them. */
 /* A streamed document may paint a half-parsed, vertically centred text block.
@@ -95,4 +96,4 @@ html[data-theme="clarity"] #hero .accent-word { color: var(--mm-accent); font-st
 }
 @media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse) {
   .mm-hero-media :is(img,video,canvas) { transition: none; transform: translateX(-50%); }
-}
+} }

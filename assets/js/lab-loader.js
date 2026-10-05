@@ -28,9 +28,10 @@
           return response.text();
         }).then(html => { host.innerHTML = html; host.dataset.hydrated = 'true'; host.removeAttribute('aria-busy'); host.classList.add('visible'); }) : Promise.resolve()
       ]);
-      await Promise.all([loadScript('lab-models'), loadScript('dynamic-copy')]);
+      await Promise.all([loadScript('lab-models'), loadScript('dynamic-copy'), loadScript('toolkit-models')]);
       await loadScript('lab-runtime');
       await Promise.all([loadScript('lab-history'), loadScript('lab-dashboard')]);
+      await loadScript('lab-toolkit');
       await window.mmTranslate?.(section);
       ready = true;
       document.getElementById('mm-lab-load-error')?.remove();
@@ -40,8 +41,8 @@
   }
   window.mmLoadLab = load;
   const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
-    if (entries.some(e => e.isIntersecting)) load().catch(showFailure);
-  }, { rootMargin: '900px 0px' }) : null;
+    if (scrollY>0 && entries.some(e => e.isIntersecting)) load().catch(showFailure);
+  }, { rootMargin: '0px' }) : null;
   function showFailure() {
     observer?.disconnect();
     let status = document.getElementById('mm-lab-load-error');
@@ -51,6 +52,7 @@
     const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'mm-secondary-cta'; retry.dataset.retryLab = ''; retry.textContent = en ? 'Try again' : 'Повторить'; status.append(retry);
   }
   observer?.observe(section);
+  addEventListener('scroll',()=>{if(!ready&&!document.getElementById('mm-lab-load-error')&&scrollY>0&&section.getBoundingClientRect().top<innerHeight+180)load().catch(showFailure);},{passive:true});
   if (location.hash.startsWith('#lab') || location.hash === '#calculators' || !observer) load().catch(showFailure);
   document.addEventListener('pointerdown', event => {
     if (event.target.closest('a[href="#calculators"]')) load().catch(showFailure);

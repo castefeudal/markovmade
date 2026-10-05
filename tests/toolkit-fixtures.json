@@ -1,0 +1,86 @@
+{
+  "recomposition": {
+    "weight": 80,
+    "bodyFat": 20,
+    "fatLoss": -2,
+    "leanChange": 1
+  },
+  "circumference": {
+    "before": 90,
+    "after": 88,
+    "days": 14
+  },
+  "protein": {
+    "weight": 80
+  },
+  "phase": {
+    "weight": 80,
+    "target": 76,
+    "rate": 0.5
+  },
+  "load": {
+    "max": 100,
+    "percent": 75,
+    "reps": 6,
+    "rir": 2,
+    "step": 2.5
+  },
+  "plates": {
+    "target": 67.5,
+    "bar": 20,
+    "inventory": "20, 10, 5, 2.5, 1.25"
+  },
+  "volume": {
+    "sets": 3,
+    "reps": 8,
+    "load": 60
+  },
+  "progression": {
+    "load": 60,
+    "reps": 10,
+    "ceiling": 10,
+    "rir": 2,
+    "sessions": 2,
+    "step": 2.5
+  },
+  "cardio": {
+    "age": 40
+  },
+  "sleep": {
+    "bed": "23:00",
+    "wake": "07:00",
+    "awake": 30
+  },
+  "caffeine": {
+    "dose": 100,
+    "hours": 8
+  },
+  "fatigue": {
+    "sleep": 6,
+    "soreness": 8,
+    "drop": 7,
+    "days": 4
+  },
+  "adherence": {
+    "planned": 14,
+    "done": 10
+  },
+  "friction": {
+    "time": 2,
+    "environment": 8,
+    "complexity": 5
+  },
+  "minimum": {
+    "action": "walk",
+    "minutes": 10
+  },
+  "ifthen": {
+    "cue": "lunch ends",
+    "action": "walk for ten minutes"
+  },
+  "review": {
+    "fact": "three sessions",
+    "lesson": "morning works",
+    "action": "keep morning sessions"
+  }
+}
