@@ -11,4 +11,10 @@
     dialog.append(title,note,content,proceed,cancel);document.body.append(dialog);const focus=document.activeElement;
     dialog.addEventListener('close',()=>{dialog.remove();focus?.focus();},{once:true});dialog.showModal();cancel.focus();
   };
+  document.addEventListener('click',event=>{
+    const link=event.target.closest('a[href]');if(!link||link.closest('.mm-share-preview'))return;
+    let url;try{url=new URL(link.href);}catch{return;}
+    if(!['t.me','wa.me'].includes(url.hostname)||!url.searchParams.has('text'))return;
+    event.preventDefault();window.mmPreviewShare(url.searchParams.get('text'),url.href);
+  },true);
 })();

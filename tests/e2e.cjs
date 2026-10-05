@@ -85,6 +85,7 @@ let browser;
   await page.locator('#lab-body-bf-source').selectOption('dexa');
   await page.locator('[data-calc="body"]').click();
   assert.match(await page.locator('#lab-body-main').textContent(), /15[,.]0?%/);
+  assert.notEqual((await page.locator('#lab-body-ffmi').textContent()).trim(),'—','computed FFMI is rendered');
   assert.match(await page.locator('[data-confidence="body"]').textContent(), /Выше средней/);
   assert.match(await page.locator('#lab-body-range').textContent(), /сохранено введённое значение 15(?:[,.]0)?%/i, 'measurement method changes confidence without altering user-entered body-fat percent');
   assert.ok(await page.locator('#mm-lab-snapshot [data-snap="bf"]').isVisible());

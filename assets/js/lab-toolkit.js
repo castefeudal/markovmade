@@ -109,7 +109,16 @@
       node('h4',p('Главное ограничение','Main limitation')),node('p',(trend||observed)?p('Учёт питания и изменения воды могут искажать калибровку.','Food logging and water changes can distort calibration.'):physical?p('Недостаточно сопоставимых наблюдений за 14–28 дней.','Not enough comparable observations over 14–28 days.'):p('Нет наблюдений о выполнении выбранного действия.','There are no observations of adherence to the chosen action.')),
       node('h4',p('Одно следующее действие','One next action')),node('p',next));
     const download=node('button',p('Скачать читаемую сводку','Download readable summary'),'mm-lab-secondary');download.type='button';download.addEventListener('click',()=>{
-      let content=summary.innerText+'\n\n';for(const tool of tools){const record=app.state.toolkit?.[tool.id];if(record){const result=record.result;content+=t(tool.title)+'\n'+t(result.value)+'\n'+t(result.meaning)+'\n'+t(result.uncertainty)+'\n'+result.actions.map(t).join('\n')+'\n'+tool.type+' · '+tool.version+'\n\n';}else if(window.mmCalcSummaries?.[tool.id])content+=window.mmCalcSummaries[tool.id]+'\n\n';}
+      let content=summary.innerText+'\n\n';for(const tool of tools){
+        const record=app.state.toolkit?.[tool.id];
+        if(record){const result=record.result;content+=t(tool.title)+'\n'+t(result.value)+'\n'+t(result.meaning)+'\n'+t(p('Уверенность','Confidence'))+': '+result.confidence+'\n'+t(result.uncertainty)+'\n'+result.actions.map(t).join('\n')+'\n'+t(result.accuracy)+'\n'+tool.type+' · '+tool.version+' · '+tool.review+'\n'+(tool.source?.join(' ')||'MARKOVMADE')+'\n\n';}
+        else if(app.state[tool.id]?.modelVersion){
+          const panel=document.getElementById('mm-lab-'+tool.id),prefix={body:'body',nutrition:'nutri',overfeeding:'fat',recovery:'rec',progress:'prog',strategy:'str'}[tool.id];
+          const value=prefix?panel.querySelector('#lab-'+prefix+'-main')?.textContent:panel.querySelector('#lab-e1rm-result')?.textContent;
+          const meaning=prefix?panel.querySelector('#lab-'+prefix+'-meaning')?.textContent:null;
+          content+=t(tool.title)+'\n'+(value||'—')+'\n'+(meaning||t(tool.subtitle))+'\n'+t(tool.limits)+'\n'+[...panel.querySelectorAll('#lab-'+prefix+'-actions li')].map(el=>el.textContent).join('\n')+'\n'+tool.type+' · '+tool.version+' · '+tool.review+'\n'+(tool.source?.join(' ')||'MARKOVMADE')+'\n\n';
+        }
+      }
       const url=URL.createObjectURL(new Blob([content],{type:'text/plain;charset=utf-8'})),link=node('a');link.href=url;link.download='markovmade-summary-'+new Date().toISOString().slice(0,10)+'.txt';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
     });summary.append(download);
   }

@@ -16,7 +16,7 @@ async function assertComposition(page,label) {
     const ir=image.getBoundingClientRect(),mr=media.getBoundingClientRect(),hr=heading.getBoundingClientRect();
     // Conservative envelope of the head over the complete authored turn/nod sequence.
     const face={left:ir.left+ir.width*.34,right:ir.left+ir.width*.68,top:ir.top+ir.height*.075,bottom:ir.top+ir.height*.68};
-    return {viewport:innerWidth,scroll:document.documentElement.scrollWidth,media:mr.toJSON(),heading:hr.toJSON(),face,width:image.naturalWidth,height:image.naturalHeight};
+    return {viewport:innerWidth,scroll:document.documentElement.scrollWidth,media:mr.toJSON(),heading:hr.toJSON(),face,width:image.naturalWidth,height:image.naturalHeight,hero:hero.getBoundingClientRect().toJSON(),layout:{display:getComputedStyle(hero).display,mediaWidth:getComputedStyle(media).width,mobileQuery:matchMedia('(max-width:1180px)').matches}};
   });
   assert.ok(result.scroll<=result.viewport+1,`${label}: horizontal overflow`);
   // Responsive srcset density rounds natural dimensions to whole CSS pixels.
@@ -67,7 +67,7 @@ async function assertCta(page,label) {
       await page.goto(server.url,{waitUntil:'load'});
       await page.evaluate(()=>window.mmLoadStyles());
       for(const lang of ['ru','en']) {
-        if(lang==='en'){await page.locator('[data-lang-toggle]:visible').first().click();await page.waitForFunction(()=>document.documentElement.lang==='en');await page.waitForTimeout(200);}
+        if(lang==='en'){await page.locator('[data-lang-toggle]:visible').first().click();await page.waitForFunction(()=>document.documentElement.lang==='en');await page.evaluate(async()=>{await window.mmLanguageReady;await document.fonts.ready;});}
         for(const theme of themes) {
           await page.locator('.theme-switch:visible').first().click();
           await page.locator(`[data-theme-value="${theme}"]`).click();
@@ -76,6 +76,7 @@ async function assertCta(page,label) {
             await page.setViewportSize({width,height:width<=430?844:900});
             await page.evaluate(()=>scrollTo(0,0));
             await page.waitForTimeout(80);
+            await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
             await assertComposition(page,`${name}/${lang}/${theme}/${width}`);
           }
           if(theme==='clarity')await assertCta(page,`${name}/${lang}/clarity`);

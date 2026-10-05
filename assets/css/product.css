@@ -138,7 +138,7 @@
 .mm-lab-outliers input{width:18px;height:18px;accent-color:var(--mm-accent)}
 
 /* Keep the long editorial page cheap to lay out before each section approaches view. */
-#decision-hub, #proof-system, #case-scenarios, #calculators, #calculator-decision, #app-ecosystem, #services, #method-proof, #about, #biography, #principles, #community, #quick-faq, #contact{content-visibility:auto;contain-intrinsic-size:auto 1100px}
+#decision-hub, #proof-system, #case-scenarios, #calculators, #calculator-decision, #personal-request, #app-ecosystem, #services, #method-proof, #about, #biography, #principles, #community, #quick-faq, #contact{content-visibility:auto;contain-intrinsic-size:auto 1100px}
 
 /* A compact, factual return surface for the LAB. */
 #calculators .mm-lab-daily {

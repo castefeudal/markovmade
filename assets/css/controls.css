@@ -30,3 +30,9 @@ body.menu-open { overflow: hidden; }
   #hero :is(.mm-primary-cta,.mm-secondary-cta) { width: 100%; min-height: 3rem; }
   #mm-quick-actions { display: none; }
 } }
+/* Structural touch targets apply before below-fold CSS arrives. These are
+   shared primitives, so the critical selector pass retains them at first paint. */
+@layer base {
+  :where(button, select, textarea, summary, input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"])) { min-height:44px; }
+  :where(a[class*="cta"]) { display:inline-flex; align-items:center; min-height:44px; }
+}

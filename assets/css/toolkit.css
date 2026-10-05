@@ -14,3 +14,4 @@
 
 }
 @layer components {.mm-result-precision{padding:24px 0;color:var(--mm-text-primary)}.mm-result-precision h4{font:600 15px/1.5 Manrope,sans-serif;margin:16px 0 8px}.mm-result-precision p{font:400 17px/1.7 Manrope,sans-serif;color:var(--mm-text-muted)}.mm-result-precision summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font:500 15px/1.5 Manrope,sans-serif;margin-top:16px}.mm-toolkit>button.mm-lab-secondary{min-height:48px;margin-top:16px}}
+@layer components {@media(max-width:768px){#calculators :is(button,select,textarea,input:not([type="checkbox"]):not([type="radio"])),#app-ecosystem :is(button,select,textarea,input:not([type="checkbox"]):not([type="radio"]),a[href]){min-height:44px}}}

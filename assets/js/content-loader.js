@@ -20,10 +20,10 @@
   addEventListener('scroll',()=>{if(scrollY>0)load().catch(()=>{});},{passive:true});
   addEventListener('wheel',()=>load().catch(()=>{}),{once:true,passive:true});
   addEventListener('touchmove',()=>load().catch(()=>{}),{once:true,passive:true});
-  document.addEventListener('focusin',event=>{if(event.target.closest('#contact,#services,#quick-faq,#biography'))load().catch(()=>{});});
+  document.addEventListener('focusin',event=>{if(event.target.closest('#contact,#personal-request,#services,#quick-faq,#biography,[data-privacy-toggle]'))load().catch(()=>{});});
   document.addEventListener('click',event=>{
     if(ready)return;
-    const target=event.target.closest('[onclick],#situation-quiz button');
+    const target=event.target.closest('[data-privacy-toggle],#request-quiz button');
     if(!target)return;
     event.preventDefault();event.stopImmediatePropagation();
     load().then(()=>target.click()).catch(()=>{});
