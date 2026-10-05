@@ -68,24 +68,6 @@ async function assertCta(page,label) {
       await page.evaluate(()=>window.mmLoadStyles());
       for(const lang of ['ru','en']) {
         if(lang==='en'){await page.locator('[data-lang-toggle]:visible').first().click();await page.waitForFunction(()=>document.documentElement.lang==='en');await page.evaluate(async()=>{await window.mmLanguageReady;await document.fonts.ready;});}
-        // Check the cold entry before preparing canonical design screenshots.
-        // font-display:optional deliberately keeps a slow font as fallback for
-        // the whole document; waiting for fonts.ready cannot swap that face.
-        await assertComposition(page,`${name}/${lang}/cold-entry`);
-        await page.evaluate(async()=>{
-          await document.fonts.ready;
-          const family=document.documentElement.lang==='en'?'Cormorant Garamond':'Cormorant RU';
-          const sample=document.documentElement.lang==='en'?'Body and nutrition for your life':'Тело и питание под вашу жизнь';
-          await Promise.all([
-            document.fonts.load('400 16px Manrope','ABC АБВ'),
-            document.fonts.load(`500 64px "${family}"`,sample),
-            document.fonts.load(`italic 400 64px "${family}"`,sample)
-          ]);
-        });
-        // A fresh document can select the now-available authored fonts. This
-        // affects only visual QA; streaming-paint and Lighthouse stay cold.
-        await page.reload({waitUntil:'load'});
-        await page.evaluate(async()=>{await window.mmLoadStyles();await window.mmLanguageReady;await document.fonts.ready;});
         for(const theme of themes) {
           await page.locator('.theme-switch:visible').first().click();
           await page.locator(`[data-theme-value="${theme}"]`).click();

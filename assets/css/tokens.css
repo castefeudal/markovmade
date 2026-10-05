@@ -158,3 +158,10 @@ img, video { filter: var(--mm-media-filter); }
   .reveal-text, .fade-in-up { opacity: 1; transform: none; }
 }
 }
+/* User motion preferences outrank component animation rules. Disabling the
+   transition property also neutralises an authored inline transition delay. */
+@layer components {
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition-property: none; animation-name: none; }
+  }
+}
