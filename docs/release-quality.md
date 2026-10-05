@@ -14,7 +14,9 @@
 
 [Финальный полный CI](https://github.com/castefeudal/markovmade/actions/runs/37384821193) прошёл: unit/source, E2E, axe, строгие visual/contracts, paint и Lighthouse. В 36 холодных Lighthouse-измерениях A / BP / SEO — 100 и CLS 0 во всех случаях; Performance — 35 × 100 и первое RU Aurum mobile 93, медианы всех 12 сценариев — 100. [Все значения и audits](lighthouse-flagship-ci-final-2026-10-06.json), [медианы](lighthouse-flagship-ci-final-2026-10-06-aggregates.json), raw JSON — в artifact финального CI. Буквальные 100 в каждом отдельном измерении Performance не заявлены. npm audit: 0 уязвимостей.
 
-GitHub Pages: публикация проверенной сборки из main выполняется; production SHA и served bytes будут записаны после smoke-проверки.
+GitHub Pages опубликовал `aa4cdf1a70d702a49eeb5dce80cda7c1d5e454ee`: [production](https://castefeudal.github.io/markovmade/). [Повторный полный CI main](https://github.com/castefeudal/markovmade/actions/runs/37386374500) также прошёл. `npm run test:production` подтвердил SHA-256 served bytes HTML, CSS, фрагментов, моделей/runtime, переводов, шрифта и пяти media-ассетов. Все шесть RU/EN × темы mobile/desktop прошли: 24 инструмента, передача профиля 100 кг в белковый расчёт 160–220 г/день, разрешимые якоря, отсутствие runtime errors и горизонтального overflow.
+
+На публичном адресе выполнено по одному холодному Lighthouse-измерению каждого из 12 сценариев: Performance 95–100, A / BP / SEO — 100, CLS 0 во всех. Mobile LCP 1316–1898 ms. EN Clarity mobile: Performance 95, TBT 235 ms. [Все production-значения и audits](lighthouse-flagship-production-2026-10-06.json), [сводка](lighthouse-flagship-production-2026-10-06-aggregates.json). Это один срез каждого сценария, а не три повтора. GitHub Pages отдаёт Cache-Control: max-age=600; клиентской имитации cache headers нет. Повторяемые 100 Performance в каждом отдельном измерении не достигнуты. Исполняемая сборка выпуска соответствует проверенному `0eee6cd`.
 
 ## Промежуточные измерения и проверка каскада
 
