@@ -18,7 +18,7 @@ html.js:not([data-critical-ready]) #hero > .container { visibility: hidden; }
   touch-action: pan-y;
 }
 #hero > .container { width: min(100%, 1600px); max-width: 1600px; padding-inline: clamp(1.25rem, 5.5vw, 6rem); margin-inline: auto; position: relative; z-index: 2; }
-#hero .hero-content-premium { width: 56%; max-width: 48rem; padding: 0; }
+#hero .hero-content-premium { width: 56%; max-width: 48rem; padding: 0; line-height: 1.5; }
 #hero .hero-content-premium > .fade-in-up { opacity: 1; transform: none; }
 #hero .hero-content-premium > div:first-child { margin-bottom: 2rem; }
 #hero h1 {
