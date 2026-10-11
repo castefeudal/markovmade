@@ -244,6 +244,29 @@ let browser;
   const accordion = page.locator('#services .mm-service-editorial-item summary').first();
   await accordion.click();
   assert.equal(await accordion.evaluate(el=>el.parentElement.open),true);
+  assert.match(await page.locator('#about .mm-author-story-photo').getAttribute('src'),/03-image-fGFdFRLn\.webp/,'the original About portrait is restored');
+  const quickRequest=page.locator('#request-quiz');
+  assert.equal(await page.locator('.mm-request-details').evaluate(el=>el.open),false,'the full request form is optional and collapsed by default');
+  await quickRequest.locator('[data-quiz-group="goal"] [data-value="снизить вес"]').click();
+  await quickRequest.locator('[data-quiz-group="blocker"] [data-value="нехватка времени"]').click();
+  assert.equal(await quickRequest.locator('[data-quiz-group="goal"] .active').count(),1,'the quick request asks for only one goal');
+  assert.match(new URL(await page.locator('#quiz-telegram-link').getAttribute('href')).searchParams.get('text'),/снизить вес|lose weight/);
+  assert.match(new URL(await page.locator('#quiz-whatsapp-link').getAttribute('href')).searchParams.get('text'),/нехватка времени|lack of time/);
+  for(const image of await page.locator('#case-scenarios .mm-case-study-layout-case-image img').all()){
+    await image.scrollIntoViewIfNeeded();
+    const imageState=await image.evaluate(async el=>{await el.decode();return {loaded:el.naturalWidth>0,fit:getComputedStyle(el).objectFit,ratio:el.naturalWidth/el.naturalHeight,rendered:el.getBoundingClientRect().width/el.getBoundingClientRect().height};});
+    assert.equal(imageState.loaded,true,'every case photo loads');
+    assert.equal(imageState.fit,'contain','framed case photos are not cropped');
+    assert.ok(Math.abs(imageState.ratio-imageState.rendered)<.035,`case photo keeps its natural proportions (${imageState.ratio} vs ${imageState.rendered})`);
+  }
+  const community=page.locator('#community');
+  assert.equal(await community.locator('.mm-community-card').count(),3,'the community section keeps its original three membership themes');
+  assert.equal(await community.locator('.mm-community-cta a').getAttribute('href'),'#personal-request','joining goes to the short request flow');
+  await page.setViewportSize({width:390,height:844});await page.waitForTimeout(300);
+  for(let attempt=0;attempt<2;attempt++){await community.evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));await page.waitForTimeout(350);}
+  await page.screenshot({path:root+'/test-results/community-section-mobile.png'});
+  await page.setViewportSize({width:1440,height:900});
+  await page.locator('.mm-request-details > summary').click();
   const privacyTrigger = page.locator('[data-privacy-toggle]').first();
   await privacyTrigger.click();
   assert.equal(await page.locator('#privacy-modal').getAttribute('aria-modal'), 'true');

@@ -90,9 +90,10 @@
   "e1RM · рабочие веса": "e1RM · working loads",
   "Стратегия": "Strategy",
   "01 / СОСТАВ ТЕЛА": "01 / BODY COMPOSITION",
-  "Состав тела без фетиша на одну цифру": "Body composition beyond a single number",
-  "Оцените % жира, жировую и безжировую массу, FFMI и практический коридор цели. Если % жира неизвестен — используйте окружности и получите честный диапазон, а не выдуманную точность.": "Estimate body fat %, fat and lean mass, FFMI and a practical target range. If body fat % is unknown, use circumference measurements to get an honest range rather than invented precision.",
+  "Состав тела: основные показатели": "Body composition: key measures",
+  "Посмотрите процент жира, жировую и безжировую массу, FFMI и ориентир по весу. Если вы не знаете процент жира, его можно примерно оценить по замерам талии, шеи и роста.": "Review body fat percentage, fat and lean mass, FFMI and a target weight estimate. If you do not know your body fat percentage, it can be roughly estimated from waist, neck and height measurements.",
   "Быстро": "Quick",
+  "Подробно": "Detailed",
   "Исходные данные": "Starting data",
   "Как определить % жира?": "How do you estimate body fat %?",
   "Я знаю % жира": "I know my body fat %",
@@ -367,5 +368,5 @@
   "Готов к рабочему плану": "Ready for a working plan",
   "Готов к строгому контролю": "Ready for close monitoring",
   "12 недель": "12 weeks",
-  "Оцените старт и выберите действие. Расчёты и история остаются в вашем браузере.": "Establish a starting point and choose an action. Calculations and history stay in your browser."
+  "Проверьте основные показатели и выберите, что делать дальше. Расчёты и история остаются в вашем браузере.": "Review the key measures and choose what to do next. Calculations and history stay in your browser."
 }

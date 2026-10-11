@@ -7,8 +7,9 @@
     'наладить питание': 'fix nutrition',
     'собрать дисциплину': 'build discipline',
     'понять формат': 'understand the right format',
+    'вступить в сообщество': 'join the community',
     'вес стоит': 'weight is stuck',
-    'срывы': 'breakdowns',
+    'срывы': 'hard to keep a routine',
     'мало энергии': 'low energy',
     'нет плана': 'no plan',
     'есть ограничения': 'limitations/injuries',
@@ -26,6 +27,7 @@
     root.__v13Ready=true;
     var summary=document.getElementById('quiz-summary');
     var tg=document.getElementById('quiz-telegram-link');
+    var wa=document.getElementById('quiz-whatsapp-link');
     function collect(group){
       return Array.prototype.slice.call(root.querySelectorAll('[data-quiz-group="'+group+'"] .mm-editorial-option.active')).map(function(btn){
         var raw=(btn.getAttribute('data-value')||btn.textContent||'').trim();
@@ -38,27 +40,34 @@
       var blockers=collect('blocker');
       var emptyGoal=en?'choose a point':'выберите пункт';
       var emptyBlocker=en?'choose a point':'выберите пункт';
-      var defaultGoal=en?'still choosing':'пока выбираю';
-      var defaultBlocker=en?'to clarify during the audit':'нужно понять на разборе';
+      var defaultGoal=en?'I would like to discuss my goal':'хочу обсудить свою задачу';
+      var defaultBlocker=en?'I can explain more in chat':'расскажу подробнее в сообщении';
       var text=en
-        ? 'Hello! I want a MARKOVMADE personal assessment. Goal: '+(goals.length?goals.join(', '):defaultGoal)+'. Main blocker: '+(blockers.length?blockers.join(', '):defaultBlocker)+'. I want to understand where to start and which work format fits me.'
-        : 'Здравствуйте! Хочу персональный разбор MARKOVMADE. Цель: '+(goals.length?goals.join(', '):defaultGoal)+'. Главный стопор: '+(blockers.length?blockers.join(', '):defaultBlocker)+'. Хочу понять, с чего начать и какой формат работы мне подходит.';
+        ? 'Hello, Pavel. I would like to discuss working with MARKOVMADE. Goal: '+(goals.length?goals.join(', '):defaultGoal)+'. '+(blockers.length?'What is getting in the way: '+blockers.join(', ')+'. ':defaultBlocker+'. ')+'What would be a good place to start?'
+        : 'Здравствуйте, Павел. Хочу обсудить работу с MARKOVMADE. Цель: '+(goals.length?goals.join(', '):defaultGoal)+'. '+(blockers.length?'Что мешает: '+blockers.join(', ')+'. ':defaultBlocker+'. ')+'Подскажите, с чего начать.';
       if(summary) {
         var ready = goals.length || blockers.length;
         var line = en
-          ? 'Request context: goal — '+(goals.length?goals.join(', '):emptyGoal)+'; main blocker — '+(blockers.length?blockers.join(', '):emptyBlocker)+'.'
-          : 'Контекст заявки: цель — '+(goals.length?goals.join(', '):emptyGoal)+'; главный стопор — '+(blockers.length?blockers.join(', '):emptyBlocker)+'.';
+          ? 'Goal: '+(goals.length?goals.join(', '):emptyGoal)+'. '+(blockers.length?'What is getting in the way: '+blockers.join(', ')+'.':'You can add more context in your message.')
+          : 'Цель: '+(goals.length?goals.join(', '):emptyGoal)+'. '+(blockers.length?'Что мешает: '+blockers.join(', ')+'.':'Подробности можно написать в сообщении.');
         summary.classList.toggle('mm-editorial-detail-quiz-ready', !!ready);
         summary.innerHTML = ready
-          ? (en ? '<b>Your details are ready.</b><span class="mm-editorial-detail-thank-note">Now send them in Telegram — so I can reply based on your actual situation, not with generic advice.</span><span class="mm-editorial-detail-thank-note">'+line+'</span>' : '<b>Вводные собраны.</b><span class="mm-editorial-detail-thank-note">Теперь отправьте их в Telegram — так я отвечу не общими словами, а по вашей ситуации.</span><span class="mm-editorial-detail-thank-note">'+line+'</span>')
-          : line;
+          ? (en ? '<b>Your message is ready.</b><span class="mm-editorial-detail-thank-note">Check it in Telegram and send when ready.</span><span class="mm-editorial-detail-thank-note">'+line+'</span>' : '<b>Сообщение готово.</b><span class="mm-editorial-detail-thank-note">Проверьте его в Telegram и отправьте, когда будете готовы.</span><span class="mm-editorial-detail-thank-note">'+line+'</span>')
+          : (en ? 'You can send the message now or add a goal above.' : 'Можно отправить сообщение сразу или выбрать цель выше.');
       }
-      if(tg) { tg.href='https://t.me/markovmade?text='+encodeURIComponent(text); tg.textContent = en ? 'Send to Pavel' : 'Отправить Павлу'; }
+      if(tg) { tg.href='https://t.me/markovmade?text='+encodeURIComponent(text); tg.textContent = en ? 'Message Pavel' : 'Написать Павлу'; }
+      if(wa) { wa.href='https://wa.me/79819722516?text='+encodeURIComponent(text); }
     }
     window.mmV13QuizUpdate = update;
     root.querySelectorAll('.mm-editorial-option').forEach(function(btn){
       btn.addEventListener('click',function(){
-        btn.classList.toggle('active');
+        var group=btn.closest('[data-quiz-group]');
+        var wasActive=btn.classList.contains('active');
+        group.querySelectorAll('.mm-editorial-option').forEach(function(option){
+          option.classList.remove('active');
+          option.setAttribute('aria-pressed','false');
+        });
+        if(!wasActive){btn.classList.add('active');btn.setAttribute('aria-pressed','true');}
         update();
         if(window.mmTrack) window.mmTrack('v13_quiz_select',{value:btn.getAttribute('data-value')});
       });

@@ -167,10 +167,10 @@
             formEl.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const errorEl = document.getElementById('lead-form-error');
-                const requiredIds = ['name', 'goal', 'problem'];
+                const requiredIds = ['name', 'goal'];
                 const missing = requiredIds.filter(id => !leadRead(id) || leadRead(id) === '—');
                 if (missing.length) {
-                    if (errorEl) errorEl.textContent = (document.documentElement.lang === 'en' || window.mmSafeStorage.get('markovmade_lang', 'ru') === 'en') ? 'Fill in name/contact, goal and main blocker — enough for a precise first reply.' : 'Заполните имя / контакт, цель и главный стопор — этого достаточно для точного первого ответа.';
+                    if (errorEl) errorEl.textContent = (document.documentElement.lang === 'en' || window.mmSafeStorage.get('markovmade_lang', 'ru') === 'en') ? 'Add your name or contact and what you would like to change.' : 'Укажите имя или контакт и напишите, что хотите изменить.';
                     const first = document.getElementById(missing[0]);
                     if (first) first.focus();
                     return;

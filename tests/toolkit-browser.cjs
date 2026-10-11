@@ -22,7 +22,12 @@ const fixtures=require('./toolkit-fixtures.json');
       assert.equal(await page.evaluate(()=>Object.keys(JSON.parse(localStorage.getItem('markovmade-lab-v1')).toolkit).length),17);
       assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-history-v1')).filter(item=>item.modelVersion==='2.0.0').length),17);
       // Imported literal strings are rendered as text, never markup.
+      await page.evaluate(()=>{const state=window.MarkovMadeLab.state;state.profile.weight=80;state.progress=state.progress||{};state.progress.weekly=-.42;localStorage.setItem('markovmade-lab-v1',JSON.stringify(state));});
       await page.locator('#toolkit-review-action').fill('<img src=x onerror=alert(1)>');await page.locator('#mm-toolkit-workspace button[type="submit"]').click();assert.equal(await page.locator('#mm-toolkit-result img').count(),0);
+      assert.equal(await page.locator('.mm-toolkit-summary .mm-summary-trend').count(),1,'weekly progress appears as a measured diverging chart');
+      assert.ok(await page.locator('.mm-toolkit-summary .mm-summary-metric-value').count()>=1,'the summary presents measured values as dashboard cards');
+      assert.equal(await page.locator('.mm-toolkit-summary .mm-summary-trend-axis').getAttribute('role'),'img');
+      if(name==='chromium'&&lang==='ru'&&theme==='aurum-noir'){await page.locator('.mm-toolkit-summary').scrollIntoViewIfNeeded();await page.screenshot({path:root+'/test-results/toolkit-summary-demo.png'});}
       const download=page.waitForEvent('download');await page.locator('.mm-toolkit-summary button').click();assert.match((await download).suggestedFilename(),/\.txt$/);
       await page.evaluate(()=>window.mmPreviewShare('Private test text','https://t.me/share/url?text=Private'));assert.equal(await page.locator('.mm-share-preview pre').innerText(),'Private test text');await page.keyboard.press('Escape');await page.locator('.mm-share-preview').waitFor({state:'detached'});
       await page.reload();await page.evaluate(()=>window.mmLoadLab());assert.equal(await page.evaluate(()=>Object.keys(window.MarkovMadeLab.state.toolkit).length),17);
