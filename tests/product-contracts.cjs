@@ -171,8 +171,16 @@ async function assertCta(page,label) {
       return [...new Set(texts)];
     });
     assert.deepEqual(untranslated,[],'all authored LAB/OS/editorial copy, including select options, is translated');
+    assert.equal(await bilingual.locator('#services .mm-service-icon[aria-hidden="true"] svg').count(),4,'each work format has a decorative semantic icon');
+    assert.equal(await bilingual.locator('#proof-system .mm-trust-card-heading > span').count(),4,'trust icons retain their readable labels');
+    assert.equal(await bilingual.locator('#proof-system .mm-trust-card-heading svg[aria-hidden="true"]').count(),4,'all trust icons are decorative alongside visible labels');
+    await bilingual.locator('#services details').first().evaluate(node=>node.open=true);
+    await bilingual.locator('#services details').first().scrollIntoViewIfNeeded();
+    const servicePhoto=bilingual.locator('#services details').first().locator('img');
+    await servicePhoto.evaluate(image=>image.decode());
+    assert.equal(await servicePhoto.evaluate(image=>getComputedStyle(image).objectFit),'contain','expanded service photos remain fully visible');
     await bilingual.locator('[data-lang-toggle]:visible').first().click();
-    await bilingual.waitForFunction(()=>document.querySelector('#hero h1').textContent.includes('Тело и питание'));
+    await bilingual.waitForFunction(()=>document.querySelector('#hero h1').textContent.includes('Тело, питание и мышление'));
     assert.match(await bilingual.locator('#hero .mm-primary-cta').innerText(),/Открыть LAB/,'saved EN restores exact RU copy');
     for(const lang of ['ru','en']) {
       if(lang==='en'){await bilingual.locator('[data-lang-toggle]:visible').first().click();await bilingual.waitForTimeout(300);}
