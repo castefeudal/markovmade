@@ -5,6 +5,7 @@
   const FAV_KEY='markovmade-lab-favorites-v1';
   const HISTORY_KEY='markovmade-lab-history-v1';
   const tools={body:['Состав тела','Body'],nutrition:['Питание','Nutrition'],overfeeding:['Переедание','Overfeeding'],recovery:['Ресурс','Recovery'],progress:['Прогресс','Progress'],strength:['Сила','Strength'],strategy:['Решение','Decision']};
+  const toolIcons={body:'body',nutrition:'calories',overfeeding:'balance',recovery:'recovery',progress:'trend',strength:'strength',strategy:'compass'};
   const $=id=>document.getElementById(id);
   const en=()=>document.documentElement.lang==='en';
   const copy=(ru,english)=>en()?english:ru;
@@ -129,7 +130,7 @@
     root.replaceChildren();
     order.forEach(key=>{
       const item=document.createElement('span');item.className='mm-lab-quick-item';
-      const go=document.createElement('button');go.type='button';go.className='mm-lab-quick-open';go.textContent=tools[key][Number(en())];go.addEventListener('click',()=>openTool(key));
+      const go=document.createElement('button');go.type='button';go.className='mm-lab-quick-open';const icon=document.createElementNS('http://www.w3.org/2000/svg','svg'),use=document.createElementNS('http://www.w3.org/2000/svg','use');icon.setAttribute('aria-hidden','true');icon.setAttribute('focusable','false');use.setAttribute('href',`#mm-icon-${toolIcons[key]}`);icon.append(use);go.append(icon,document.createTextNode(tools[key][Number(en())]));go.addEventListener('click',()=>openTool(key));
       const star=document.createElement('button');star.type='button';star.className='mm-lab-quick-favorite';star.textContent=fav.includes(key)?'★':'☆';star.setAttribute('aria-pressed',String(fav.includes(key)));star.setAttribute('aria-label',copy(`${fav.includes(key)?'Убрать из избранного':'В избранное'}: ${tools[key][0]}`,`${fav.includes(key)?'Remove favorite':'Add favorite'}: ${tools[key][1]}`));
       star.addEventListener('click',()=>{const next=fav.includes(key)?fav.filter(item=>item!==key):[...fav,key];write(FAV_KEY,next);renderQuick();});
       item.append(go,star);root.appendChild(item);

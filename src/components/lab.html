@@ -1,4 +1,20 @@
 <section id="calculators" class="mm-lab-section">
+  <svg class="mm-lab-icon-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="mm-icon-body" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.5"/><path d="M7.5 20v-3.2A5.2 5.2 0 0 1 12.7 12h0a5.2 5.2 0 0 1 5.2 5.2V20M8.4 12.9l-2.1 2.2v3.1m9.3-5.3 2.1 2.2v3.1M9.3 8.5l2.7 1.2 2.7-1.2"/></symbol>
+    <symbol id="mm-icon-calories" viewBox="0 0 24 24"><path d="M13.2 2.8c.8 3.2-1.4 4.8-3 6.7-1.4 1.6-2 3-1.6 4.8.3 1.3 1.2 2.1 2.4 2.5-.2-1.8.8-2.9 2.2-4 1.2 1.7 2.8 2.6 2.8 4.9A4.7 4.7 0 0 1 11.3 22 7.3 7.3 0 0 1 4 14.7c0-4.1 2.7-7.2 6.1-9.1-.1 2.1.4 3.4 1.5 4.1.8-2.1 1.9-4.4 1.6-6.9Z"/></symbol>
+    <symbol id="mm-icon-balance" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 6.4M12 12l5.1-5.1M5.7 18.3 12 12"/></symbol>
+    <symbol id="mm-icon-recovery" viewBox="0 0 24 24"><path d="M20.2 8.7c0 5.1-8.2 11-8.2 11s-8.2-5.9-8.2-11A4.7 4.7 0 0 1 12 6.1a4.7 4.7 0 0 1 8.2 2.6Z"/><path d="M4 12h4l1.7-3.2 3.1 6.3 1.8-3.1H20"/></symbol>
+    <symbol id="mm-icon-trend" viewBox="0 0 24 24"><path d="M4 19.5h16M5.5 17V12m5 5V8m5 9V5m4 12v-7"/><path d="m4.5 9 5-4 4.5 2 5-4"/></symbol>
+    <symbol id="mm-icon-strength" viewBox="0 0 24 24"><path d="M3 9v6m3-9v12m12-12v12m3-9v6M6 12h12"/></symbol>
+    <symbol id="mm-icon-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15.7 8.3-2.1 5.3-5.3 2.1 2.1-5.3 5.3-2.1Z"/><path d="M12 3v2m9 7h-2M12 21v-2m-9-7h2"/></symbol>
+    <symbol id="mm-icon-calendar" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M7.5 3v4m9-4v4M3.5 9.5h17"/></symbol>
+    <symbol id="mm-icon-scale" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 7h8l1 4H7l1-4Zm4 0 1.5 2"/></symbol>
+    <symbol id="mm-icon-ruler" viewBox="0 0 24 24"><path d="m4 16 12-12 4 4L8 20H4v-4Z"/><path d="m13 7 4 4m-7-1 2 2m-5 1 2 2"/></symbol>
+    <symbol id="mm-icon-moon" viewBox="0 0 24 24"><path d="M19.3 15.8A8.5 8.5 0 0 1 8.2 4.7 8.7 8.7 0 1 0 19.3 15.8Z"/><path d="m17.5 4 .5 1.5 1.5.5-1.5.5-.5 1.5-.5-1.5-1.5-.5 1.5-.5.5-1.5Z"/></symbol>
+    <symbol id="mm-icon-bolt" viewBox="0 0 24 24"><path d="m13.5 2.8-9 11h6l-.2 7.4 9.2-11h-6.2l.2-7.4Z"/></symbol>
+    <symbol id="mm-icon-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12.2 2.6 2.6 5.5-5.6"/></symbol>
+    <symbol id="mm-icon-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2.2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 4v3"/></symbol>
+  </svg>
   <div class="mm-lab-wrap">
     <header class="mm-lab-intro fade-in-up">
       <span class="mm-lab-kicker">MARKOVMADE / LAB</span>
@@ -29,37 +45,37 @@
 
       <div class="mm-lab-tabs" role="tablist" aria-label="Инструменты MARKOVMADE LAB">
         <button type="button" class="mm-lab-tab" data-mm-lab-tab="body" role="tab" aria-selected="true" aria-controls="mm-lab-body" id="mm-lab-tab-body">
-          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">01</span><span class="mm-lab-tab-icon" aria-hidden="true">◎</span></span>
+          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">01</span><span class="mm-lab-tab-icon" aria-hidden="true"><svg><use href="#mm-icon-body"/></svg></span></span>
           <strong>Состав тела</strong>
           <small>% жира · LBM · FFMI</small>
         </button>
         <button type="button" class="mm-lab-tab" data-mm-lab-tab="nutrition" role="tab" aria-selected="false" aria-controls="mm-lab-nutrition" tabindex="-1" id="mm-lab-tab-nutrition">
-          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">02</span><span class="mm-lab-tab-icon" aria-hidden="true">◔</span></span>
+          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">02</span><span class="mm-lab-tab-icon" aria-hidden="true"><svg><use href="#mm-icon-calories"/></svg></span></span>
           <strong>Калории</strong>
           <small>расход · поддержание · БЖУ</small>
         </button>
         <button type="button" class="mm-lab-tab" data-mm-lab-tab="overfeeding" role="tab" aria-selected="false" aria-controls="mm-lab-overfeeding" tabindex="-1" id="mm-lab-tab-overfeeding">
-          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">03</span><span class="mm-lab-tab-icon" aria-hidden="true">≈</span></span>
+          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">03</span><span class="mm-lab-tab-icon" aria-hidden="true"><svg><use href="#mm-icon-balance"/></svg></span></span>
           <strong>Переедание</strong>
           <small>что могло стать жиром</small>
         </button>
         <button type="button" class="mm-lab-tab" data-mm-lab-tab="recovery" role="tab" aria-selected="false" aria-controls="mm-lab-recovery" tabindex="-1" id="mm-lab-tab-recovery">
-          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">04</span><span class="mm-lab-tab-icon" aria-hidden="true">✦</span></span>
+          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">04</span><span class="mm-lab-tab-icon" aria-hidden="true"><svg><use href="#mm-icon-recovery"/></svg></span></span>
           <strong>Восстановление</strong>
           <small>ресурс · решение дня</small>
         </button>
         <button type="button" class="mm-lab-tab" data-mm-lab-tab="progress" role="tab" aria-selected="false" aria-controls="mm-lab-progress" tabindex="-1" id="mm-lab-tab-progress">
-          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">05</span><span class="mm-lab-tab-icon" aria-hidden="true">↗</span></span>
+          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">05</span><span class="mm-lab-tab-icon" aria-hidden="true"><svg><use href="#mm-icon-trend"/></svg></span></span>
           <strong>Прогресс</strong>
           <small>тренд · темп · плато</small>
         </button>
         <button type="button" class="mm-lab-tab" data-mm-lab-tab="strength" role="tab" aria-selected="false" aria-controls="mm-lab-strength" tabindex="-1" id="mm-lab-tab-strength">
-          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">06</span><span class="mm-lab-tab-icon" aria-hidden="true">↟</span></span>
+          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">06</span><span class="mm-lab-tab-icon" aria-hidden="true"><svg><use href="#mm-icon-strength"/></svg></span></span>
           <strong>Силовые</strong>
           <small>e1RM · рабочие веса</small>
         </button>
         <button type="button" class="mm-lab-tab" data-mm-lab-tab="strategy" role="tab" aria-selected="false" aria-controls="mm-lab-strategy" tabindex="-1" id="mm-lab-tab-strategy">
-          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">07</span><span class="mm-lab-tab-icon" aria-hidden="true">⌘</span></span>
+          <span class="mm-lab-tab-top"><span class="mm-lab-tab-num">07</span><span class="mm-lab-tab-icon" aria-hidden="true"><svg><use href="#mm-icon-compass"/></svg></span></span>
           <strong>Стратегия</strong>
           <small>следующий шаг</small>
         </button>
@@ -244,25 +260,25 @@
       </section>
 <section class="mm-lab-daily" id="mm-lab-daily" aria-labelledby="mm-lab-daily-title" data-no-translate>
         <div class="mm-lab-daily-head">
-          <div><span class="mm-lab-kicker" data-checkin-ru="ВАШ LAB · СЕГОДНЯ" data-checkin-en="YOUR LAB · TODAY">ВАШ LAB · СЕГОДНЯ</span><h3 id="mm-lab-daily-title" data-checkin-ru="Одна минута для ясной динамики" data-checkin-en="One minute for a clearer trend">Одна минута для ясной динамики</h3><p data-checkin-ru="Запишите сопоставимые сигналы. Вес за день шумит; решение опирается на период." data-checkin-en="Log comparable signals. Daily weight is noisy; decisions use a period.">Запишите сопоставимые сигналы. Вес за день шумит; решение опирается на период.</p></div>
+          <div class="mm-lab-daily-intro"><span class="mm-lab-daily-mark" aria-hidden="true"><svg><use href="#mm-icon-trend"/></svg></span><div><h3 id="mm-lab-daily-title" data-checkin-ru="Одна минута для ясной динамики" data-checkin-en="One minute for a clearer trend">Одна минута для ясной динамики</h3><p data-checkin-ru="Запишите сопоставимые сигналы. Вес за день шумит; решение опирается на период." data-checkin-en="Log comparable signals. Daily weight is noisy; decisions use a period.">Запишите сопоставимые сигналы. Вес за день шумит; решение опирается на период.</p></div></div>
           <div class="mm-lab-periods" role="group" aria-label="Период тренда"><button type="button" data-checkin-period="7" aria-pressed="true">7</button><button type="button" data-checkin-period="14" aria-pressed="false">14</button><button type="button" data-checkin-period="28" aria-pressed="false">28</button><span data-checkin-ru="ДНЕЙ" data-checkin-en="DAYS">ДНЕЙ</span></div>
         </div>
         <div class="mm-lab-daily-grid">
           <form id="mm-lab-checkin-form" class="mm-lab-checkin-form">
             <div class="mm-lab-checkin-fields">
-              <label><span data-checkin-ru="Дата" data-checkin-en="Date">Дата</span><input id="mm-checkin-date" type="date" required></label>
-              <label><span data-checkin-ru="Вес · кг" data-checkin-en="Weight · kg">Вес · кг</span><input id="mm-checkin-weight" type="number" min="35" max="300" step="0.1" inputmode="decimal" placeholder="98.6"></label>
-              <label><span data-checkin-ru="Талия · см" data-checkin-en="Waist · cm">Талия · см</span><input id="mm-checkin-waist" type="number" min="40" max="200" step="0.1" inputmode="decimal" placeholder="86"></label>
-              <label><span data-checkin-ru="Сон · ч" data-checkin-en="Sleep · h">Сон · ч</span><input id="mm-checkin-sleep" type="number" min="0" max="16" step="0.25" inputmode="decimal" placeholder="7.5"></label>
-              <label><span data-checkin-ru="Энергия · 1–10" data-checkin-en="Energy · 1–10">Энергия · 1–10</span><input id="mm-checkin-energy" type="number" min="1" max="10" step="1" inputmode="numeric" placeholder="7"></label>
-              <label><span data-checkin-ru="Калории · ккал" data-checkin-en="Calories · kcal">Калории · ккал</span><input id="mm-checkin-calories" type="number" min="1000" max="8000" step="1" inputmode="numeric" placeholder="2600"></label>
-              <label><span data-checkin-ru="Соблюдение · %" data-checkin-en="Adherence · %">Соблюдение · %</span><input id="mm-checkin-adherence" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="90"></label>
+              <label><span class="mm-checkin-label"><svg aria-hidden="true"><use href="#mm-icon-calendar"/></svg><span data-checkin-ru="Дата" data-checkin-en="Date">Дата</span></span><input id="mm-checkin-date" type="date" required></label>
+              <label><span class="mm-checkin-label"><svg aria-hidden="true"><use href="#mm-icon-scale"/></svg><span data-checkin-ru="Вес · кг" data-checkin-en="Weight · kg">Вес · кг</span></span><input id="mm-checkin-weight" type="number" min="35" max="300" step="0.1" inputmode="decimal" placeholder="98.6"></label>
+              <label><span class="mm-checkin-label"><svg aria-hidden="true"><use href="#mm-icon-ruler"/></svg><span data-checkin-ru="Талия · см" data-checkin-en="Waist · cm">Талия · см</span></span><input id="mm-checkin-waist" type="number" min="40" max="200" step="0.1" inputmode="decimal" placeholder="86"></label>
+              <label><span class="mm-checkin-label"><svg aria-hidden="true"><use href="#mm-icon-moon"/></svg><span data-checkin-ru="Сон · ч" data-checkin-en="Sleep · h">Сон · ч</span></span><input id="mm-checkin-sleep" type="number" min="0" max="16" step="0.25" inputmode="decimal" placeholder="7.5"></label>
+              <label><span class="mm-checkin-label"><svg aria-hidden="true"><use href="#mm-icon-bolt"/></svg><span data-checkin-ru="Энергия · 1–10" data-checkin-en="Energy · 1–10">Энергия · 1–10</span></span><input id="mm-checkin-energy" type="number" min="1" max="10" step="1" inputmode="numeric" placeholder="7"></label>
+              <label><span class="mm-checkin-label"><svg aria-hidden="true"><use href="#mm-icon-calories"/></svg><span data-checkin-ru="Калории · ккал" data-checkin-en="Calories · kcal">Калории · ккал</span></span><input id="mm-checkin-calories" type="number" min="1000" max="8000" step="1" inputmode="numeric" placeholder="2600"></label>
+              <label><span class="mm-checkin-label"><svg aria-hidden="true"><use href="#mm-icon-check"/></svg><span data-checkin-ru="Соблюдение · %" data-checkin-en="Adherence · %">Соблюдение · %</span></span><input id="mm-checkin-adherence" type="number" min="0" max="100" step="1" inputmode="numeric" placeholder="90"></label>
             </div>
-            <div class="mm-lab-daily-actions"><button type="submit" class="mm-lab-primary" data-checkin-ru="Сохранить день" data-checkin-en="Save day">Сохранить день</button><span id="mm-checkin-status" role="status" aria-live="polite"></span></div>
+            <div class="mm-lab-daily-actions"><button type="submit" class="mm-lab-primary"><svg aria-hidden="true"><use href="#mm-icon-check"/></svg><span data-checkin-ru="Сохранить день" data-checkin-en="Save day">Сохранить день</span></button><span id="mm-checkin-status" role="status" aria-live="polite"></span></div>
           </form>
           <div class="mm-lab-daily-readout">
             <p class="mm-lab-daily-summary" id="mm-checkin-summary" aria-live="polite"></p>
-            <div class="mm-lab-daily-trends"><div><small data-checkin-ru="Вес · изменение" data-checkin-en="Weight · change">Вес · изменение</small><strong id="mm-checkin-weight-trend">—</strong></div><div><small data-checkin-ru="Талия · изменение" data-checkin-en="Waist · change">Талия · изменение</small><strong id="mm-checkin-waist-trend">—</strong></div><div><small data-checkin-ru="Энергия · среднее / сдвиг" data-checkin-en="Energy · mean / change">Энергия · среднее / сдвиг</small><strong id="mm-checkin-energy-trend">—</strong></div><div><small data-checkin-ru="Сон · среднее / сдвиг" data-checkin-en="Sleep · mean / change">Сон · среднее / сдвиг</small><strong id="mm-checkin-sleep-trend">—</strong></div></div>
+            <div class="mm-lab-daily-trends"><div><small><svg aria-hidden="true"><use href="#mm-icon-scale"/></svg><span data-checkin-ru="Вес · изменение" data-checkin-en="Weight · change">Вес · изменение</span></small><strong id="mm-checkin-weight-trend">—</strong></div><div><small><svg aria-hidden="true"><use href="#mm-icon-ruler"/></svg><span data-checkin-ru="Талия · изменение" data-checkin-en="Waist · change">Талия · изменение</span></small><strong id="mm-checkin-waist-trend">—</strong></div><div><small><svg aria-hidden="true"><use href="#mm-icon-bolt"/></svg><span data-checkin-ru="Энергия · среднее / сдвиг" data-checkin-en="Energy · mean / change">Энергия · среднее / сдвиг</span></small><strong id="mm-checkin-energy-trend">—</strong></div><div><small><svg aria-hidden="true"><use href="#mm-icon-moon"/></svg><span data-checkin-ru="Сон · среднее / сдвиг" data-checkin-en="Sleep · mean / change">Сон · среднее / сдвиг</span></small><strong id="mm-checkin-sleep-trend">—</strong></div></div>
             <p class="mm-lab-daily-calibration" id="mm-checkin-maintenance" data-checkin-ru="Адаптивное поддержание появится после 14 последовательных дней с весом и калориями." data-checkin-en="Adaptive maintenance needs 14 consecutive days with weight and calories.">Адаптивное поддержание появится после 14 последовательных дней с весом и калориями.</p>
             <button type="button" class="mm-lab-secondary" id="mm-checkin-use-calibration" hidden data-checkin-ru="Перенести данные в Питание" data-checkin-en="Use data in Nutrition">Перенести данные в Питание</button>
           </div>

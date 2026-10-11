@@ -9,6 +9,11 @@ const fixtures=require('./toolkit-fixtures.json');
     try{for(const lang of ['ru','en'])for(const theme of ['aurum-noir','event-horizon','clarity']){
       const page=await browser.newPage({viewport:{width:390,height:900},reducedMotion:'reduce'}),errors=[];page.on('pageerror',e=>errors.push(e.message));
       await page.goto(server.url+`/?lang=${lang}&theme=${theme}`);await page.evaluate(async()=>{await window.mmLoadLab();await window.mmLoadLanguage();await window.mmLanguageReady;});
+      assert.equal(await page.locator('.mm-lab-daily .mm-lab-kicker').count(),0,'the removed daily LAB kicker is not rendered');
+      assert.equal(await page.locator('.mm-lab-tab-icon svg use').count(),7,'primary LAB sections use the custom SVG icon set');
+      assert.equal(await page.locator('.mm-checkin-label svg use').count(),7,'daily input labels have matching visual icons');
+      assert.equal(await page.locator('.mm-lab-daily-trends small svg use').count(),4,'daily trend cards have matching visual icons');
+      assert.equal(await page.locator('.mm-toolkit-card-head svg').count(),3,'featured tools have category icons');
       assert.equal(await page.evaluate(()=>window.MarkovMadeToolkit.tools.length),24);
       await page.locator('#mm-toolkit-search').fill('protein');assert.equal(await page.locator('[data-tool-id="protein"]').count(),1);await page.locator('#mm-toolkit-search').fill('');
       for(const [id,values] of Object.entries(fixtures)){
@@ -26,6 +31,7 @@ const fixtures=require('./toolkit-fixtures.json');
       await page.locator('#toolkit-review-action').fill('<img src=x onerror=alert(1)>');await page.locator('#mm-toolkit-workspace button[type="submit"]').click();assert.equal(await page.locator('#mm-toolkit-result img').count(),0);
       assert.equal(await page.locator('.mm-toolkit-summary .mm-summary-trend').count(),1,'weekly progress appears as a measured diverging chart');
       assert.ok(await page.locator('.mm-toolkit-summary .mm-summary-metric-value').count()>=1,'the summary presents measured values as dashboard cards');
+      assert.ok(await page.locator('.mm-toolkit-summary .mm-summary-metric-icon use').count()>=1,'measured summary cards have icons');
       assert.equal(await page.locator('.mm-toolkit-summary .mm-summary-trend-axis').getAttribute('role'),'img');
       if(name==='chromium'&&lang==='ru'&&theme==='aurum-noir'){await page.locator('.mm-toolkit-summary').scrollIntoViewIfNeeded();await page.screenshot({path:root+'/test-results/toolkit-summary-demo.png'});}
       const download=page.waitForEvent('download');await page.locator('.mm-toolkit-summary button').click();assert.match((await download).suggestedFilename(),/\.txt$/);
