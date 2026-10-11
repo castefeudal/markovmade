@@ -6,9 +6,9 @@
 
 Hero использует текущий ролик исходного качества 960×648 и нативные постеры того же размера; pointer-driven turn/nod и parallax сохранены. Расчёты и методика результата остаются компактными с деталями по раскрытию.
 
-Проверки Windows: build; 29 unit/source тестов; E2E и 17 LAB-инструментов в Chromium/Firefox/WebKit × RU/EN × три темы; Axe WCAG 2.2 AA; визуальные контракты трёх движков на 320–2560 px; 24 first-paint сценария с CLS 0.00000. Локальный Lighthouse, три холодных mobile/desktop запуска: медианы Performance 99/100, Accessibility 100, Best Practices 100, SEO 100; CLS 0 во всех шести замерах. `npm run test:production` выполняется после обновления GitHub Pages: текущий публичный HTML ожидаемо отличается до публикации этой сборки.
+Проверки Windows: build; 29 unit/source тестов; E2E и 17 LAB-инструментов в Chromium/Firefox/WebKit × RU/EN × три темы; Axe WCAG 2.2 AA; визуальные контракты трёх движков на 320–2560 px; 24 first-paint сценария с CLS 0.00000. Локальный Lighthouse, три холодных mobile/desktop запуска: медианы Performance 99/100, Accessibility 100, Best Practices 100, SEO 100; CLS 0 во всех шести замерах.
 
-Следующий опубликованный коммит и post-deploy production-smoke будут записаны ниже после подтверждения GitHub Pages.
+GitHub Pages опубликовал `3333bb399d8fbd20170605ae36f9d3fa349ac680`: [production](https://castefeudal.github.io/markovmade/). Post-deploy `npm run test:production` подтвердил совпадение опубликованных байтов HTML, CSS, fragment/assets с текущей сборкой и прошёл все шесть комбинаций RU/EN × три темы на mobile/desktop; расчёт LAB, якоря, ошибки и горизонтальный overflow — без замечаний. [Полный GitHub Actions CI](https://github.com/castefeudal/markovmade/actions/runs/38155737287) прошёл: unit/source, browser/e2e, Axe accessibility, visual/contracts, paint и Linux Lighthouse. В 36 Lighthouse-замерах 11 из 12 сценариев имеют медиану Performance 100, RU Aurum Noir mobile — 99; медианы Accessibility, Best Practices и SEO — 100 во всех сценариях.
 
 ---
 
