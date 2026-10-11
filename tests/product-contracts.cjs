@@ -160,8 +160,11 @@ async function assertCta(page,label) {
     await retry.close();
     const bilingual=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
     await bilingual.goto(server.url+'/?lang=en',{waitUntil:'load'});
-    await bilingual.evaluate(()=>Promise.all([mmLoadLanguage(),mmLoadLab(),mmLoadOS(),mmLoadContent()]));
-    await bilingual.waitForTimeout(300);
+    await bilingual.evaluate(async()=>{
+      await Promise.all([mmLoadLanguage(),mmLoadLab(),mmLoadOS(),mmLoadContent()]);
+      await window.mmLanguageReady;
+      await window.mmTranslate(document.body);
+    });
     const untranslated=await bilingual.evaluate(()=>{
       const texts=[],walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let node;
       while(node=walker.nextNode())if(/[а-яё]/i.test(node.nodeValue)&&!node.parentElement.closest('script,style,[data-no-translate]'))texts.push(node.nodeValue.trim());

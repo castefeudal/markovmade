@@ -13,5 +13,24 @@
 @media(prefers-reduced-motion:reduce){.mm-toolkit-card{transition:none}}
 
 }
-@layer components {.mm-result-precision{padding:24px 0;color:var(--mm-text-primary)}.mm-result-precision h4{font:600 15px/1.5 Manrope,sans-serif;margin:16px 0 8px}.mm-result-precision p{font:400 17px/1.7 Manrope,sans-serif;color:var(--mm-text-muted)}.mm-result-precision summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font:500 15px/1.5 Manrope,sans-serif;margin-top:16px}.mm-toolkit>button.mm-lab-secondary{min-height:48px;margin-top:16px}}
+@layer components {
+  .mm-toolkit-outcome{display:grid;gap:12px;margin-top:24px;padding:clamp(18px,3vw,30px);border:1px solid var(--mm-border-strong);background:radial-gradient(ellipse at 0 0,var(--mm-accent-soft),transparent 62%),var(--mm-bg-primary)}
+  .mm-toolkit-result-label{color:var(--mm-accent);font:700 12px/1.3 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+  .mm-toolkit-outcome .mm-toolkit-value{margin:0;font:500 clamp(30px,4.6vw,48px)/1.12 var(--mm-font-display,Georgia,serif);letter-spacing:-.035em;color:var(--mm-text-primary)}
+  .mm-toolkit-outcome .mm-toolkit-meaning{max-width:64ch;margin:0;color:var(--mm-text-secondary);font:400 15px/1.65 Manrope,sans-serif}
+  .mm-toolkit-next-step{margin-top:4px;padding:16px 18px;border-inline-start:2px solid var(--mm-accent);background:var(--mm-surface-1)}
+  .mm-toolkit-next-step h4{margin:0 0 6px;color:var(--mm-accent);font:700 11px/1.4 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+  .mm-toolkit-next-step ol{margin:0;padding-inline-start:20px}
+  .mm-toolkit-next-step li{padding-inline-start:4px;color:var(--mm-text-primary);font:500 15px/1.6 Manrope,sans-serif}
+  .mm-toolkit-precision{padding-top:10px;border-top:1px solid var(--mm-border);color:var(--mm-text-muted)}
+  .mm-toolkit-precision summary,.mm-result-precision>summary{min-height:44px;display:flex;align-items:center;cursor:pointer;color:var(--mm-text-secondary);font:600 13px/1.5 Manrope,sans-serif}
+  .mm-toolkit-precision p,.mm-result-precision-body>p{max-width:72ch;margin:8px 0;color:var(--mm-text-muted);font:400 13px/1.65 Manrope,sans-serif}
+  .mm-toolkit-outcome>.mm-evidence{margin-top:6px;padding-top:8px}
+  .mm-result-precision{margin-top:16px;padding-top:10px;border-top:1px solid var(--lab-line);color:var(--mm-text-primary)}
+  .mm-result-precision-body{padding:0 0 8px 12px;border-inline-start:1px solid var(--mm-border)}
+  .mm-result-precision-body>details{margin-top:8px}
+  .mm-result-precision-body>details summary{min-height:40px;display:flex;align-items:center;cursor:pointer;color:var(--mm-text-secondary);font:600 13px/1.5 Manrope,sans-serif}
+  .mm-result-precision-body>details p{font:400 13px/1.65 Manrope,sans-serif;color:var(--mm-text-muted)}
+  .mm-toolkit>button.mm-lab-secondary{min-height:48px;margin-top:16px}
+}
 @layer components {@media(max-width:768px){#calculators :is(button,select,textarea,input:not([type="checkbox"]):not([type="radio"])),#app-ecosystem :is(button,select,textarea,input:not([type="checkbox"]):not([type="radio"]),a[href]){min-height:44px}}}

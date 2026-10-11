@@ -151,6 +151,28 @@
 @media (max-width: 430px){
   .mm-case-study-layout-case-card .mm-case-study-case-list span{font-size:.86rem;}
 }}
+
+/* Bring each direction's deliverable forward and keep the case copy scannable. */
+#case-scenarios .mm-case-study-layout-case-card{grid-template-columns:minmax(185px,.72fr) 1.28fr;align-items:stretch;border-color:rgb(var(--color-gold)/.16);background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012));}
+#case-scenarios .mm-case-study-layout-case-image{min-height:100%;padding:0;background:rgb(0 0 0/.22);}
+#case-scenarios .mm-case-study-layout-case-image img{width:100%;height:100%;min-height:100%;max-height:none;aspect-ratio:auto;border-radius:0;object-fit:cover;object-position:center;filter:saturate(.82) contrast(1.02);}
+#case-scenarios .mm-case-study-layout-case-body{display:flex;flex-direction:column;justify-content:center;padding:clamp(1rem,2.1vw,1.65rem);}
+#case-scenarios .mm-case-study-layout-case-body h3{max-width:22ch;margin:.3rem 0 .9rem;font-size:clamp(1.35rem,1.8vw,1.8rem);}
+#case-scenarios .mm-case-study-layout-case-card .mm-case-study-case-list{gap:.45rem;}
+#case-scenarios .mm-case-study-layout-case-card .mm-case-study-case-list li{grid-template-columns:1fr;gap:.18rem;padding:.58rem .72rem;border:0;border-inline-start:1px solid rgb(var(--color-gold)/.18);border-radius:0;background:transparent;}
+#case-scenarios .mm-case-study-layout-case-card .mm-case-study-case-list b{margin:0;font-size:.62rem;letter-spacing:.13em;}
+#case-scenarios .mm-case-study-layout-case-card .mm-case-study-case-list span{font-size:.83rem;line-height:1.48;}
+#case-scenarios .mm-case-study-layout-case-card .mm-case-study-case-list .mm-case-outcome{margin-top:.25rem;padding:.78rem .85rem;border:1px solid rgb(var(--color-gold)/.27);border-radius:15px;background:linear-gradient(120deg,rgb(var(--color-gold)/.09),rgb(var(--color-gold)/.025));}
+#case-scenarios .mm-case-study-layout-case-card .mm-case-study-case-list .mm-case-outcome b{color:rgb(var(--color-gold));}
+#case-scenarios .mm-case-study-layout-case-card .mm-case-study-case-list .mm-case-outcome span{color:rgb(var(--text-platinum)/.92);font-size:.9rem;font-weight:650;line-height:1.5;}
+@media(min-width:1040px){#case-scenarios .mm-case-study-layout-cases-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:1039px){#case-scenarios .mm-case-study-layout-cases-grid{grid-template-columns:1fr;}}
+@media(max-width:640px){#case-scenarios .mm-case-study-layout-case-card{grid-template-columns:minmax(0,1fr);}
+  #case-scenarios .mm-case-study-layout-case-image{aspect-ratio:1.55;min-height:0;}
+  #case-scenarios .mm-case-study-layout-case-image img{aspect-ratio:1.55;min-height:0;height:100%;}
+  #case-scenarios .mm-case-study-layout-case-body{padding:1rem;}
+  #case-scenarios .mm-case-study-layout-case-card .mm-case-study-case-list span{font-size:.88rem;}
+}
 @layer priority{
 .mm-editorial-kicker {
     border-color: rgb(var(--color-gold) / .42);

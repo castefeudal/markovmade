@@ -241,7 +241,7 @@ let browser;
   await page.waitForFunction(() => JSON.parse(localStorage.getItem('markovmade-lab-history-v1') || '[]').length === 12);
   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-daily-v1')).length),14,'JSON backup restores daily check-ins');
 
-  const accordion = page.locator('.mm-service summary').first();
+  const accordion = page.locator('#services .mm-service-editorial-item summary').first();
   await accordion.click();
   assert.equal(await accordion.evaluate(el=>el.parentElement.open),true);
   const privacyTrigger = page.locator('[data-privacy-toggle]').first();

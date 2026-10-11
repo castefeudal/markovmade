@@ -37,11 +37,14 @@
             nod2PeakTime: 6.24,
             nod2EndTime: 7.72,
 
-            desktopWidth: 640,
+            /* Keep desktop frames at the 960px native width of the authored video. */
+            desktopWidth: 960,
             mobileWidth: 360,
             lowMemoryWidth: 300,
-            desktopTurnFrames: 32,
-            desktopNodFrames: 16,
+            /* Full-width RGBA frames are larger; smooth pointer interpolation keeps
+               the authored motion fluid with a bounded frame cache. */
+            desktopTurnFrames: 16,
+            desktopNodFrames: 8,
             mobileTurnFrames: 12,
             mobileNodFrames: 7,
             lowMemoryTurnFrames: 8,
@@ -53,8 +56,8 @@
             pointerTurnFullX: 0.06,
             pointerNodStartY: 0.58,
             pointerNodFullY: 0.92,
-            desktopShiftX: 7,
-            desktopShiftY: 4,
+            desktopShiftX: 14,
+            desktopShiftY: 8,
             mobileShiftX: 5,
             mobileShiftY: 3,
             directSeekInterval: 42,

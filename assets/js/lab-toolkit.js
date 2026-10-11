@@ -40,11 +40,13 @@
   }
   function outcome(definition,result){
     const out=node('div',undefined,'mm-toolkit-outcome');out.setAttribute('role','status');
-    out.append(node('h4',p('Результат','Result')),node('p',result.value,'mm-toolkit-value'),node('h4',p('Что это значит','What it means')),node('p',result.meaning));
+    out.append(node('span',p('Расчёт','Estimate'),'mm-toolkit-result-label'),node('p',result.value,'mm-toolkit-value'),node('p',result.meaning,'mm-toolkit-meaning'));
     const confidence={high:p('Высокая · для арифметики введённых данных','High · for arithmetic on your inputs'),moderate:p('Умеренная','Moderate'),low:p('Низкая','Low')};
-    out.append(node('h4',p('Уверенность','Confidence')),node('p',confidence[result.confidence]||confidence.low),node('h4',p('Главный источник неопределённости','Main uncertainty')),node('p',result.uncertainty),node('h4',p('Следующее действие','Next action')));
-    const actions=node('ol');result.actions.forEach(action=>actions.append(node('li',action)));out.append(actions);
-    const precision=node('details');precision.append(node('summary',p('Как улучшить точность','How to improve accuracy')),node('p',result.accuracy));out.append(precision,evidence(definition));return out;
+    const action=node('section',undefined,'mm-toolkit-next-step');action.append(node('h4',p('Следующий шаг','Next step')));
+    const actions=node('ol');result.actions.forEach(item=>actions.append(node('li',item)));action.append(actions);out.append(action);
+    const precision=node('details',undefined,'mm-toolkit-precision');precision.append(node('summary',p('Уверенность и ограничения','Confidence and limits')),node('p',confidence[result.confidence]||confidence.low),node('p',result.uncertainty));
+    const accuracy=node('details',undefined,'mm-toolkit-precision');accuracy.append(node('summary',p('Как улучшить точность','How to improve accuracy')),node('p',result.accuracy));
+    out.append(precision,accuracy,evidence(definition));return out;
   }
   function renderCards(){
     const query=search.value.trim().toLocaleLowerCase();cards.replaceChildren();
@@ -143,11 +145,12 @@
       const result={value:main.textContent,meaning:meaning?.textContent||tool.subtitle,confidence:tool.id==='recovery'||tool.id==='strategy'?'low':'moderate',uncertainty:tool.limits,actions:actions.length?actions.slice(0,3):[p('Повторите оценку через неделю в одинаковых условиях.','Repeat the assessment in a week under the same conditions.')],accuracy:p('Добавьте сопоставимые наблюдения за 14–28 дней. Проверяйте единицы, метод замеров и полноту учёта.','Add comparable observations over 14–28 days. Check units, measurement method and logging completeness.')};
       // Existing metric, interpretation, confidence badge and action list remain
       // the result owner. Add only the two missing standard fields.
-      const component=node('div',undefined,'mm-result-precision');component.dataset.standardResult='';component.dataset.noTranslate='';
-      if(!meaning)component.append(node('h4',p('Что это значит','What it means')),node('p',tool.subtitle));
-      if(tool.id==='strategy')component.append(node('h4',p('Уверенность','Confidence')),node('p',p('Низкая · практическая эвристика','Low · practical heuristic')));
-      component.append(node('h4',p('Главный источник неопределённости','Main uncertainty')),node('p',tool.limits));
-      const accuracy=node('details');accuracy.append(node('summary',p('Как улучшить точность','How to improve accuracy')),node('p',result.accuracy));component.append(accuracy);panel.append(component);
+      const component=node('details',undefined,'mm-result-precision');component.dataset.standardResult='';component.dataset.noTranslate='';
+      component.append(node('summary',p('Уверенность и ограничения','Confidence and limits')));
+      const body=node('div',undefined,'mm-result-precision-body');
+      body.append(node('p',tool.id==='strategy'||tool.id==='recovery'?p('Уверенность: низкая · практическая эвристика','Confidence: low · practical heuristic'):p('Уверенность: умеренная','Confidence: moderate')));
+      body.append(node('p',tool.limits));
+      const accuracy=node('details');accuracy.append(node('summary',p('Как улучшить точность','How to improve accuracy')),node('p',result.accuracy));body.append(accuracy);component.append(body);panel.append(component);
     }
   }
   function localise(){heading.textContent=t(p('Что хотите решить?','What would you like to solve?'));lead.textContent=t(p('24 инструмента. Начните с задачи; профиль и результаты остаются на этом устройстве.','24 tools. Start with a task; your profile and results stay on this device.'));searchLabel.textContent=t(p('Поиск по задаче','Search by task'));renderCards();renderSummary();legacyEvidence();window.mmLanguageReady?.then(legacyResult);if(selected&&models.definitions.some(item=>item.id===selected))open(models.definitions.find(item=>item.id===selected));}
