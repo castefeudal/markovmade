@@ -6,6 +6,12 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      refresh_visual_baselines:
+        description: Capture Linux contract screenshots for visual review
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: read
@@ -42,6 +48,8 @@ jobs:
       - run: npm run test:e2e
       - run: npm run test:a11y
       - run: npm run test:visual
+        env:
+          UPDATE_VISUAL_BASELINES: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh_visual_baselines && '1' || '0' }}
       - run: npm run test:paint
       - uses: actions/upload-artifact@v6
         if: always()
