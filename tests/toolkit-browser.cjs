@@ -10,11 +10,11 @@ const fixtures=require('./toolkit-fixtures.json');
       const page=await browser.newPage({viewport:{width:390,height:900},reducedMotion:'reduce'}),errors=[];page.on('pageerror',e=>errors.push(e.message));
       await page.goto(server.url+`/?lang=${lang}&theme=${theme}`);await page.evaluate(async()=>{await window.mmLoadLab();await window.mmLoadLanguage();await window.mmLanguageReady;});
       assert.equal(await page.locator('.mm-lab-daily .mm-lab-kicker').count(),0,'the removed daily LAB kicker is not rendered');
-      assert.equal(await page.locator('.mm-lab-tab-icon svg use').count(),7,'primary LAB sections use the custom SVG icon set');
+      assert.equal(await page.locator('.mm-lab-tab-icon svg use').count(),6,'six primary LAB sections use the custom SVG icon set');
       assert.equal(await page.locator('.mm-checkin-label svg use').count(),7,'daily input labels have matching visual icons');
       assert.equal(await page.locator('.mm-lab-daily-trends small svg use').count(),4,'daily trend cards have matching visual icons');
       assert.equal(await page.locator('.mm-toolkit-card-head svg').count(),3,'featured tools have category icons');
-      assert.equal(await page.evaluate(()=>window.MarkovMadeToolkit.tools.length),24);
+      assert.equal(await page.evaluate(()=>window.MarkovMadeToolkit.tools.length),23);
       await page.locator('#mm-toolkit-search').fill('protein');assert.equal(await page.locator('[data-tool-id="protein"]').count(),1);await page.locator('#mm-toolkit-search').fill('');
       for(const [id,values] of Object.entries(fixtures)){
         await page.evaluate(id=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id===id)),id);

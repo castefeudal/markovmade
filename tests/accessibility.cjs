@@ -54,7 +54,7 @@ const themes=['aurum-noir','event-horizon','clarity'];
         await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(200);
         fs.mkdirSync(path.join(root,'test-results/accessibility'),{recursive:true});
         fs.writeFileSync(path.join(root,'test-results/accessibility/findings.json'),JSON.stringify(findings,null,2));
-        console.log(`Axe inspected ${lang}/${theme}: 4 widths, 7 LAB tabs, 5 OS tabs, dialogs.`);
+        console.log(`Axe inspected ${lang}/${theme}: 4 widths, 6 LAB tabs, 5 OS tabs, dialogs.`);
       }
     }
     fs.mkdirSync(path.join(root,'test-results/accessibility'),{recursive:true});

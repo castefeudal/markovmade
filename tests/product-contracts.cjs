@@ -179,7 +179,9 @@ async function assertCta(page,label) {
     assert.equal(await bilingual.locator('#proof-system .mm-trust-card-heading svg[aria-hidden="true"]').count(),4,'all trust icons are decorative alongside visible labels');
     assert.match(await bilingual.locator('#proof-system').innerText(),/14\+\s*years of training experience/,'trust section states the author’s verified training tenure');
     assert.equal(await bilingual.locator('#proof-system .mm-trust-credentials li').count(),3,'education is presented with clear institutions and years');
-    assert.equal(await bilingual.locator('#proof-system .mm-trust-card--education').evaluate(el=>getComputedStyle(el).gridColumn),'span 2','education leads the trust layout');
+    assert.equal(await bilingual.locator('#proof-system .mm-trust-card--education').evaluate(el=>getComputedStyle(el).gridColumn),'auto','education shares the compact four-card trust layout');
+    assert.equal(await bilingual.locator('#calculators .mm-method-v3__principle').count(),4,'methodology keeps four distinct, understandable principles');
+    assert.equal(await bilingual.locator('#calculators [data-mm-lab-tab]').count(),6,'LAB presents six primary tools');
     await bilingual.locator('#services details').first().evaluate(node=>node.open=true);
     await bilingual.locator('#services details').first().scrollIntoViewIfNeeded();
     const servicePhoto=bilingual.locator('#services details').first().locator('img');

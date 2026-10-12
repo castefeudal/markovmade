@@ -4,8 +4,8 @@
   const DAILY_KEY='markovmade-lab-daily-v1';
   const FAV_KEY='markovmade-lab-favorites-v1';
   const HISTORY_KEY='markovmade-lab-history-v1';
-  const tools={body:['Состав тела','Body'],nutrition:['Питание','Nutrition'],overfeeding:['Переедание','Overfeeding'],recovery:['Ресурс','Recovery'],progress:['Прогресс','Progress'],strength:['Сила','Strength'],strategy:['Решение','Decision']};
-  const toolIcons={body:'body',nutrition:'calories',overfeeding:'balance',recovery:'recovery',progress:'trend',strength:'strength',strategy:'compass'};
+  const tools={body:['Состав тела','Body'],nutrition:['Питание','Nutrition'],overfeeding:['Переедание','Overfeeding'],recovery:['Ресурс','Recovery'],progress:['Прогресс','Progress'],strength:['Сила','Strength']};
+  const toolIcons={body:'body',nutrition:'calories',overfeeding:'balance',recovery:'recovery',progress:'trend',strength:'strength'};
   const $=id=>document.getElementById(id);
   const en=()=>document.documentElement.lang==='en';
   const copy=(ru,english)=>en()?english:ru;

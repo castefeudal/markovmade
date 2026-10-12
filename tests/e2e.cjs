@@ -196,10 +196,9 @@ let browser;
   await page.locator('#lab-e1rm-calculate').click();
   assert.match(await page.locator('#lab-e1rm-result').textContent(),/\+0,0 кг к предыдущей записи/,'same-lift estimates expose a local trend');
 
-  await page.locator('[data-mm-lab-tab="strategy"]').click();
-  await page.locator('[data-calc="strategy"]').click();
-  assert.equal(await page.locator('#lab-strategy-error').textContent(), '');
-  assert.equal(await page.locator('#lab-str-main').textContent(), 'Восстановление', 'low readiness takes priority in the strategy navigator');
+  assert.equal(await page.locator('[data-mm-lab-tab]').count(), 6, 'the primary LAB navigation stays focused on six tools');
+  assert.equal(await page.locator('[data-mm-lab-tab="strategy"]').count(), 0, 'the heuristic strategy tool is no longer a primary calculator');
+  assert.equal(await page.locator('#mm-lab-quick-list .mm-lab-quick-open').count(), 6, 'quick access matches the six primary LAB tools');
   const saved = await page.evaluate(() => Object.values(JSON.parse(localStorage.getItem('markovmade-lab-v1') || '{}')).filter(value => value && typeof value === 'object').map(value => value.modelVersion));
   assert.ok(saved.some(version => version === '1.0.0'), 'calculation snapshots include model versions');
 
@@ -211,7 +210,7 @@ let browser;
   assert.notEqual(await page.locator('[data-os-model="readiness"]').textContent(), '—', 'Personal OS readiness comes from the current recovery calculation');
   await page.locator('[data-lab-history-open]').click();
   assert.equal(await page.locator('#mm-lab-history-dialog').isVisible(), true, 'local calculation history opens');
-  assert.equal(await page.locator('#mm-lab-history-list li').count(), 12, 'history stores each calculated snapshot');
+  assert.equal(await page.locator('#mm-lab-history-list li').count(), 11, 'history stores each active calculator snapshot');
   const bodyIds = await page.evaluate(() => JSON.parse(localStorage.getItem('markovmade-lab-history-v1')).filter(item => item.tool==='body').map(item=>item.id));
   await page.locator('#mm-lab-history-a').selectOption(bodyIds[0]);
   await page.locator('#mm-lab-history-b').selectOption(bodyIds[1]);
@@ -238,7 +237,7 @@ let browser;
   const restored = page.waitForNavigation({waitUntil:'domcontentloaded'});
   await page.locator('#mm-lab-import-file').setInputFiles({name:backup.suggestedFilename(),mimeType:'application/json',buffer:fs.readFileSync(backupPath)});
   await restored;
-  await page.waitForFunction(() => JSON.parse(localStorage.getItem('markovmade-lab-history-v1') || '[]').length === 12);
+  await page.waitForFunction(() => JSON.parse(localStorage.getItem('markovmade-lab-history-v1') || '[]').length === 11);
   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-daily-v1')).length),14,'JSON backup restores daily check-ins');
 
   const accordion = page.locator('#services .mm-service-editorial-item summary').first();

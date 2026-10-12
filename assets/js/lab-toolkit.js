@@ -14,22 +14,21 @@
     {id:'overfeeding',category:'nutrition',title:p('Переедание и изменение веса','Overeating and weight change'),subtitle:p('Энергетический сценарий, вода и гликоген','Energy scenario, water and glycogen'),type:'MARKOVMADE practical heuristic',formula:'Energy-equivalent surplus / 7700; separate assumed TEF and glycogen-associated water scenarios.',limits:p('Не предсказывает фактическую прибавку жира. Коэффициенты и запасы гликогена меняются.','Does not predict actual fat gain. Energy factors and glycogen stores vary.'),source:['Hall et al. 2011','https://pubmed.ncbi.nlm.nih.gov/21872751/']},
     {id:'recovery',category:'recovery',title:p('Readiness · HRV / RHR baseline','Readiness · HRV / RHR baseline'),subtitle:p('Личные сигналы и минимум 14 наблюдений','Personal signals and at least 14 observations'),type:'MARKOVMADE practical heuristic',formula:'Self-reported weighted signals; personal RHR/HRV baseline = median of last 14–28 valid paired observations.',limits:p('Не медицинский score, не диагноз и не тест готовности. Значения разных устройств несопоставимы.','Not a medical score, diagnosis or readiness test. Different devices are not interchangeable.'),source:['HRV measurement recommendations','https://pubmed.ncbi.nlm.nih.gov/8838590/']},
     {id:'progress',category:'progress',title:p('Тренд веса · плато · ETA · коррекция','Weight trend · plateau · ETA · adjustment'),subtitle:p('Theil–Sen, средние и проверка выбросов','Theil–Sen, averages and outlier review'),type:'Statistical trend + practical heuristic',formula:'Median pairwise daily slopes; moving average; MAD flags. Plateau/ETA/calorie adjustment use practical thresholds.',limits:p('Тренд не отделяет жир от воды. Выбросы требуют проверки, а ETA — условный линейный сценарий.','The trend cannot separate fat from water. Outliers require review and ETA is a conditional linear scenario.'),source:['Sen 1968','https://doi.org/10.1080/01621459.1968.10480934']},
-    {id:'strength',category:'training',title:p('Силовой ориентир · e1RM','Strength reference · e1RM'),subtitle:p('Оценка максимума по весу и повторам','Estimate a maximum from load and repetitions'),type:'Published equations',formula:'Epley: load × (1 + reps/30); Brzycki: load × 36/(37 − reps); average, with reduced confidence at high repetitions.',limits:p('Не измеряет реальный 1ПМ. Техника, RIR и упражнение меняют ошибку; не предложение проверять максимум.','Does not measure actual 1RM. Technique, RIR and exercise affect error; not a recommendation to test a maximum.'),source:['Brzycki 1993','https://doi.org/10.1080/07303084.1993.10606684']},
-    {id:'strategy',category:'behaviour',title:p('Главный рычаг на 7–14 дней','One main lever for 7–14 days'),subtitle:p('Приоритет из цели, ограничений и ресурса','Prioritise using goals, constraints and capacity'),type:'MARKOVMADE practical heuristic',formula:'Rule-based prioritisation of goal, blocker, resources and chosen horizon.',limits:p('Не психологическая диагностика. Правило помогает выбрать эксперимент, но не доказывает причину проблемы.','Not psychological diagnosis. A rule helps choose an experiment but does not prove a cause.'),source:null}
+    {id:'strength',category:'training',title:p('Силовой ориентир · e1RM','Strength reference · e1RM'),subtitle:p('Оценка максимума по весу и повторам','Estimate a maximum from load and repetitions'),type:'Published equations',formula:'Epley: load × (1 + reps/30); Brzycki: load × 36/(37 − reps); average, with reduced confidence at high repetitions.',limits:p('Не измеряет реальный 1ПМ. Техника, RIR и упражнение меняют ошибку; не предложение проверять максимум.','Does not measure actual 1RM. Technique, RIR and exercise affect error; not a recommendation to test a maximum.'),source:['Brzycki 1993','https://doi.org/10.1080/07303084.1993.10606684']}
   ].map(item=>({...item,version:'1.0.0',review:models.review}));
   const tools=[...legacy,...models.definitions];
   let category='all',selected=null,expanded=false;
   const drafts={};
   const shell=root.querySelector('.mm-lab-shell'),catalogue=node('section',undefined,'mm-toolkit');catalogue.dataset.noTranslate='';catalogue.setAttribute('aria-labelledby','mm-toolkit-title');
   const heading=node('h3',p('Что хотите решить?','What would you like to solve?'));heading.id='mm-toolkit-title';
-  const lead=node('p',p('24 инструмента. Начните с задачи; профиль и результаты остаются на этом устройстве.','24 tools. Start with a task; your profile and results stay on this device.'),'mm-toolkit-lead');
+  const lead=node('p',p('23 инструмента. Начните с задачи; профиль и результаты остаются на этом устройстве.','23 tools. Start with a task; your profile and results stay on this device.'),'mm-toolkit-lead');
   const searchLabel=node('label',p('Поиск по задаче','Search by task'));searchLabel.htmlFor='mm-toolkit-search';
   const search=node('input');search.type='search';search.id='mm-toolkit-search';search.className='mm-lab-input';search.autocomplete='off';
   const filters=node('div',undefined,'mm-toolkit-filters');filters.setAttribute('role','group');
   for(const key of Object.keys(categories)){const button=node('button',categories[key]);button.type='button';button.dataset.category=key;button.setAttribute('aria-pressed',String(key==='all'));button.addEventListener('click',()=>{category=key;renderCards();});filters.append(button);}
   const count=node('p',undefined,'mm-toolkit-count');count.setAttribute('role','status');
   const cards=node('div',undefined,'mm-toolkit-cards'),workspace=node('section',undefined,'mm-toolkit-workspace');workspace.hidden=true;workspace.id='mm-toolkit-workspace';workspace.setAttribute('aria-labelledby','mm-toolkit-active-title');
-  const more=node('button',p('Показать все 24 инструмента','Show all 24 tools'),'mm-lab-secondary');more.type='button';more.addEventListener('click',()=>{expanded=!expanded;renderCards();});
+  const more=node('button',p('Показать все 23 инструмента','Show all 23 tools'),'mm-lab-secondary');more.type='button';more.addEventListener('click',()=>{expanded=!expanded;renderCards();});
   catalogue.append(heading,lead,searchLabel,search,filters,count,cards,more,workspace);shell.prepend(catalogue);
   const summary=node('section',undefined,'mm-toolkit-summary');summary.dataset.noTranslate='';summary.setAttribute('aria-labelledby','mm-toolkit-summary-title');catalogue.after(summary);
   function evidence(definition){
@@ -53,13 +52,13 @@
   function renderCards(){
     const query=search.value.trim().toLocaleLowerCase();cards.replaceChildren();
     const matches=tools.filter(tool=>(category==='all'||tool.category===category)&&(!query||[...tool.title,...tool.subtitle,tool.id].join(' ').toLocaleLowerCase().includes(query)));
-    const shown=category==='all'&&!query&&!expanded?matches.filter(tool=>['body','nutrition','strategy'].includes(tool.id)):matches;
+    const shown=category==='all'&&!query&&!expanded?matches.filter(tool=>['body','nutrition','progress'].includes(tool.id)):matches;
     shown.forEach(tool=>{
       const button=node('button',undefined,'mm-toolkit-card');button.type='button';button.dataset.toolId=tool.id;
       const head=node('span',undefined,'mm-toolkit-card-head');head.append(node('span',categories[tool.category]),icon(categoryIcons[tool.category]||'compass'));button.append(head,node('strong',tool.title),node('span',tool.subtitle));button.setAttribute('aria-controls',models.definitions.includes(tool)?workspace.id:'mm-lab-'+tool.id);button.addEventListener('click',()=>open(tool));cards.append(button);
     });
     count.textContent=t(p(`Показано: ${cards.childElementCount} из ${matches.length}`,`Showing: ${cards.childElementCount} of ${matches.length}`));
-    more.hidden=category!=='all'||Boolean(query);more.textContent=t(expanded?p('Свернуть каталог','Collapse catalogue'):p('Показать все 24 инструмента','Show all 24 tools'));more.setAttribute('aria-expanded',String(expanded));
+    more.hidden=category!=='all'||Boolean(query);more.textContent=t(expanded?p('Свернуть каталог','Collapse catalogue'):p('Показать все 23 инструмента','Show all 23 tools'));more.setAttribute('aria-expanded',String(expanded));
     for(const button of filters.children){button.textContent=t(categories[button.dataset.category]);button.setAttribute('aria-pressed',String(category===button.dataset.category));}
     filters.setAttribute('aria-label',t(p('Категории инструментов','Tool categories')));
   }
@@ -162,7 +161,7 @@
       const accuracy=node('details');accuracy.append(node('summary',p('Как улучшить точность','How to improve accuracy')),node('p',result.accuracy));body.append(accuracy);component.append(body);panel.append(component);
     }
   }
-  function localise(){heading.textContent=t(p('Что хотите решить?','What would you like to solve?'));lead.textContent=t(p('24 инструмента. Начните с задачи; профиль и результаты остаются на этом устройстве.','24 tools. Start with a task; your profile and results stay on this device.'));searchLabel.textContent=t(p('Поиск по задаче','Search by task'));renderCards();renderSummary();legacyEvidence();window.mmLanguageReady?.then(legacyResult);if(selected&&models.definitions.some(item=>item.id===selected))open(models.definitions.find(item=>item.id===selected));}
+  function localise(){heading.textContent=t(p('Что хотите решить?','What would you like to solve?'));lead.textContent=t(p('23 инструмента. Начните с задачи; профиль и результаты остаются на этом устройстве.','23 tools. Start with a task; your profile and results stay on this device.'));searchLabel.textContent=t(p('Поиск по задаче','Search by task'));renderCards();renderSummary();legacyEvidence();window.mmLanguageReady?.then(legacyResult);if(selected&&models.definitions.some(item=>item.id===selected))open(models.definitions.find(item=>item.id===selected));}
   new MutationObserver(localise).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
   root.addEventListener('mm:lab-state',()=>{renderSummary();legacyResult();});
   root.addEventListener('click',event=>{if(event.target.closest('[data-calc]'))setTimeout(legacyResult,0);});
