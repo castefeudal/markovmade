@@ -11,7 +11,7 @@ const {documentSource,scriptSource}=require('./source-components.cjs');
 const namespaces=['shared','lab','personal-os'];
 const productCopy=Object.assign({},...namespaces.map(name=>JSON.parse(fs.readFileSync(path.join(root,'src/locales',name+'.en.json'),'utf8'))));
 const translationSource=fs.readFileSync(path.join(root,'assets/js/i18n.js'),'utf8').replace('var META =',`Object.assign(DICT,${JSON.stringify(productCopy)}); var META =`);
-const cssFiles = ['fonts','foundation','editorial','lab','personal-os','tokens','product','worlds','clarity','hero','controls','header','author','toolkit'];
+const cssFiles = ['fonts','foundation','editorial','lab','personal-os','tokens','product','worlds','clarity','hero','controls','header','author','toolkit','experience'];
 const out = path.join(root,'assets/dist');
 fs.mkdirSync(out,{recursive:true});
 fs.mkdirSync(path.join(out,'locales'),{recursive:true});

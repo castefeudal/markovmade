@@ -54,11 +54,12 @@
   const actions = document.createElement('div');
   actions.id = 'mm-quick-actions';
   actions.inert = true;
-  actions.innerHTML = '<a class="mm-quick-btn wide" href="#contact" data-quick-contact>Контакты</a><a class="mm-quick-btn" href="#hero" data-mm-top aria-label="Наверх">↑</a>';
+  actions.innerHTML = '<a class="mm-quick-btn wide" href="#contact" data-quick-contact aria-label="Контакты"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="sr-only mm-quick-label">Контакты</span></a><a class="mm-quick-btn" href="#hero" data-mm-top aria-label="Наверх"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 19V5m-7 7 7-7 7 7"/></svg></a>';
   document.body.appendChild(actions);
   function labels() {
     const en = document.documentElement.lang === 'en';
-    actions.querySelector('[data-quick-contact]').textContent = en ? 'Contact' : 'Контакты';
+    actions.querySelector('[data-quick-contact]').setAttribute('aria-label', en ? 'Contact' : 'Контакты');
+    actions.querySelector('[data-quick-contact] .mm-quick-label').textContent = en ? 'Contact' : 'Контакты';
     actions.querySelector('[data-mm-top]').setAttribute('aria-label', en ? 'Back to top' : 'Наверх');
     burger?.setAttribute('aria-label', en ? 'Menu' : 'Меню');
     menu?.setAttribute('aria-label', en ? 'Navigation' : 'Навигация');
