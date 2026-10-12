@@ -337,12 +337,54 @@ aria-hidden="true"
 (function(){let o,s=!1;const l=new Map;window.mmLocaleCopy={},window.mmLoadLocale=function(t){if(l.has(t))return l.get(t);const a=fetch("assets/dist/locales/"+t+".en.json").then(e=>{if(!e.ok)throw new Error("Locale not available");return e.json()}).then(e=>{Object.assign(window.mmLocaleCopy,e),window.mmAddTranslations?.(e)}).catch(e=>{throw l.delete(t),e});return l.set(t,a),a},document.querySelectorAll("[data-lang-toggle]").forEach(t=>t.setAttribute("aria-label","EN — Switch to English"));function r(){return o||(o=window.mmLoadLocale("shared").then(()=>new Promise((t,a)=>{const e=document.createElement("script");e.src="assets/dist/i18n.js",e.onload=()=>{s=!0,t()},e.onerror=()=>{o=null,a(new Error("Translation could not load"))},document.body.appendChild(e)})),o)}document.addEventListener("click",t=>{const a=t.target.closest("[data-lang-toggle]");!a||s||(t.preventDefault(),t.stopImmediatePropagation(),a.setAttribute("aria-busy","true"),r().then(()=>{a.removeAttribute("aria-busy"),a.click()}).catch(()=>a.removeAttribute("aria-busy")))},!0),document.addEventListener("pointerover",t=>{t.target.closest("[data-lang-toggle]")&&r().catch(()=>{})},{passive:!0}),document.addEventListener("focusin",t=>{t.target.closest("[data-lang-toggle]")&&r().catch(()=>{})});const c=new URLSearchParams(location.search).get("lang");if((c==="ru"||c==="en")&&window.mmSafeStorage.set("markovmade_lang",c),window.mmLoadLanguage=r,window.mmSafeStorage.get("markovmade_lang","ru")==="en"){const t=window.mmTextOriginals=new WeakMap,a=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let e;for(;e=a.nextNode();){if(!e.parentElement.closest("#hero,#main-header,#mobile-menu"))continue;const n=e.nodeValue.replace(/\s+/g," ").trim(),d=window.mmCriticalCopy?.[n];d&&(t.set(e,e.nodeValue),e.nodeValue=e.nodeValue.match(/^\s*/)[0]+d+e.nodeValue.match(/\s*$/)[0])}document.documentElement.lang="en",document.body.classList.add("lang-en"),document.title=window.mmCriticalMeta.title,document.querySelector('meta[name="description"]').content=window.mmCriticalMeta.description,document.querySelectorAll("[data-lang-toggle]").forEach(n=>{n.querySelector(".lang-switch-label").textContent="RU",n.setAttribute("aria-label","RU — Switch to Russian")});const i=()=>r().catch(()=>{});addEventListener("scroll",()=>{scrollY>0&&i()},{passive:!0}),addEventListener("wheel",i,{once:!0,passive:!0}),addEventListener("touchmove",i,{once:!0,passive:!0}),document.addEventListener("focusin",n=>{n.target.closest("main")&&!n.target.closest("#hero")&&i()}),location.hash&&i()}document.documentElement.dataset.criticalReady="true"})();
 </script>
 
-<section id="proof-system" class="mm-trust mm-editorial-section"><div class="mm-editorial-inner"><div class="mm-trust-heading"><span class="mm-editorial-kicker">Образование · практика · личный опыт</span><h2>Почему мне можно доверять</h2><p>Здесь мой опыт, образование и принципы работы.</p></div><div class="mm-trust-grid">
-<article><div class="mm-trust-card-heading"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5z"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20M8 7h8m-8 4h6"/></svg><span>Образование</span></div><h3>Международное образование и квалификации</h3><p>EREPS · 2019 / МИИН · 2022 / ICA · 2026. Направления: фитнес, нутрициология и коучинг. Документы покажу по запросу.</p></article>
-<article><div class="mm-trust-card-heading"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18V9m5 9V5m5 13v-6m5 6V3M2 21h20"/><path d="m3 7 5-4 5 5 7-6"/></svg><span>Практика</span></div><h3>Тренировки, питание и привычки</h3><p>Составляем план, следим за изменениями и вместе вносим поправки. Диагностику, лечение и назначения проводит врач.</p></article>
-<article><div class="mm-trust-card-heading"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0m-8-5v5m-3-2 3 2 3-2"/></svg><span>Личный опыт</span></div><h3>16 лет тренировочного пути</h3><p>Я знаю периоды высокой нагрузки, восстановления и возвращения к привычному ритму.</p></article>
-<article><div class="mm-trust-card-heading"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.3 5.2L20 10l-5.7 1.8L12 17l-2.3-5.2L4 10l5.7-1.8L12 3Z"/><path d="m19 16 .9 2.1L22 19l-2.1.9L19 22l-.9-2.1L16 19l2.1-.9L19 16Z"/></svg><span>Проект</span></div><h3>Автор MARKOVMADE</h3><p>LAB помогает разбираться самостоятельно. Personal OS показывает, как может выглядеть личная система работы.</p></article>
-</div></div></section>
+<section id="proof-system" class="mm-trust mm-editorial-section" aria-labelledby="trust-title">
+<div class="mm-editorial-inner">
+<div class="mm-trust-heading">
+<span class="mm-editorial-kicker">Образование · практика · личный опыт</span>
+<h2 id="trust-title">На чём строится моя работа</h2>
+<p>Показываю отдельно, чему учился, с чем работаю и что прошёл сам.</p>
+</div>
+<div class="mm-trust-grid">
+<article class="mm-trust-card mm-trust-card--education">
+<div class="mm-trust-card-heading">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5z"/><path d="M4 17.5A2.5 2.5 0 0 1 6.5 15H20M8 7h8m-8 4h6"/></svg>
+<span>Международное образование</span>
+</div>
+<h3>Учёба и квалификации</h3>
+<p>Фитнес, нутрициология и коучинг. Подтверждающие документы покажу по запросу.</p>
+<ul class="mm-trust-credentials" aria-label="Образование и годы обучения">
+<li><strong>EREPS</strong><span>2019</span></li>
+<li><strong>МИИН</strong><span>2022</span></li>
+<li><strong>ICA</strong><span>2026</span></li>
+</ul>
+</article>
+<article class="mm-trust-card mm-trust-card--experience">
+<div class="mm-trust-card-heading">
+<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0m-8-5v5m-3-2 3 2 3-2"/></svg>
+<span>Личный опыт</span>
+</div>
+<p class="mm-trust-years"><strong>14+</strong><span>лет тренировочного стажа</span></p>
+<p>Я прошёл через периоды интенсивных тренировок, восстановления и возвращения к режиму. Этот опыт помогает мне учитывать, как план сочетается с обычной жизнью.</p>
+</article>
+<article class="mm-trust-card">
+<div class="mm-trust-card-heading">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18V9m5 9V5m5 13v-6m5 6V3M2 21h20"/><path d="m3 7 5-4 5 5 7-6"/></svg>
+<span>Практика</span>
+</div>
+<h3>План, наблюдения, обратная связь</h3>
+<p>Вместе выбираем посильные шаги, смотрим на изменения и при необходимости корректируем план. Медицинские вопросы решает врач.</p>
+</article>
+<article class="mm-trust-card">
+<div class="mm-trust-card-heading">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.3 5.2L20 10l-5.7 1.8L12 17l-2.3-5.2L4 10l5.7-1.8L12 3Z"/><path d="m19 16 .9 2.1L22 19l-2.1.9L19 22l-.9-2.1L16 19l2.1-.9L19 16Z"/></svg>
+<span>Мои проекты</span>
+</div>
+<h3>MARKOVMADE LAB и Personal OS</h3>
+<p>В LAB — расчёты и инструменты для самостоятельной работы. Personal OS показывает, как устроено персональное сопровождение.</p>
+</article>
+</div>
+</div>
+</section>
 
 <section id="calculators" class="mm-lab-section">
 <svg class="mm-lab-icon-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
