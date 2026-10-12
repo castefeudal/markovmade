@@ -16,9 +16,10 @@ async function assertComposition(page,label) {
     const ir=image.getBoundingClientRect(),mr=media.getBoundingClientRect(),hr=heading.getBoundingClientRect();
     // Conservative envelope of the head over the complete authored turn/nod sequence.
     const face={left:ir.left+ir.width*.34,right:ir.left+ir.width*.68,top:ir.top+ir.height*.075,bottom:ir.top+ir.height*.68};
-    return {viewport:innerWidth,scroll:document.documentElement.scrollWidth,media:mr.toJSON(),heading:hr.toJSON(),face,width:image.naturalWidth,height:image.naturalHeight,hero:hero.getBoundingClientRect().toJSON(),layout:{display:getComputedStyle(hero).display,mediaWidth:getComputedStyle(media).width,mobileQuery:matchMedia('(max-width:1180px)').matches}};
+    return {viewport:innerWidth,scroll:document.documentElement.scrollWidth,media:mr.toJSON(),heading:hr.toJSON(),headingTextWidth:heading.scrollWidth,headingBoxWidth:heading.clientWidth,face,width:image.naturalWidth,height:image.naturalHeight,hero:hero.getBoundingClientRect().toJSON(),layout:{display:getComputedStyle(hero).display,mediaWidth:getComputedStyle(media).width,mobileQuery:matchMedia('(max-width:1180px)').matches}};
   });
   assert.ok(result.scroll<=result.viewport+1,`${label}: horizontal overflow`);
+  assert.ok(result.heading.left>=-1&&result.heading.right<=result.viewport+1&&result.headingTextWidth<=result.headingBoxWidth+1,`${label}: headline text fits inside its visible box ${JSON.stringify(result.heading)}`);
   // Responsive srcset density rounds natural dimensions to whole CSS pixels.
   // The asset bytes and their exact physical crop are sealed in hero.test.cjs.
   assert.ok(Math.abs(result.width-result.height*40/27)<=1+40/27,`${label}: poster retains the approved crop ratio`);
@@ -66,6 +67,7 @@ async function assertCta(page,label) {
       const errors=[];page.on('pageerror',e=>errors.push(e.message));
       await page.goto(server.url,{waitUntil:'load'});
       await page.evaluate(()=>window.mmLoadStyles());
+      await page.evaluate(()=>document.fonts.ready);
       for(const lang of ['ru','en']) {
         if(lang==='en'){await page.locator('[data-lang-toggle]:visible').first().click();await page.waitForFunction(()=>document.documentElement.lang==='en');await page.evaluate(async()=>{await window.mmLanguageReady;await document.fonts.ready;});}
         for(const theme of themes) {
@@ -74,6 +76,7 @@ async function assertCta(page,label) {
           await assertPalette(page,`${name}/${lang}/${theme}`);
           for(const width of widths){
             await page.setViewportSize({width,height:width<=430?844:900});
+            await page.evaluate(()=>document.fonts.ready);
             await page.evaluate(()=>scrollTo(0,0));
             await page.waitForTimeout(80);
             await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
