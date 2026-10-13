@@ -21,6 +21,37 @@ html{scroll-padding-block-start:6rem;}
 #mm-quick-actions .mm-quick-btn:hover{transform:translateY(-2px);border-color:var(--mm-accent);background:var(--mm-accent-soft);color:var(--mm-accent);}
 #mm-quick-actions .mm-quick-btn:focus-visible{outline:2px solid var(--mm-focus);outline-offset:3px;}
 
+/* A single, tactile control family for theme, language, menu and contact. */
+#main-header nav>div{gap:6px;padding:4px;border:1px solid var(--mm-border);border-radius:17px;background:color-mix(in srgb,var(--mm-surface-1) 64%,transparent);backdrop-filter:blur(14px);}
+#main-header .theme-switch,#main-header .lang-switch{position:relative;isolation:isolate;overflow:hidden;width:42px;min-width:42px;height:42px;min-height:42px;padding:0;border:1px solid transparent;border-radius:13px;background:transparent;color:var(--mm-text-secondary);transition:color .22s ease,background .22s ease,border-color .22s ease,transform .22s var(--mm-ease-premium),box-shadow .22s ease;}
+#main-header .theme-switch:hover,#main-header .lang-switch:hover{transform:translateY(-1px);border-color:rgb(var(--color-gold)/.2);background:var(--mm-accent-soft);color:var(--mm-text-primary);box-shadow:inset 0 1px rgb(255 255 255/.06);}
+#main-header .theme-switch:active,#main-header .lang-switch:active{transform:scale(.95);}
+#main-header .theme-switch:focus-visible,#main-header .lang-switch:focus-visible,#main-header #burger-btn:focus-visible{outline:2px solid var(--mm-focus);outline-offset:3px;}
+#main-header .theme-switch-icon{width:17px;height:17px;border-width:1.5px;transition:transform .48s var(--mm-ease-premium),box-shadow .25s ease;}
+#main-header .theme-switch:hover .theme-switch-icon,#main-header .theme-switch:focus-visible .theme-switch-icon{transform:rotate(180deg) scale(1.08);box-shadow:0 0 12px rgb(var(--color-gold)/.18);}
+#main-header .lang-switch:after{position:absolute;bottom:5px;left:50%;width:4px;height:4px;border-radius:50%;background:var(--mm-accent);content:"";opacity:0;transform:translate(-50%,4px);transition:opacity .2s ease,transform .25s var(--mm-ease-premium);}
+#main-header .lang-switch:hover:after,#main-header .lang-switch:focus-visible:after{opacity:1;transform:translate(-50%,0);}
+#main-header a[href="#contact"]{position:relative;isolation:isolate;overflow:hidden;min-width:0;min-height:42px;padding:.55rem 1rem;border:1px solid rgb(var(--color-gold)/.52);border-radius:13px;background:linear-gradient(135deg,var(--mm-accent-hover),var(--mm-accent) 68%);color:var(--mm-selection-text);box-shadow:0 5px 16px rgb(0 0 0/.14),inset 0 1px rgb(255 255 255/.28);font-weight:800;transition:transform .22s var(--mm-ease-premium),border-color .22s ease,box-shadow .22s ease,filter .22s ease;}
+#main-header a[href="#contact"]:after{position:absolute;z-index:0;inset:1px;border-radius:11px;background:linear-gradient(110deg,transparent 20%,rgb(255 255 255/.3) 48%,transparent 72%);content:"";pointer-events:none;transform:translateX(-125%);transition:transform .7s var(--mm-ease-premium);}
+#main-header a[href="#contact"]:hover{transform:translateY(-1px);border-color:var(--mm-accent-hover);box-shadow:0 8px 22px rgb(var(--color-gold)/.2),inset 0 1px rgb(255 255 255/.32);filter:brightness(1.035);}
+#main-header a[href="#contact"]:hover:after{transform:translateX(125%);}
+#main-header a[href="#contact"]:active{transform:translateY(1px) scale(.985);filter:brightness(.98);}
+#main-header a[href="#contact"]:focus-visible{outline:2px solid var(--mm-focus);outline-offset:3px;}
+#main-header a[href="#contact"] svg{position:relative;z-index:1;width:15px;height:15px;transition:transform .25s var(--mm-ease-premium);}
+#main-header a[href="#contact"]:hover svg{transform:translateX(1px) scale(1.06);}
+#main-header #burger-btn{position:relative;gap:6px;transition:transform .22s var(--mm-ease-premium),border-color .22s ease,background .22s ease,color .22s ease;}
+#main-header #burger-btn:hover{transform:translateY(-1px);border-color:rgb(var(--color-gold)/.35);background:var(--mm-accent-soft);color:var(--mm-accent);}
+#main-header #burger-btn:active{transform:scale(.95);}
+#main-header #burger-btn span{transform-origin:center;transition:transform .28s var(--mm-ease-premium),width .22s ease,background-color .22s ease;}
+#main-header #burger-btn[aria-expanded="true"] span:first-child{transform:translateY(3.5px) rotate(45deg);}
+#main-header #burger-btn[aria-expanded="true"] span:last-child{width:18px;transform:translateY(-3.5px) rotate(-45deg);}
+
+@media(max-width:1180px){
+  #main-header .mm-header-mobile-controls{gap:5px;padding:4px;border:1px solid var(--mm-border);border-radius:17px;background:color-mix(in srgb,var(--mm-surface-1) 72%,transparent);box-shadow:0 8px 24px rgb(0 0 0/.1),inset 0 1px rgb(255 255 255/.045);backdrop-filter:blur(14px);}
+  #main-header .mm-header-mobile-controls .theme-switch,#main-header .mm-header-mobile-controls .lang-switch,#main-header .mm-header-mobile-controls #burger-btn{flex:0 0 42px;width:42px;min-width:42px;height:42px;min-height:42px;padding:0;border:1px solid transparent;border-radius:13px;}
+  #main-header .mm-header-mobile-controls #burger-btn{align-items:center;gap:6px;}
+}
+
 @media(max-width:640px){
   html{scroll-padding-block-start:5.25rem;}
   #main-content>section[id]:not(#hero){scroll-margin-block-start:5.25rem;}
@@ -31,4 +62,8 @@ html{scroll-padding-block-start:6rem;}
 @media(prefers-reduced-motion:reduce){
   #mm-quick-actions .mm-quick-btn{transition:none;}
   #mm-quick-actions .mm-quick-btn:hover{transform:none;}
+  #main-header .theme-switch,#main-header .lang-switch,#main-header .theme-switch-icon,#main-header .lang-switch:after,#main-header a[href="#contact"],#main-header a[href="#contact"]:after,#main-header a[href="#contact"] svg,#main-header #burger-btn,#main-header #burger-btn span{transition:none;}
+  #main-header .theme-switch:hover,#main-header .lang-switch:hover,#main-header a[href="#contact"]:hover,#main-header #burger-btn:hover{transform:none;}
+  #main-header .theme-switch:hover .theme-switch-icon,#main-header .theme-switch:focus-visible .theme-switch-icon{transform:none;}
+  #main-header a[href="#contact"]:hover:after{transform:none;}
 }
