@@ -38,22 +38,19 @@
       var en=isEnglish();
       var goals=collect('goal');
       var blockers=collect('blocker');
-      var emptyGoal=en?'choose a point':'выберите пункт';
-      var emptyBlocker=en?'choose a point':'выберите пункт';
-      var defaultGoal=en?'I would like to discuss my goal':'хочу обсудить свою задачу';
-      var defaultBlocker=en?'I can explain more in chat':'расскажу подробнее в сообщении';
       var text=en
-        ? 'Hello, Pavel. I would like to discuss working with MARKOVMADE. Goal: '+(goals.length?goals.join(', '):defaultGoal)+'. '+(blockers.length?'What is getting in the way: '+blockers.join(', ')+'. ':defaultBlocker+'. ')+'What would be a good place to start?'
-        : 'Здравствуйте, Павел. Хочу обсудить работу с MARKOVMADE. Цель: '+(goals.length?goals.join(', '):defaultGoal)+'. '+(blockers.length?'Что мешает: '+blockers.join(', ')+'. ':defaultBlocker+'. ')+'Подскажите, с чего начать.';
+        ? 'Hello, Pavel. I would like to discuss working with MARKOVMADE.'+(goals.length?' My goal: '+goals.join(', ')+'.':'')+(blockers.length?' What is getting in the way: '+blockers.join(', ')+'.':'')+' What would be a good first step?'
+        : 'Здравствуйте, Павел. Хочу обсудить работу с MARKOVMADE.'+(goals.length?' Моя цель: '+goals.join(', ')+'.':'')+(blockers.length?' Что сейчас мешает: '+blockers.join(', ')+'.':'')+' Подскажите, с чего начать.';
       if(summary) {
         var ready = goals.length || blockers.length;
-        var line = en
-          ? 'Goal: '+(goals.length?goals.join(', '):emptyGoal)+'. '+(blockers.length?'What is getting in the way: '+blockers.join(', ')+'.':'You can add more context in your message.')
-          : 'Цель: '+(goals.length?goals.join(', '):emptyGoal)+'. '+(blockers.length?'Что мешает: '+blockers.join(', ')+'.':'Подробности можно написать в сообщении.');
+        var line = [
+          goals.length ? (en?'Goal: ':'Цель: ')+goals.join(', ') : '',
+          blockers.length ? (en?'What is getting in the way: ':'Что сейчас мешает: ')+blockers.join(', ') : ''
+        ].filter(Boolean).join(' · ');
         summary.classList.toggle('mm-editorial-detail-quiz-ready', !!ready);
         summary.innerHTML = ready
-          ? (en ? '<b>Your message is ready.</b><span class="mm-editorial-detail-thank-note">Check it in Telegram and send when ready.</span><span class="mm-editorial-detail-thank-note">'+line+'</span>' : '<b>Сообщение готово.</b><span class="mm-editorial-detail-thank-note">Проверьте его в Telegram и отправьте, когда будете готовы.</span><span class="mm-editorial-detail-thank-note">'+line+'</span>')
-          : (en ? 'You can send the message now or add a goal above.' : 'Можно отправить сообщение сразу или выбрать цель выше.');
+          ? (en ? '<b>Your message is ready.</b><span class="mm-editorial-detail-thank-note">Review it in your messenger and send when ready.</span><span class="mm-editorial-detail-thank-note">'+line+'</span>' : '<b>Сообщение готово.</b><span class="mm-editorial-detail-thank-note">Проверьте текст в мессенджере и отправьте, когда будете готовы.</span><span class="mm-editorial-detail-thank-note">'+line+'</span>')
+          : (en ? '<b>Your message is ready.</b><span class="mm-editorial-detail-thank-note">Choose a messenger to send it.</span>' : '<b>Текст сообщения готов.</b><span class="mm-editorial-detail-thank-note">Выберите удобный мессенджер.</span>');
       }
       if(tg) { tg.href='https://t.me/markovmade?text='+encodeURIComponent(text); tg.textContent = en ? 'Message Pavel' : 'Написать Павлу'; }
       if(wa) { wa.href='https://wa.me/79819722516?text='+encodeURIComponent(text); }

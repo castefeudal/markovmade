@@ -370,6 +370,14 @@
 .mm-editorial-quiz-label>span{margin-inline-start:.35rem;color:rgb(var(--text-platinum)/.52);font-size:.78em;font-weight:500;letter-spacing:0;text-transform:none;}
 .mm-editorial-option{text-transform:none;letter-spacing:0;font-size:.84rem;font-weight:650;}
 .mm-community-choice{grid-column:1/-1;width:fit-content;justify-self:center;border-color:rgb(var(--color-gold)/.24);}
+.mm-request-optional{max-width:720px;margin:12px auto 0;padding-top:10px;border-top:1px solid rgb(255 255 255/.07);}
+.mm-request-optional>summary{display:flex;align-items:center;justify-content:center;gap:.45rem;min-height:44px;padding:8px 12px;cursor:pointer;list-style:none;color:rgb(var(--text-platinum)/.72);font:600 .78rem/1.4 'Manrope',sans-serif;}
+.mm-request-optional>summary::-webkit-details-marker{display:none;}
+.mm-request-optional>summary::after{content:'+';color:rgb(var(--color-gold));font-size:1.2rem;font-weight:400;}
+.mm-request-optional[open]>summary::after{content:'−';}
+.mm-request-optional>summary>span{color:rgb(var(--text-platinum)/.5);font-size:.72rem;font-weight:400;}
+.mm-request-optional>summary:focus-visible{outline:2px solid var(--mm-focus);outline-offset:2px;border-radius:8px;}
+.mm-request-optional>.mm-editorial-quiz-label{margin-top:8px;}
 @media(max-width:640px){.mm-request-details>summary{padding-inline:15px}.mm-request-details>summary span{margin-left:auto}}
 
 /* Give the authored case photos enough room to read as work, not thumbnails. */
