@@ -33,6 +33,31 @@
     if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   });
+  const locationLinks = [...document.querySelectorAll('#main-header nav a[href^="#"], #mobile-menu nav a[href^="#"]')];
+  const locationTargets = [...new Set(locationLinks.map(link => document.getElementById(link.getAttribute('href').slice(1))).filter(Boolean))];
+  function setCurrentLocation(id) {
+    locationLinks.forEach(link => {
+      if (id && link.getAttribute('href') === `#${id}`) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
+    });
+  }
+  if ('IntersectionObserver' in window && locationTargets.length) {
+    const locationObserver = new IntersectionObserver(entries => {
+      const active = entries.filter(entry => entry.isIntersecting).sort((a, b) =>
+        Math.abs(a.boundingClientRect.top - innerHeight * .28) - Math.abs(b.boundingClientRect.top - innerHeight * .28)
+      )[0];
+      let id = active?.target.id;
+      if (!id) {
+        const marker = innerHeight * .28;
+        id = locationTargets.find(target => {
+          const rect = target.getBoundingClientRect();
+          return rect.top <= marker && rect.bottom > marker;
+        })?.id;
+      }
+      setCurrentLocation(id || '');
+    }, { rootMargin: '-26% 0px -64% 0px', threshold: 0 });
+    locationTargets.forEach(target => locationObserver.observe(target));
+  }
   document.addEventListener('click', async event => {
     const link = event.target.closest('a[href^="#"]');
     if (event.target.closest('[aria-disabled="true"]')) { event.preventDefault(); return; }

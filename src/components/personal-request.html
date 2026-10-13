@@ -9,8 +9,8 @@
 <div id="request-quiz" class="mm-editorial-quiz mm-editorial-flow-quiz mm-editorial-detail-final-cta fade-in-up">
   <h3>Расскажите, с чем помочь</h3>
   <p>Выберите одну цель. Второй пункт можно пропустить — сообщение откроется в Telegram, и вы сможете сразу его отправить.</p>
-  <div class="mm-editorial-quiz-label">Что хотите изменить?</div>
-  <div class="mm-editorial-quiz-grid" data-quiz-group="goal">
+  <div class="mm-editorial-quiz-label" id="request-goal-label">Что хотите изменить?</div>
+  <div class="mm-editorial-quiz-grid" role="group" aria-labelledby="request-goal-label" data-quiz-group="goal">
     <button type="button" class="mm-editorial-option interactive" aria-pressed="false" data-value="снизить вес">снизить вес</button>
     <button type="button" class="mm-editorial-option interactive" aria-pressed="false" data-value="набрать мышцы">набрать мышцы</button>
     <button type="button" class="mm-editorial-option interactive" aria-pressed="false" data-value="вернуть режим">вернуть режим</button>
@@ -19,8 +19,8 @@
     <button type="button" class="mm-editorial-option interactive" aria-pressed="false" data-value="понять формат">понять формат</button>
     <button type="button" class="mm-editorial-option interactive mm-community-choice" aria-pressed="false" data-value="вступить в сообщество">вступить в сообщество</button>
   </div>
-  <div class="mm-editorial-quiz-label">Что мешает? <span>Необязательно</span></div>
-  <div class="mm-editorial-quiz-grid" data-quiz-group="blocker">
+  <div class="mm-editorial-quiz-label" id="request-blocker-label">Что мешает? <span>Необязательно</span></div>
+  <div class="mm-editorial-quiz-grid" role="group" aria-labelledby="request-blocker-label" data-quiz-group="blocker">
     <button type="button" class="mm-editorial-option interactive" aria-pressed="false" data-value="вес стоит">вес стоит</button>
     <button type="button" class="mm-editorial-option interactive" aria-pressed="false" data-value="срывы">трудно держать режим</button>
     <button type="button" class="mm-editorial-option interactive" aria-pressed="false" data-value="мало энергии">мало энергии</button>
@@ -28,7 +28,7 @@
     <button type="button" class="mm-editorial-option interactive" aria-pressed="false" data-value="есть ограничения">есть ограничения</button>
     <button type="button" class="mm-editorial-option interactive" aria-pressed="false" data-value="нехватка времени">мало времени</button>
   </div>
-  <div class="mm-editorial-quiz-result" id="quiz-summary">Сообщение можно отправить сразу или дополнить деталями.</div>
+  <div class="mm-editorial-quiz-result" id="quiz-summary" role="status" aria-live="polite" aria-atomic="true">Сообщение можно отправить сразу или дополнить деталями.</div>
   <div class="mm-editorial-cta-row" style="justify-content:center;margin-top:20px">
     <a id="quiz-telegram-link" href="https://t.me/markovmade?text=Здравствуйте!%20Хочу%20обсудить%20свою%20задачу%20и%20понять%2C%20с%20чего%20начать." target="_blank" rel="noopener noreferrer" class="mm-editorial-cta interactive" data-analytics="v17_quiz_telegram">Написать в Telegram</a>
     <a id="quiz-whatsapp-link" href="https://wa.me/79819722516" target="_blank" rel="noopener noreferrer" class="mm-editorial-cta secondary interactive" data-analytics="v17_quiz_whatsapp">Написать в WhatsApp</a>
@@ -118,7 +118,7 @@
                         </div>
                     </form>
 
-                    <div id="access-card" class="absolute inset-0 hidden flex-col items-center justify-center">
+                    <div id="access-card" class="absolute inset-0 hidden flex-col items-center justify-center" role="region" aria-labelledby="lead-result-title" tabindex="-1" aria-hidden="true" inert>
                         <div class="relative w-full bg-charcoal border border-gold/30 p-7 md:p-10 shadow-[0_0_60px_rgba(0,0,0,0.55)] noise-bg overflow-hidden flex flex-col items-center text-center transition-colors duration-500">
                             <div class="absolute top-0 left-0 w-full h-1 bg-gold"></div>
                             <div class="absolute bottom-0 right-0 w-20 h-1 bg-gold"></div>
@@ -128,7 +128,7 @@
                                     <svg class="w-8 h-8 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="square" stroke-linejoin="miter" stroke-width="1" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                                 </div>
                                 <div>
-                                    <h3 class="font-serif text-2xl md:text-3xl text-platinum mb-2">ВВОДНЫЕ СОБРАНЫ</h3>
+                                    <h3 id="lead-result-title" class="font-serif text-2xl md:text-3xl text-platinum mb-2">ВВОДНЫЕ СОБРАНЫ</h3>
                                     <p class="font-sans text-[10px] text-dim tracking-[0.24em] uppercase">Осталось отправить их удобным способом</p>
                                 </div>
                                 <div class="py-4 border-t border-white/10 border-b border-white/10">

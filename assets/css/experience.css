@@ -45,6 +45,11 @@ html{scroll-padding-block-start:6rem;}
 #main-header #burger-btn span{transform-origin:center;transition:transform .28s var(--mm-ease-premium),width .22s ease,background-color .22s ease;}
 #main-header #burger-btn[aria-expanded="true"] span:first-child{transform:translateY(3.5px) rotate(45deg);}
 #main-header #burger-btn[aria-expanded="true"] span:last-child{width:18px;transform:translateY(-3.5px) rotate(-45deg);}
+#main-header .nav-link[aria-current="location"]{color:var(--mm-accent);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--mm-accent) 70%,transparent);text-decoration-thickness:1px;text-underline-offset:.55rem;}
+#mobile-menu nav a[aria-current="location"]{color:var(--mm-accent);border-color:color-mix(in srgb,var(--mm-accent) 42%,var(--mm-border));}
+.mm-skip-link{position:fixed;z-index:10000;top:12px;left:12px;max-width:calc(100vw - 24px);padding:.8rem 1rem;border:1px solid color-mix(in srgb,var(--mm-accent) 60%,var(--mm-border));border-radius:12px;background:var(--mm-surface-1);color:var(--mm-text-primary);box-shadow:0 12px 34px rgb(0 0 0/.28);font:700 .875rem/1.35 var(--mm-font-body);text-decoration:none;transform:translateY(calc(-100% - 20px));transition:transform .18s ease;}
+.mm-skip-link:focus{transform:translateY(0);outline:2px solid var(--mm-focus);outline-offset:3px;}
+#access-card:focus-visible{outline:2px solid var(--mm-focus);outline-offset:5px;}
 
 @media(max-width:1180px){
   #main-header .mm-header-mobile-controls{gap:5px;padding:4px;border:1px solid var(--mm-border);border-radius:17px;background:color-mix(in srgb,var(--mm-surface-1) 72%,transparent);box-shadow:0 8px 24px rgb(0 0 0/.1),inset 0 1px rgb(255 255 255/.045);backdrop-filter:blur(14px);}
@@ -62,7 +67,7 @@ html{scroll-padding-block-start:6rem;}
 @media(prefers-reduced-motion:reduce){
   #mm-quick-actions .mm-quick-btn{transition:none;}
   #mm-quick-actions .mm-quick-btn:hover{transform:none;}
-  #main-header .theme-switch,#main-header .lang-switch,#main-header .theme-switch-icon,#main-header .lang-switch:after,#main-header a[href="#contact"],#main-header a[href="#contact"]:after,#main-header a[href="#contact"] svg,#main-header #burger-btn,#main-header #burger-btn span{transition:none;}
+  #main-header .theme-switch,#main-header .lang-switch,#main-header .theme-switch-icon,#main-header .lang-switch:after,#main-header a[href="#contact"],#main-header a[href="#contact"]:after,#main-header a[href="#contact"] svg,#main-header #burger-btn,#main-header #burger-btn span,.mm-skip-link{transition:none;}
   #main-header .theme-switch:hover,#main-header .lang-switch:hover,#main-header a[href="#contact"]:hover,#main-header #burger-btn:hover{transform:none;}
   #main-header .theme-switch:hover .theme-switch-icon,#main-header .theme-switch:focus-visible .theme-switch-icon{transform:none;}
   #main-header a[href="#contact"]:hover:after{transform:none;}

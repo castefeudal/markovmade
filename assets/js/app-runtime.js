@@ -188,12 +188,21 @@
                 const cardWrapper = document.getElementById('access-card');
                 const cardId = document.getElementById('card-id');
                 if (cardId) cardId.innerText = uniqueId;
+                formEl.setAttribute('aria-hidden', 'true');
+                formEl.inert = true;
                 formEl.style.transform = 'scaleY(0.01) scaleX(1)';
                 formEl.style.opacity = '0';
-                setTimeout(() => {
+                const revealResult = () => {
                     formEl.style.display = 'none';
-                    if (cardWrapper) { cardWrapper.classList.remove('hidden'); cardWrapper.classList.add('flex'); }
-                }, 450);
+                    if (cardWrapper) {
+                        cardWrapper.classList.remove('hidden');
+                        cardWrapper.classList.add('flex');
+                        cardWrapper.inert = false;
+                        cardWrapper.setAttribute('aria-hidden', 'false');
+                        cardWrapper.focus();
+                    }
+                };
+                window.setTimeout(revealResult, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 450);
             });
             const telegramBtn = document.getElementById('telegram-btn');
             const whatsappBtn = document.getElementById('whatsapp-btn');
@@ -218,11 +227,19 @@
             });
             if (backBtn) backBtn.addEventListener('click', () => {
                 const cardWrapper = document.getElementById('access-card');
-                if (cardWrapper) { cardWrapper.classList.add('hidden'); cardWrapper.classList.remove('flex'); }
+                if (cardWrapper) {
+                    cardWrapper.classList.add('hidden');
+                    cardWrapper.classList.remove('flex');
+                    cardWrapper.inert = true;
+                    cardWrapper.setAttribute('aria-hidden', 'true');
+                }
                 formEl.style.display = '';
+                formEl.inert = false;
+                formEl.setAttribute('aria-hidden', 'false');
                 requestAnimationFrame(() => {
                     formEl.style.transform = '';
                     formEl.style.opacity = '1';
+                    formEl.querySelector('button[type="submit"]')?.focus();
                 });
             });
         }
