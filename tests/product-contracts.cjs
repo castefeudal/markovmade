@@ -28,6 +28,18 @@ async function assertComposition(page,label) {
   if(result.viewport>1180)assert.ok(result.heading.right<=result.face.left+2,`${label}: text overlaps the face`);
   else assert.ok(result.heading.top>=result.media.bottom,`${label}: mobile text overlaps the portrait`);
 }
+async function settleResponsivePoster(page) {
+  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(resolve)));
+  const image=page.locator('#hero-head-fallback');
+  await page.waitForFunction(()=>{const img=document.getElementById('hero-head-fallback');return img.complete&&img.naturalWidth>0&&img.currentSrc;});
+  for(let attempt=0;attempt<3;attempt++){
+    const source=await image.evaluate(el=>el.currentSrc);
+    await image.evaluate(el=>el.decode());
+    await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+    if(await image.evaluate(el=>el.currentSrc)===source)return;
+  }
+  throw new Error('Responsive hero poster did not settle after viewport change');
+}
 async function assertPalette(page,label) {
   const colors=await page.evaluate(()=>{
     const hero=document.querySelector('#hero'),heading=hero.querySelector('h1'),intro=hero.querySelector('.hero-intro'),cta=hero.querySelector('.mm-primary-cta');
@@ -84,7 +96,7 @@ async function assertCta(page,label) {
           }
           if(theme==='clarity')await assertCta(page,`${name}/${lang}/clarity`);
           if(name==='chromium')for(const width of [320,390,768,1440,2560]){
-            await page.setViewportSize({width,height:width<=430?844:900});await page.evaluate(()=>scrollTo(0,0));
+            await page.setViewportSize({width,height:width<=430?844:900});await page.evaluate(()=>scrollTo(0,0));await settleResponsivePoster(page);
             await page.locator('#hero .mm-primary-cta').evaluate(el=>el.blur());await page.mouse.move(0,0);await page.waitForTimeout(180);
             const shot=path.join(output,`${lang}-${theme}-${width}.png`);await page.screenshot({path:shot});assertVisualBaseline(`contract-${lang}-${theme}-${width}.png`,shot,.015);
           }
