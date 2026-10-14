@@ -40,7 +40,7 @@
     if (!status) { status = document.createElement('div'); status.id = 'mm-os-load-error'; status.className = 'mm-component-loading'; status.setAttribute('role','alert'); section.querySelector('[data-component="personal-os"]').before(status); }
     const en = document.documentElement.lang === 'en';
     status.replaceChildren(document.createTextNode(en ? 'Could not load Personal OS. ' : 'Personal OS не загрузился. '));
-    const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'mm-secondary-cta'; retry.textContent = en ? 'Try again' : 'Повторить'; retry.addEventListener('click', () => { retry.disabled = true; load().catch(() => {}); }); status.append(retry);
+    const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'mm-secondary-cta'; retry.textContent = en ? 'Try again' : 'Повторить'; retry.addEventListener('click', () => { retry.disabled = true; load().then(()=>document.dispatchEvent(new CustomEvent('mm:component-recovered',{detail:{id:section.id}}))).catch(() => {}); }); status.append(retry);
   }
   const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
     if (scrollY>0 && entries.some(entry => entry.isIntersecting)) load().catch(() => {});

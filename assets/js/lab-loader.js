@@ -39,7 +39,7 @@
     })().catch(error => { pending = null; throw error; });
     return pending;
   }
-  window.mmLoadLab = load;
+  window.mmLoadLab = () => load().catch(error => { showFailure(); throw error; });
   const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
     if (scrollY>0 && entries.some(e => e.isIntersecting)) load().catch(showFailure);
   }, { rootMargin: '0px' }) : null;
@@ -62,7 +62,7 @@
     if (ready || !event.target.closest('button')) return;
     const button = event.target.closest('button');
     event.preventDefault(); event.stopImmediatePropagation();
-    if (button.hasAttribute('data-retry-lab')) { button.disabled = true; load().catch(showFailure); return; }
+    if (button.hasAttribute('data-retry-lab')) { button.disabled = true; load().then(()=>document.dispatchEvent(new CustomEvent('mm:component-recovered',{detail:{id:section.id}}))).catch(showFailure); return; }
     load().then(() => button.click()).catch(showFailure);
   }, true);
   section.addEventListener('submit', event => {

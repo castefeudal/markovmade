@@ -1,5 +1,8 @@
 /* Site-wide finish: clear section landings, a quieter action dock and a deliberate editorial rhythm. */
 html{scroll-padding-block-start:6rem;}
+.mm-content-load-status{display:block;margin-block:1rem;padding:1rem;border:1px solid var(--mm-border);border-radius:14px;background:var(--mm-bg-secondary);color:var(--mm-text-primary);font:500 .9rem/1.6 var(--mm-font-body,Manrope,sans-serif);}
+.mm-content-load-status .mm-secondary-cta{display:flex;width:fit-content;min-height:44px;margin:.75rem auto 0;padding:.6rem 1.15rem;border:1px solid var(--mm-border-strong);border-radius:999px;background:var(--mm-bg-primary);color:var(--mm-text-primary);}
+#manifest-form[aria-busy="true"] button[type="submit"]{opacity:.65;cursor:progress;}
 #main-content>section[id]:not(#hero){scroll-margin-block-start:6rem;}
 
 /* Separate the working formats from the personal story without changing the brand palette. */

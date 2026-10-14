@@ -58,20 +58,80 @@
     }, { rootMargin: '-26% 0px -64% 0px', threshold: 0 });
     locationTargets.forEach(target => locationObserver.observe(target));
   }
-  document.addEventListener('click', async event => {
+  let navigationRequest=0;
+  function savePosition(){
+    const marker=innerHeight*.3;
+    const section=[...main.querySelectorAll(':scope > section[id]')].find(section=>{const rect=section.getBoundingClientRect();return rect.top<=marker&&rect.bottom>marker;});
+    if(section)history.replaceState({...history.state,mmPosition:{id:section.id,top:section.getBoundingClientRect().top}},'',location.href);
+  }
+  async function navigate(hash,{focus=true,behavior=reduced()?'instant':'smooth'}={}){
+    const request=++navigationRequest;
+    let id;try{id=decodeURIComponent(hash.slice(1));}catch{id=hash.slice(1);}
+    try{
+      await window.mmLoadStyles?.();
+      if(id==='calculators'||/^(lab-|mm-lab-)/.test(id)){
+        if(document.getElementById('mm-lab-load-error'))throw new Error('LAB awaits an explicit retry');
+        await window.mmLoadLab?.();
+      }
+      if(id==='app-ecosystem'||/^(insights(?:-|$)|mm-os-)/.test(id)){
+        if(document.getElementById('mm-os-load-error'))throw new Error('Personal OS awaits an explicit retry');
+        await window.mmLoadOS?.();
+      }
+    }catch{
+      if(request!==navigationRequest)return false;
+      const failureId=/^(calculators$|lab-|mm-lab-)/.test(id)?'mm-lab-load-error':/^(app-ecosystem$|insights(?:-|$)|mm-os-)/.test(id)?'mm-os-load-error':null;
+      const failure=failureId?document.getElementById(failureId):null;
+      const landing=failure||document.getElementById(id);
+      landing?.scrollIntoView({behavior:'instant',block:'start'});
+      if(focus)failure?.querySelector('button')?.focus({preventScroll:true});
+      return false;
+    }
+    if(request!==navigationRequest)return false;
+    const target=document.getElementById(id);
+    if(!target)return false;
+    const panel=target.closest('[role="tabpanel"]');
+    if(panel?.hidden){
+      [...document.querySelectorAll('[role="tab"]')].find(tab=>tab.getAttribute('aria-controls')===panel.id)?.click();
+    }
+    if(target.matches('[role="tab"]'))target.click();
+    for(let parent=target.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
+    target.scrollIntoView({behavior,block:'start'});
+    if(focus){
+      if(!target.matches('a[href],button,input,select,textarea,[tabindex]'))target.setAttribute('tabindex','-1');
+      target.focus({preventScroll:true});
+    }
+    return true;
+  }
+  document.addEventListener('click', event => {
     const link = event.target.closest('a[href^="#"]');
     if (event.target.closest('[aria-disabled="true"]')) { event.preventDefault(); return; }
     if (!link || link.getAttribute('href').length < 2 || event.defaultPrevented) return;
-    const target = document.getElementById(link.getAttribute('href').slice(1));
-    if (!target) return;
+    const hash=link.getAttribute('href');
+    if(!document.getElementById(hash.slice(1))&&!/^#(?:lab-|mm-lab-|insights|mm-os-)/.test(hash))return;
     event.preventDefault();
     setMenu(false);
-    await window.mmLoadStyles?.();
-    target.scrollIntoView({ behavior: reduced() ? 'instant' : 'smooth', block: 'start' });
-    history.replaceState(null, '', link.getAttribute('href'));
-    if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
-    target.focus({ preventScroll: true });
+    if(link.id!=='skip-to-main'&&location.hash!==hash){savePosition();history.pushState(null,'',hash);}
+    navigate(hash);
   });
+  const restore=async()=>{
+    const saved=history.state?.mmPosition;
+    if(saved&&typeof saved.id==='string'&&Number.isFinite(saved.top)){
+      if(!await navigate('#'+saved.id,{focus:false,behavior:'instant'}))return;
+      const request=navigationRequest;
+      await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+      const section=document.getElementById(saved.id);
+      if(section&&request===navigationRequest)scrollBy({top:section.getBoundingClientRect().top-saved.top,behavior:'instant'});
+    }else if(location.hash)navigate(location.hash,{focus:false,behavior:'instant'});else ++navigationRequest;
+  };
+  addEventListener('popstate',restore);
+  addEventListener('hashchange',restore);
+  document.addEventListener('mm:component-recovered',event=>{
+    const hash=location.hash;
+    if((event.detail?.id==='calculators'&&/^#(?:calculators$|lab-|mm-lab-)/.test(hash))||
+       (event.detail?.id==='app-ecosystem'&&/^#(?:app-ecosystem$|insights|mm-os-)/.test(hash)))navigate(hash,{focus:false,behavior:'instant'});
+  });
+  const land=()=>{if(location.hash)navigate(location.hash,{focus:false,behavior:'instant'});};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',land,{once:true});else land();
   const progress = document.createElement('div');
   progress.id = 'mm-scroll-progress';
   progress.setAttribute('aria-hidden', 'true');
