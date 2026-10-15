@@ -69,8 +69,11 @@
         if(window.mmTrack) window.mmTrack('v13_quiz_select',{value:btn.getAttribute('data-value')});
       });
     });
-    document.querySelectorAll('[data-lang-toggle]').forEach(function(btn){
-      btn.addEventListener('click',function(){ setTimeout(update, 90); });
+    // Follow the actual language change, including lazy loading and programmatic
+    // switches. A click timer can finish after languageReady and expose RU links
+    // in an otherwise translated page.
+    new MutationObserver(update).observe(document.documentElement, {
+      attributes: true, attributeFilter: ['lang']
     });
     update();
   }
