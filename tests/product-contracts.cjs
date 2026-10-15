@@ -119,19 +119,23 @@ async function assertCta(page,label) {
     await motion.goto(server.url,{waitUntil:'load'});
     await motion.waitForFunction(()=>document.querySelector('.mm-hero-media').classList.contains('mm-frames-ready'),{},{timeout:30000});
     const video=motion.locator('#hero-head-video');
-    assert.deepEqual(await video.evaluate(el=>[el.videoWidth,el.videoHeight]),[960,648],'video has no watermark region');
+    assert.deepEqual(await video.evaluate(el=>[el.videoWidth,el.videoHeight]),[1600,1080],'video retains source detail and excludes the watermark region');
     for(const drawable of await motion.locator('.mm-hero-media img,.mm-hero-media video,.mm-hero-media canvas').all()) {
       const transition=await drawable.evaluate(el=>getComputedStyle(el).transitionProperty);
       assert.ok(!/transform|all/.test(transition),'rAF smoothing has no second CSS transform interpolator');
     }
+    const renderedPoses=new Set();
     for(const [pose,x,y]of [['turn',100,320],['nod',1080,820],['neutral',1120,350]]) {
       await motion.mouse.move(x,y,{steps:8});await motion.waitForTimeout(600);
       assert.equal(await motion.locator('.mm-hero-media').getAttribute('data-mm-pose'),pose,`pointer produces ${pose}`);
+      renderedPoses.add(await motion.locator('#hero-head-canvas').evaluate(el=>el.toDataURL()));
       await assertComposition(motion,`pointer/${pose}`);
       const shot=path.join(output,`pointer-${pose}.png`);await motion.screenshot({path:shot});
       // Pose screenshots are evidence; the stable neutral/crop baselines above
       // are strict regressions. Decoder timing does not relax crop assertions.
     }
+    assert.equal(renderedPoses.size,3,'pointer changes the actual video pixels for turn, nod and neutral');
+    assert.ok(await motion.locator('#hero-head-canvas').evaluate(el=>el.width>=960&&el.width<=1600),'frame bank preserves displayed detail within the source resolution');
     await motion.mouse.move(1500,100);await motion.waitForTimeout(800);
     const shift=await motion.locator('.mm-hero-media').evaluate(el=>[parseFloat(el.style.getPropertyValue('--mm-hero-x')),parseFloat(el.style.getPropertyValue('--mm-hero-y'))]);
     assert.ok(shift.every(x=>Math.abs(x)<.1),'pointer leave eases back to neutral, including spatial shift');

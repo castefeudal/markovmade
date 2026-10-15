@@ -37,13 +37,13 @@
             nod2PeakTime: 6.24,
             nod2EndTime: 7.72,
 
-            /* Keep desktop frames at the 960px native width of the authored video. */
-            desktopWidth: 960,
+            /* Retain source detail up to 1600px; size the cache to displayed pixels. */
+            desktopWidth: 1600,
             mobileWidth: 360,
             lowMemoryWidth: 300,
             /* Full-width RGBA frames are larger; smooth pointer interpolation keeps
                the authored motion fluid with a bounded frame cache. */
-            desktopTurnFrames: 16,
+            desktopTurnFrames: 24,
             desktopNodFrames: 8,
             mobileTurnFrames: 12,
             mobileNodFrames: 7,
@@ -56,8 +56,8 @@
             pointerTurnFullX: 0.06,
             pointerNodStartY: 0.58,
             pointerNodFullY: 0.92,
-            desktopShiftX: 14,
-            desktopShiftY: 8,
+            desktopShiftX: 26,
+            desktopShiftY: 14,
             mobileShiftX: 5,
             mobileShiftY: 3,
             directSeekInterval: 42,
@@ -219,12 +219,8 @@
             }
 
             var seeked = waitForEvent(targetVideo, 'seeked', 6500);
-            if (typeof targetVideo.fastSeek === 'function') {
-                try { targetVideo.fastSeek(safeTime); }
-                catch (error) { targetVideo.currentTime = safeTime; }
-            } else {
-                targetVideo.currentTime = safeTime;
-            }
+            // fastSeek snaps to keyframes; exact seeking preserves each pose.
+            targetVideo.currentTime = safeTime;
             await seeked;
             await waitForDecodedFrame(targetVideo);
         }
@@ -253,12 +249,13 @@
                 width = settings.lowMemoryWidth;
                 turnCount = settings.lowMemoryTurnFrames;
                 nodCount = settings.lowMemoryNodFrames;
-            } else if (coarsePointer || window.innerWidth <= 1024) {
+            } else if (coarsePointer) {
                 width = settings.mobileWidth;
                 turnCount = settings.mobileTurnFrames;
                 nodCount = settings.mobileNodFrames;
             } else {
-                width = settings.desktopWidth;
+                width = Math.min(sourceWidth, settings.desktopWidth,
+                    Math.max(960, Math.ceil(media.clientHeight * sourceWidth / sourceHeight * (window.devicePixelRatio || 1))));
                 turnCount = settings.desktopTurnFrames;
                 nodCount = settings.desktopNodFrames;
             }
@@ -733,6 +730,7 @@
                 directReady = true;
                 media.classList.add('mm-direct-ready');
                 media.classList.remove('mm-video-error');
+                scheduleRender(true);
 
                 /* Keep the poster and direct-seek fallback on reduced-motion and low-memory devices. */
                 if (reducedMotion || lowMemory) return;

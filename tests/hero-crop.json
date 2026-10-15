@@ -1,27 +1,29 @@
 {
   "source": {
-    "width": 960,
-    "height": 720
+    "width": 1660,
+    "height": 1244
   },
   "crop": {
-    "x": 0,
+    "x": 30,
     "y": 0,
-    "width": 960,
-    "height": 648
+    "width": 1600,
+    "height": 1080
   },
   "excludedWatermark": {
-    "x": 808,
-    "y": 674,
-    "width": 140,
-    "height": 36
+    "x": 1395,
+    "y": 1165,
+    "width": 265,
+    "height": 79
   },
   "assets": {
-    "assets/media/hero-portrait-320w.avif": "bc6590501e4ab3340198681562ac5674974a022d2c3fa13b5674d8db4e000938",
-    "assets/media/hero-portrait-320w.webp": "cca568d01047ade430a118f87a9288afaadc29feb8faa28e7b08d7cb7685ffaf",
-    "assets/media/hero-portrait.avif": "44882c1adca916715a7635f89e02fed4f9e774a39e16f35bbd8bb4ff957110ff",
-    "assets/media/hero-portrait.mp4": "91c5037da33bf2d9b8d737f8c0a0bafb1b622ccf22ff34f224846363acce7ada",
-    "assets/media/hero-portrait.webp": "83d3c09502a42ef91d8927f418ae8e39f40377a6dfb4df8ace8f3f98e53db5c4",
-    "assets/media/hero-portrait-960w.webp": "da6d7bb67fff885dce2f544442f0a2e123f3ad8d96fef046ce2347b331201c11",
-    "assets/media/hero-portrait-960w.avif": "6b1175ceab379d84b1d3256d3744ca721b05b18435e24f02a09a6dd10ea21b10"
+    "assets/media/hero-portrait-320w.avif": "759397db3846c0cb7a72b9e0ff4e330a2a5054c11afdb04a887eda46b98c736d",
+    "assets/media/hero-portrait-320w.webp": "858f23598cf114b86a79335c4ef8d59c4ab0a45ab5c64c0156c9a578d5f2f82a",
+    "assets/media/hero-portrait.avif": "fc4c426bdd89da37c5cb1cc66849f62a3aede2ad7c8dcbbade64fde12f043833",
+    "assets/media/hero-portrait.mp4": "858d45dcb7486f7d49026ce1677a7a161a74905295fde9ef04955fc3c1bf0732",
+    "assets/media/hero-portrait.webp": "4cc06912d76f64f6bc40900d9fc5fb48938e48479dc6cc2637440c2bf16f71e5",
+    "assets/media/hero-portrait-960w.webp": "c4ef31b1c477cb4a9a05b9e7fbf93abab21dfbfb7f085c16ab3ae1a960eba76e",
+    "assets/media/hero-portrait-960w.avif": "fa9cd47e5691aea8e46799564a89dba308f0d6e5c5015c8cd02c1d34b198cf25",
+    "assets/media/hero-portrait-1600w.avif": "4dba22e136ac6bd80e64fa2f4b5791bfaa70b0c915e24d51a87e2f9a4dae64c6",
+    "assets/media/hero-portrait-1600w.webp": "4e0720e713773a75e42f42649b45eb031b2d8c94f334863a7067337ad884d934"
   }
 }
