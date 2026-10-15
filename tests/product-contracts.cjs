@@ -237,6 +237,26 @@ async function assertCta(page,label) {
       }
     }
     await bilingual.close();
+    await browser.close();browser=null;
+    // Firefox/WebKit do not expose navigator.connection. This used to leave
+    // mm-static-poster enabled even while the video frame bank was ready.
+    for(const [name,engine]of [['firefox',firefox],['webkit',webkit]]) {
+      browser=await engine.launch({headless:true,...(name==='firefox'?{firefoxUserPrefs:{'network.proxy.type':0}}:{proxy:{server:'http://127.0.0.1:9',bypass:'127.0.0.1,localhost'}})});
+      const pointer=await browser.newPage({viewport:{width:1920,height:1000},deviceScaleFactor:1,reducedMotion:'no-preference'});
+      await pointer.addInitScript(()=>{Object.defineProperty(navigator,'hardwareConcurrency',{get:()=>8});Object.defineProperty(navigator,'deviceMemory',{get:()=>8});});
+      await pointer.goto(server.url,{waitUntil:'load'});
+      await pointer.waitForFunction(()=>document.querySelector('.mm-hero-media')?.classList.contains('mm-frames-ready'),{},{timeout:45000});
+      assert.equal(await pointer.locator('.mm-hero-media').evaluate(el=>el.classList.contains('mm-static-poster')),false,`${name}: mouse enables the rendered video`);
+      const rect=await pointer.locator('#hero').boundingBox(),pixels=new Set();
+      for(const [pose,x,y]of [['turn',.07,.36],['nod',.75,.92],['neutral',.78,.4]]) {
+        await pointer.mouse.move(rect.x+rect.width*x,rect.y+rect.height*y,{steps:8});await pointer.waitForTimeout(900);
+        assert.equal(await pointer.locator('.mm-hero-media').getAttribute('data-mm-pose'),pose,`${name}: pointer produces ${pose}`);
+        pixels.add(await pointer.locator('#hero-head-canvas').evaluate(el=>el.toDataURL()));
+      }
+      assert.equal(pixels.size,3,`${name}: actual pixels change for all three video poses`);
+      await browser.close();browser=null;
+      console.log(`${name}: cursor-controlled HD turn, nod and neutral passed.`);
+    }
     if(captureLinux)throw new Error('Linux baselines captured for review. Commit the reviewed contract screenshots under tests/visual-baselines/linux before acceptance.');
     console.log('Pointer turn/nod/neutral, touch entry and dynamic reduced motion passed.');
   } finally {await browser?.close();await server.close();}

@@ -6,7 +6,9 @@
   const fine = matchMedia('(hover: hover) and (pointer: fine)');
   let loaded = false;
   function sync() {
-    const staticMode = motion.matches || !fine.matches || navigator.connection?.saveData;
+    // connection is absent in Firefox/Safari. Passing undefined as toggle's
+    // optional force toggles the class on instead of explicitly removing it.
+    const staticMode = Boolean(motion.matches || !fine.matches || navigator.connection?.saveData);
     media.classList.toggle('mm-static-poster', staticMode);
     if (staticMode || loaded) return;
     loaded = true;
