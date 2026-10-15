@@ -119,6 +119,7 @@ async function assertCta(page,label) {
     await motion.goto(server.url,{waitUntil:'load'});
     await motion.waitForFunction(()=>document.querySelector('.mm-hero-media').classList.contains('mm-frames-ready'),{},{timeout:30000});
     const video=motion.locator('#hero-head-video');
+    assert.equal(await motion.locator('.mm-hero-media').getAttribute('data-mm-frame-source'),'prepared','native prepared poses are the primary rendering path');
     assert.deepEqual(await video.evaluate(el=>[el.videoWidth,el.videoHeight]),[1600,1080],'video retains source detail and excludes the watermark region');
     for(const drawable of await motion.locator('.mm-hero-media img,.mm-hero-media video,.mm-hero-media canvas').all()) {
       const transition=await drawable.evaluate(el=>getComputedStyle(el).transitionProperty);
@@ -143,7 +144,7 @@ async function assertCta(page,label) {
     assert.equal(await video.evaluate(el=>getComputedStyle(el).display),'none','live reduced-motion change returns to the poster');
     const touch=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
     const requests=[];touch.on('request',r=>requests.push(r.url()));await touch.goto(server.url,{waitUntil:'load'});
-    assert.ok(!requests.some(u=>/\.mp4|lab-runtime|personal-os\.html|lab\.html/.test(u)),'touch first paint does not fetch video or below-fold calculators');
+    assert.ok(!requests.some(u=>/\.mp4|hero-frames|lab-runtime|personal-os\.html|lab\.html/.test(u)),'touch first paint does not fetch video, pose frames or below-fold calculators');
     await touch.locator('#hero .mm-primary-cta').tap();
     await touch.waitForFunction(()=>!!window.MarkovMadeLab);
     assert.equal(await touch.locator('[data-mm-lab-panel="body"]').isVisible(),true,'touch CTA loads a working LAB');
@@ -157,10 +158,24 @@ async function assertCta(page,label) {
       if(theme!=='clarity'){const family=await first.locator('#hero h1').evaluate(el=>getComputedStyle(el).fontFamily);assert.ok(family.startsWith(lang==='ru'?'"Cormorant RU"':'"Cormorant Garamond"'),`${theme}/${lang}: first paint uses its locale font`);}
       const colors=await first.locator('#hero .mm-primary-cta').evaluate(el=>({fg:getComputedStyle(el.querySelector('span')).color,bg:getComputedStyle(el).backgroundColor}));
       assert.ok(contrast(colors.fg,colors.bg)>=4.5,`critical CSS CTA is legible in ${theme}/${lang}`);
-      assert.ok(!fetched.some(u=>/site\.css|\.mp4|lab-runtime|personal-os\.html|lab\.html/.test(u)),`${theme}/${lang}: first paint is independent of below-fold assets`);
+      assert.ok(!fetched.some(u=>/site\.css|\.mp4|hero-frames|lab-runtime|personal-os\.html|lab\.html/.test(u)),`${theme}/${lang}: first paint is independent of below-fold assets`);
       assert.ok(!fetched.some(u=>/cormorant-(normal|italic)-cyrillic\.woff2/.test(u)),`${theme}/${lang}: section-only display faces stay outside first paint`);
       await first.close();
     }
+    const cacheFailure=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'no-preference'});
+    await cacheFailure.addInitScript(()=>{
+      Object.defineProperty(navigator,'hardwareConcurrency',{get:()=>8});Object.defineProperty(navigator,'deviceMemory',{get:()=>8});
+      const create=document.createElement.bind(document);
+      document.createElement=function(tag,...args){if(tag==='video')throw new Error('forced auxiliary decoder failure');return create(tag,...args);};
+    });
+    await cacheFailure.route('**/hero-frames/**',route=>route.abort());
+    await cacheFailure.goto(server.url,{waitUntil:'load'});
+    await cacheFailure.waitForFunction(()=>document.querySelector('.mm-hero-media').dataset.mmFrameSource==='direct');
+    await cacheFailure.mouse.move(100,320,{steps:8});
+    await cacheFailure.waitForFunction(()=>document.getElementById('hero-head-video').currentTime>1);
+    await cacheFailure.waitForFunction(()=>Number(getComputedStyle(document.getElementById('hero-head-video')).opacity)===1);
+    assert.equal(await cacheFailure.locator('#hero-head-video').evaluate(el=>Number(getComputedStyle(el).opacity)),1,'native video remains visible and follows the pointer if prepared frames and auxiliary decoding fail');
+    await cacheFailure.close();
     const failure=await browser.newPage({viewport:{width:1440,height:900}});
     await failure.route('**/hero-portrait.mp4',route=>route.abort());await failure.goto(server.url,{waitUntil:'load'});
     await failure.waitForFunction(()=>document.querySelector('.mm-hero-media').classList.contains('mm-video-error'));
@@ -247,6 +262,7 @@ async function assertCta(page,label) {
       await pointer.goto(server.url,{waitUntil:'load'});
       await pointer.waitForFunction(()=>document.querySelector('.mm-hero-media')?.classList.contains('mm-frames-ready'),{},{timeout:45000});
       assert.equal(await pointer.locator('.mm-hero-media').evaluate(el=>el.classList.contains('mm-static-poster')),false,`${name}: mouse enables the rendered video`);
+      assert.equal(await pointer.locator('.mm-hero-media').getAttribute('data-mm-frame-source'),'prepared',`${name}: authored HD frames load without the hidden decoder`);
       const rect=await pointer.locator('#hero').boundingBox(),pixels=new Set();
       for(const [pose,x,y]of [['turn',.07,.36],['nod',.75,.92],['neutral',.78,.4]]) {
         await pointer.mouse.move(rect.x+rect.width*x,rect.y+rect.height*y,{steps:8});await pointer.waitForTimeout(900);

@@ -38,6 +38,8 @@
             nod2EndTime: 7.72,
 
             /* Retain source detail up to 1600px; size the cache to displayed pixels. */
+            sourceWidth: 1600,
+            sourceHeight: 1080,
             desktopWidth: 1600,
             mobileWidth: 360,
             lowMemoryWidth: 300,
@@ -239,8 +241,10 @@
         }
 
         function getGeometry() {
-            var sourceWidth = Math.max(1, video.videoWidth || 1660);
-            var sourceHeight = Math.max(1, video.videoHeight || 1244);
+            // Some WebKit decoders report their display-sized output instead
+            // of the encoded dimensions. Prepared frames retain native detail.
+            var sourceWidth = settings.sourceWidth;
+            var sourceHeight = settings.sourceHeight;
             var width;
             var turnCount;
             var nodCount;
@@ -306,6 +310,58 @@
             canvas.height = frameHeight;
             captureCanvas.width = frameWidth;
             captureCanvas.height = frameHeight;
+
+            // Prefer prepared source frames. Hidden video surfaces can return a
+            // stale frame in WebKitGTK despite advancing media timestamps.
+            try {
+                var frameRoot = 'assets/media/hero-frames/';
+                var response = await fetch(frameRoot + 'manifest.json');
+                if (!response.ok) throw new Error('Prepared frames unavailable');
+                var manifest = await response.json();
+                if (manifest.version !== 1 || manifest.width !== settings.sourceWidth || manifest.height !== settings.sourceHeight) {
+                    throw new Error('Prepared frame geometry does not match the video');
+                }
+                var jobs = [];
+                ['neutral', 'turn', 'nod1', 'nod2'].forEach(function (group) {
+                    manifest.frames[group].forEach(function (file, index) {
+                        jobs.push({ group: group, index: index, file: file });
+                    });
+                });
+                bank.turn = new Array(manifest.frames.turn.length);
+                bank.nod1 = new Array(manifest.frames.nod1.length);
+                bank.nod2 = new Array(manifest.frames.nod2.length);
+                var next = 0;
+                async function prepareNext() {
+                    while (next < jobs.length && !destroyed) {
+                        var job = jobs[next++];
+                        var img = new Image();
+                        img.src = frameRoot + job.file;
+                        await img.decode();
+                        var frame = document.createElement('canvas');
+                        frame.width = frameWidth;frame.height = frameHeight;
+                        var ctx = frame.getContext('2d', { alpha: false });
+                        ctx.imageSmoothingQuality = 'high';
+                        ctx.drawImage(img, 0, 0, frameWidth, frameHeight);
+                        if (job.group === 'neutral') bank.neutral = frame;
+                        else bank[job.group][job.index] = frame;
+                    }
+                }
+                var prepared = await Promise.allSettled([prepareNext(), prepareNext(), prepareNext(), prepareNext()]);
+                if (prepared.some(function (result) { return result.status === 'rejected'; })) {
+                    throw new Error('A prepared frame could not be loaded');
+                }
+                if (destroyed) return;
+                bank.nod1PeakIndex = manifest.peak.nod1;
+                bank.nod2PeakIndex = manifest.peak.nod2;
+                media.dataset.mmFrameSource = 'prepared';
+                return;
+            } catch (preparedError) {
+                // Retain live extraction and then direct seeking as independent
+                // fallbacks if an image request fails or an older build is cached.
+                console.warn('[MARKOVMADE] Prepared pose images unavailable:', preparedError);
+            }
+            bank.neutral = null;
+            bank.turn = [];bank.nod1 = [];bank.nod2 = [];
 
             decoder = document.createElement('video');
             decoder.muted = true;
@@ -737,6 +793,15 @@
 
                 try {
                     await cacheFrames();
+                    // Successful timestamps do not guarantee fresh canvas pixels.
+                    // Fall back to the visible video if a decoder repeats a frame.
+                    var probe = document.createElement('canvas');
+                    probe.width = 32;probe.height = 22;
+                    var probeContext = probe.getContext('2d', { alpha: false });
+                    probeContext.drawImage(bank.neutral, 0, 0, 32, 22);
+                    var neutralPixels = probe.toDataURL();
+                    probeContext.drawImage(bank.turn[bank.turn.length - 1], 0, 0, 32, 22);
+                    if (neutralPixels === probe.toDataURL()) throw new Error('Decoder returned identical poses');
                     cacheReady = true;
                     media.classList.add('mm-frames-ready');
                     media.classList.remove('mm-direct-ready');
@@ -745,6 +810,7 @@
                 } catch (cacheError) {
                     console.warn('[MARKOVMADE] Кэш цельных кадров недоступен; используется прямая перемотка:', cacheError);
                     cacheReady = false;
+                    media.dataset.mmFrameSource = 'direct';
                     media.classList.add('mm-direct-ready');
                     requestDirectPose();
                 }
