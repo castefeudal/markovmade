@@ -11,12 +11,14 @@ const {startServer,root}=require('../tests/browser-helpers.cjs');
   await page.addStyleTag({content:'html{scroll-behavior:auto;overflow-anchor:none}section{content-visibility:visible;contain-intrinsic-size:none}'});
   await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:path.join(output,`hero-viewport-${width}.png`)});
   // Fixed navigation is outside the section; hide it solely for isolated section captures.
-  const style='header,.skip-link,.mm-quick-actions{visibility:hidden}';
-  for(const id of['hero','proof-system','services','case-scenarios','method-proof','calculators','about','biography','team','app-ecosystem','quick-faq']){
+  const style='#main-header,.mm-skip-link,#mm-quick-actions,#mm-scroll-progress{visibility:hidden}';
+  for(const id of['hero','proof-system','services','case-scenarios','method-proof','calculators','about','biography','community','app-ecosystem','quick-faq']){
    const node=page.locator('#'+id);if(!await node.count())continue;
    await node.scrollIntoViewIfNeeded();await page.waitForTimeout(250);
-   await node.screenshot({path:path.join(output,`${id==='team'?'community':id}-${width}.png`),style});
+   await node.screenshot({path:path.join(output,`${id}-${width}.png`),style});
   }
+  await page.locator('#services details').first().evaluate(el=>el.open=true);
+  await page.locator('#services').screenshot({path:path.join(output,`services-expanded-${width}.png`),style});
   await page.locator('[data-mm-lab-tab="progress"]').click();await page.locator('#mm-lab-daily>summary').click();
   await page.locator('#mm-lab-daily').screenshot({path:path.join(output,`progress-empty-${width}.png`),style});
   // Clearly marked deterministic QA fixture, never presented as a client result.

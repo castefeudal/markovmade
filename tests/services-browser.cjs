@@ -36,7 +36,18 @@ const { startServer, root } = require('./browser-helpers.cjs');
                 await summary.focus();
                 await page.keyboard.press('Enter');
                 assert.equal(await item.evaluate(el => el.open), true);
-                await item.locator('figure img').evaluate(el => el.decode());
+                await item.locator('figure img').evaluate(async el => {
+                  // WebKit may abort decode when responsive currentSrc changes after resize.
+                  // Wait for the selected source; broken images still fail the final decode.
+                  for (let attempt=0;attempt<3;attempt++) {
+                    const source=el.currentSrc;
+                    try { await el.decode(); if(source===el.currentSrc&&el.naturalWidth>0)return; }
+                    catch(error) { if(error.name!=='EncodingError')throw error; }
+                    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+                  }
+                  await el.decode();assertImage();
+                  function assertImage(){if(!el.naturalWidth)throw new Error('Service image did not decode');}
+                });
                 const geometry = await item.evaluate(el => {
                   const viewport = document.documentElement.clientWidth;
                   const visible = [...el.querySelectorAll('summary, .mm-service-editorial-copy, figure, img, a')];
