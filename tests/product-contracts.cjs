@@ -264,8 +264,14 @@ async function assertCta(page,label) {
       assert.equal(await pointer.locator('.mm-hero-media').evaluate(el=>el.classList.contains('mm-static-poster')),false,`${name}: mouse enables the rendered video`);
       assert.equal(await pointer.locator('.mm-hero-media').getAttribute('data-mm-frame-source'),'prepared',`${name}: authored HD frames load without the hidden decoder`);
       const rect=await pointer.locator('#hero').boundingBox(),pixels=new Set();
+      // Windows WebKit reports CSS viewport dimensions after display scaling.
+      // A tall hero can extend below that viewport; moving outside the window
+      // emits pointerleave and correctly returns the portrait to neutral.
+      const visibleBottom=await pointer.evaluate(()=>innerHeight)-16;
       for(const [pose,x,y]of [['turn',.07,.36],['nod',.75,.92],['neutral',.78,.4]]) {
-        await pointer.mouse.move(rect.x+rect.width*x,rect.y+rect.height*y,{steps:8});await pointer.waitForTimeout(900);
+        const clientY=Math.min(rect.y+rect.height*y,visibleBottom);
+        assert.ok(clientY>rect.y&&clientY<rect.y+rect.height,`${name}: pose pointer remains inside the visible hero`);
+        await pointer.mouse.move(rect.x+rect.width*x,clientY,{steps:8});await pointer.waitForTimeout(900);
         assert.equal(await pointer.locator('.mm-hero-media').getAttribute('data-mm-pose'),pose,`${name}: pointer produces ${pose}`);
         pixels.add(await pointer.locator('#hero-head-canvas').evaluate(el=>el.toDataURL()));
       }
