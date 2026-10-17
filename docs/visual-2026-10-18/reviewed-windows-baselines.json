@@ -1,0 +1,170 @@
+[
+  {
+    "name": "contract-ru-aurum-noir-320.png",
+    "ratio": 0.06440313981042654
+  },
+  {
+    "name": "contract-ru-aurum-noir-390.png",
+    "ratio": 0.10241523878964637
+  },
+  {
+    "name": "contract-ru-aurum-noir-768.png",
+    "ratio": 0.023606770833333332
+  },
+  {
+    "name": "contract-ru-aurum-noir-1440.png",
+    "ratio": 0.03514429012345679
+  },
+  {
+    "name": "contract-ru-aurum-noir-2560.png",
+    "ratio": 0.05831076388888889
+  },
+  {
+    "name": "contract-ru-clarity-320.png",
+    "ratio": 0.06914247630331753
+  },
+  {
+    "name": "contract-ru-clarity-390.png",
+    "ratio": 0.10328411714667639
+  },
+  {
+    "name": "contract-ru-clarity-1440.png",
+    "ratio": 0.022573302469135803
+  },
+  {
+    "name": "contract-ru-clarity-2560.png",
+    "ratio": 0.021201388888888888
+  },
+  {
+    "name": "contract-ru-event-horizon-320.png",
+    "ratio": 0.06551392180094787
+  },
+  {
+    "name": "contract-ru-event-horizon-390.png",
+    "ratio": 0.10444768501640539
+  },
+  {
+    "name": "contract-ru-event-horizon-768.png",
+    "ratio": 0.024146412037037036
+  },
+  {
+    "name": "contract-ru-event-horizon-1440.png",
+    "ratio": 0.0351712962962963
+  },
+  {
+    "name": "contract-ru-event-horizon-2560.png",
+    "ratio": 0.05863758680555556
+  },
+  {
+    "name": "contract-en-aurum-noir-320.png",
+    "ratio": 0.06402177132701421
+  },
+  {
+    "name": "contract-en-aurum-noir-390.png",
+    "ratio": 0.11430611252886134
+  },
+  {
+    "name": "contract-en-aurum-noir-768.png",
+    "ratio": 0.019778645833333334
+  },
+  {
+    "name": "contract-en-aurum-noir-1440.png",
+    "ratio": 0.03217978395061728
+  },
+  {
+    "name": "contract-en-aurum-noir-2560.png",
+    "ratio": 0.02440798611111111
+  },
+  {
+    "name": "contract-en-clarity-320.png",
+    "ratio": 0.06661359597156398
+  },
+  {
+    "name": "contract-en-clarity-390.png",
+    "ratio": 0.05819358366751732
+  },
+  {
+    "name": "contract-en-clarity-768.png",
+    "ratio": 0.017405960648148148
+  },
+  {
+    "name": "contract-en-clarity-1440.png",
+    "ratio": 0.019915895061728396
+  },
+  {
+    "name": "contract-en-clarity-2560.png",
+    "ratio": 0.018848958333333332
+  },
+  {
+    "name": "contract-en-event-horizon-320.png",
+    "ratio": 0.06516217417061611
+  },
+  {
+    "name": "contract-en-event-horizon-390.png",
+    "ratio": 0.11637197715396767
+  },
+  {
+    "name": "contract-en-event-horizon-768.png",
+    "ratio": 0.020311053240740742
+  },
+  {
+    "name": "contract-en-event-horizon-1440.png",
+    "ratio": 0.032469135802469136
+  },
+  {
+    "name": "contract-en-event-horizon-2560.png",
+    "ratio": 0.02463411458333333
+  },
+  {
+    "name": "aurum-noir-hero-390x844.png",
+    "ratio": 0.10241523878964637
+  },
+  {
+    "name": "event-horizon-hero-390x844.png",
+    "ratio": 0.10444768501640539
+  },
+  {
+    "name": "clarity-hero-390x844.png",
+    "ratio": 0.10328411714667639
+  },
+  {
+    "name": "aurum-noir-insights-1440x900.png",
+    "ratio": 0.07755478395061728
+  },
+  {
+    "name": "clarity-calculators-1440x900.png",
+    "ratio": 0.10365509259259259
+  },
+  {
+    "name": "clarity-app-ecosystem-1440x900.png",
+    "ratio": 0.10597530864197531
+  },
+  {
+    "name": "aurum-noir-lab-390x844.png",
+    "ratio": 0.1156337343541135
+  },
+  {
+    "name": "aurum-noir-os-390x844.png",
+    "ratio": 0.14538218495564467
+  },
+  {
+    "name": "aurum-noir-os-1440x900.png",
+    "ratio": 0.0884537037037037
+  },
+  {
+    "name": "event-horizon-lab-390x844.png",
+    "ratio": 0.11474055170737635
+  },
+  {
+    "name": "event-horizon-os-390x844.png",
+    "ratio": 0.15955766192733017
+  },
+  {
+    "name": "clarity-lab-390x844.png",
+    "ratio": 0.18994713816988698
+  },
+  {
+    "name": "clarity-os-390x844.png",
+    "ratio": 0.10862194677360554
+  }
+]

@@ -1,0 +1,165 @@
+[
+  {
+    "name": "mobile-1",
+    "scene": "mobile",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1164.326082831675,
+      "largest-contentful-paint": 1804.3260828316752,
+      "total-blocking-time": 14,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.2 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "1.8 s"
+      }
+    ]
+  },
+  {
+    "name": "desktop-1",
+    "scene": "desktop",
+    "sample": 1,
+    "url": "http://127.0.0.1:4173/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 315.6317678229626,
+      "largest-contentful-paint": 427.07941955740654,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "mobile-2",
+    "scene": "mobile",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1113.173,
+      "largest-contentful-paint": 1951.1729999999998,
+      "total-blocking-time": 12,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.1 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "2.0 s"
+      },
+      {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "detail": "2.0 s"
+      }
+    ]
+  },
+  {
+    "name": "desktop-2",
+    "scene": "desktop",
+    "sample": 2,
+    "url": "http://127.0.0.1:4173/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 309.752,
+      "largest-contentful-paint": 421.38000000000005,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  },
+  {
+    "name": "mobile-3",
+    "scene": "mobile",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 1115.188123874729,
+      "largest-contentful-paint": 1953.1881238747292,
+      "total-blocking-time": 12,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": [
+      {
+        "id": "first-contentful-paint",
+        "title": "First Contentful Paint",
+        "detail": "1.1 s"
+      },
+      {
+        "id": "largest-contentful-paint",
+        "title": "Largest Contentful Paint",
+        "detail": "2.0 s"
+      },
+      {
+        "id": "interactive",
+        "title": "Time to Interactive",
+        "detail": "2.0 s"
+      }
+    ]
+  },
+  {
+    "name": "desktop-3",
+    "scene": "desktop",
+    "sample": 3,
+    "url": "http://127.0.0.1:4173/",
+    "lighthouseVersion": "13.5.0",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 311.38490473160175,
+      "largest-contentful-paint": 425.4622618290044,
+      "total-blocking-time": 0,
+      "cumulative-layout-shift": 0
+    },
+    "remainingAudits": []
+  }
+]
