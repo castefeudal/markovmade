@@ -23,6 +23,9 @@
         video.defaultMuted = true;
         video.playsInline = true;
         video.controls = false;
+        // Keep the URL out of parser-driven media selection in static modes.
+        var source = video.querySelector('source[data-src]');
+        if (source && !source.hasAttribute('src')) source.src = source.dataset.src;
         video.preload = 'metadata';
 
         var settings = {
