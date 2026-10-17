@@ -21,7 +21,7 @@
       const host = section.querySelector('[data-component="personal-os"]');
       await Promise.all([
         window.mmLoadStyles?.(),
-        window.mmSafeStorage.get('markovmade-lab-v1', null) ? window.mmLoadLab() : Promise.resolve(),
+        (window.mmSafeStorage.get('markovmade-lab-v1', null) || window.mmSafeStorage.get('markovmade-os-daily-consent-v1','false')==='true') ? window.mmLoadLab() : Promise.resolve(),
         host && !host.dataset.hydrated ? fetch('assets/dist/personal-os.html').then(response => {
           if (!response.ok) throw new Error('OS markup could not load');
           return response.text();

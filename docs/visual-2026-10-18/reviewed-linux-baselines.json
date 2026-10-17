@@ -1,0 +1,114 @@
+[
+  {
+    "file": "ru-aurum-noir-320.png",
+    "ratio": 0.05626110781990521
+  },
+  {
+    "file": "ru-aurum-noir-390.png",
+    "ratio": 0.09482318629238061
+  },
+  {
+    "file": "ru-aurum-noir-768.png",
+    "ratio": 0.021456886574074074
+  },
+  {
+    "file": "ru-aurum-noir-1440.png",
+    "ratio": 0.03172685185185185
+  },
+  {
+    "file": "ru-aurum-noir-2560.png",
+    "ratio": 0.05813498263888889
+  },
+  {
+    "file": "ru-event-horizon-320.png",
+    "ratio": 0.05711270734597156
+  },
+  {
+    "file": "ru-event-horizon-390.png",
+    "ratio": 0.09662777980313525
+  },
+  {
+    "file": "ru-event-horizon-768.png",
+    "ratio": 0.021875
+  },
+  {
+    "file": "ru-event-horizon-1440.png",
+    "ratio": 0.032109567901234565
+  },
+  {
+    "file": "ru-event-horizon-2560.png",
+    "ratio": 0.0583984375
+  },
+  {
+    "file": "ru-clarity-320.png",
+    "ratio": 0.06757997630331754
+  },
+  {
+    "file": "ru-clarity-390.png",
+    "ratio": 0.09993620123951877
+  },
+  {
+    "file": "ru-clarity-1440.png",
+    "ratio": 0.020616512345679013
+  },
+  {
+    "file": "ru-clarity-2560.png",
+    "ratio": 0.02057465277777778
+  },
+  {
+    "file": "en-aurum-noir-320.png",
+    "ratio": 0.05598711492890995
+  },
+  {
+    "file": "en-aurum-noir-390.png",
+    "ratio": 0.10658646251063313
+  },
+  {
+    "file": "en-aurum-noir-768.png",
+    "ratio": 0.018083043981481483
+  },
+  {
+    "file": "en-aurum-noir-1440.png",
+    "ratio": 0.032121913580246915
+  },
+  {
+    "file": "en-aurum-noir-2560.png",
+    "ratio": 0.024985243055555554
+  },
+  {
+    "file": "en-event-horizon-320.png",
+    "ratio": 0.05675355450236967
+  },
+  {
+    "file": "en-event-horizon-390.png",
+    "ratio": 0.10825130635557176
+  },
+  {
+    "file": "en-event-horizon-768.png",
+    "ratio": 0.01845630787037037
+  },
+  {
+    "file": "en-event-horizon-1440.png",
+    "ratio": 0.032483024691358026
+  },
+  {
+    "file": "en-event-horizon-2560.png",
+    "ratio": 0.025184461805555555
+  },
+  {
+    "file": "en-clarity-320.png",
+    "ratio": 0.06614706753554503
+  },
+  {
+    "file": "en-clarity-390.png",
+    "ratio": 0.05774395430793535
+  },
+  {
+    "file": "en-clarity-768.png",
+    "ratio": 0.016843171296296297
+  },
+  {
+    "file": "en-clarity-1440.png",
+    "ratio": 0.015372685185185185
+  }
+]

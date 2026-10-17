@@ -2,7 +2,7 @@
     'use strict';
 
     /* Keep the authored poster as the mobile hero: frame extraction is desktop-only and not part of first paint. */
-    if (window.matchMedia && window.matchMedia('(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)').matches) {
+    if (window.matchMedia && (window.matchMedia('(prefers-reduced-motion: reduce)').matches || navigator.connection?.saveData)) {
         var staticHero = document.querySelector('.mm-hero-media');
         if (staticHero) staticHero.classList.add('mm-static-poster');
         return;
@@ -23,13 +23,18 @@
         video.defaultMuted = true;
         video.playsInline = true;
         video.controls = false;
+        // Keep the URL out of parser-driven media selection in static modes.
+        var source = video.querySelector('source[data-src]');
+        if (source && !source.hasAttribute('src')) source.src = source.dataset.src;
         video.preload = 'metadata';
 
         var settings = {
             referenceDuration: 8.041667,
             neutralTime: 0.10,
             turnStartTime: 0.08,
-            turnEndTime: 2.42,
+            turnEndTime: 1.606087,
+            preparedTurnPeak: 15,
+            frameBudgetBytes: 96 * 1024 * 1024,
             nod1StartTime: 2.72,
             nod1PeakTime: 3.72,
             nod1EndTime: 4.58,
@@ -56,7 +61,7 @@
             smoothingMobile: 0.25,
             pointerTurnNeutralX: 0.76,
             pointerTurnFullX: 0.06,
-            pointerNodStartY: 0.58,
+            pointerNodStartY: 0.48,
             pointerNodFullY: 0.92,
             desktopShiftX: 26,
             desktopShiftY: 14,
@@ -76,7 +81,7 @@
             if (reducedMotion) returnToNeutral(0);
         });
         var coarsePointer = !!(window.matchMedia &&
-            window.matchMedia('(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)').matches);
+            window.matchMedia('(any-pointer: fine)').matches === false && media.dataset.mmPointer !== 'mouse');
         var lowMemory = (typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4) ||
             (typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 4);
 
@@ -264,6 +269,9 @@
                 nodCount = settings.desktopNodFrames;
             }
 
+            var retainedFrames = 1 + (settings.preparedTurnPeak + 1) + 16 + 2;
+            var budgetWidth = Math.floor(Math.sqrt(settings.frameBudgetBytes * sourceWidth / sourceHeight / (retainedFrames * 4))) - 2;
+            width = Math.min(width, budgetWidth);
             return {
                 width: width,
                 height: Math.max(1, Math.round(width * sourceHeight / sourceWidth)),
@@ -324,10 +332,11 @@
                 var jobs = [];
                 ['neutral', 'turn', 'nod1', 'nod2'].forEach(function (group) {
                     manifest.frames[group].forEach(function (file, index) {
+                        if (group === 'turn' && index > settings.preparedTurnPeak) return;
                         jobs.push({ group: group, index: index, file: file });
                     });
                 });
-                bank.turn = new Array(manifest.frames.turn.length);
+                bank.turn = new Array(Math.min(manifest.frames.turn.length,settings.preparedTurnPeak+1));
                 bank.nod1 = new Array(manifest.frames.nod1.length);
                 bank.nod2 = new Array(manifest.frames.nod2.length);
                 var next = 0;
@@ -346,7 +355,7 @@
                         else bank[job.group][job.index] = frame;
                     }
                 }
-                var prepared = await Promise.allSettled([prepareNext(), prepareNext(), prepareNext(), prepareNext()]);
+                var prepared = await Promise.allSettled([prepareNext(), prepareNext()]);
                 if (prepared.some(function (result) { return result.status === 'rejected'; })) {
                     throw new Error('A prepared frame could not be loaded');
                 }
@@ -354,6 +363,7 @@
                 bank.nod1PeakIndex = manifest.peak.nod1;
                 bank.nod2PeakIndex = manifest.peak.nod2;
                 media.dataset.mmFrameSource = 'prepared';
+                media.dataset.mmFrameBytes = String(frameWidth * frameHeight * 4 * (jobs.length + 2));
                 return;
             } catch (preparedError) {
                 // Retain live extraction and then direct seeking as independent
@@ -559,8 +569,11 @@
                 return;
             }
 
-            if (currentNod > 0.018 && bank.nod1.length) {
-                var nodPosition = currentNod * bank.nod1PeakIndex;
+            // Available yaw and pitch clips meet at neutral. Follow that physical
+            // path instead of abruptly replacing a turned face with a nod.
+            var pitch = clamp((currentNod - 0.20) / 0.80, 0, 1);
+            if (pitch > 0.001 && bank.nod1.length) {
+                var nodPosition = pitch * bank.nod1PeakIndex;
                 var nodA = clamp(Math.floor(nodPosition), 0, bank.nod1PeakIndex);
                 var nodB = clamp(nodA + 1, 0, bank.nod1PeakIndex);
                 drawBlendedFrame(bank.nod1[nodA], bank.nod1[nodB], nodPosition - nodA, 'manual-nod:' + nodA + '-' + nodB, force);
@@ -569,7 +582,7 @@
             }
 
             if (bank.turn.length) {
-                var turnPosition = currentTurn * (bank.turn.length - 1);
+                var turnPosition = currentTurn * (1 - smoothStep(clamp(currentNod / 0.20, 0, 1))) * (bank.turn.length - 1);
                 var turnA = clamp(Math.floor(turnPosition), 0, bank.turn.length - 1);
                 var turnB = clamp(turnA + 1, 0, bank.turn.length - 1);
                 drawBlendedFrame(bank.turn[turnA], bank.turn[turnB], turnPosition - turnA, 'turn:' + turnA + '-' + turnB, force);
@@ -582,18 +595,18 @@
         }
 
         function directTimeForPose() {
-            if (currentNod > 0.025) {
+            if (currentNod > 0.20) {
                 return lerp(
                     scaledTime(settings.nod1StartTime),
                     scaledTime(settings.nod1PeakTime),
-                    currentNod
+                    clamp((currentNod - 0.20) / 0.80, 0, 1)
                 );
             }
 
             return lerp(
                 scaledTime(settings.turnStartTime),
                 scaledTime(settings.turnEndTime),
-                currentTurn
+                currentTurn * (1 - smoothStep(clamp(currentNod / 0.20, 0, 1)))
             );
         }
 
@@ -639,7 +652,7 @@
         }
 
         function scheduleRender(force) {
-            if (destroyed || autoPlaying || !heroVisible || document.hidden) return;
+            if (destroyed || autoPlaying || !heroVisible || document.hidden || media.classList.contains('mm-static-poster')) return;
             if (force) lastRenderKey = '';
             if (!animationFrame) {
                 animationFrame = window.requestAnimationFrame(renderLoop);
@@ -648,7 +661,7 @@
 
         function renderLoop(timestamp) {
             animationFrame = 0;
-            if (destroyed || autoPlaying || !heroVisible || document.hidden) return;
+            if (destroyed || autoPlaying || !heroVisible || document.hidden || media.classList.contains('mm-static-poster')) return;
 
             var dt = lastFrameTime ? clamp(timestamp - lastFrameTime, 8, 42) : 16.7;
             var poseTau = coarsePointer ? 78 : 104;
@@ -680,10 +693,11 @@
 
         function setFromPointer(clientX, clientY, immediate) {
             if (autoPlaying) return;
-
+            window.clearTimeout(returnTimer);
+            measureHero();
             var rect = heroRect;
             pointerX = clamp((clientX - rect.left) / Math.max(1, rect.width), 0, 1);
-            pointerY = clamp((clientY - rect.top) / Math.max(1, rect.height), 0, 1);
+            pointerY = clamp((clientY - Math.max(0,rect.top)) / Math.max(1,Math.min(innerHeight,rect.bottom)-Math.max(0,rect.top)), 0, 1);
 
             var turnRange = Math.max(0.01, settings.pointerTurnNeutralX - settings.pointerTurnFullX);
             targetTurn = clamp((settings.pointerTurnNeutralX - pointerX) / turnRange, 0, 1);
@@ -692,7 +706,7 @@
             targetNod = clamp((pointerY - settings.pointerNodStartY) / nodRange, 0, 1);
 
             /* При выраженном кивке горизонтальный поворот ослабляется. */
-            targetTurn *= (1 - targetNod * 0.68);
+            targetTurn *= (1 - targetNod);
 
             if (immediate) {
                 currentTurn = targetTurn;
@@ -730,7 +744,7 @@
             }
 
             for (var i = 0; i < frames.length - 1; i += 1) {
-                if (destroyed || !heroVisible) break;
+                if (destroyed || !heroVisible || media.classList.contains('mm-static-poster')) break;
                 await new Promise(function (resolve) {
                     var fromIndex = i;
                     var started = performance.now();
@@ -793,6 +807,7 @@
 
                 try {
                     await cacheFrames();
+                    if(reducedMotion || media.classList.contains('mm-static-poster')){bank.neutral=null;bank.turn=[];bank.nod1=[];bank.nod2=[];return;}
                     // Successful timestamps do not guarantee fresh canvas pixels.
                     // Fall back to the visible video if a decoder repeats a frame.
                     var probe = document.createElement('canvas');
@@ -807,6 +822,7 @@
                     media.classList.remove('mm-direct-ready');
                     drawInteractivePose(true);
                     scheduleRender(true);
+                    if(window.mmHeroPointer)setFromPointer(window.mmHeroPointer.x,window.mmHeroPointer.y,false);
                 } catch (cacheError) {
                     console.warn('[MARKOVMADE] Кэш цельных кадров недоступен; используется прямая перемотка:', cacheError);
                     cacheReady = false;
@@ -829,12 +845,13 @@
 
         hero.addEventListener('pointerleave', function (event) {
             if (event.pointerType === 'touch') return;
+            window.mmHeroPointer=null;
             returnToNeutral(0);
         }, { passive: true });
 
         hero.addEventListener('click', function (event) {
             if (event.target.closest && event.target.closest('a, button, input, select, textarea, label')) return;
-            if (coarsePointer) return;
+            if (coarsePointer || media.classList.contains('mm-static-poster') || event.pointerType === 'touch') return;
             playDoubleNod(true);
         });
 

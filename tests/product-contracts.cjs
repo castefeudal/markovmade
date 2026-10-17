@@ -190,6 +190,7 @@ async function assertCta(page,label) {
     await retry.route('**/site-interactions.js',route=>route.abort());await retry.evaluate(()=>window.mmLoadOS().catch(()=>{}));
     await retry.locator('#mm-os-load-error button').waitFor();await retry.unroute('**/site-interactions.js');
     await retry.locator('#mm-os-load-error button').click();await retry.locator('#mm-os-load-error').waitFor({state:'detached'});
+    await retry.evaluate(()=>window.mmLoadOS());
     await retry.locator('[data-app-tab="nutrition"]').click();assert.equal(await retry.locator('[data-app-screen="nutrition"]').isVisible(),true,'OS retries a partial load without losing its tabs');
     await retry.close();
     const bilingual=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
@@ -215,7 +216,7 @@ async function assertCta(page,label) {
     assert.equal(await bilingual.locator('#calculators [data-mm-lab-tab]').count(),6,'LAB presents six primary tools');
     await bilingual.locator('#services details').first().evaluate(node=>node.open=true);
     await bilingual.locator('#services details').first().scrollIntoViewIfNeeded();
-    const servicePhoto=bilingual.locator('#services details').first().locator('img');
+    const servicePhoto=bilingual.locator('#services details').first().locator('figure img');
     await servicePhoto.evaluate(image=>image.decode());
     assert.equal(await servicePhoto.evaluate(image=>getComputedStyle(image).objectFit),'contain','expanded service photos remain fully visible');
     await bilingual.locator('[data-lang-toggle]:visible').first().click();
@@ -264,8 +265,14 @@ async function assertCta(page,label) {
       assert.equal(await pointer.locator('.mm-hero-media').evaluate(el=>el.classList.contains('mm-static-poster')),false,`${name}: mouse enables the rendered video`);
       assert.equal(await pointer.locator('.mm-hero-media').getAttribute('data-mm-frame-source'),'prepared',`${name}: authored HD frames load without the hidden decoder`);
       const rect=await pointer.locator('#hero').boundingBox(),pixels=new Set();
+      // Windows WebKit reports CSS viewport dimensions after display scaling.
+      // A tall hero can extend below that viewport; moving outside the window
+      // emits pointerleave and correctly returns the portrait to neutral.
+      const visibleBottom=await pointer.evaluate(()=>innerHeight)-16;
       for(const [pose,x,y]of [['turn',.07,.36],['nod',.75,.92],['neutral',.78,.4]]) {
-        await pointer.mouse.move(rect.x+rect.width*x,rect.y+rect.height*y,{steps:8});await pointer.waitForTimeout(900);
+        const clientY=Math.min(rect.y+rect.height*y,visibleBottom);
+        assert.ok(clientY>rect.y&&clientY<rect.y+rect.height,`${name}: pose pointer remains inside the visible hero`);
+        await pointer.mouse.move(rect.x+rect.width*x,clientY,{steps:8});await pointer.waitForTimeout(900);
         assert.equal(await pointer.locator('.mm-hero-media').getAttribute('data-mm-pose'),pose,`${name}: pointer produces ${pose}`);
         pixels.add(await pointer.locator('#hero-head-canvas').evaluate(el=>el.toDataURL()));
       }

@@ -31,6 +31,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npx playwright install --with-deps chromium
       - run: npm test
 
   browser:
@@ -58,7 +59,9 @@ jobs:
           path: |
             test-results/visual/
             test-results/contracts/
+            test-results/services/
             test-results/accessibility/
+            test-results/ultimate/
           if-no-files-found: ignore
           retention-days: 14
 
