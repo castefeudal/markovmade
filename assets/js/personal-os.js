@@ -51,6 +51,21 @@
             });
         });
 
+        var consent=root.querySelector('#mm-os-daily-consent');
+        function consentCopy(){root.querySelectorAll('[data-os-daily-ru]').forEach(function(node){node.textContent=document.documentElement.lang==='en'?node.dataset.osDailyEn:node.dataset.osDailyRu;});}
+        if(consent){
+            consent.checked=window.mmSafeStorage.get('markovmade-os-daily-consent-v1','false')==='true';
+            consent.addEventListener('change',async function(){
+                var desired=consent.checked,status=root.querySelector('#mm-os-data-status');consent.disabled=true;
+                try{
+                    if(desired)await window.mmLoadLab();
+                    if(!window.mmSafeStorage.set('markovmade-os-daily-consent-v1',String(desired)))throw new Error('storage');
+                    window.mmRefreshPersonalOS?.();status.textContent='';
+                }catch(error){consent.checked=!desired;status.textContent=document.documentElement.lang==='en'?'Could not update the setting. Your journal is preserved.':'Не удалось изменить настройку. Дневник сохранён.';}
+                finally{consent.disabled=false;}
+            });
+        }
+        new MutationObserver(consentCopy).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});consentCopy();
         activate('today', false);
     }
 

@@ -190,6 +190,7 @@ async function assertCta(page,label) {
     await retry.route('**/site-interactions.js',route=>route.abort());await retry.evaluate(()=>window.mmLoadOS().catch(()=>{}));
     await retry.locator('#mm-os-load-error button').waitFor();await retry.unroute('**/site-interactions.js');
     await retry.locator('#mm-os-load-error button').click();await retry.locator('#mm-os-load-error').waitFor({state:'detached'});
+    await retry.evaluate(()=>window.mmLoadOS());
     await retry.locator('[data-app-tab="nutrition"]').click();assert.equal(await retry.locator('[data-app-screen="nutrition"]').isVisible(),true,'OS retries a partial load without losing its tabs');
     await retry.close();
     const bilingual=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
@@ -215,7 +216,7 @@ async function assertCta(page,label) {
     assert.equal(await bilingual.locator('#calculators [data-mm-lab-tab]').count(),6,'LAB presents six primary tools');
     await bilingual.locator('#services details').first().evaluate(node=>node.open=true);
     await bilingual.locator('#services details').first().scrollIntoViewIfNeeded();
-    const servicePhoto=bilingual.locator('#services details').first().locator('img');
+    const servicePhoto=bilingual.locator('#services details').first().locator('figure img');
     await servicePhoto.evaluate(image=>image.decode());
     assert.equal(await servicePhoto.evaluate(image=>getComputedStyle(image).objectFit),'contain','expanded service photos remain fully visible');
     await bilingual.locator('[data-lang-toggle]:visible').first().click();

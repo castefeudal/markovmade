@@ -7,22 +7,16 @@
 .mm-toolkit-workspace{margin-top:32px;padding-top:32px;border-top:1px solid var(--mm-border);scroll-margin-top:100px}.mm-toolkit-workspace>p{font:400 17px/1.7 Manrope,sans-serif;color:var(--mm-text-muted)}.mm-toolkit-fields{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0}.mm-toolkit-fields label{font:500 15px/1.6 Manrope,sans-serif}.mm-toolkit-fields input{min-height:48px}
 .mm-toolkit-outcome{margin-top:32px;padding:28px;background:var(--mm-bg-primary);border-radius:var(--mm-radius-card)}.mm-toolkit-outcome h4,.mm-toolkit-summary h4{font:600 15px/1.5 Manrope,sans-serif;margin:20px 0 8px;color:var(--mm-text-primary)}.mm-toolkit-outcome p,.mm-toolkit-outcome li,.mm-toolkit-summary p{font:400 17px/1.7 Manrope,sans-serif;color:var(--mm-text-muted)}.mm-toolkit-outcome .mm-toolkit-value{font:500 clamp(24px,3vw,40px)/1.4 Manrope,sans-serif;letter-spacing:-.03em;color:var(--mm-text-primary);overflow-wrap:anywhere}.mm-toolkit-outcome ol{padding-left:24px}.mm-toolkit-outcome details{margin-top:20px}.mm-toolkit-outcome summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font:500 15px/1.5 Manrope,sans-serif;color:var(--mm-text-primary)}
 .mm-evidence{margin-top:24px;padding-top:12px;border-top:1px solid var(--mm-border);color:var(--mm-text-primary);font:400 15px/1.7 Manrope,sans-serif;overflow-wrap:anywhere}.mm-evidence>summary{min-height:44px;cursor:pointer;font-weight:600;display:flex;align-items:center}.mm-evidence p{margin:12px 0;color:var(--mm-text-muted)}.mm-evidence .mm-evidence-type{color:var(--mm-accent);font-size:14px}.mm-evidence a{color:var(--mm-accent);text-decoration:underline;text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}
-.mm-toolkit-summary{margin:24px 0;padding:clamp(20px,4vw,40px);border:1px solid var(--mm-border);border-radius:var(--mm-radius-card);color:var(--mm-text-primary)}.mm-toolkit-summary dl{display:grid;grid-template-columns:1fr auto;gap:12px 24px;font:400 16px/1.6 Manrope,sans-serif;margin:24px 0}.mm-toolkit-summary dt{color:var(--mm-text-muted)}.mm-toolkit-summary dd{margin:0;color:var(--mm-text-primary)}.mm-toolkit-summary button{margin-top:24px;min-height:48px}
+.mm-toolkit-summary{margin:24px 0;padding:clamp(20px,4vw,40px);border:1px solid var(--mm-border);border-radius:8px;color:var(--mm-text-primary)}.mm-toolkit-summary dl{display:grid;grid-template-columns:1fr auto;gap:12px 24px;font:400 16px/1.6 Manrope,sans-serif;margin:24px 0}.mm-toolkit-summary dt{color:var(--mm-text-muted)}.mm-toolkit-summary dd{margin:0;color:var(--mm-text-primary)}.mm-toolkit-summary button{margin-top:24px;min-height:48px}
 .mm-toolkit button:focus-visible,.mm-toolkit summary:focus-visible,.mm-evidence summary:focus-visible{outline:2px solid var(--mm-focus);outline-offset:3px}.mm-toolkit [hidden]{display:none}.mm-toolkit :is(p,strong,span,label){overflow-wrap:anywhere}.mm-toolkit-workspace form>p[role="alert"]{color:var(--mm-danger);margin-top:16px}
 @media(max-width:1000px){.mm-toolkit-cards{grid-template-columns:1fr 1fr}}@media(max-width:600px){.mm-toolkit-cards,.mm-toolkit-fields{grid-template-columns:1fr}.mm-toolkit-card{padding:20px 0}.mm-toolkit-outcome{padding:20px}.mm-toolkit{padding:20px}.mm-toolkit-summary dl{gap:12px}.mm-toolkit-card strong{font-size:18px}}
 @media(prefers-reduced-motion:reduce){.mm-toolkit-card{transition:none}}
 
 }
 @layer components {
-  .mm-toolkit .mm-toolkit-cards{gap:12px;}
-  .mm-toolkit .mm-toolkit-card{position:relative;min-height:204px;justify-content:flex-start;gap:13px;padding:20px;border:1px solid var(--mm-border);border-radius:18px;background:linear-gradient(145deg,var(--mm-surface-1),var(--mm-bg-primary));box-shadow:inset 0 1px 0 rgb(255 255 255/.035);transition:border-color .2s ease,background-color .2s ease,transform .2s ease,box-shadow .2s ease;}
-  .mm-toolkit .mm-toolkit-card:hover{transform:translateY(-3px);border-color:var(--mm-border-strong);background:linear-gradient(145deg,var(--mm-surface-2),var(--mm-bg-primary));box-shadow:0 15px 35px rgb(0 0 0/.14);}
   .mm-toolkit-card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;}
-  .mm-toolkit-card-head>span{color:var(--mm-accent);font:700 .68rem/1.4 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase;}
+  .mm-toolkit-card-head>span{color:var(--mm-accent);font:700 .8125rem/1.5 var(--mm-font-body);letter-spacing:.12em;text-transform:uppercase;}
   .mm-toolkit-card-head svg{width:31px;height:31px;padding:6px;border:1px solid var(--mm-border-strong);border-radius:10px;color:var(--mm-accent);background:var(--mm-accent-soft);fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
-  .mm-toolkit .mm-toolkit-card strong{max-width:28ch;font-size:clamp(1rem,1.2vw,1.16rem);line-height:1.42;}
-  .mm-toolkit .mm-toolkit-card>span:last-child{margin-top:auto;max-width:42ch;font-size:.875rem;line-height:1.55;}
-  @media(max-width:600px){.mm-toolkit .mm-toolkit-card{min-height:176px;padding:17px;}}
   .mm-toolkit-outcome{display:grid;gap:12px;margin-top:24px;padding:clamp(18px,3vw,30px);border:1px solid var(--mm-border-strong);background:radial-gradient(ellipse at 0 0,var(--mm-accent-soft),transparent 62%),var(--mm-bg-primary)}
   .mm-toolkit-result-label{color:var(--mm-accent);font:700 12px/1.3 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase}
   .mm-toolkit-outcome .mm-toolkit-value{margin:0;font:500 clamp(30px,4.6vw,48px)/1.12 var(--mm-font-display,Georgia,serif);letter-spacing:-.035em;color:var(--mm-text-primary)}
@@ -50,8 +44,7 @@
   #calculators .mm-lab-kicker:before{width:26px;height:1px;content:"";background:currentColor;opacity:.8;}
   #calculators .mm-lab-title{max-width:20ch;margin:18px 0 0;font:500 clamp(2.8rem,6.5vw,6rem)/.98 var(--mm-font-display,'Cormorant Garamond',Georgia,serif);letter-spacing:-.035em;}
   #calculators .mm-lab-intro>p{max-width:46rem;margin-top:18px;font-size:clamp(1rem,1.3vw,1.12rem);line-height:1.75;}
-  #calculators .mm-toolkit-summary{position:relative;isolation:isolate;overflow:hidden;margin:32px 0 8px;padding:clamp(22px,4.4vw,48px);border-color:var(--mm-border-strong);border-radius:26px;background:radial-gradient(ellipse at 100% 0,var(--mm-accent-soft),transparent 44%),linear-gradient(145deg,var(--mm-surface-1),var(--mm-bg-primary));box-shadow:0 24px 70px rgb(0 0 0/.2);}
-  #calculators .mm-toolkit-summary:before{position:absolute;z-index:-1;top:0;left:clamp(22px,4.4vw,48px);right:clamp(22px,4.4vw,48px);height:1px;content:"";background:linear-gradient(90deg,transparent,var(--mm-accent),transparent);opacity:.72;}
+  #calculators .mm-toolkit-summary{position:relative;isolation:isolate;overflow:hidden;margin:32px 0 8px;padding:clamp(22px,4.4vw,48px);border-color:var(--mm-border-strong);border-radius:8px;background:var(--mm-bg-secondary);box-shadow:none;}
   .mm-toolkit-summary-head{display:grid;gap:6px;margin-bottom:10px;}
   .mm-toolkit-summary-kicker{color:var(--mm-accent);font:800 .66rem/1.4 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase;}
   #calculators .mm-toolkit-summary h3{margin:0;font:500 clamp(2rem,4vw,3.4rem)/1 var(--mm-font-display,'Cormorant Garamond',Georgia,serif);letter-spacing:-.025em;}
@@ -70,15 +63,6 @@
   .mm-summary-metric-icon{grid-column:2;grid-row:1;width:30px;height:30px;padding:6px;border:1px solid var(--mm-border-strong);border-radius:10px;color:var(--mm-accent);background:var(--mm-accent-soft);fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
   .mm-summary-metric-label{grid-column:1/-1;align-self:end;margin-top:12px;}
   .mm-summary-metric-value{grid-column:1/-1;}
-  .mm-summary-trend{margin-top:14px;padding:20px 22px;border:1px solid var(--mm-border);border-radius:18px;background:linear-gradient(120deg,var(--mm-accent-soft),transparent 68%),var(--mm-surface-1);}
-  .mm-summary-trend-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;}
-  .mm-summary-trend-head h4{margin:0;color:var(--mm-text-secondary);font:600 .86rem/1.5 Manrope,sans-serif;}
-  .mm-summary-trend-head strong{color:var(--mm-text-primary);font:700 1rem/1.4 Manrope,sans-serif;white-space:nowrap;}
-  .mm-summary-trend-axis{position:relative;height:14px;margin:20px 4px 9px;border-radius:99px;background:linear-gradient(90deg,var(--mm-border),var(--mm-surface-2) 50%,var(--mm-border));}
-  .mm-summary-trend-axis:before{position:absolute;top:-5px;bottom:-5px;left:50%;width:1px;content:"";background:var(--mm-text-muted);opacity:.55;}
-  .mm-summary-trend-bar{position:absolute;top:3px;left:var(--mm-trend-start);width:var(--mm-trend-width);height:8px;border-radius:99px;background:var(--mm-accent);}
-  .mm-summary-trend-marker{position:absolute;top:50%;left:var(--mm-trend-point);width:16px;height:16px;transform:translate(-50%,-50%);border:3px solid var(--mm-bg-primary);border-radius:50%;background:var(--mm-accent);box-shadow:0 0 0 1px var(--mm-accent),0 0 22px var(--mm-accent-soft);}
-  .mm-summary-trend-labels{display:flex;justify-content:space-between;color:var(--mm-text-muted);font:500 .68rem/1.4 Manrope,sans-serif;}
   .mm-toolkit-summary-notes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
   .mm-summary-note{min-width:0;padding:19px 20px;border:1px solid var(--mm-border);border-radius:18px;background:var(--mm-surface-1);}
   .mm-summary-note h4{margin:0 0 7px;color:var(--mm-text-primary);font:650 .92rem/1.45 Manrope,sans-serif;}
@@ -88,6 +72,6 @@
   .mm-summary-next-step h4{color:var(--mm-accent);}
   #calculators .mm-toolkit-summary>button{margin-top:20px;}
   @media(max-width:920px){.mm-toolkit-summary-metrics{grid-template-columns:repeat(2,minmax(0,1fr));}}
-  @media(max-width:620px){#calculators .mm-lab-title{max-width:19ch;font-size:clamp(2.6rem,11vw,4.2rem);}.mm-toolkit-summary-metrics{grid-template-columns:1fr 1fr;gap:8px;}.mm-summary-metric{min-height:122px;padding:14px 12px;}.mm-summary-metric-value{font-size:1.05rem;}.mm-summary-metric-icon{width:27px;height:27px;padding:5px}.mm-toolkit-summary-notes{grid-template-columns:1fr;}.mm-summary-trend{padding:17px 15px;}.mm-summary-trend-head{align-items:flex-start;flex-direction:column;gap:5px;}}
+  @media(max-width:620px){#calculators .mm-lab-title{max-width:19ch;font-size:clamp(2.6rem,11vw,4.2rem);}.mm-toolkit-summary-metrics{grid-template-columns:1fr 1fr;gap:8px;}.mm-summary-metric{min-height:122px;padding:14px 12px;}.mm-summary-metric-value{font-size:1.05rem;}.mm-summary-metric-icon{width:27px;height:27px;padding:5px}.mm-toolkit-summary-notes{grid-template-columns:1fr;}}
   @media(max-width:380px){.mm-toolkit-summary-metrics{grid-template-columns:1fr;}.mm-summary-metric{min-height:90px;}}
 }

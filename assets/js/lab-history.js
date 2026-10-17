@@ -37,6 +37,7 @@
   }
 
   function record(tool) {
+    if(document.getElementById('lab-'+tool+'-error')?.textContent.trim())return;
     const app = window.MarkovMadeLab;
     const result = app && app.state && (app.state[tool]||app.state.toolkit?.[tool]?.result);
     if (!tools[tool] || !result || !result.modelVersion) return;
@@ -156,8 +157,14 @@
     if (!state) return;
     const n = value => Number.isFinite(value) ? new Intl.NumberFormat(lang() ? 'en-GB' : 'ru-RU', {maximumFractionDigits:1}).format(value) : null;
     const unit = copy('кг','kg');
-    const progress = state.progress || {}, nutrition = state.nutrition || {}, recovery = state.recovery || {};
-    const profile = state.profile || {};
+    const progress = {...(state.progress || {})}, nutrition = state.nutrition || {}, recovery = state.recovery || {};
+    const profile = {...(state.profile || {})};
+    if(window.mmSafeStorage.get('markovmade-os-daily-consent-v1','false')==='true'&&window.MarkovMadeModels){
+      const journal=readJson('markovmade-lab-daily-v1')||[],metric=window.MarkovMadeModels.checkinTrends(journal,14).weight;
+      const latest=metric.points.at(-1);
+      if(latest){profile.weight=latest.value;progress.source=copy('дневник LAB · ','LAB journal · ')+latest.date;}
+      if(metric.delta!==null){const span=(Date.parse(metric.points.at(-1).date)-Date.parse(metric.points[0].date))/86400000;progress.weekly=metric.delta/span*7;progress.plateau='';}
+    }
     const values = {
       calories: Number.isFinite(nutrition.target) ? [`~${n(nutrition.target)} kcal`,copy('рабочая цель','working target')] :
         Number.isFinite(nutrition.tdee) ? [`~${n(nutrition.tdee)} kcal`,copy('поддержание','maintenance')] : ['—',copy('нет расчёта','not calculated')],
@@ -248,18 +255,26 @@
         payload.lab.toolkit=validated;
       }
       const history = Array.isArray(payload.history) ? payload.history.filter(item => item && tools[item.tool] && item.result).slice(0,MAX_HISTORY) : [];
-      if (!writeJson(LAB_KEY,payload.lab) || !writeJson(HISTORY_KEY,history)) throw new Error('storage');
-      if (Array.isArray(payload.dailyCheckins)) {
-        const days=payload.dailyCheckins.filter(item=>item&&/^\d{4}-\d{2}-\d{2}$/.test(item.date)&&['weight','waist','sleep','energy','calories','adherence'].every(key=>item[key]===undefined||Number.isFinite(item[key]))).slice(-180);
-        if (!writeJson('markovmade-lab-daily-v1',days)) throw new Error('storage');
+      // Validate the complete backup before changing any persistent key.
+      const staged=[[LAB_KEY,payload.lab],[HISTORY_KEY,history]];
+      if(Array.isArray(payload.dailyCheckins)){
+        if(payload.dailyCheckins.some(item=>!item||!/^\d{4}-\d{2}-\d{2}$/.test(item.date)||!Number.isFinite(Date.parse(item.date))||new Date(item.date).toISOString().slice(0,10)!==item.date||!['weight','waist','sleep','energy','calories','adherence'].every(key=>item[key]===undefined||Number.isFinite(item[key]))))throw new Error('daily data');
+        staged.push(['markovmade-lab-daily-v1',payload.dailyCheckins]);
       }
-      if (Array.isArray(payload.favorites)) {
-        const favorites=payload.favorites.filter(key=>tools[key]).slice(0,6);
-        if (!writeJson('markovmade-lab-favorites-v1',favorites)) throw new Error('storage');
+      if(Array.isArray(payload.favorites))staged.push(['markovmade-lab-favorites-v1',payload.favorites.filter(key=>tools[key]).slice(0,6)]);
+      const previous=staged.map(([key])=>[key,localStorage.getItem(key)]);
+      try{for(const[key,value]of staged)if(!writeJson(key,value))throw new Error('storage');}
+      catch(error){
+        let restored=true;
+        for(const[key]of previous){try{localStorage.removeItem(key);}catch(_){restored=false;}}
+        for(const[key,value]of previous){if(value!==null)try{localStorage.setItem(key,value);}catch(_){restored=false;}}
+        throw new Error(restored?'storage':'storage-rollback');
       }
       status(copy('Данные восстановлены. Обновляю LAB…', 'Data restored. Refreshing LAB…'));
       window.setTimeout(() => window.location.reload(), 450);
-    } catch (_) {
+    } catch (error) {
+      if(error.message==='storage'){status(copy('Не удалось восстановить данные. Прежние записи сохранены.','Could not restore data. Previous records are preserved.'));return;}
+      if(error.message==='storage-rollback'){status(copy('Хранилище недоступно. Сохраните резервную копию и повторите восстановление.','Storage is unavailable. Keep your backup and retry restoring it.'));return;}
       status(copy('Файл не распознан. Используйте JSON-экспорт MARKOVMADE LAB.', 'File not recognized. Use a MARKOVMADE LAB JSON export.'));
     }
   }

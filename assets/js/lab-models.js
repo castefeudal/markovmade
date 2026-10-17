@@ -148,6 +148,33 @@
     };
     return {days,count:sample.length,weight:metric('weight',35,300),waist:metric('waist',40,200),energy:metric('energy',1,10),sleep:metric('sleep',0,16),entries:sample};
   }
+  // Calendar windows contain observed days only; no imputation or assumed adherence.
+  function checkinComparison(entries, days, today=new Date()) {
+    const current=checkinTrends(entries,days,today);
+    const previousEnd=new Date(today);previousEnd.setDate(previousEnd.getDate()-days);
+    const previous=checkinTrends(entries,days,previousEnd);
+    const metrics={};
+    for(const key of ['weight','waist','sleep','energy']) {
+      const a=current[key],b=previous[key];
+      metrics[key]={currentCount:a.count,previousCount:b.count,delta:a.average!==null&&b.average!==null&&a.count>=Math.ceil(days*.75)&&b.count>=Math.ceil(days*.75)?a.average-b.average:null};
+    }
+    return {current,previous,metrics};
+  }
+  function dailyCalibration(entries, today=new Date()) {
+    const anchor=new Date(today);anchor.setHours(12,0,0,0);const floor=new Date(anchor);floor.setDate(floor.getDate()-179);
+    const complete=(Array.isArray(entries)?entries:[]).filter(item=>item&&/^\d{4}-\d{2}-\d{2}$/.test(item.date)&&new Date(item.date+'T12:00:00')<=anchor&&new Date(item.date+'T12:00:00')>=floor&&new Date(item.date).toISOString().slice(0,10)===item.date&&Number.isFinite(item.weight)&&item.weight>=35&&item.weight<=300&&Number.isFinite(item.calories)&&item.calories>=1000&&item.calories<=8000).sort((a,b)=>a.date.localeCompare(b.date));
+    let run=[];
+    for(const item of complete){const last=run.at(-1);if(last&&(Date.parse(item.date)-Date.parse(last.date))/86400000!==1)run=[];run.push(item);}
+    const sample=run.slice(-28),count=sample.length;
+    if(count<14)return {ready:false,count,reason:'days'};
+    const known=sample.filter(item=>Number.isFinite(item.adherence)&&item.adherence>=0&&item.adherence<=100);
+    if(known.length<Math.ceil(count*.75))return {ready:false,count,adherenceCount:known.length,reason:'adherence'};
+    const averageCalories=average(sample.map(item=>item.calories));
+    const averageAdherence=average(known.map(item=>item.adherence));
+    const waist=sample.filter(item=>Number.isFinite(item.waist)&&item.waist>=40&&item.waist<=200);
+    const waistDelta=waist.length>=2?waist.at(-1).waist-waist[0].waist:NaN;
+    return {ready:true,count,sample,adherenceCount:known.length,averageCalories,averageAdherence,waistDelta,result:maintenanceCalibration(sample.map(item=>item.weight),averageCalories,100,averageAdherence,waistDelta)};
+  }
   function personalRecoveryBaseline(entries, minimumDays=14) {
     const valid = Array.isArray(entries) ? entries.filter(entry => entry && Number.isFinite(entry.rhr) && entry.rhr >= 30 && entry.rhr <= 130 && Number.isFinite(entry.hrv) && entry.hrv >= 5 && entry.hrv <= 300) : [];
     const median = values => { const sorted=values.slice().sort((a,b)=>a-b), mid=Math.floor(sorted.length/2); return sorted.length%2?sorted[mid]:(sorted[mid-1]+sorted[mid])/2; };
@@ -159,6 +186,6 @@
   return Object.freeze({
     mifflin, tenHaaf, tenHaafFFM, navyBodyFat, ffmi, tdeeFromPal, dailySurplus,
     energyEquivalentFatKg, weightedTef, glycogenRange, average, movingAverage,
-    regressionSlope, maintenanceCalibration, plateauStatus, detectWeightOutliers, robustDailySlope, estimate1RM, checkinTrends, personalRecoveryBaseline
+    regressionSlope, maintenanceCalibration, plateauStatus, detectWeightOutliers, robustDailySlope, estimate1RM, checkinTrends, checkinComparison, dailyCalibration, personalRecoveryBaseline
   });
 });

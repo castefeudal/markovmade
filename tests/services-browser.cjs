@@ -36,7 +36,7 @@ const { startServer, root } = require('./browser-helpers.cjs');
                 await summary.focus();
                 await page.keyboard.press('Enter');
                 assert.equal(await item.evaluate(el => el.open), true);
-                await item.locator('img').evaluate(el => el.decode());
+                await item.locator('figure img').evaluate(el => el.decode());
                 const geometry = await item.evaluate(el => {
                   const viewport = document.documentElement.clientWidth;
                   const visible = [...el.querySelectorAll('summary, .mm-service-editorial-copy, figure, img, a')];

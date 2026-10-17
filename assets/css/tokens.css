@@ -49,7 +49,10 @@
   --mm-space-6: 1.5rem;
   --mm-space-8: 2rem;
   --mm-space-12: 3rem;
-  --mm-space-section: clamp(4rem, 8vw, 9rem);
+  --mm-space-section: clamp(72px, 8vw, 128px);
+  --mm-content-width: 1320px;
+  --mm-page-gutter: clamp(16px, 4vw, 72px);
+  --mm-editorial-rule: 1px solid var(--mm-border-strong);
   --mm-motion-fast: 160ms;
   --mm-motion-normal: 220ms;
   --mm-motion-panel: 340ms;
