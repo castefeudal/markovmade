@@ -67,7 +67,7 @@
 .mm-timeline-list summary>span:first-child{min-width:68px;color:var(--mm-accent);font:600 14px/1.4 Manrope,sans-serif;font-variant-numeric:tabular-nums}
 .mm-timeline-list .mm-timeline-summary-copy{display:grid;gap:3px;min-width:0}
 .mm-timeline-list .mm-timeline-summary-copy b{color:var(--mm-text-primary);font:500 clamp(22px,2.5vw,30px)/1.15 var(--mm-font-display,Georgia,serif)}
-.mm-timeline-list .mm-timeline-summary-copy small{color:var(--mm-text-muted);font:600 10px/1.4 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.mm-timeline-list .mm-timeline-summary-copy small{color:var(--mm-text-muted);font:600 13px/1.5 Manrope,sans-serif;letter-spacing:.06em;text-transform:uppercase}
 .mm-timeline-content{padding:2px 6px 32px clamp(84px,12vw,132px)}
 .mm-timeline-content>p{max-width:72ch;margin:0 0 24px;color:var(--mm-text-secondary);font:400 16px/1.8 Manrope,sans-serif}
 .mm-timeline-photos{max-width:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -638,7 +638,7 @@ body:not(.theme-light) button:not(.calc-primary-btn):not(.calc-gold-link):not(.l
 } }
 @layer priority {
 #contact .contact-value-card {
-    border-radius: 28px;
+    border-radius: 8px;
     min-height: 100%;
 } }
 @layer priority {
@@ -663,10 +663,10 @@ body:not(.theme-light) button:not(.calc-primary-btn):not(.calc-gold-link):not(.l
 } }
 @layer priority {
 #contact .contact-value-card {
-    border-radius: 28px;
+    border-radius: 8px;
     align-items: stretch;
     text-align: left;
-    box-shadow: 0 28px 80px rgb(0 0 0 / .22), inset 0 1px 0 rgb(255 255 255 / .045);
+    box-shadow: none;
 } }
 @layer priority {
 #contact .contact-value-card h4, #contact .contact-value-card > p, #contact .contact-card-kicker {
@@ -675,7 +675,7 @@ body:not(.theme-light) button:not(.calc-primary-btn):not(.calc-gold-link):not(.l
 } }
 @layer priority {
 #contact .contact-value-card > p {
-    font-size: clamp(.90rem, .95vw, 1rem);
+    font-size: clamp(1rem, .95vw, 1.125rem);
     line-height: 1.68;
 } }
 @layer priority {
