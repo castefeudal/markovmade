@@ -120,7 +120,7 @@ async function assertCta(page,label) {
     await motion.waitForFunction(()=>document.querySelector('.mm-hero-media').classList.contains('mm-frames-ready'),{},{timeout:30000});
     const video=motion.locator('#hero-head-video');
     assert.equal(await motion.locator('.mm-hero-media').getAttribute('data-mm-frame-source'),'prepared','native prepared poses are the primary rendering path');
-    assert.deepEqual(await video.evaluate(el=>[el.videoWidth,el.videoHeight]),[1600,1080],'video retains source detail and excludes the watermark region');
+    assert.equal(await video.evaluate(el=>el.currentSrc),'','prepared native frames do not wait for an MP4 decoder');
     for(const drawable of await motion.locator('.mm-hero-media img,.mm-hero-media video,.mm-hero-media canvas').all()) {
       const transition=await drawable.evaluate(el=>getComputedStyle(el).transitionProperty);
       assert.ok(!/transform|all/.test(transition),'rAF smoothing has no second CSS transform interpolator');
@@ -177,6 +177,7 @@ async function assertCta(page,label) {
     assert.equal(await cacheFailure.locator('#hero-head-video').evaluate(el=>Number(getComputedStyle(el).opacity)),1,'native video remains visible and follows the pointer if prepared frames and auxiliary decoding fail');
     await cacheFailure.close();
     const failure=await browser.newPage({viewport:{width:1440,height:900}});
+    await failure.route('**/hero-frames/**',route=>route.abort());
     await failure.route('**/hero-portrait.mp4',route=>route.abort());await failure.goto(server.url,{waitUntil:'load'});
     await failure.waitForFunction(()=>document.querySelector('.mm-hero-media').classList.contains('mm-video-error'));
     await assertComposition(failure,'failed decoder uses the approved poster');

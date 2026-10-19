@@ -12,6 +12,20 @@ const assert=require('node:assert/strict');const{chromium,firefox,webkit}=requir
  await page.dispatchEvent('#hero','pointerleave',{pointerType:'mouse'});await page.waitForFunction(()=>document.querySelector('.mm-hero-media').dataset.mmPose==='neutral');
  await page.touchscreen.tap(Math.min(rect.width-30,500),200);assert.equal(await page.locator('.mm-hero-media').evaluate(el=>el.classList.contains('mm-static-poster')),true,name+': touch returns to the poster');
  await move(.08,.34);await page.waitForFunction(()=>document.querySelector('.mm-hero-media').dataset.mmPose==='turn'&&!document.querySelector('.mm-hero-media').classList.contains('mm-static-poster'));await page.close();
+ const constrained=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'no-preference'});const mp4=[];
+ constrained.on('request',request=>{if(/hero-portrait.mp4/.test(request.url()))mp4.push(request.url());});
+ await constrained.addInitScript(()=>{Object.defineProperty(navigator,'hardwareConcurrency',{get:()=>4});Object.defineProperty(navigator,'deviceMemory',{get:()=>4});});
+ await constrained.route('**/hero-portrait.mp4',route=>route.abort());
+ await constrained.goto(server.url,{waitUntil:'load'});
+ await constrained.mouse.move(120,280,{steps:8});
+ await constrained.waitForFunction(()=>document.querySelector('.mm-hero-media').classList.contains('mm-frames-ready'),{},{timeout:45000});
+ await constrained.waitForTimeout(450);
+ const leftPixels=await constrained.locator('#hero-head-canvas').evaluate(el=>el.toDataURL());
+ await constrained.mouse.move(1320,280,{steps:8});await constrained.waitForTimeout(600);
+ assert.notEqual(await constrained.locator('#hero-head-canvas').evaluate(el=>el.toDataURL()),leftPixels,name+': four-core/4 GiB follows the mouse even without MP4');
+ assert.deepEqual(mp4,[],name+': prepared following has no MP4 dependency');
+ assert.ok(Number(await constrained.locator('.mm-hero-media').getAttribute('data-mm-frame-bytes'))<=48*1024*1024,name+': constrained bank stays within 48 MiB');
+ await constrained.close();
  for(const mode of['save-data','reduced-motion']){const p=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:mode==='reduced-motion'?'reduce':'no-preference'}),network=[];p.on('request',r=>{if(/hero-frames|hero-portrait.mp4/.test(r.url()))network.push(r.url());});if(mode==='save-data')await p.addInitScript(()=>Object.defineProperty(navigator,'connection',{get:()=>({saveData:true,addEventListener(){}})}));await p.goto(server.url,{waitUntil:'load'});await p.mouse.move(300,300);await p.waitForTimeout(150);assert.deepEqual(network,[],name+'/'+mode+': static means no frame or video requests');await p.close();}
  console.log('Portrait verified: '+name+' · hybrid mouse, native yaw/pitch pixels, neutral return, static touch/Save-Data/reduced-motion, 96 MiB retained surface budget');
  }finally{await browser.close();}
