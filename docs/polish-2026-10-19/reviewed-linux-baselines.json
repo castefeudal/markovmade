@@ -1,0 +1,50 @@
+[
+  {
+    "file": "ru-aurum-noir-320.png",
+    "ratio": 0.07234152843601896
+  },
+  {
+    "file": "ru-aurum-noir-390.png",
+    "ratio": 0.10549580751002552
+  },
+  {
+    "file": "ru-event-horizon-320.png",
+    "ratio": 0.07232671800947868
+  },
+  {
+    "file": "ru-event-horizon-390.png",
+    "ratio": 0.10548669340138535
+  },
+  {
+    "file": "ru-clarity-320.png",
+    "ratio": 0.0712862855450237
+  },
+  {
+    "file": "ru-clarity-390.png",
+    "ratio": 0.1043018592781626
+  },
+  {
+    "file": "en-aurum-noir-320.png",
+    "ratio": 0.05774585308056872
+  },
+  {
+    "file": "en-aurum-noir-390.png",
+    "ratio": 0.05149775185320209
+  },
+  {
+    "file": "en-event-horizon-320.png",
+    "ratio": 0.05766809834123223
+  },
+  {
+    "file": "en-event-horizon-390.png",
+    "ratio": 0.05145218131000121
+  },
+  {
+    "file": "en-clarity-320.png",
+    "ratio": 0.05813832938388626
+  },
+  {
+    "file": "en-clarity-390.png",
+    "ratio": 0.0521509296390813
+  }
+]

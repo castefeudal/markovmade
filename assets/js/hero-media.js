@@ -23,10 +23,7 @@
         video.defaultMuted = true;
         video.playsInline = true;
         video.controls = false;
-        // Keep the URL out of parser-driven media selection in static modes.
-        var source = video.querySelector('source[data-src]');
-        if (source && !source.hasAttribute('src')) source.src = source.dataset.src;
-        video.preload = 'metadata';
+        video.preload = 'none';
 
         var settings = {
             referenceDuration: 8.041667,
@@ -47,7 +44,7 @@
             sourceHeight: 1080,
             desktopWidth: 1600,
             mobileWidth: 360,
-            lowMemoryWidth: 300,
+            lowMemoryWidth: 720,
             /* Full-width RGBA frames are larger; smooth pointer interpolation keeps
                the authored motion fluid with a bounded frame cache. */
             desktopTurnFrames: 24,
@@ -108,6 +105,7 @@
         var frameHeight = 0;
         var cacheReady = false;
         var directReady = false;
+        var directTask = null;
         var destroyed = false;
         var heroVisible = true;
         var decoder = null;
@@ -245,7 +243,7 @@
             return result;
         }
 
-        function getGeometry() {
+        function getGeometry(extraction) {
             // Some WebKit decoders report their display-sized output instead
             // of the encoded dimensions. Prepared frames retain native detail.
             var sourceWidth = settings.sourceWidth;
@@ -269,8 +267,8 @@
                 nodCount = settings.desktopNodFrames;
             }
 
-            var retainedFrames = 1 + (settings.preparedTurnPeak + 1) + 16 + 2;
-            var budgetWidth = Math.floor(Math.sqrt(settings.frameBudgetBytes * sourceWidth / sourceHeight / (retainedFrames * 4))) - 2;
+            var retainedFrames = extraction ? 1 + turnCount + 2 * nodCount + 2 : 1 + (settings.preparedTurnPeak + 1) + 16 + 2;
+            var budgetWidth = Math.floor(Math.sqrt((lowMemory ? 48 * 1024 * 1024 : settings.frameBudgetBytes) * sourceWidth / sourceHeight / (retainedFrames * 4))) - 2;
             width = Math.min(width, budgetWidth);
             return {
                 width: width,
@@ -373,6 +371,12 @@
             bank.neutral = null;
             bank.turn = [];bank.nod1 = [];bank.nod2 = [];
 
+            if (lowMemory) throw new Error('Use direct video instead of an auxiliary decoder on a constrained device');
+            geometry = getGeometry(true);
+            frameWidth = geometry.width; frameHeight = geometry.height;
+            canvas.width = captureCanvas.width = frameWidth;
+            canvas.height = captureCanvas.height = frameHeight;
+            await enableDirectVideo();
             decoder = document.createElement('video');
             decoder.muted = true;
             decoder.defaultMuted = true;
@@ -788,50 +792,55 @@
             console.warn('[MARKOVMADE] hero-portrait.mp4 не загрузился:', error || 'unknown error');
         }
 
-        async function boot() {
-            try {
+        function enableDirectVideo() {
+            if (directTask) return directTask;
+            directTask = (async function () {
+                var source = video.querySelector('source[data-src]');
+                if (source && !source.hasAttribute('src')) source.src = source.dataset.src;
+                video.preload = 'metadata';
                 await ensureMetadata(video);
-                duration = Number.isFinite(video.duration) && video.duration > 0
-                    ? video.duration
-                    : settings.referenceDuration;
+                duration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : settings.referenceDuration;
                 timeScale = duration / settings.referenceDuration;
-
                 await seekVideo(video, scaledTime(settings.neutralTime));
                 directReady = true;
                 media.classList.add('mm-direct-ready');
                 media.classList.remove('mm-video-error');
                 scheduleRender(true);
+            })();
+            return directTask;
+        }
 
-                /* Keep the poster and direct-seek fallback on reduced-motion and low-memory devices. */
-                if (reducedMotion || lowMemory) return;
-
+        async function boot() {
+            try {
+                // Prepared native poses do not depend on a working MP4 decoder.
+                // Even four-core devices get real following, within a smaller bank.
+                await cacheFrames();
+                if (reducedMotion || media.classList.contains('mm-static-poster') || destroyed) {
+                    bank.neutral = null; bank.turn = []; bank.nod1 = []; bank.nod2 = []; return;
+                }
+                var probe = document.createElement('canvas');
+                probe.width = 32; probe.height = 22;
+                var probeContext = probe.getContext('2d', { alpha: false });
+                probeContext.drawImage(bank.neutral, 0, 0, 32, 22);
+                var neutralPixels = probe.toDataURL();
+                probeContext.drawImage(bank.turn[bank.turn.length - 1], 0, 0, 32, 22);
+                if (neutralPixels === probe.toDataURL()) throw new Error('Decoder returned identical poses');
+                cacheReady = true;
+                media.classList.add('mm-frames-ready');
+                media.classList.remove('mm-direct-ready', 'mm-video-error');
+                drawInteractivePose(true);
+                scheduleRender(true);
+                if (window.mmHeroPointer) setFromPointer(window.mmHeroPointer.x, window.mmHeroPointer.y, false);
+            } catch (cacheError) {
+                if (reducedMotion || media.classList.contains('mm-static-poster') || destroyed) return;
                 try {
-                    await cacheFrames();
-                    if(reducedMotion || media.classList.contains('mm-static-poster')){bank.neutral=null;bank.turn=[];bank.nod1=[];bank.nod2=[];return;}
-                    // Successful timestamps do not guarantee fresh canvas pixels.
-                    // Fall back to the visible video if a decoder repeats a frame.
-                    var probe = document.createElement('canvas');
-                    probe.width = 32;probe.height = 22;
-                    var probeContext = probe.getContext('2d', { alpha: false });
-                    probeContext.drawImage(bank.neutral, 0, 0, 32, 22);
-                    var neutralPixels = probe.toDataURL();
-                    probeContext.drawImage(bank.turn[bank.turn.length - 1], 0, 0, 32, 22);
-                    if (neutralPixels === probe.toDataURL()) throw new Error('Decoder returned identical poses');
-                    cacheReady = true;
-                    media.classList.add('mm-frames-ready');
-                    media.classList.remove('mm-direct-ready');
-                    drawInteractivePose(true);
-                    scheduleRender(true);
-                    if(window.mmHeroPointer)setFromPointer(window.mmHeroPointer.x,window.mmHeroPointer.y,false);
-                } catch (cacheError) {
-                    console.warn('[MARKOVMADE] Кэш цельных кадров недоступен; используется прямая перемотка:', cacheError);
+                    await enableDirectVideo();
                     cacheReady = false;
                     media.dataset.mmFrameSource = 'direct';
                     media.classList.add('mm-direct-ready');
+                    if (window.mmHeroPointer) setFromPointer(window.mmHeroPointer.x, window.mmHeroPointer.y, false);
                     requestDirectPose();
-                }
-            } catch (error) {
-                handleVideoError(error);
+                } catch (error) { handleVideoError(error); }
             }
         }
 

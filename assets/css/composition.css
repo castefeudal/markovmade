@@ -119,7 +119,7 @@
 #mm-os-data-status:empty{display:none;}
 #app-ecosystem .mm-os-metrics>div,#app-ecosystem .mm-os-progress-kpis>div{border:0;border-top:1px solid var(--mm-border-strong);border-radius:0;background:none;padding:20px 8px;}
 #app-ecosystem .mm-os-metrics b,#app-ecosystem .mm-os-progress-kpis b{font:600 clamp(1.25rem,2vw,2rem)/1.15 var(--mm-font-body);font-variant-numeric:tabular-nums;}
-#app-ecosystem .mm-os-screen.active{animation:mm-product-screen 180ms var(--mm-ease-premium) both;}
+#app-ecosystem .mm-os-screen.active{animation:mm-product-screen 260ms var(--mm-ease-premium) both;}
 @keyframes mm-product-screen{from{opacity:.3;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
 /* The final contact chapter stays direct and easy to scan. */
 #contact .contact-value-card{border:0;border-top:var(--mm-editorial-rule);border-radius:0;background:none;box-shadow:none;}
@@ -133,3 +133,31 @@ html[data-theme="event-horizon"] :is(#proof-system,#method-proof,#biography){bac
 @media(max-width:850px){:is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-head,#calculators .mm-lab-intro,#community .mm-community-head{grid-template-columns:1fr;gap:20px;}:is(#case-scenarios,#method-proof,#biography) .mm-editorial-copy{max-width:64ch;}#proof-system .mm-editorial-inner,#about .mm-about-grid,#method-proof .mm-editorial-process{grid-template-columns:1fr;}#proof-system .mm-trust-heading,#about .mm-author-story-photo{position:relative;top:auto;}#about .mm-author-story-photo{max-width:640px;margin-inline:auto;}#case-scenarios .mm-case-study-layout-case-card{grid-template-columns:1fr;gap:28px;}#case-scenarios .mm-case-study-layout-case-image,#case-scenarios .mm-case-study-layout-case-card:nth-child(even) .mm-case-study-layout-case-image{grid-column:1;grid-row:1;}#case-scenarios .mm-case-study-layout-case-body,#case-scenarios .mm-case-study-layout-case-card:nth-child(even) .mm-case-study-layout-case-body{grid-column:1;grid-row:2;}#case-scenarios .mm-case-study-layout-case-image img{max-height:none;}#case-scenarios .mm-case-study-layout-cases-cta{flex-direction:column;align-items:flex-start;}#biography .mm-timeline-list summary{grid-template-columns:96px minmax(0,1fr);gap:24px;}#biography .mm-timeline-content{padding-left:120px;}#calculators .mm-lab-result{border-left:0;border-top:var(--mm-editorial-rule);padding:28px 0;}#calculators .mm-toolkit-cards{grid-template-columns:1fr;}}
 @media(max-width:600px){:is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-title,#proof-system h2,#about h2,#calculators .mm-lab-title{font-size:clamp(2.35rem,10vw,3.5rem);}#proof-system .mm-trust-card{padding-block:28px;}#proof-system .mm-trust-years{flex-wrap:wrap;}#about .mm-author-purpose{grid-template-columns:1fr;gap:24px;}#biography .mm-timeline-list summary{grid-template-columns:72px minmax(0,1fr);gap:16px;padding-right:32px;min-height:112px;}#biography .mm-timeline-content{padding-left:0;}#biography .mm-timeline-photos{gap:16px;}#biography .mm-timeline-photos img{max-height:360px;}#method-proof .mm-editorial-step{grid-template-columns:44px minmax(0,1fr);gap:16px;}#method-proof .mm-editorial-step-num{font-size:2.5rem;}#case-scenarios .mm-case-study-case-list li{grid-template-columns:1fr;gap:4px;}#community .mm-community-card,#community .mm-community-card:first-child{padding:28px 0;border-left:0;}#community .mm-community-head h2{font-size:clamp(2.8rem,11vw,4rem);}#app-ecosystem .mm-os-wrap{width:calc(100% - 24px);}#app-ecosystem .mm-os-story h2{font-size:clamp(2.6rem,10vw,3.8rem);}#app-ecosystem .mm-os-data-choice{padding-inline:12px;}#app-ecosystem .mm-os-metrics>div,#app-ecosystem .mm-os-progress-kpis>div{padding:16px 4px;}#app-ecosystem .mm-os-metrics b,#app-ecosystem .mm-os-progress-kpis b{font-size:1.25rem;}#calculators .mm-lab-shell{border-radius:4px;}#calculators .mm-lab-hero-result strong{font-size:clamp(2.5rem,11vw,4rem);}}
 @media(prefers-reduced-motion:reduce){#app-ecosystem .mm-os-screen.active{animation:none;}}
+
+/* Optical finishing: one quiet edge, a clear reading measure, responsive actions. */
+:is(#services,#case-scenarios,#biography) figure{isolation:isolate;}
+#services .mm-service-editorial-item>summary{transition:background var(--mm-motion-normal) ease;}
+#services .mm-service-editorial-item[open]{border-bottom-color:var(--mm-accent);}
+#services .mm-service-editorial-copy{max-width:60ch;}
+#services .mm-service-preview{border:1px solid var(--mm-border-strong);border-radius:2px;}
+:is(#about,#biography,#case-scenarios) p{hanging-punctuation:first last;}
+#about .mm-author-purpose p{max-width:28ch;}
+#quick-faq summary{transition:color var(--mm-motion-normal) ease;}
+#quick-faq details[open]>summary{color:var(--mm-accent);}
+#main-header nav a[aria-current=location]::after{transform-origin:left;transition:transform var(--mm-motion-normal) var(--mm-ease-premium);}
+@media(hover:hover) and (pointer:fine){
+ #services .mm-service-editorial-item:not([open])>summary:hover{background:var(--mm-accent-soft);}
+ #services .mm-service-preview{transition:border-color var(--mm-motion-normal) ease;}
+ #services summary:hover .mm-service-preview{border-color:var(--mm-accent);}
+}
+@media(max-width:600px){
+ #services .mm-service-lead{font-size:1.5rem;line-height:1.45;}
+ #services .mm-editorial-cta{min-height:56px;}
+ #services .mm-service-preview{height:180px;margin-top:8px;}
+ #services .mm-service-preview img{padding:8px;}
+ #quick-faq summary{line-height:1.5;padding-block:22px;}
+ #app-ecosystem .mm-os-tabs button{min-height:48px;}
+}
+@media(prefers-reduced-motion:reduce){
+ #services .mm-service-editorial-item>summary,#quick-faq summary,#main-header nav a[aria-current=location]::after{transition:none;}
+}

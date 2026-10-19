@@ -161,7 +161,7 @@
 #calculators .mm-lab-snap small{display:block;color:var(--lab-muted);font:800 13px/1.2 Manrope,sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
 #calculators .mm-lab-snap b{display:block;color:rgb(var(--text-platinum));font:650 clamp(.94rem,1.5vw,1.2rem)/1.05 var(--mm-font-display),serif;overflow-wrap:anywhere}
 #calculators .mm-lab-content{padding:18px}
-#calculators .mm-lab-panel{animation:mmLabIn .34s ease both}
+
 #calculators .mm-lab-toolhead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:end;padding:12px 8px 22px}
 #calculators .mm-lab-toolhead .eyebrow{display:block;color:rgb(var(--color-gold));font:900 13px/1 Manrope,sans-serif;letter-spacing:.19em;text-transform:uppercase;margin-bottom:9px}
 #calculators .mm-lab-toolhead h3{margin:0;color:rgb(var(--text-platinum));font:400 clamp(1.65rem,3vw,2.6rem)/1.03 var(--mm-font-display),serif;letter-spacing:-.02em}

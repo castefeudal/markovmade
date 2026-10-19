@@ -48,3 +48,50 @@
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initLogoFallback, { once: true });
     else initLogoFallback();
 })();
+
+/* Finite editorial motion: content is readable before enhancement, and no
+   scroll-linked loop, hidden reveal state or layout measurement is required. */
+(function () {
+    'use strict';
+    var preference = matchMedia('(prefers-reduced-motion: reduce)');
+    var active = new Map();
+    function stop() { active.forEach(function (animation) { animation.cancel(); }); active.clear(); }
+    function reveal(node, distance, duration) {
+        if (!node || preference.matches || document.hidden || !node.animate) return;
+        if (active.has(node)) active.get(node).cancel();
+        var animation = node.animate([
+            { opacity: .58, transform: 'translate3d(0,' + distance + 'px,0)' },
+            { opacity: 1, transform: 'translate3d(0,0,0)' }
+        ], { duration: duration, easing: 'cubic-bezier(.16,1,.3,1)' });
+        active.set(node, animation);
+        animation.finished.catch(function () {}).then(function () { if (active.get(node) === animation) active.delete(node); });
+    }
+    if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                observer.unobserve(entry.target);
+                // Never animate content above the reader after late runtime loading.
+                if (entry.boundingClientRect.top < 72) return;
+                reveal(entry.target, 16, 560);
+            });
+        }, { threshold: .12, rootMargin: '0px 0px -24px 0px' });
+        document.querySelectorAll('#proof-system .mm-trust-card, .mm-editorial-head, .mm-community-head, #method-proof .mm-editorial-step, #about .mm-author-purpose, #community .mm-community-card').forEach(function (node) { observer.observe(node); });
+    }
+    document.addEventListener('toggle', function (event) {
+        if (!(event.target instanceof HTMLDetailsElement) || !event.target.open) return;
+        var content = event.target.querySelector(':scope > .mm-service-editorial-body, :scope > .mm-timeline-content, :scope > .mm-progress-workspace');
+        reveal(content, 8, 360);
+    }, true);
+    document.addEventListener('click', function (event) {
+        var tab = event.target.closest('[data-mm-lab-tab]');
+        if (!tab) return;
+        requestAnimationFrame(function () {
+            var panel = document.querySelector('[data-mm-lab-panel="' + tab.dataset.mmLabTab + '"]');
+            if (panel && !panel.hidden) reveal(panel, 6, 260);
+        });
+    });
+    preference.addEventListener('change', stop);
+    document.addEventListener('visibilitychange', function () { if (document.hidden) stop(); });
+    addEventListener('pagehide', stop, { once: true });
+})();
