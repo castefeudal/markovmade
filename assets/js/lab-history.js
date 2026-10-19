@@ -23,7 +23,7 @@
     const map = {
       body: result => Number.isFinite(result.bf) ? `${result.bf.toFixed(1)}% · FFMI ${Number(result.ffmi).toFixed(1)}` : '—',
       nutrition: result => Number.isFinite(result.tdee) ? `~${Math.round(result.tdee)} ${copy('ккал','kcal')}` : '—',
-      overfeeding: result => Number.isFinite(result.low) ? `${result.low.toFixed(2)}–${result.high.toFixed(2)} kg` : '—',
+      overfeeding: result => Number.isFinite(result.low) && Number.isFinite(result.high) ? `${result.low.toFixed(2)}–${result.high.toFixed(2)} kg` : '—',
       recovery: result => Number.isFinite(result.score) ? `${Math.round(result.score)}/100` : '—',
       progress: result => Number.isFinite(result.weekly) ? `${result.weekly >= 0 ? '+' : ''}${result.weekly.toFixed(2)} kg/week` : '—',
       strategy: result => result.main || '—'
@@ -31,9 +31,15 @@
     return (map[tool] || (value => Array.isArray(value.value)?value.value[lang()]:'—'))(result);
   };
 
+  function validSnapshot(item) {
+    return item && typeof item.id === 'string' && Object.hasOwn(tools,item.tool) &&
+      item.result && typeof item.result === 'object' && !Array.isArray(item.result) &&
+      typeof item.at === 'string' && Number.isFinite(Date.parse(item.at));
+  }
+
   function snapshots() {
     const value = readJson(HISTORY_KEY);
-    return Array.isArray(value) ? value.filter(item => item && item.id && tools[item.tool] && item.result).slice(0, MAX_HISTORY) : [];
+    return Array.isArray(value) ? value.filter(validSnapshot).slice(0, MAX_HISTORY) : [];
   }
 
   function record(tool) {
@@ -52,7 +58,10 @@
       inputs, result: JSON.parse(JSON.stringify(result))
     };
     const next = [entry, ...snapshots()].slice(0, MAX_HISTORY);
-    writeJson(HISTORY_KEY, next);
+    if (!writeJson(HISTORY_KEY, next)) {
+      status(copy('Расчёт готов, но история не сохранена: хранилище недоступно. Сохраните результат отдельно.', 'Calculation complete, but history could not be saved: storage is unavailable. Save the result separately.'));
+      return;
+    }
     renderHistory();
   }
 
@@ -254,7 +263,8 @@
         }
         payload.lab.toolkit=validated;
       }
-      const history = Array.isArray(payload.history) ? payload.history.filter(item => item && tools[item.tool] && item.result).slice(0,MAX_HISTORY) : [];
+      if(payload.history!==undefined&&(!Array.isArray(payload.history)||payload.history.some(item=>!validSnapshot(item))))throw new Error('history');
+      const history = (payload.history || []).slice(0,MAX_HISTORY);
       // Validate the complete backup before changing any persistent key.
       const staged=[[LAB_KEY,payload.lab],[HISTORY_KEY,history]];
       if(Array.isArray(payload.dailyCheckins)){

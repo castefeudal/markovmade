@@ -18,8 +18,9 @@
     document.body.classList.toggle('menu-open', open);
     if (burger) burger.setAttribute('aria-expanded', String(open));
     if (main) main.inert = open;
+    if (header) header.inert = open;
     if (open) menu.querySelector('a,button')?.focus();
-    else if (returnFocus?.isConnected) returnFocus.focus();
+    else if (returnFocus?.isConnected) { returnFocus.focus({preventScroll:true}); returnFocus = null; }
   }
   window.toggleMenu = () => setMenu(menu?.inert, burger);
   burger?.addEventListener('click', window.toggleMenu);
