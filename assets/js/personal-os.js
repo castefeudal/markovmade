@@ -39,17 +39,30 @@
             });
         });
 
+        function taskCopy(task) {
+            var state = task.querySelector('em');
+            if (!state) return;
+            var en = document.documentElement.lang === 'en';
+            var defaults = {'сейчас':'now','7 дней':'7 days','регулярно':'regularly','в плане':'planned'};
+            state.textContent = task.classList.contains('done') ? (en ? 'done' : 'готово') :
+                (en ? defaults[state.dataset.defaultText] || state.dataset.defaultText : state.dataset.defaultText);
+        }
         root.querySelectorAll('.mm-app-task').forEach(function (task) {
             var initialState = task.querySelector('em');
-            if (initialState && !initialState.dataset.defaultText) initialState.dataset.defaultText = task.classList.contains('done') ? 'в плане' : initialState.textContent;
+            if (initialState && !initialState.dataset.defaultText) {
+                initialState.dataset.defaultText = ['сейчас','7 дней','регулярно'][Array.from(root.querySelectorAll('.mm-app-task')).indexOf(task)] || initialState.textContent;
+                initialState.setAttribute('data-no-translate','');
+            }
             task.addEventListener('click', function () {
                 var done = !task.classList.contains('done');
                 task.classList.toggle('done', done);
                 task.setAttribute('aria-pressed', done ? 'true' : 'false');
-                var state = task.querySelector('em');
-                if (state) state.textContent = done ? 'готово' : (state.dataset.defaultText || state.textContent);
+                taskCopy(task);
             });
         });
+        function taskLabels(){root.querySelectorAll('.mm-app-task').forEach(taskCopy);}
+        new MutationObserver(taskLabels).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+        taskLabels();
 
         var consent=root.querySelector('#mm-os-daily-consent');
         function consentCopy(){root.querySelectorAll('[data-os-daily-ru]').forEach(function(node){node.textContent=document.documentElement.lang==='en'?node.dataset.osDailyEn:node.dataset.osDailyRu;});}
