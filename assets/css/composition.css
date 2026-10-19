@@ -151,7 +151,6 @@ html[data-theme="event-horizon"] :is(#proof-system,#method-proof,#biography){bac
  #services summary:hover .mm-service-preview{border-color:var(--mm-accent);}
 }
 @media(max-width:600px){
- #about .mm-author-copy>p{font-size:1rem;line-height:1.85;}
  #services .mm-service-lead{font-size:1.5rem;line-height:1.45;}
  #services .mm-editorial-cta{min-height:56px;}
  #services .mm-service-preview{height:180px;margin-top:8px;}
