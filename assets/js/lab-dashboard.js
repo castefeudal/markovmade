@@ -209,7 +209,7 @@
     $('mm-progress-metric').addEventListener('change',renderTrends);
     $('mm-progress-edit-selected').addEventListener('click',()=>{
       if(!selectedDate)return;
-      $('mm-checkin-date').value=selectedDate;populate(selectedDate);$('mm-checkin-weight').focus();
+      $('mm-checkin-date').value=selectedDate;populate(selectedDate);const metric=$('mm-progress-metric').value;if(metric!=='weight')$('mm-checkin-extra').open=true;$('mm-checkin-'+metric).focus();
     });
     $('mm-progress-export-csv').addEventListener('click',()=>{
       const fields=['date','weight','waist','sleep','energy','calories','adherence'];
