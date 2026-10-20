@@ -21,6 +21,7 @@ const fixtures=require('./toolkit-fixtures.json');
         for(const [key,value] of Object.entries(values))await page.locator(`#toolkit-${id}-${key}`).fill(String(value));
         await page.locator('#mm-toolkit-workspace button[type="submit"]').click();assert.equal(await page.locator('#mm-toolkit-result .mm-toolkit-outcome').count(),1,`${name}/${lang}/${theme}/${id}`);
         assert.ok((await page.locator('#mm-toolkit-result').innerText()).length>100);
+        assert.equal(await page.locator('#mm-lab-repeat-last').isEnabled(),true,'repeat-last refreshes after the result reaches history');
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true,`${id} page overflow`);
         assert.equal(await page.locator('#mm-toolkit-workspace').evaluate(el=>el.scrollWidth<=el.clientWidth+2),true,`${id} workspace overflow`);
       }

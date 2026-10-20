@@ -22,6 +22,7 @@ concurrency:
 
 jobs:
   unit:
+    if: github.event_name != 'workflow_dispatch' || !inputs.refresh_visual_baselines
     name: Unit and source checks
     runs-on: ubuntu-latest
     steps:
@@ -35,6 +36,7 @@ jobs:
       - run: npm test
 
   browser:
+    if: github.event_name != 'workflow_dispatch' || !inputs.refresh_visual_baselines
     name: Browser, visual and accessibility QA
     runs-on: ubuntu-latest
     steps:
@@ -49,8 +51,6 @@ jobs:
       - run: npm run test:e2e
       - run: npm run test:a11y
       - run: npm run test:visual
-        env:
-          CAPTURE_VISUAL_CANDIDATES: ${{ github.event_name == 'workflow_dispatch' && inputs.refresh_visual_baselines && '1' || '0' }}
       - run: npm run test:paint
       - uses: actions/upload-artifact@v6
         if: always()
@@ -67,6 +67,7 @@ jobs:
           retention-days: 14
 
   performance:
+    if: github.event_name != 'workflow_dispatch' || !inputs.refresh_visual_baselines
     name: Lighthouse mobile and desktop diagnostics
     runs-on: ubuntu-latest
     steps:
@@ -88,4 +89,29 @@ jobs:
           name: markovmade-lighthouse-reports
           path: test-results/lighthouse/
           if-no-files-found: ignore
+          retention-days: 14
+
+  visual_candidates:
+    name: Linux visual candidates - review required
+    if: github.event_name == 'workflow_dispatch' && inputs.refresh_visual_baselines
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run build
+      # Capture deliberately fails until the images have been reviewed and committed.
+      - run: npm run test:visual
+        env:
+          CAPTURE_VISUAL_CANDIDATES: 1
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: markovmade-linux-candidates
+          path: test-results/contracts/
+          if-no-files-found: error
           retention-days: 14

@@ -66,7 +66,7 @@
       favorite.addEventListener('click',()=>{
         const current=favoriteIds(),next=current.includes(tool.id)?current.filter(id=>id!==tool.id):[...current,tool.id];
         if(next.length>6){count.textContent=t(p('В избранном уже 6 инструментов. Уберите один, чтобы добавить новый.','You have 6 favorites. Remove one before adding another.'));return;}
-        try{localStorage.setItem(favoriteKey,JSON.stringify(next));renderCards();root.dispatchEvent(new CustomEvent('mm:favorites-change'));const replacement=cards.querySelector(`[data-tool-id="${tool.id}"]`)?.parentElement.querySelector('.mm-toolkit-favorite');(replacement||search).focus();}catch{count.textContent=t(p('Браузер не сохранил избранное.','The browser could not save favorites.'));}
+        try{localStorage.setItem(favoriteKey,JSON.stringify(next));root.dispatchEvent(new CustomEvent('mm:favorites-change'));const replacement=cards.querySelector(`[data-tool-id="${tool.id}"]`)?.parentElement.querySelector('.mm-toolkit-favorite');(replacement||search).focus();}catch{count.textContent=t(p('Браузер не сохранил избранное.','The browser could not save favorites.'));}
       });item.append(button,favorite);cards.append(item);
     });
     if(!matches.length)cards.append(node('p',category==='favorites'?p('Добавьте нужные инструменты звёздочкой в каталоге.','Star tools in the catalogue to keep them here.'):category==='recent'?p('Здесь появятся выполненные расчёты.','Completed calculations will appear here.'):p('Ничего не найдено. Попробуйте другую задачу или категорию.','No matches. Try another task or category.'),'mm-toolkit-empty'));

@@ -222,7 +222,7 @@
     window.addEventListener('storage',event=>{if(event.key===DAILY_KEY){populate($('mm-checkin-date').value);render();}});
     document.querySelectorAll('[data-checkin-period]').forEach(button=>button.addEventListener('click',()=>{period=Number(button.dataset.checkinPeriod);document.querySelectorAll('[data-checkin-period]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));renderTrends();}));
     $('calculators').addEventListener('mm:favorites-change',renderQuick);
-    $('calculators').addEventListener('mm:toolkit-result',renderQuick);
+    $('calculators').addEventListener('mm:toolkit-result',()=>queueMicrotask(renderQuick));
     $('mm-lab-repeat-last').addEventListener('click',repeatLast);
     $('mm-checkin-use-calibration').addEventListener('click',useCalibration);
     document.addEventListener('click',event=>{if(event.target.closest?.('[data-calc]'))setTimeout(renderQuick,50);if(event.target.closest?.('#mm-lab-clear-all'))setTimeout(()=>{populate(today());render();},50);});

@@ -165,7 +165,7 @@
 #calculators .mm-lab-toolhead{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:end;padding:12px 8px 22px}
 #calculators .mm-lab-toolhead .eyebrow{display:block;color:rgb(var(--color-gold));font:900 14px/1 Manrope,sans-serif;letter-spacing:.19em;text-transform:uppercase;margin-bottom:9px}
 #calculators .mm-lab-toolhead h3{margin:0;color:rgb(var(--text-platinum));font:400 clamp(1.65rem,3vw,2.6rem)/1.03 var(--mm-font-display),serif;letter-spacing:-.02em}
-#calculators .mm-lab-toolhead p{max-width:780px;margin:10px 0 0;color:var(--lab-muted);font:600 .86rem/1.65 Manrope,sans-serif}
+#calculators .mm-lab-toolhead p{max-width:780px;margin:10px 0 0;color:var(--lab-muted);font:600 var(--mm-type-label)/1.65 Manrope,sans-serif}
 #calculators .mm-lab-mode{display:inline-flex;padding:4px;border:1px solid var(--lab-line);border-radius:999px;background:var(--mm-surface-2)}
 #calculators .mm-lab-mode button{min-width:84px;min-height:44px;padding:0 13px;border:0;border-radius:999px;background:transparent;color:var(--lab-muted);font:900 14px/1 Manrope,sans-serif;letter-spacing:.13em;text-transform:uppercase;cursor:pointer}
 #calculators .mm-lab-mode button[aria-pressed="true"]{background:rgb(var(--color-gold));color:rgb(var(--bg-obsidian));box-shadow:0 9px 25px rgb(var(--color-gold)/.12)}
