@@ -7,15 +7,15 @@
 #main-header .mm-header-logo-link { flex: 0 0 3rem; display: flex; align-items: center; justify-content: center; width: 3rem; height: 3.25rem; overflow: hidden; }
 #main-header .mm-header-logo-link img { width: 3rem; height: 3.25rem; max-width: 3rem; object-fit: contain; filter: none; }
 #main-header nav { display: flex; align-items: center; gap: clamp(1rem, 2vw, 2rem); background: none; border: 0; border-radius: 0; padding: 0; box-shadow: none; }
-#main-header .nav-link { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .5rem 0; color: var(--mm-text-secondary); font: 650 .8125rem/1.4 var(--mm-font-body); letter-spacing: .025em; text-transform: none; text-decoration: none; border: 0; background: none; }
+#main-header .nav-link { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .5rem 0; color: var(--mm-text-secondary); font: 650 .875rem/1.4 var(--mm-font-body); letter-spacing: .025em; text-transform: none; text-decoration: none; border: 0; background: none; }
 #main-header .nav-link:hover, #main-header .nav-link:focus-visible { color: var(--mm-text-primary); }
 #main-header .nav-link::after { content: none; }
 #main-header nav > div { display: flex; align-items: center; gap: .5rem; padding-left: 1rem; border-left: 1px solid var(--mm-border); }
 #main-header a[href="#contact"] { display: inline-flex; align-items: center; justify-content: center; min-width: 2.75rem; min-height: 2.75rem; padding: .5rem .75rem; color: var(--mm-text-primary); border: 1px solid var(--mm-border-strong); border-radius: .5rem; text-decoration: none; }
 #main-header a[href="#contact"] > .absolute { display: none; }
-#main-header a[href="#contact"] > .relative { color: inherit; font-size: .8125rem; }
+#main-header a[href="#contact"] > .relative { color: inherit; font-size: .875rem; }
 #main-header .mm-header-mobile-controls { display: none; align-items: center; gap: .5rem; }
-.theme-switch, .lang-switch { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-width: 2.75rem; min-height: 2.75rem; padding: .5rem .75rem; background: transparent; border: 1px solid var(--mm-border-strong); border-radius: .5rem; color: var(--mm-text-primary); font: 700 .8125rem/1.3 var(--mm-font-body); cursor: pointer; }
+.theme-switch, .lang-switch { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-width: 2.75rem; min-height: 2.75rem; padding: .5rem .75rem; background: transparent; border: 1px solid var(--mm-border-strong); border-radius: .5rem; color: var(--mm-text-primary); font: 700 .875rem/1.3 var(--mm-font-body); cursor: pointer; }
 .theme-switch:hover, .lang-switch:hover { background: var(--mm-accent-soft); border-color: var(--mm-accent); }
 .theme-switch-text, .lang-switch-flag { display: none; }
 .theme-switch-icon { width: 1rem; height: 1rem; border: 1.5px solid currentColor; border-radius: 50%; background: linear-gradient(90deg, transparent 50%, currentColor 50%); }

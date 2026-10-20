@@ -269,8 +269,12 @@
             }
             $$('[data-reset]').forEach(btn=>btn.addEventListener('click',()=>resetTool(btn.dataset.reset)));
             el('mm-lab-clear-all')?.addEventListener('click',()=>{
-                if(!window.confirm('Очистить локальные данные MARKOVMADE LAB на этом устройстве?')) return;
-                try{localStorage.removeItem(STORAGE_KEY);localStorage.removeItem('markovmade-lab-history-v1');localStorage.removeItem('markovmade-lab-daily-v1');localStorage.removeItem('markovmade-lab-favorites-v1')}catch(e){} state=emptyState(); if(window.MarkovMadeLab) window.MarkovMadeLab.state=state;
+                const english=document.documentElement.lang==='en';
+                if(!window.confirm(english?'Clear local MARKOVMADE LAB data on this device?':'Очистить локальные данные MARKOVMADE LAB на этом устройстве?')) return;
+                try{for(const key of [STORAGE_KEY,'markovmade-lab-history-v1','markovmade-lab-daily-v1','markovmade-lab-favorites-v1','markovmade-os-actions-v1'])localStorage.removeItem(key);}
+                catch(e){const status=el('mm-lab-data-status');if(status)status.textContent=english?'Storage is unavailable. Complete deletion could not be confirmed. Try again.':'Хранилище недоступно. Полную очистку подтвердить не удалось. Повторите попытку.';return;}
+                if(el('mm-lab-data-status'))el('mm-lab-data-status').textContent='';state=emptyState(); if(window.MarkovMadeLab) window.MarkovMadeLab.state=state;
+                window.mmRefreshOSActions?.();window.mmRefreshPersonalOS?.();
                 $$('[data-profile]').forEach(x=>x.value=''); ['body','nutrition','overfeeding','recovery','progress','strategy'].forEach(resetTool); updateFemaleFields(); updateSnapshot();
             });
 
