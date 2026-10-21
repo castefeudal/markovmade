@@ -201,7 +201,7 @@
 #calculators .mm-lab-details-body li{position:relative;padding-left:14px}
 #calculators .mm-lab-details-body li:before{position:absolute;left:0;top:.7em;width:4px;height:4px;border-radius:50%;background:rgb(var(--color-gold)/.7)}
 #calculators .mm-lab-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-#calculators .mm-lab-primary, #calculators .mm-lab-secondary, #calculators .mm-lab-link{min-width:0;max-width:100%;overflow-wrap:anywhere;min-height:48px;border-radius:999px;padding:0 18px;display:inline-flex;align-items:center;justify-content:center;font:900 14px/1 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:transform .2s ease,border-color .2s ease,background .2s ease,color .2s ease}
+#calculators .mm-lab-primary, #calculators .mm-lab-secondary, #calculators .mm-lab-link{min-width:0;max-width:100%;overflow-wrap:anywhere;min-height:48px;border-radius:999px;padding:12px 18px;display:inline-flex;align-items:center;justify-content:center;text-align:center;font:750 14px/1.5 Manrope,sans-serif;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:transform .2s ease,border-color .2s ease,background .2s ease,color .2s ease}
 #calculators .mm-lab-primary{flex:1 1 190px;border:1px solid rgb(var(--color-gold));background:rgb(var(--color-gold));color:rgb(var(--bg-obsidian))}
 #calculators .mm-lab-primary:hover{transform:translateY(-1px);box-shadow:0 15px 36px rgb(var(--color-gold)/.12)}
 #calculators .mm-lab-secondary{border:1px solid var(--lab-line);background:rgb(255 255 255/.02);color:var(--lab-soft)}
@@ -218,8 +218,8 @@
 #calculators .mm-lab-hero-result p{overflow-wrap:anywhere;margin:10px 0 0;color:var(--lab-soft);font:500 1rem/1.7 Manrope,sans-serif}
 #calculators .mm-lab-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 #calculators .mm-lab-metric{min-width:0;padding:13px;border:1px solid var(--lab-line);border-radius:14px;background:rgb(0 0 0/.11)}
-#calculators .mm-lab-metric small{display:block;color:var(--lab-muted);font:800 14px/1.3 Manrope,sans-serif;letter-spacing:.09em;text-transform:uppercase;margin-bottom:7px;overflow-wrap: anywhere}
-#calculators .mm-lab-metric b{display:block;color:rgb(var(--text-platinum));font:600 clamp(1rem,2vw,1.4rem)/1.08 var(--mm-font-display),serif;overflow-wrap:anywhere}
+#calculators .mm-lab-metric small{display:block;color:var(--lab-muted);font:750 14px/1.5 Manrope,sans-serif;letter-spacing:.045em;text-transform:uppercase;min-block-size:3em;margin-bottom:8px;overflow-wrap: anywhere}
+#calculators .mm-lab-metric b{display:block;color:rgb(var(--text-platinum));font:650 clamp(1rem,2vw,1.4rem)/1.4 var(--mm-font-body),sans-serif;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 #calculators .mm-lab-metric em{display:block;margin-top:5px;color:var(--mm-text-muted);font:500 14px/1.5 Manrope,sans-serif;font-style:normal}
 #calculators .mm-lab-insight{margin-top:13px;padding:15px;border-left:2px solid rgb(var(--color-gold)/.75);border-radius:0 13px 13px 0;background:rgb(var(--color-gold)/.045);color:var(--lab-soft);font:500 1rem/1.7 Manrope,sans-serif}
 #calculators .mm-lab-insight strong{color:rgb(var(--text-platinum));font-weight:850}
