@@ -10,7 +10,8 @@
     overfeeding:['Переедание','Overfeeding'],
     recovery:['Восстановление','Recovery'],
     progress:['Прогресс','Progress'],
-    strategy:['Стратегия','Strategy']
+    strategy:['Стратегия','Strategy'],
+    strength:['Сила','Strength']
   };
   for(const definition of window.MarkovMadeToolkitModels?.definitions||[])tools[definition.id]=definition.title;
   const readJson = key => { try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch (_) { return null; } };
@@ -161,7 +162,8 @@
   }
 
   function renderPersonalOS() {
-    document.querySelector('[data-os-provenance]')?.replaceChildren(document.createTextNode(copy('Сегодня: локальные данные LAB · остальные экраны: демо','Today: local LAB data · other screens: demo')));
+    window.mmRenderConnectedOS?.();
+    document.querySelector('[data-os-provenance]')?.replaceChildren(document.createTextNode(copy('Локальные данные LAB · демонстрационные сценарии отмечены DEMO','Local LAB data · example scenarios are marked DEMO')));
     const state = window.MarkovMadeLab && window.MarkovMadeLab.state;
     if (!state) return;
     const n = value => Number.isFinite(value) ? new Intl.NumberFormat(lang() ? 'en-GB' : 'ru-RU', {maximumFractionDigits:1}).format(value) : null;
@@ -233,7 +235,8 @@
       lab:readJson(LAB_KEY) || {},
       history:snapshots(),
       dailyCheckins:readJson('markovmade-lab-daily-v1') || [],
-      favorites:readJson('markovmade-lab-favorites-v1') || []
+      favorites:readJson('markovmade-lab-favorites-v1') || [],
+      osActions:readJson('markovmade-os-actions-v1') || {}
     };
     const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
     const url = URL.createObjectURL(blob);
@@ -251,7 +254,7 @@
     try {
       const payload = JSON.parse(await file.text());
       if (!payload || payload.schema !== 'markovmade-lab-export-v1' || !payload.lab || typeof payload.lab !== 'object' || !payload.lab.profile || typeof payload.lab.profile !== 'object') throw new Error('schema');
-      const allowed = ['body','nutrition','overfeeding','recovery','progress','strategy'];
+      const allowed = ['body','nutrition','overfeeding','recovery','progress','strategy','strength'];
       if (allowed.some(key => payload.lab[key] && typeof payload.lab[key] !== 'object')) throw new Error('data');
       if(payload.lab.toolkit){
         if(typeof payload.lab.toolkit!=='object'||Array.isArray(payload.lab.toolkit))throw new Error('toolkit');
@@ -271,7 +274,11 @@
         if(payload.dailyCheckins.some(item=>!item||!/^\d{4}-\d{2}-\d{2}$/.test(item.date)||!Number.isFinite(Date.parse(item.date))||new Date(item.date).toISOString().slice(0,10)!==item.date||!['weight','waist','sleep','energy','calories','adherence'].every(key=>item[key]===undefined||Number.isFinite(item[key]))))throw new Error('daily data');
         staged.push(['markovmade-lab-daily-v1',payload.dailyCheckins]);
       }
-      if(Array.isArray(payload.favorites))staged.push(['markovmade-lab-favorites-v1',payload.favorites.filter(key=>tools[key]).slice(0,6)]);
+      if(Array.isArray(payload.favorites))staged.push(['markovmade-lab-favorites-v1',payload.favorites.filter(key=>Object.hasOwn(tools,key)).slice(0,6)]);
+      if(payload.osActions!==undefined){
+        if(!payload.osActions||typeof payload.osActions!=='object'||Array.isArray(payload.osActions)||Object.entries(payload.osActions).some(([key,value])=>!/^\d{4}-\d{1,2}-\d{1,2}:[0-2]$/.test(key)||typeof value!=='boolean'))throw new Error('OS actions');
+        staged.push(['markovmade-os-actions-v1',payload.osActions]);
+      }
       const previous=staged.map(([key])=>[key,localStorage.getItem(key)]);
       try{for(const[key,value]of staged)if(!writeJson(key,value))throw new Error('storage');}
       catch(error){

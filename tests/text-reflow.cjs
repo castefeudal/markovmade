@@ -1,0 +1,18 @@
+const assert=require('node:assert/strict'),fs=require('node:fs');
+const {chromium,firefox,webkit}=require('playwright');
+const {startServer,root}=require('./browser-helpers.cjs');
+(async()=>{const server=await startServer();try{for(const[name,engine]of Object.entries({chromium,firefox,webkit})){
+ const browser=await engine.launch({headless:true,...(name==='firefox'?{firefoxUserPrefs:{'network.proxy.type':0}}:{}),...(name==='webkit'?{proxy:{server:'http://127.0.0.1:9',bypass:'127.0.0.1,localhost'}}:{})});
+ try{for(const lang of ['ru','en'])for(const theme of ['aurum-noir','event-horizon','clarity']){
+  const page=await browser.newPage({viewport:{width:320,height:900},reducedMotion:'reduce'});await page.goto(server.url+`/?lang=${lang}&theme=${theme}`);const measuredWidth=await page.evaluate(()=>document.documentElement.clientWidth);if(measuredWidth!==320)await page.setViewportSize({width:Math.round(320*320/measuredWidth),height:Math.round(900*320/measuredWidth)});await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));assert.equal(await page.evaluate(()=>document.documentElement.clientWidth),320,'test uses 320 CSS pixels even under Windows WebKit display scaling');await page.evaluate(async()=>{await Promise.all([mmLoadLab(),mmLoadOS(),mmLoadContent(),mmLoadLanguage(),mmLoadStyles()]);await window.mmLanguageReady;await document.fonts.ready;});
+  // Enlarge actual text and its line boxes, keeping layout lengths and the root
+  // rem unchanged. Precompute every size to avoid compounding nested elements.
+  await page.evaluate(()=>{const sizes=[...document.querySelectorAll('body *')].filter(el=>!['SCRIPT','STYLE','TITLE','DESC'].includes(el.tagName)&&(el.matches('input,select,textarea,button')||[...el.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()))).map(el=>[el,getComputedStyle(el).fontSize,getComputedStyle(el).lineHeight]);for(const[el,font,line]of sizes){el.style.fontSize=parseFloat(font)*2+'px';if(line!=='normal')el.style.lineHeight=parseFloat(line)*2+'px';}});
+  async function fits(selector,label){const geometry=await page.locator(selector).evaluate(el=>({client:el.clientWidth,scroll:el.scrollWidth}));assert.ok(geometry.scroll<=geometry.client+2,`${name}/${lang}/${theme}/${label}: 200% text overflow ${JSON.stringify(geometry)}`);}
+  await fits('#hero','hero');
+  for(const selector of ['[data-mm-lab-tab]','[data-app-tab]'])for(const button of await page.locator(selector).all()){await button.click();const id=await button.getAttribute('aria-controls');await fits('#'+id,id);if(id==='insights'){for(let step=0;step<2;step++){await page.locator('#insights .mm-insights-wizard [data-wizard-next]').click();await fits('#insights','insights step '+(step+2));}}}
+  await page.evaluate(()=>scrollTo(0,0));await page.locator('#burger-btn').click();await fits('#mobile-menu','mobile menu');await page.keyboard.press('Escape');await page.locator('.theme-switch:visible').first().click();await fits('#mm-theme-dialog','theme dialog');await page.keyboard.press('Escape');
+  if(name==='chromium'&&lang==='ru'&&theme==='aurum-noir'){fs.mkdirSync(root+'/test-results/text-reflow',{recursive:true});await page.locator('#mm-os-tab-today').click();await page.locator('#mm-os-screen-today').screenshot({path:root+'/test-results/text-reflow/today-200-percent.png'});}
+  await page.close();
+ }console.log('200% text reflow verified: '+name+' · RU/EN × three themes · 320px · HERO, six LAB panels, five OS panels, menu and theme dialog.');}finally{await browser.close();}
+ }}finally{await server.close();}})().catch(error=>{console.error(error);process.exitCode=1;});

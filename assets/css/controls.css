@@ -6,7 +6,7 @@ html[data-theme="clarity"] { --mm-action-text: #fff; }
 .mm-primary-cta, .mm-secondary-cta {
   display: inline-flex; align-items: center; justify-content: center; gap: .75rem;
   min-height: 3.25rem; padding: .875rem 1.6rem; border: 1px solid transparent; border-radius: .625rem;
-  font: 750 .8125rem/1.4 var(--mm-font-body); letter-spacing: .04em; text-transform: none;
+  font: 750 .875rem/1.4 var(--mm-font-body); letter-spacing: .04em; text-transform: none;
   text-decoration: none; cursor: pointer;
   transition: background-color 160ms ease, border-color 160ms ease;
 }

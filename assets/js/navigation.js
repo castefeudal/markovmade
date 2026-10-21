@@ -95,6 +95,7 @@
       [...document.querySelectorAll('[role="tab"]')].find(tab=>tab.getAttribute('aria-controls')===panel.id)?.click();
     }
     if(target.matches('[role="tab"]'))target.click();
+    if(target.tagName==='DETAILS')target.open=true;
     for(let parent=target.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
     target.scrollIntoView({behavior,block:'start'});
     if(focus){

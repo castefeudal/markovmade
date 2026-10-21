@@ -76,7 +76,7 @@
             if(strengthMount){
                 if(!el('lab-e1rm-tool')){
                     const tool=document.createElement('section');tool.id='lab-e1rm-tool';tool.className='mm-lab-e1rm';tool.setAttribute('aria-labelledby','lab-e1rm-title');
-                    tool.innerHTML='<h4 id="lab-e1rm-title" data-no-translate data-ru-dynamic-text="Силовой ориентир · e1RM">Силовой ориентир · e1RM</h4><p>Расчётный максимум для сравнения динамики, а не рекомендация проверять реальный 1ПМ.</p><div class="mm-lab-fields"><div class="mm-lab-field"><label for="lab-e1rm-exercise">Упражнение</label><select id="lab-e1rm-exercise" class="mm-lab-select"><option>Присед</option><option>Жим лёжа</option><option>Становая тяга</option><option>Другое</option></select></div><div class="mm-lab-field"><label for="lab-e1rm-load">Рабочий вес · кг</label><input id="lab-e1rm-load" class="mm-lab-input" type="number" min="1" max="500" step="0.5" inputmode="decimal"></div><div class="mm-lab-field"><label for="lab-e1rm-reps">Повторения</label><input id="lab-e1rm-reps" class="mm-lab-input" type="number" min="1" max="15" step="1" inputmode="numeric"></div></div><div class="mm-lab-actions"><button type="button" class="mm-lab-primary" id="lab-e1rm-calculate">Оценить 1ПМ</button></div><p id="lab-e1rm-result" class="mm-lab-insight" aria-live="polite">Введите вес и повторы.</p>';
+                    tool.innerHTML='<h4 id="lab-e1rm-title" data-no-translate data-ru-dynamic-text="Силовой ориентир · e1RM">Силовой ориентир · e1RM</h4><p>Расчётный максимум для сравнения динамики, а не рекомендация проверять реальный 1ПМ.</p><div class="mm-lab-fields"><div class="mm-lab-field"><label for="lab-e1rm-exercise">Упражнение</label><select id="lab-e1rm-exercise" class="mm-lab-select"><option value="squat">Присед</option><option value="bench">Жим лёжа</option><option value="deadlift">Становая тяга</option><option value="other">Другое</option></select></div><div class="mm-lab-field"><label for="lab-e1rm-load">Рабочий вес · кг</label><input id="lab-e1rm-load" class="mm-lab-input" type="number" min="1" max="500" step="0.5" inputmode="decimal"></div><div class="mm-lab-field"><label for="lab-e1rm-reps">Повторения</label><input id="lab-e1rm-reps" class="mm-lab-input" type="number" min="1" max="15" step="1" inputmode="numeric"></div></div><div class="mm-lab-actions"><button type="button" class="mm-lab-primary" id="lab-e1rm-calculate">Оценить 1ПМ</button></div><p id="lab-e1rm-result" class="mm-lab-insight" aria-live="polite">Введите вес и повторы.</p>';
                     strengthMount.appendChild(tool);
                     const loadPlan=document.createElement('div');loadPlan.className='mm-lab-load-plan';loadPlan.setAttribute('data-no-translate','');loadPlan.innerHTML='<label for="lab-e1rm-increment" id="lab-e1rm-increment-label">Шаг округления · кг</label><select id="lab-e1rm-increment" class="mm-lab-select"><option value="2.5">2,5 кг</option><option value="5">5 кг</option></select><p id="lab-e1rm-load-plan" aria-live="polite"></p>';tool.appendChild(loadPlan);
                     let lastEstimate=null;
@@ -87,10 +87,11 @@
                     };
                     el('lab-e1rm-increment').addEventListener('change',renderLoads);
                     new MutationObserver(renderLoads).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});renderLoads();
+                    const liftId=value=>({'присед':'squat','squat':'squat','жим лёжа':'bench','жим лежа':'bench','bench press':'bench','становая тяга':'deadlift','deadlift':'deadlift','другое':'other','other':'other'}[String(value).trim().toLowerCase()]||value);
                     el('lab-e1rm-calculate').addEventListener('click',()=>{
                         const load=Number(String(val('lab-e1rm-load')).replace(',','.')),reps=Number(val('lab-e1rm-reps')),exercise=val('lab-e1rm-exercise'),out=el('lab-e1rm-result');
                         if(!Number.isFinite(load)||load<1||load>500||!Number.isInteger(reps)||reps<1||reps>15){out.textContent='Укажите рабочий вес от 1 до 500 кг и 1–15 повторений.';return;}
-                        const estimate=estimate1RM(load,reps),history=Array.isArray(state.strength?.history)?state.strength.history:[],previous=history.filter(item=>item.exercise===exercise).slice(-1)[0];
+                        const estimate=estimate1RM(load,reps),history=Array.isArray(state.strength?.history)?state.strength.history:[],previous=history.filter(item=>item&&liftId(item.exercise)===exercise).slice(-1)[0];
                         lastEstimate=estimate.value;renderLoads();
                         const entry={exercise,load,reps,value:estimate.value,date:localToday()};history.push(entry);state.strength={modelVersion:'1.0.0',history:history.slice(-90)};save();
                         const delta=previous?` · ${estimate.value-previous.value>=0?'+':''}${fmt(estimate.value-previous.value,1)} кг к предыдущей записи`:' · Запись стала начальной точкой тренда';
@@ -269,8 +270,12 @@
             }
             $$('[data-reset]').forEach(btn=>btn.addEventListener('click',()=>resetTool(btn.dataset.reset)));
             el('mm-lab-clear-all')?.addEventListener('click',()=>{
-                if(!window.confirm('Очистить локальные данные MARKOVMADE LAB на этом устройстве?')) return;
-                try{localStorage.removeItem(STORAGE_KEY);localStorage.removeItem('markovmade-lab-history-v1');localStorage.removeItem('markovmade-lab-daily-v1');localStorage.removeItem('markovmade-lab-favorites-v1')}catch(e){} state=emptyState(); if(window.MarkovMadeLab) window.MarkovMadeLab.state=state;
+                const english=document.documentElement.lang==='en';
+                if(!window.confirm(english?'Clear local MARKOVMADE LAB data on this device?':'Очистить локальные данные MARKOVMADE LAB на этом устройстве?')) return;
+                try{for(const key of [STORAGE_KEY,'markovmade-lab-history-v1','markovmade-lab-daily-v1','markovmade-lab-favorites-v1','markovmade-os-actions-v1'])localStorage.removeItem(key);}
+                catch(e){const status=el('mm-lab-data-status');if(status)status.textContent=english?'Storage is unavailable. Complete deletion could not be confirmed. Try again.':'Хранилище недоступно. Полную очистку подтвердить не удалось. Повторите попытку.';return;}
+                if(el('mm-lab-data-status'))el('mm-lab-data-status').textContent='';state=emptyState(); if(window.MarkovMadeLab) window.MarkovMadeLab.state=state;
+                window.mmRefreshOSActions?.();window.mmRefreshPersonalOS?.();
                 $$('[data-profile]').forEach(x=>x.value=''); ['body','nutrition','overfeeding','recovery','progress','strategy'].forEach(resetTool); updateFemaleFields(); updateSnapshot();
             });
 

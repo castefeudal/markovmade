@@ -5,6 +5,7 @@
   const FAV_KEY='markovmade-lab-favorites-v1';
   const HISTORY_KEY='markovmade-lab-history-v1';
   const tools={body:['Состав тела','Body'],nutrition:['Питание','Nutrition'],overfeeding:['Переедание','Overfeeding'],recovery:['Ресурс','Recovery'],progress:['Прогресс','Progress'],strength:['Сила','Strength']};
+  for(const definition of window.MarkovMadeToolkitModels?.definitions||[])tools[definition.id]=definition.title;
   const toolIcons={body:'body',nutrition:'calories',overfeeding:'balance',recovery:'recovery',progress:'trend',strength:'strength'};
   const $=id=>document.getElementById(id);
   const en=()=>document.documentElement.lang==='en';
@@ -18,7 +19,7 @@
   const number=id=>{const raw=$(id).value.trim().replace(',','.');return raw===''?null:Number(raw);};
   const set=(id,value)=>{const node=$(id);if(node)node.textContent=value;};
   const status=value=>set('mm-checkin-status',value);
-  let period=7;
+  let period=7,selectedDate=null;
 
   function localize(){
     document.querySelectorAll('[data-checkin-ru][data-checkin-en]').forEach(node=>{node.textContent=en()?node.dataset.checkinEn:node.dataset.checkinRu;});
@@ -74,23 +75,60 @@
   }
   function renderChart(trend){
     const root=$('mm-progress-chart'),key=$('mm-progress-metric').value,metric=trend[key],points=metric.points;
+    const previousSelection=selectedDate;
     root.replaceChildren();
-    if(!points.length){root.textContent=copy('В этом периоде нет измерений выбранного показателя.','No measurements for this metric in this period.');set('mm-progress-chart-caption','');return;}
+    selectedDate=null;
+    $('mm-progress-edit-selected').hidden=true;
+    set('mm-progress-selection',copy('Выберите точку: касанием или стрелками на клавиатуре.','Select a reading by touch or with the arrow keys.'));
+    if(!points.length){set('mm-progress-selection','');root.textContent=copy('В этом периоде нет измерений выбранного показателя.','No measurements for this metric in this period.');set('mm-progress-chart-caption','');return;}
     const ns='http://www.w3.org/2000/svg';
-    const svg=document.createElementNS(ns,'svg');const chartWidth=Math.max(280,Math.min(800,root.clientWidth||640)),left=60,right=chartWidth-16;svg.setAttribute('viewBox','0 0 '+chartWidth+' 250');svg.setAttribute('role','img');svg.setAttribute('aria-labelledby','mm-chart-title mm-chart-description');
+    const svg=document.createElementNS(ns,'svg');const chartWidth=Math.max(200,Math.min(800,root.clientWidth||640)),left=60,right=chartWidth-16;svg.setAttribute('viewBox','0 0 '+chartWidth+' 250');svg.setAttribute('role','group');svg.setAttribute('aria-labelledby','mm-chart-title mm-chart-description');
     const node=(tag,attributes,text)=>{const el=document.createElementNS(ns,tag);for(const[k,v]of Object.entries(attributes))el.setAttribute(k,String(v));if(text!==undefined)el.textContent=text;svg.append(el);return el;};
     node('title',{id:'mm-chart-title'},metrics[key][Number(en())]+' · '+period+' '+copy('дней','days'));
-    node('desc',{id:'mm-chart-description'},copy('Точки — реальные измерения. Пунктир соединяет дни с пропусками; отсутствующие значения не рассчитаны.','Dots are observed readings. Dashes connect gaps; missing values are not estimated.'));
+    node('desc',{id:'mm-chart-description'},copy('Точки — реальные измерения. Горизонтальная линия — среднее. Пунктир соединяет дни с пропусками; отсутствующие значения не рассчитаны.','Dots are observed readings. The horizontal line is the mean. Dashes connect gaps; missing values are not estimated.'));
     const end=Date.parse(today()),start=end-(period-1)*86400000;
     const values=points.map(p=>p.value),lo=Math.min(...values),hi=Math.max(...values),pad=Math.max((hi-lo)*.18,key==='energy'?.5:key==='sleep'?.25:.2),min=lo-pad,max=hi+pad;
     const x=date=>left+(Date.parse(date)-start)/Math.max(86400000,end-start)*(right-left),y=value=>210-(value-min)/(max-min)*184;
     for(let i=0;i<3;i++){const value=min+(max-min)*i/2;node('line',{x1:left,x2:right,y1:y(value),y2:y(value),class:'mm-chart-grid'});node('text',{x:left-10,y:y(value)+5,'text-anchor':'end',class:'mm-chart-label'},fmt(value));}
     for(let i=1;i<points.length;i++){const prev=points[i-1],p=points[i];node('line',{x1:x(prev.date),y1:y(prev.value),x2:x(p.date),y2:y(p.value),class:'mm-chart-line','stroke-dasharray':(Date.parse(p.date)-Date.parse(prev.date))/86400000>1?'5 5':'none'});}
-    for(const p of points){const circle=node('circle',{cx:x(p.date),cy:y(p.value),r:4,class:'mm-chart-point'});const title=document.createElementNS(ns,'title');title.textContent=dateLabel(p.date)+': '+fmt(p.value);circle.append(title);}
-    const first=new Date(start).toISOString().slice(0,10);node('text',{x:left,y:240,class:'mm-chart-label'},dateLabel(first));node('text',{x:right,y:240,'text-anchor':'end',class:'mm-chart-label'},dateLabel(today()));root.append(svg);
+    const selectPoint=(point,index,focus=false)=>{
+      selectedDate=point.date;
+      const picker=$('mm-progress-reading');if(picker)picker.value=String(index);
+      const targets=svg.querySelectorAll('[data-reading]');
+      targets.forEach((target,i)=>{target.setAttribute('tabindex',i===index?'0':'-1');target.setAttribute('aria-pressed',String(i===index));});
+      set('mm-progress-selection',dateLabel(point.date)+' · '+metrics[key][Number(en())]+': '+fmt(point.value)+' '+metrics[key][en()?3:2]);
+      $('mm-progress-edit-selected').hidden=false;
+      if(focus)targets[index].focus();
+    };
+    // A single tab stop; arrow keys traverse observations without inventing missing days.
+    points.forEach((point,index)=>{
+      const group=node('g',{'data-reading':point.date,role:'button',tabindex:index===0?'0':'-1','aria-pressed':'false','aria-label':dateLabel(point.date)+': '+fmt(point.value)+' '+metrics[key][en()?3:2]});
+      const target=document.createElementNS(ns,'ellipse');
+      for(const [attribute,value]of Object.entries({cx:x(point.date),cy:y(point.value),rx:22,ry:22,class:'mm-chart-hit'}))target.setAttribute(attribute,String(value));
+      const dot=document.createElementNS(ns,'circle');
+      for(const [attribute,value]of Object.entries({cx:x(point.date),cy:y(point.value),r:4,class:'mm-chart-point'}))dot.setAttribute(attribute,String(value));
+      group.append(target,dot);
+      group.addEventListener('click',()=>selectPoint(point,index));
+      group.addEventListener('focus',()=>selectPoint(point,index));
+      group.addEventListener('keydown',event=>{
+        const next=event.key==='ArrowRight'?Math.min(points.length-1,index+1):event.key==='ArrowLeft'?Math.max(0,index-1):event.key==='Home'?0:event.key==='End'?points.length-1:null;
+        if(next!==null){event.preventDefault();selectPoint(points[next],next,true);}
+        else if(event.key==='Enter'||event.key===' '){event.preventDefault();selectPoint(point,index);}
+      });
+    });
+    const meanValue=window.MarkovMadeModels.average(values);
+    node('line',{x1:left,x2:right,y1:y(meanValue),y2:y(meanValue),class:'mm-chart-mean'});
+    const pickerLabel=document.createElement('label'),picker=document.createElement('select');
+    pickerLabel.htmlFor='mm-progress-reading';pickerLabel.textContent=copy('Выбрать измерение','Choose a reading');
+    picker.id='mm-progress-reading';picker.className='mm-progress-reading';
+    const prompt=document.createElement('option');prompt.value='';prompt.textContent=copy('Дата и значение','Date and value');picker.append(prompt);
+    points.forEach((point,index)=>{const option=document.createElement('option');option.value=String(index);option.textContent=dateLabel(point.date)+' · '+fmt(point.value)+' '+metrics[key][en()?3:2];picker.append(option);});
+    picker.addEventListener('change',()=>{if(picker.value!==''){const index=Number(picker.value);selectPoint(points[index],index);}});
+    const first=new Date(start).toISOString().slice(0,10);node('text',{x:left,y:240,class:'mm-chart-label'},dateLabel(first));node('text',{x:right,y:240,'text-anchor':'end',class:'mm-chart-label'},dateLabel(today()));root.append(svg,pickerLabel,picker);
+    const previousIndex=points.findIndex(point=>point.date===previousSelection);if(previousIndex>=0)selectPoint(points[previousIndex],previousIndex);
     const mean=window.MarkovMadeModels.average(values),comparison=window.MarkovMadeModels.checkinComparison(entries(),period).metrics[key];
     const unit=metrics[key][en()?3:2];
-    set('mm-progress-chart-caption',copy('Измерений: ','Readings: ')+points.length+'/'+period+' · '+copy('Среднее: ','Mean: ')+fmt(mean)+' '+unit+' · '+copy('Изменение по тренду: ','Trend change: ')+trendText(metric,unit)+' · '+copy('Среднее против предыдущего периода: ','Mean vs previous period: ')+(comparison.delta===null?copy('недостаточно данных','insufficient data'):(comparison.delta>=0?'+':'')+fmt(comparison.delta)+' '+unit)+' ('+comparison.currentCount+'/'+period+' · '+comparison.previousCount+'/'+period+'). '+copy('Пунктир — пропуски измерений. Сравнение средних требует ≥75% дней в обоих периодах.','Dashed lines mark gaps. Mean comparison requires ≥75% of days in both periods.'));
+    set('mm-progress-chart-caption',copy('Измерений: ','Readings: ')+points.length+'/'+period+' · '+copy('Среднее: ','Mean: ')+fmt(mean)+' '+unit+' · '+copy('Изменение по тренду: ','Trend change: ')+trendText(metric,unit)+' · '+copy('Среднее против предыдущего периода: ','Mean vs previous period: ')+(comparison.delta===null?copy('недостаточно данных','insufficient data'):(comparison.delta>=0?'+':'')+fmt(comparison.delta)+' '+unit)+' ('+comparison.currentCount+'/'+period+' · '+comparison.previousCount+'/'+period+'). '+copy('Горизонтальная линия — среднее; пунктир — пропуски измерений. Сравнение средних требует ≥75% дней в обоих периодах.','The horizontal line is the mean; dashed lines mark gaps. Mean comparison requires ≥75% of days in both periods.'));
   }
   function renderRecords(records){
     const root=$('mm-progress-records');root.replaceChildren();
@@ -116,19 +154,19 @@
     else set('mm-checkin-maintenance',copy('Адаптивное поддержание появится после 14 последовательных дней с весом и калориями. Сейчас: ','Adaptive maintenance needs 14 consecutive days with weight and calories. Current: ')+observed.count+'/14.');
   }
 
-  function history(){const value=read(HISTORY_KEY,[]);return Array.isArray(value)?value.filter(item=>item&&tools[item.tool]&&item.inputs):[];}
-  function favorites(){const raw=read(FAV_KEY,[]);return Array.isArray(raw)?raw.filter(item=>tools[item]).slice(0,6):[];}
-  function openTool(key){const tab=document.querySelector(`[data-mm-lab-tab="${key}"]`);if(tab){tab.click();tab.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});}}
+  function history(){const value=read(HISTORY_KEY,[]);return Array.isArray(value)?value.filter(item=>item&&Object.hasOwn(tools,item.tool)&&item.inputs):[];}
+  function favorites(){const raw=read(FAV_KEY,[]);return Array.isArray(raw)?raw.filter(item=>Object.hasOwn(tools,item)).slice(0,6):[];}
+  function openTool(key){const definition=window.MarkovMadeToolkit?.tools.find(tool=>tool.id===key);if(definition&&!document.querySelector(`[data-mm-lab-tab="${key}"]`)){window.MarkovMadeToolkit.open(definition);return;}const tab=document.querySelector(`[data-mm-lab-tab="${key}"]`);if(tab){tab.click();tab.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});}}
   function renderQuick(){
     const root=$('mm-lab-quick-list');if(!root)return;
     const fav=favorites(),recent=[...new Set(history().map(item=>item.tool))];
-    const order=[...new Set([...fav,...recent,...Object.keys(tools)])];
+    const order=[...new Set([...fav,...recent,...Object.keys(tools).slice(0,6)])].slice(0,8);
     root.replaceChildren();
     order.forEach(key=>{
       const item=document.createElement('span');item.className='mm-lab-quick-item';
-      const go=document.createElement('button');go.type='button';go.className='mm-lab-quick-open';const icon=document.createElementNS('http://www.w3.org/2000/svg','svg'),use=document.createElementNS('http://www.w3.org/2000/svg','use');icon.setAttribute('aria-hidden','true');icon.setAttribute('focusable','false');use.setAttribute('href',`#mm-icon-${toolIcons[key]}`);icon.append(use);go.append(icon,document.createTextNode(tools[key][Number(en())]));go.addEventListener('click',()=>openTool(key));
+      const go=document.createElement('button');go.type='button';go.className='mm-lab-quick-open';const icon=document.createElementNS('http://www.w3.org/2000/svg','svg'),use=document.createElementNS('http://www.w3.org/2000/svg','use');icon.setAttribute('aria-hidden','true');icon.setAttribute('focusable','false');use.setAttribute('href',`#mm-icon-${toolIcons[key]||'compass'}`);icon.append(use);go.append(icon,document.createTextNode(tools[key][Number(en())]));go.addEventListener('click',()=>openTool(key));
       const star=document.createElement('button');star.type='button';star.className='mm-lab-quick-favorite';star.textContent=fav.includes(key)?'★':'☆';star.setAttribute('aria-pressed',String(fav.includes(key)));star.setAttribute('aria-label',copy(`${fav.includes(key)?'Убрать из избранного':'В избранное'}: ${tools[key][0]}`,`${fav.includes(key)?'Remove favorite':'Add favorite'}: ${tools[key][1]}`));
-      star.addEventListener('click',()=>{const next=fav.includes(key)?fav.filter(item=>item!==key):[...fav,key];write(FAV_KEY,next);renderQuick();});
+      star.addEventListener('click',()=>{const next=fav.includes(key)?fav.filter(item=>item!==key):[...fav,key];if(next.length>6){status(copy('В избранном уже 6 инструментов. Сначала уберите один.','You have 6 favorites. Remove one first.'));return;}if(write(FAV_KEY,next)){$('calculators').dispatchEvent(new CustomEvent('mm:favorites-change'));}else status(copy('Браузер не сохранил избранное.','The browser could not save favorites.'));renderQuick();});
       item.append(go,star);root.appendChild(item);
     });
     const repeat=$('mm-lab-repeat-last');repeat.disabled=history().length===0;
@@ -137,6 +175,11 @@
   function repeatLast(){
     const last=history()[0];if(!last){status(copy('Сначала выполните расчёт.','Run a calculation first.'));return;}
     openTool(last.tool);
+    if(!document.querySelector(`[data-mm-lab-tab="${last.tool}"]`)){
+      for(const[key,value]of Object.entries(last.inputs)){const field=$(`toolkit-${last.tool}-${key}`);if(field)field.value=String(value);}
+      $('mm-toolkit-workspace').querySelector('form')?.requestSubmit();
+      status(copy('Последний расчёт повторён с сохранёнными полями.','Last calculation repeated with saved inputs.'));renderQuick();return;
+    }
     const panel=document.querySelector(`[data-mm-lab-panel="${last.tool}"]`);
     Object.entries(last.inputs).forEach(([id,value])=>{const field=panel?.querySelector(`#${CSS.escape(id)}`);if(field&&field.type!=='file')field.value=String(value);});
     const button=panel?.querySelector(`[data-calc="${last.tool}"]`);if(button)button.click();
@@ -164,9 +207,22 @@
     $('mm-checkin-date').addEventListener('change',event=>{populate(event.target.value);status('');});
     $('mm-lab-checkin-form').addEventListener('submit',saveDay);
     $('mm-progress-metric').addEventListener('change',renderTrends);
+    $('mm-progress-edit-selected').addEventListener('click',()=>{
+      if(!selectedDate)return;
+      $('mm-checkin-date').value=selectedDate;populate(selectedDate);const metric=$('mm-progress-metric').value;if(metric!=='weight')$('mm-checkin-extra').open=true;$('mm-checkin-'+metric).focus();
+    });
+    $('mm-progress-export-csv').addEventListener('click',()=>{
+      const fields=['date','weight','waist','sleep','energy','calories','adherence'];
+      const raw=read(DAILY_KEY,[]),records=Array.isArray(raw)?raw.filter(record=>record&&validDate(record.date)).sort((a,b)=>a.date.localeCompare(b.date)):[];
+      const rows=records.map(record=>fields.map(key=>key==='date'?record.date:Number.isFinite(record[key])?String(record[key]):'').join(','));
+      const blob=new Blob(['\uFEFF'+['date,weight_kg,waist_cm,sleep_h,energy_1_10,calories_kcal,adherence_percent',...rows].join('\r\n')],{type:'text/csv;charset=utf-8'});
+      const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download='markovmade-measurements-'+today()+'.csv';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+    });
     if('ResizeObserver' in window){let width=0;new ResizeObserver(items=>{const next=Math.round(items[0].contentRect.width);if(next>0&&next!==width){width=next;requestAnimationFrame(renderTrends);}}).observe($('mm-progress-chart'));}
     window.addEventListener('storage',event=>{if(event.key===DAILY_KEY){populate($('mm-checkin-date').value);render();}});
     document.querySelectorAll('[data-checkin-period]').forEach(button=>button.addEventListener('click',()=>{period=Number(button.dataset.checkinPeriod);document.querySelectorAll('[data-checkin-period]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));renderTrends();}));
+    $('calculators').addEventListener('mm:favorites-change',renderQuick);
+    $('calculators').addEventListener('mm:toolkit-result',()=>queueMicrotask(renderQuick));
     $('mm-lab-repeat-last').addEventListener('click',repeatLast);
     $('mm-checkin-use-calibration').addEventListener('click',useCalibration);
     document.addEventListener('click',event=>{if(event.target.closest?.('[data-calc]'))setTimeout(renderQuick,50);if(event.target.closest?.('#mm-lab-clear-all'))setTimeout(()=>{populate(today());render();},50);});

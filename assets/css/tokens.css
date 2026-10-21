@@ -65,7 +65,7 @@
   --mm-type-h2: clamp(2.15rem, 4.2vw, 4.8rem);
   --mm-type-h3: clamp(1.45rem, 2vw, 2.1rem);
   --mm-type-body: clamp(1rem, .96rem + .18vw, 1.125rem);
-  --mm-type-label: .8125rem;
+  --mm-type-label: .875rem;
   --mm-bg-obsidian: 8 8 7;
   --mm-bg-charcoal: 21 20 17;
   --mm-text-platinum: 242 240 233;

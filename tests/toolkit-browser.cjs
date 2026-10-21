@@ -15,12 +15,13 @@ const fixtures=require('./toolkit-fixtures.json');
       assert.equal(await page.locator('.mm-lab-daily-trends small svg use').count(),4,'daily trend cards have matching visual icons');
       assert.equal(await page.locator('.mm-toolkit-card-head svg').count(),3,'featured tools have category icons');
       assert.equal(await page.evaluate(()=>window.MarkovMadeToolkit.tools.length),23);
-      await page.locator('#mm-toolkit-search').fill('protein');assert.equal(await page.locator('[data-tool-id="protein"]').count(),1);await page.locator('#mm-toolkit-search').fill('');
+      await page.locator('#mm-toolkit-search').fill('protein');assert.equal(await page.locator('[data-tool-id="protein"]').count(),1);await page.locator('.mm-toolkit-favorite').click();assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-favorites-v1'))),['protein']);await page.locator('#mm-toolkit-search').fill('');await page.locator('[data-category="favorites"]').click();assert.equal(await page.locator('[data-tool-id="protein"]').count(),1);await page.locator('[data-category="all"]').click();
       for(const [id,values] of Object.entries(fixtures)){
         await page.evaluate(id=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id===id)),id);
         for(const [key,value] of Object.entries(values))await page.locator(`#toolkit-${id}-${key}`).fill(String(value));
         await page.locator('#mm-toolkit-workspace button[type="submit"]').click();assert.equal(await page.locator('#mm-toolkit-result .mm-toolkit-outcome').count(),1,`${name}/${lang}/${theme}/${id}`);
         assert.ok((await page.locator('#mm-toolkit-result').innerText()).length>100);
+        assert.equal(await page.locator('#mm-lab-repeat-last').isEnabled(),true,'repeat-last refreshes after the result reaches history');
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true,`${id} page overflow`);
         assert.equal(await page.locator('#mm-toolkit-workspace').evaluate(el=>el.scrollWidth<=el.clientWidth+2),true,`${id} workspace overflow`);
       }
@@ -36,7 +37,8 @@ const fixtures=require('./toolkit-fixtures.json');
       if(name==='chromium'&&lang==='ru'&&theme==='aurum-noir'){await page.locator('.mm-toolkit-summary').scrollIntoViewIfNeeded();await page.screenshot({path:root+'/test-results/toolkit-summary-demo.png'});}
       const download=page.waitForEvent('download');await page.locator('.mm-toolkit-summary button').click();assert.match((await download).suggestedFilename(),/\.txt$/);
       await page.evaluate(()=>window.mmPreviewShare('Private test text','https://t.me/share/url?text=Private'));assert.equal(await page.locator('.mm-share-preview pre').innerText(),'Private test text');await page.keyboard.press('Escape');await page.locator('.mm-share-preview').waitFor({state:'detached'});
-      await page.reload();await page.evaluate(()=>window.mmLoadLab());assert.equal(await page.evaluate(()=>Object.keys(window.MarkovMadeLab.state.toolkit).length),17);
+      await page.locator('[data-category="recent"]').click();assert.ok(await page.locator('[data-tool-id="protein"]').count(),'recent calculations cover the full catalogue');await page.locator('[data-category="all"]').click();
+      await page.reload();await page.evaluate(()=>window.mmLoadLab());assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-favorites-v1'))),['protein']);assert.equal(await page.evaluate(()=>Object.keys(window.MarkovMadeLab.state.toolkit).length),17);
       await page.evaluate(()=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='protein')));assert.equal(await page.locator('#toolkit-protein-weight').inputValue(),'80');
       for(const width of [320,360,390,430,768,1440,2560]){await page.setViewportSize({width,height:900});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true,`${name}/${theme}/${width} overflow`);}
       assert.deepEqual(errors,[],`${name}/${lang}/${theme} runtime errors`);report.push({browser:name,lang,theme,tools:17,errors});await page.close();
