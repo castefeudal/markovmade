@@ -128,7 +128,7 @@
     overflow: hidden;
 }
 
-#calculators{--lab-line:rgb(var(--text-platinum)/.095);--lab-line-gold:rgb(var(--color-gold)/.28);--lab-card:rgb(255 255 255/.027);--lab-card-2:rgb(255 255 255/.045);--lab-muted:var(--mm-text-muted);--lab-soft:var(--mm-text-secondary);position:relative;isolation:isolate;overflow-anchor:none;overflow:hidden;background:radial-gradient(circle at 18% 4%,rgb(var(--color-gold)/.07),transparent 34rem),linear-gradient(180deg,rgb(var(--bg-charcoal)/.56),rgb(var(--bg-obsidian)));border-top:1px solid rgb(var(--color-gold)/.12)}
+#calculators{--lab-line:rgb(var(--text-platinum)/.095);--lab-line-gold:rgb(var(--color-gold)/.28);--lab-card:rgb(255 255 255/.027);--lab-card-2:rgb(255 255 255/.045);--lab-muted:var(--mm-text-muted);--lab-soft:var(--mm-text-secondary);position:relative;isolation:isolate;overflow:hidden;background:radial-gradient(circle at 18% 4%,rgb(var(--color-gold)/.07),transparent 34rem),linear-gradient(180deg,rgb(var(--bg-charcoal)/.56),rgb(var(--bg-obsidian)));border-top:1px solid rgb(var(--color-gold)/.12)}
 #calculators, #calculators *{box-sizing:border-box}
 #calculators .mm-lab-wrap{width:min(1320px,calc(100% - 32px));margin:0 auto;position:relative;z-index:2}
 #calculators .mm-lab-kicker{display:inline-flex;align-items:center;gap:9px;margin-bottom:18px;font:900 14px/1 Manrope,'MM Body Fallback',Arial,sans-serif;letter-spacing:.26em;text-transform:uppercase;color:rgb(var(--color-gold))}
@@ -203,7 +203,7 @@
 #calculators .mm-lab-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 #calculators .mm-lab-primary, #calculators .mm-lab-secondary, #calculators .mm-lab-link{min-width:0;max-width:100%;overflow-wrap:anywhere;min-height:48px;border-radius:999px;padding:12px 18px;display:inline-flex;align-items:center;justify-content:center;text-align:center;font:750 14px/1.5 Manrope,sans-serif;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:transform .2s ease,border-color .2s ease,background .2s ease,color .2s ease}
 #calculators .mm-lab-primary{flex:1 1 190px;border:1px solid rgb(var(--color-gold));background:rgb(var(--color-gold));color:rgb(var(--bg-obsidian))}
-#calculators .mm-lab-primary:hover{transform:translateY(-1px);box-shadow:0 15px 36px rgb(var(--color-gold)/.12)}
+#calculators .mm-lab-primary:hover{box-shadow:0 15px 36px rgb(var(--color-gold)/.12)}
 #calculators .mm-lab-secondary{border:1px solid var(--lab-line);background:rgb(255 255 255/.02);color:var(--lab-soft)}
 #calculators .mm-lab-secondary:hover{border-color:rgb(var(--color-gold)/.40);color:rgb(var(--color-gold))}
 #calculators .mm-lab-link{border:1px solid rgb(var(--color-gold)/.35);color:rgb(var(--color-gold));background:rgb(var(--color-gold)/.04)}
