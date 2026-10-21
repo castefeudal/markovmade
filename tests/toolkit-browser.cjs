@@ -19,7 +19,7 @@ const fixtures=require('./toolkit-fixtures.json');
       for(const [id,values] of Object.entries(fixtures)){
         await page.evaluate(id=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id===id)),id);
         for(const [key,value] of Object.entries(values))await page.locator(`#toolkit-${id}-${key}`).fill(String(value));
-        await page.locator('#mm-toolkit-workspace button[type="submit"]').click();assert.equal(await page.locator('#mm-toolkit-result .mm-toolkit-outcome').count(),1,`${name}/${lang}/${theme}/${id}`);
+        try{await page.locator('#mm-toolkit-workspace button[type="submit"]').click();}catch(error){console.error('Toolkit submit failed: '+name+'/'+lang+'/'+theme+'/'+id);console.error(await page.locator('#mm-toolkit-workspace button[type="submit"]').evaluate(async el=>{const samples=[];for(let i=0;i<8;i++){await new Promise(resolve=>requestAnimationFrame(resolve));const r=el.getBoundingClientRect();samples.push({top:r.top,height:r.height,scrollY,documentHeight:document.documentElement.scrollHeight});}return samples;}));throw error;}assert.equal(await page.locator('#mm-toolkit-result .mm-toolkit-outcome').count(),1,`${name}/${lang}/${theme}/${id}`);
         assert.ok((await page.locator('#mm-toolkit-result').innerText()).length>100);
         assert.equal(await page.locator('#mm-lab-repeat-last').isEnabled(),true,'repeat-last refreshes after the result reaches history');
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true,`${id} page overflow`);
