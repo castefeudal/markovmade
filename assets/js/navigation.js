@@ -35,30 +35,35 @@
     else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
   });
   const locationLinks = [...document.querySelectorAll('#main-header nav a[href^="#"], #mobile-menu nav a[href^="#"]')];
-  const locationTargets = [...new Set(locationLinks.map(link => document.getElementById(link.getAttribute('href').slice(1))).filter(Boolean))];
+  const locationTargets = [...new Set(locationLinks.map(link => document.getElementById(link.getAttribute('href').slice(1))).filter(Boolean))].sort((a,b)=>a.compareDocumentPosition(b)&Node.DOCUMENT_POSITION_FOLLOWING?-1:1);
+  let currentLocation=null;
   function setCurrentLocation(id) {
+    if(currentLocation===id)return;
+    currentLocation=id;
     locationLinks.forEach(link => {
       if (id && link.getAttribute('href') === `#${id}`) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
     });
   }
-  if ('IntersectionObserver' in window && locationTargets.length) {
-    const locationObserver = new IntersectionObserver(entries => {
-      const active = entries.filter(entry => entry.isIntersecting).sort((a, b) =>
-        Math.abs(a.boundingClientRect.top - innerHeight * .28) - Math.abs(b.boundingClientRect.top - innerHeight * .28)
-      )[0];
-      let id = active?.target.id;
-      if (!id) {
-        const marker = innerHeight * .28;
-        id = locationTargets.find(target => {
-          const rect = target.getBoundingClientRect();
-          return rect.top <= marker && rect.bottom > marker;
-        })?.id;
-      }
-      setCurrentLocation(id || '');
-    }, { rootMargin: '-26% 0px -64% 0px', threshold: 0 });
-    locationTargets.forEach(target => locationObserver.observe(target));
+  function updateCurrentLocation() {
+    // Resolve the complete document order, not just the entries changed in one
+    // observer callback. Keep a section current through its supporting content.
+    const marker=Math.min(innerHeight*.75,Math.max((header?.offsetHeight||72)+24,innerHeight*.5));
+    let id='';
+    for(const target of locationTargets){
+      if(target.getBoundingClientRect().top>marker)break;
+      id=target.id;
+    }
+    if(scrollY>0&&scrollY+innerHeight>=document.documentElement.scrollHeight-2)id=locationTargets.at(-1)?.id||id;
+    setCurrentLocation(id);
   }
+  if ('IntersectionObserver' in window && locationTargets.length) {
+    const locationObserver=new IntersectionObserver(updateCurrentLocation,{threshold:0});
+    locationTargets.forEach(target=>locationObserver.observe(target));
+  }else addEventListener('load',updateCurrentLocation,{once:true});
+  if('ResizeObserver' in window&&main)new ResizeObserver(()=>{
+    if(!scrollFrame)scrollFrame=requestAnimationFrame(renderScroll);
+  }).observe(main);
   let navigationRequest=0;
   function savePosition(){
     const marker=innerHeight*.3;
@@ -102,6 +107,11 @@
       if(!target.matches('a[href],button,input,select,textarea,[tabindex]'))target.setAttribute('tabindex','-1');
       target.focus({preventScroll:true});
     }
+    // Revealing content-visibility sections can change the anchor's position
+    // after the browser's first scroll. Realign after that layout is painted.
+    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+    if(request!==navigationRequest)return false;
+    target.scrollIntoView({behavior,block:'start'});
     return true;
   }
   document.addEventListener('click', event => {
@@ -158,6 +168,7 @@
   function renderScroll() {
     scrollFrame = 0;
     const y = scrollY;
+    updateCurrentLocation();
     progress.style.transform = `scaleX(${Math.min(1, y / Math.max(1, document.documentElement.scrollHeight - innerHeight))})`;
     const down = y > 200 && y > lastY + 2;
     header?.classList.toggle('scrolled-down', down && !document.body.classList.contains('menu-open'));

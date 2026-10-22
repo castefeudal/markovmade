@@ -994,9 +994,7 @@ html, body { overflow-x: hidden; }
 @media (max-width: 640px) {
   #mobile-menu a { width: 100%; max-width: 340px; text-align: center; border: 1px solid rgba(255,255,255,.08); border-radius: 999px; padding: .95rem 1rem; background: rgba(255,255,255,.022); }
 }
-@media (max-width: 640px) {
-  #mobile-menu .mobile-app-link { border-color: rgb(var(--color-gold) / .38); background: rgb(var(--color-gold) / .08); }
-}
+
 html, body { overflow-x: hidden; }
 section, footer, main, .container, .mm-editorial-inner { min-width: 0; }
 img, video, canvas, svg { max-width: 100%; }
@@ -1892,12 +1890,8 @@ html[lang="en"] .tracking-luxury {
   #services .mb-20 { margin-bottom: 2.5rem; }
 }
 #mobile-menu a { color: rgb(var(--text-platinum) / .88); }
-#mobile-menu a[href="#services"] {
-    color: rgb(var(--color-gold));
-    border-color: rgb(var(--color-gold) / .40);
-    background: rgb(var(--color-gold) / .08);
-}
-#mobile-menu a:not([href="#services"]):hover { color: rgb(var(--color-gold)); }
+
+#mobile-menu a:hover { color: rgb(var(--color-gold)); }
 #services, #services .container, #services .mm-service-route {
     min-width: 0;
     max-width: 100%;
