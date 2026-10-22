@@ -90,6 +90,7 @@ html[data-theme="clarity"] #services .mm-service-summary-main strong{font-family
 #main-header a[href="#contact"]:hover:after{transform:translateX(125%);}
 #main-header a[href="#contact"]:active{transform:translateY(1px) scale(.985);filter:brightness(.98);}
 #main-header a[href="#contact"]:focus-visible{outline:2px solid var(--mm-focus);outline-offset:3px;}
+#main-header a[href="#contact"][aria-current="location"]{outline:2px solid var(--mm-accent);outline-offset:4px;}
 #main-header a[href="#contact"] svg{position:relative;z-index:1;width:15px;height:15px;transition:transform .25s var(--mm-ease-premium);}
 #main-header a[href="#contact"]:hover svg{transform:translateX(1px) scale(1.06);}
 #main-header #burger-btn{position:relative;gap:6px;transition:transform .22s var(--mm-ease-premium),border-color .22s ease,background .22s ease,color .22s ease;}
