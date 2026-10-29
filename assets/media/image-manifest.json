@@ -378,5 +378,525 @@
     "path": "assets/media/hero-portrait-320w.avif",
     "width": 320,
     "height": 216
+  },
+  {
+    "path": "assets/media/services/service-condition-320w.webp",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/services/service-condition-640w.webp",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/services/service-condition-1024w.webp",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/services/service-condition.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "path": "assets/media/services/service-condition-320w.avif",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/services/service-condition-640w.avif",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/services/service-condition-1024w.avif",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/services/service-condition.avif",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "path": "assets/media/services/service-mentorship-320w.webp",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/services/service-mentorship-640w.webp",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/services/service-mentorship-1024w.webp",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/services/service-mentorship.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "path": "assets/media/services/service-mentorship-320w.avif",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/services/service-mentorship-640w.avif",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/services/service-mentorship-1024w.avif",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/services/service-mentorship.avif",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "path": "assets/media/services/service-nutrition-320w.webp",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/services/service-nutrition-640w.webp",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/services/service-nutrition-1024w.webp",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/services/service-nutrition.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "path": "assets/media/services/service-nutrition-320w.avif",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/services/service-nutrition-640w.avif",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/services/service-nutrition-1024w.avif",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/services/service-nutrition.avif",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "path": "assets/media/services/service-strength-320w.webp",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/services/service-strength-640w.webp",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/services/service-strength-1024w.webp",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/services/service-strength.webp",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "path": "assets/media/services/service-strength-320w.avif",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/services/service-strength-640w.avif",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/services/service-strength-1024w.avif",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/services/service-strength.avif",
+    "width": 1536,
+    "height": 1024
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-a-320w.webp",
+    "width": 320,
+    "height": 400
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-a-640w.webp",
+    "width": 640,
+    "height": 800
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-a-1024w.webp",
+    "width": 1024,
+    "height": 1280
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-a.webp",
+    "width": 1600,
+    "height": 2000
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-a-320w.avif",
+    "width": 320,
+    "height": 400
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-a-640w.avif",
+    "width": 640,
+    "height": 800
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-a-1024w.avif",
+    "width": 1024,
+    "height": 1280
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-a.avif",
+    "width": 1600,
+    "height": 2000
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-b-320w.webp",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-b-640w.webp",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-b-1024w.webp",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-b.webp",
+    "width": 1600,
+    "height": 1066
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-b-320w.avif",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-b-640w.avif",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-b-1024w.avif",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/editorial/bio-craft-b.avif",
+    "width": 1600,
+    "height": 1066
+  },
+  {
+    "path": "assets/media/editorial/bio-legacy-face-320w.webp",
+    "width": 320,
+    "height": 320
+  },
+  {
+    "path": "assets/media/editorial/bio-legacy-face-640w.webp",
+    "width": 640,
+    "height": 640
+  },
+  {
+    "path": "assets/media/editorial/bio-legacy-face-1024w.webp",
+    "width": 1024,
+    "height": 1024
+  },
+  {
+    "path": "assets/media/editorial/bio-legacy-face.webp",
+    "width": 1126,
+    "height": 1126
+  },
+  {
+    "path": "assets/media/editorial/bio-legacy-face-320w.avif",
+    "width": 320,
+    "height": 320
+  },
+  {
+    "path": "assets/media/editorial/bio-legacy-face-640w.avif",
+    "width": 640,
+    "height": 640
+  },
+  {
+    "path": "assets/media/editorial/bio-legacy-face-1024w.avif",
+    "width": 1024,
+    "height": 1024
+  },
+  {
+    "path": "assets/media/editorial/bio-legacy-face.avif",
+    "width": 1126,
+    "height": 1126
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-a-320w.webp",
+    "width": 320,
+    "height": 400
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-a-640w.webp",
+    "width": 640,
+    "height": 800
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-a-1024w.webp",
+    "width": 1024,
+    "height": 1280
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-a.webp",
+    "width": 1600,
+    "height": 2000
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-a-320w.avif",
+    "width": 320,
+    "height": 400
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-a-640w.avif",
+    "width": 640,
+    "height": 800
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-a-1024w.avif",
+    "width": 1024,
+    "height": 1280
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-a.avif",
+    "width": 1600,
+    "height": 2000
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-b-320w.webp",
+    "width": 320,
+    "height": 400
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-b-640w.webp",
+    "width": 640,
+    "height": 800
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-b-1024w.webp",
+    "width": 1024,
+    "height": 1280
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-b.webp",
+    "width": 1600,
+    "height": 2000
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-b-320w.avif",
+    "width": 320,
+    "height": 400
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-b-640w.avif",
+    "width": 640,
+    "height": 800
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-b-1024w.avif",
+    "width": 1024,
+    "height": 1280
+  },
+  {
+    "path": "assets/media/editorial/bio-origin-b.avif",
+    "width": 1600,
+    "height": 2000
+  },
+  {
+    "path": "assets/media/editorial/bio-rise-a-320w.webp",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/editorial/bio-rise-a-640w.webp",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/editorial/bio-rise-a-1024w.webp",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/editorial/bio-rise-a.webp",
+    "width": 1362,
+    "height": 908
+  },
+  {
+    "path": "assets/media/editorial/bio-rise-a-320w.avif",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/editorial/bio-rise-a-640w.avif",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/editorial/bio-rise-a-1024w.avif",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/editorial/bio-rise-a.avif",
+    "width": 1362,
+    "height": 908
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-a-320w.webp",
+    "width": 320,
+    "height": 192
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-a-640w.webp",
+    "width": 640,
+    "height": 384
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-a-1024w.webp",
+    "width": 1024,
+    "height": 614
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-a.webp",
+    "width": 1280,
+    "height": 768
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-a-320w.avif",
+    "width": 320,
+    "height": 192
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-a-640w.avif",
+    "width": 640,
+    "height": 384
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-a-1024w.avif",
+    "width": 1024,
+    "height": 614
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-a.avif",
+    "width": 1280,
+    "height": 768
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-b-320w.webp",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-b-640w.webp",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-b-1024w.webp",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-b.webp",
+    "width": 1280,
+    "height": 852
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-b-320w.avif",
+    "width": 320,
+    "height": 214
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-b-640w.avif",
+    "width": 640,
+    "height": 426
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-b-1024w.avif",
+    "width": 1024,
+    "height": 682
+  },
+  {
+    "path": "assets/media/editorial/bio-stage-b.avif",
+    "width": 1280,
+    "height": 852
+  },
+  {
+    "path": "assets/media/portrait/portrait-author-320w.webp",
+    "width": 320,
+    "height": 400
+  },
+  {
+    "path": "assets/media/portrait/portrait-author-640w.webp",
+    "width": 640,
+    "height": 800
+  },
+  {
+    "path": "assets/media/portrait/portrait-author-1024w.webp",
+    "width": 1024,
+    "height": 1280
+  },
+  {
+    "path": "assets/media/portrait/portrait-author.webp",
+    "width": 1200,
+    "height": 1500
+  },
+  {
+    "path": "assets/media/portrait/portrait-author-320w.avif",
+    "width": 320,
+    "height": 400
+  },
+  {
+    "path": "assets/media/portrait/portrait-author-640w.avif",
+    "width": 640,
+    "height": 800
+  },
+  {
+    "path": "assets/media/portrait/portrait-author-1024w.avif",
+    "width": 1024,
+    "height": 1280
+  },
+  {
+    "path": "assets/media/portrait/portrait-author.avif",
+    "width": 1200,
+    "height": 1500
   }
 ]

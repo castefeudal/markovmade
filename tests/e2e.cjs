@@ -274,7 +274,7 @@ let browser;
   const accordion = page.locator('#services .mm-service-editorial-item summary').first();
   await accordion.click();
   assert.equal(await accordion.evaluate(el=>el.parentElement.open),true);
-  assert.match(await page.locator('#about .mm-author-story-photo').getAttribute('src'),/03-image-fGFdFRLn\.webp/,'the original About portrait is restored');
+  assert.match(await page.locator('#about .mm-author-story-photo').getAttribute('src'),/portrait-author\.webp/,'the About portrait is a real photograph of Pavel');
   const quickRequest=page.locator('#request-quiz');
   assert.equal(await page.locator('.mm-request-details').evaluate(el=>el.open),false,'the full request form is optional and collapsed by default');
   const optionalBlocker=quickRequest.locator('.mm-request-optional');

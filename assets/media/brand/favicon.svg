@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="MARKOVMADE">
+  <title>MARKOVMADE</title>
+  <rect width="64" height="64" rx="14" fill="#0b0b09"/>
+  <g fill="none" stroke="#c7ae78" stroke-width="6.4" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M14 49V15l18 21 18-21v34"/>
+  </g>
+</svg>

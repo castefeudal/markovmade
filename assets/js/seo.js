@@ -1,5 +1,5 @@
 (function(){
-  var SEO_IMAGE = 'https://castefeudal.github.io/markovmade/assets/media/portfolio/01-11-20Z6SwTz.webp';
+  var SEO_IMAGE = 'https://castefeudal.github.io/markovmade/assets/media/brand/og-cover.png';
   function setMeta(selector, value){ var el=document.querySelector(selector); if(el) el.setAttribute('content', value); }
   function applySeoMeta(){
     var en = document.documentElement.lang === 'en' || document.body.classList.contains('lang-en');
