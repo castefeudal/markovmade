@@ -2,6 +2,10 @@
    same promise; original fields and localStorage remain owned by lab-runtime. */
 (function () {
   let pending, ready = false;
+  // The position is remembered from the passive scroll event instead of being read
+  // inside the intersection callback: reading it there forced the whole document to
+  // lay out on a frame where the browser had only just worked out the geometry.
+  let lastScrollY = 0;
   const section = document.getElementById('calculators');
   if (!section) return;
   const scripts = new Map();
@@ -41,7 +45,7 @@
   }
   window.mmLoadLab = () => load().catch(error => { showFailure(); throw error; });
   const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
-    if (scrollY>0 && entries.some(e => e.isIntersecting)) load().catch(showFailure);
+    if (lastScrollY>0 && entries.some(e => e.isIntersecting)) load().catch(showFailure);
   }, { rootMargin: '0px' }) : null;
   function showFailure() {
     observer?.disconnect();
@@ -52,7 +56,7 @@
     const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'mm-secondary-cta'; retry.dataset.retryLab = ''; retry.textContent = en ? 'Try again' : 'Повторить'; status.append(retry);
   }
   observer?.observe(section);
-  addEventListener('scroll',()=>{if(!ready&&!document.getElementById('mm-lab-load-error')&&scrollY>0&&section.getBoundingClientRect().top<innerHeight+180)load().catch(showFailure);},{passive:true});
+  addEventListener('scroll',()=>{lastScrollY=scrollY;if(!ready&&!document.getElementById('mm-lab-load-error')&&lastScrollY>0&&section.getBoundingClientRect().top<innerHeight+180)load().catch(showFailure);},{passive:true});
   if (location.hash.startsWith('#lab') || location.hash === '#calculators' || !observer) load().catch(showFailure);
   document.addEventListener('pointerdown', event => {
     if (event.target.closest('a[href="#calculators"]')) load().catch(showFailure);

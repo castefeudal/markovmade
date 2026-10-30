@@ -186,6 +186,12 @@
   }
   function renderScroll() {
     scrollFrame = 0;
+    // A resize or an intersection change before the reader moved asks for a pass
+    // whose answer is already known: nothing is scrolled, nothing is current, the
+    // bar is empty and the header is in its default state. Running it anyway
+    // measured all fifteen content-visibility sections while the document was
+    // still settling, which is a single 350 ms blocked task on slower machines.
+    if (!scrolled) return;
     const y = scrollY;
     updateCurrentLocation();
     progress.style.transform = `scaleX(${Math.min(1, y / Math.max(1, document.documentElement.scrollHeight - innerHeight))})`;
