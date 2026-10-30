@@ -125,10 +125,10 @@
         attrOriginals.set(el, obj);
     }
     function applyAttrs(root, lang) {
-        var elements = (root || document).querySelectorAll ? (root || document).querySelectorAll('[placeholder], [title], [aria-label]') : [];
+        var elements = (root || document).querySelectorAll ? (root || document).querySelectorAll('[placeholder], [title], [aria-label], img[alt]') : [];
         elements.forEach(function(el) {
             if (el.closest('[data-no-translate], [data-lang-toggle]')) return;
-            ['placeholder','title','aria-label'].forEach(function(attr) {
+            ['placeholder','title','aria-label','alt'].forEach(function(attr) {
                 if (!el.hasAttribute(attr)) return;
                 storeAttr(el, attr);
                 var original = (attrOriginals.get(el) || {})[attr] || el.getAttribute(attr);
