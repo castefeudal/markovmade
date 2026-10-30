@@ -3,6 +3,10 @@
   const section = document.getElementById('app-ecosystem');
   if (!section) return;
   let pending, ready = false;
+  // The position is remembered from the passive scroll event instead of being read
+  // inside the intersection callback, which forced the whole document to lay out
+  // while the browser was still working out the geometry after first paint.
+  let lastScrollY = 0;
   const scripts = new Map();
   function script(name) {
     if (scripts.has(name)) return scripts.get(name);
@@ -43,10 +47,10 @@
     const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'mm-secondary-cta'; retry.textContent = en ? 'Try again' : 'Повторить'; retry.addEventListener('click', () => { retry.disabled = true; load().then(()=>document.dispatchEvent(new CustomEvent('mm:component-recovered',{detail:{id:section.id}}))).catch(() => {}); }); status.append(retry);
   }
   const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => {
-    if (scrollY>0 && entries.some(entry => entry.isIntersecting)) load().catch(() => {});
+    if (lastScrollY>0 && entries.some(entry => entry.isIntersecting)) load().catch(() => {});
   }, { rootMargin: '900px 0px' }) : null;
   observer?.observe(section);
-  addEventListener('scroll',()=>{if(!ready&&!document.getElementById('mm-os-load-error')&&scrollY>0&&section.getBoundingClientRect().top<innerHeight+180)load().catch(showFailure);},{passive:true});
+  addEventListener('scroll',()=>{lastScrollY=scrollY;if(!ready&&!document.getElementById('mm-os-load-error')&&lastScrollY>0&&section.getBoundingClientRect().top<innerHeight+180)load().catch(showFailure);},{passive:true});
   window.mmLoadOS = load;
   document.addEventListener('click', event => {
     const target = event.target.closest('[data-open-app-tab], [data-app-tab], #insights button, #insights input');

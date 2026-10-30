@@ -7,8 +7,9 @@
   const header = document.getElementById('main-header');
   const main = document.getElementById('main-content');
   // Reading scrollY during bootstrap flushes the entire pending initial layout.
-  // The first actual scroll event supplies the position, including restoration.
-  let returnFocus, scrollFrame = 0, resizeFrame = 0, lastY = 0;
+  // The first actual scroll event supplies the position, including restoration,
+  // and doubles as the proof that the reader is anywhere but at the top.
+  let returnFocus, scrollFrame = 0, resizeFrame = 0, lastY = 0, scrolled = false;
   function setMenu(open, opener) {
     if (!menu) return;
     if (open) returnFocus = opener || document.activeElement;
@@ -58,7 +59,14 @@
     setCurrentLocation(id);
   }
   if ('IntersectionObserver' in window && locationTargets.length) {
-    const locationObserver=new IntersectionObserver(updateCurrentLocation,{threshold:0});
+    const locationObserver=new IntersectionObserver(()=>{
+      // Before the first scroll event the reader is provably at the top, where no
+      // anchored section reaches the marker and nothing is current by construction.
+      // Walking the section list instead measured every content-visibility section
+      // from scratch on each frame the document needed to settle after first paint.
+      if(!scrolled){setCurrentLocation('');return;}
+      updateCurrentLocation();
+    },{threshold:0});
     locationTargets.forEach(target=>locationObserver.observe(target));
   }else addEventListener('load',updateCurrentLocation,{once:true});
   // Content growing or collapsing changes the runnable height, so it only needs
@@ -173,11 +181,17 @@
     resizeFrame = 0;
     // The bar is empty at the top whatever the document height turns out to be,
     // so the frames the page spends settling after first paint need no layout read.
-    if (!scrollY) return;
+    if (!scrolled) return;
     progress.style.transform = `scaleX(${Math.min(1, scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight))})`;
   }
   function renderScroll() {
     scrollFrame = 0;
+    // A resize or an intersection change before the reader moved asks for a pass
+    // whose answer is already known: nothing is scrolled, nothing is current, the
+    // bar is empty and the header is in its default state. Running it anyway
+    // measured all fifteen content-visibility sections while the document was
+    // still settling, which is a single 350 ms blocked task on slower machines.
+    if (!scrolled) return;
     const y = scrollY;
     updateCurrentLocation();
     progress.style.transform = `scaleX(${Math.min(1, y / Math.max(1, document.documentElement.scrollHeight - innerHeight))})`;
@@ -188,7 +202,7 @@
     actions.inert = y <= innerHeight;
     lastY = y;
   }
-  addEventListener('scroll', () => { if (!scrollFrame) scrollFrame = requestAnimationFrame(renderScroll); }, { passive: true });
+  addEventListener('scroll', () => { scrolled = true; if (!scrollFrame) scrollFrame = requestAnimationFrame(renderScroll); }, { passive: true });
   addEventListener('resize', () => {
     if (innerWidth > 1180 && menu && !menu.inert) setMenu(false);
     if (!scrollFrame) scrollFrame = requestAnimationFrame(renderScroll);
