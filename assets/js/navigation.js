@@ -8,7 +8,7 @@
   const main = document.getElementById('main-content');
   // Reading scrollY during bootstrap flushes the entire pending initial layout.
   // The first actual scroll event supplies the position, including restoration.
-  let returnFocus, scrollFrame = 0, lastY = 0;
+  let returnFocus, scrollFrame = 0, resizeFrame = 0, lastY = 0;
   function setMenu(open, opener) {
     if (!menu) return;
     if (open) returnFocus = opener || document.activeElement;
@@ -61,8 +61,12 @@
     const locationObserver=new IntersectionObserver(updateCurrentLocation,{threshold:0});
     locationTargets.forEach(target=>locationObserver.observe(target));
   }else addEventListener('load',updateCurrentLocation,{once:true});
+  // Content growing or collapsing changes the runnable height, so it only needs
+  // the progress scale recomputed. The section walk and the header states belong
+  // to real scrolling and resizing; running them on every resize notification
+  // forced layout for each frame the document took to settle after first paint.
   if('ResizeObserver' in window&&main)new ResizeObserver(()=>{
-    if(!scrollFrame)scrollFrame=requestAnimationFrame(renderScroll);
+    if(!resizeFrame)resizeFrame=requestAnimationFrame(renderProgress);
   }).observe(main);
   let navigationRequest=0;
   function savePosition(){
@@ -165,6 +169,13 @@
   new MutationObserver(labels).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
   labels();
   header?.addEventListener('focusin', () => { header.classList.remove('scrolled-down'); header.classList.add('scrolled-up'); });
+  function renderProgress() {
+    resizeFrame = 0;
+    // The bar is empty at the top whatever the document height turns out to be,
+    // so the frames the page spends settling after first paint need no layout read.
+    if (!scrollY) return;
+    progress.style.transform = `scaleX(${Math.min(1, scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight))})`;
+  }
   function renderScroll() {
     scrollFrame = 0;
     const y = scrollY;
