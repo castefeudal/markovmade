@@ -38,8 +38,8 @@
   </div>
 </div>
 
-                    <details class="mm-request-details"><summary>Добавить подробности <span>по желанию</span></summary><div class="relative max-w-xl mx-auto min-h-[400px]">
-                    <form id="manifest-form" class="lead-form space-y-8 transition-all duration-700 ease-[0.7,0,0.3,1]" novalidate>
+                    <details class="mm-request-details"><summary id="manifest-form-title">Добавить подробности <span>по желанию</span></summary><div class="relative max-w-xl mx-auto min-h-[400px]">
+                    <form id="manifest-form" aria-labelledby="manifest-form-title" class="lead-form space-y-8 transition-all duration-700 ease-[0.7,0,0.3,1]" novalidate>
                         <div class="lead-form-grid">
                             <label class="lead-field" for="name">
                                 <span>Имя / контакт</span>
@@ -112,12 +112,13 @@
                              <span data-no-translate data-copy-ru="· необязательно" data-copy-en="· optional">· необязательно</span></label>
                         </div>
                         <div id="lead-form-error" class="lead-form-error" role="alert" aria-live="polite"></div>
+                        <noscript data-no-translate><p class="mm-form-off">Заявка собирается в браузере и открывается в выбранном мессенджере — для этого нужен JavaScript. Без него напишите напрямую: <a href="https://t.me/markovmade">Telegram</a> · <a href="https://wa.me/79819722516">WhatsApp</a> · <a href="mailto:castefeudal@gmail.com">castefeudal@gmail.com</a>. <span lang="en">This form requires JavaScript; please use one of the direct contacts.</span></p></noscript>
                         <div class="pt-2 text-center">
                             <button type="submit" class="interactive group relative w-full sm:w-auto px-8 sm:px-14 py-5 border border-gold/50 text-gold font-sans text-xs font-extrabold tracking-[0.24em] uppercase overflow-hidden transition-all duration-500 hover:shadow-[0_0_40px_rgb(var(--color-gold)/0.16)]">
                                 <span class="relative z-10 group-hover:text-obsidian transition-colors duration-500">Собрать заявку</span>
                                 <div class="absolute inset-0 bg-gold translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-[0.16,1,0.3,1]"></div>
                             </button>
-                            <p class="mt-5 text-[9px] font-sans text-dim/50 uppercase tracking-widest">Нажимая кнопку, вы принимаете условия <button type="button" data-privacy-toggle class="border-b border-dim/30 pb-0.5 hover:text-gold hover:border-gold transition-all duration-300">обработки данных</button></p>
+                            <p class="mm-form-consent mt-5 text-[9px] font-sans text-dim/50 uppercase tracking-widest">Нажимая кнопку, вы принимаете условия <button type="button" data-privacy-toggle class="border-b border-dim/30 pb-0.5 hover:text-gold hover:border-gold transition-all duration-300">обработки данных</button></p>
                         </div>
                     </form>
 

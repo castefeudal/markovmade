@@ -31,7 +31,13 @@ function extractComponent(html, className, name) {
   }
   if (depth) throw new Error(`Unbalanced ${className}`);
   fs.writeFileSync(path.join(out,name+'.html'),html.slice(innerStart,token.index));
-  const placeholder=match[0].replace(/>$/,` data-component="${name}" aria-busy="true">`)+`<p class="mm-component-loading" role="status">${name==='lab'?'Инструменты загружаются при открытии раздела.':'Прототип загружается при открытии раздела.'}</p></div>`;
+  const loadingCopy = name === 'lab'
+    ? 'Инструменты загружаются при открытии раздела.'
+    : 'Прототип загружается при открытии раздела.';
+  const offlineCopy = name === 'lab'
+    ? 'LAB — 23 инструмента расчёта, методика и локальная история — работает при включённом JavaScript.'
+    : 'Интерактивный прототип Personal OS работает при включённом JavaScript.';
+  const placeholder=match[0].replace(/>$/,` data-component="${name}" aria-busy="true">`)+`<p class="mm-component-loading" role="status">${loadingCopy}</p><noscript><p class="mm-component-off">${offlineCopy} <span lang="en">This interactive section requires JavaScript.</span> <a href="https://t.me/markovmade">Telegram</a> · <a href="https://wa.me/79819722516">WhatsApp</a> · <a href="mailto:castefeudal@gmail.com">castefeudal@gmail.com</a></p></noscript></div>`;
   return html.slice(0,start)+placeholder+html.slice(tags.lastIndex);
 }
 (async () => {

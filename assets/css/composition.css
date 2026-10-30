@@ -22,13 +22,16 @@
 #proof-system .mm-trust-years strong{color:var(--mm-accent);font:400 clamp(4rem,7vw,7rem)/1 var(--mm-font-display);letter-spacing:-.05em;}
 /* Case studies alternate image and argument rather than repeating tiles. */
 #case-scenarios{background:var(--mm-bg-secondary);}
-#case-scenarios .mm-case-study-layout-cases-grid{display:grid;grid-template-columns:1fr;gap:0;}
-#case-scenarios .mm-case-study-layout-case-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,88px);align-items:center;padding:48px 0;border:0;border-top:var(--mm-editorial-rule);border-radius:0;background:none;box-shadow:none;}
-#case-scenarios .mm-case-study-layout-case-image{grid-column:1;grid-row:1;min-width:0;margin:0;}
-#case-scenarios .mm-case-study-layout-case-image img{display:block;width:100%;height:auto;max-height:580px;object-fit:contain;filter:var(--mm-media-filter);border-radius:4px;}
-#case-scenarios .mm-case-study-layout-case-body{grid-column:2;grid-row:1;min-width:0;padding:0;}
-#case-scenarios .mm-case-study-layout-case-card:nth-child(even) .mm-case-study-layout-case-image{grid-column:2;}
-#case-scenarios .mm-case-study-layout-case-card:nth-child(even) .mm-case-study-layout-case-body{grid-column:1;}
+#case-scenarios .mm-case-study-plate{position:relative;margin:0 0 clamp(30px,4vw,52px)}
+/* The meetup plate is one authentic frame that carries the section: it is shown whole.
+   A max-height clamp here used to crop 40% of the crowd out of the band, which is the
+   opposite of what a documentary plate is for. */
+#case-scenarios .mm-case-study-plate img{display:block;width:100%;height:auto;object-fit:cover;object-position:center 32%;filter:var(--mm-media-filter);border-radius:4px}
+#case-scenarios .mm-case-study-layout-cases-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(32px,5vw,76px)}
+#case-scenarios .mm-case-study-layout-case-card{display:block;padding:clamp(26px,3vw,38px) 0 clamp(30px,3.4vw,44px);border:0;border-top:var(--mm-editorial-rule);border-radius:0;background:none;box-shadow:none;}
+#case-scenarios .mm-case-study-case-index{display:block;margin-bottom:6px;font:500 clamp(2.1rem,2.8vw,2.7rem)/1 var(--mm-font-display);letter-spacing:.01em;color:var(--mm-accent)}
+#case-scenarios .mm-case-study-layout-case-body{min-width:0;padding:0;}
+#case-scenarios .mm-case-study-layout-case-body h3{margin:.35em 0 .5em;max-width:24ch}
 #case-scenarios .mm-case-study-case-kicker{color:var(--mm-accent);font:700 .8125rem/1.6 var(--mm-font-body);letter-spacing:.08em;text-transform:uppercase;}
 #case-scenarios h3{max-width:22ch;margin:16px 0 28px;color:var(--mm-text-primary);font:500 clamp(2rem,3.4vw,3.5rem)/1.08 var(--mm-font-display);letter-spacing:-.025em;text-wrap:balance;}
 #case-scenarios .mm-case-study-case-list{list-style:none;padding:0;margin:0;display:grid;gap:0;}
@@ -114,7 +117,7 @@
 #app-ecosystem .mm-os-lead{font-size:1.0625rem;line-height:1.8;}
 #app-ecosystem .mm-os-frame{border-radius:12px;border-color:var(--mm-border-strong);box-shadow:none;background:var(--mm-bg-secondary);}
 #app-ecosystem .mm-os-data-choice{display:flex;gap:12px;align-items:center;min-height:48px;padding:12px 20px;color:var(--mm-text-secondary);border-bottom:1px solid var(--mm-border);font:550 .875rem/1.6 var(--mm-font-body);cursor:pointer;}
-#mm-os-daily-consent{width:20px;height:20px;flex:0 0 20px;accent-color:var(--mm-accent);}
+#mm-os-daily-consent{width:24px;height:24px;flex:0 0 24px;accent-color:var(--mm-accent);}
 #mm-os-data-status{margin:0;padding-inline:20px;color:var(--mm-danger);font-size:.875rem;}
 #mm-os-data-status:empty{display:none;}
 #app-ecosystem .mm-os-metrics>div,#app-ecosystem .mm-os-progress-kpis>div{border:0;border-top:1px solid var(--mm-border-strong);border-radius:0;background:none;padding:20px 8px;}
@@ -130,7 +133,7 @@
 html[data-theme="clarity"] :is(#proof-system h2,#about h2,#community .mm-community-head h2,#calculators .mm-lab-title){font-weight:650;line-height:1.12;letter-spacing:-.04em;}
 html[data-theme="event-horizon"] :is(#proof-system,#method-proof,#biography){background-image:linear-gradient(90deg,transparent calc(50% - .5px),var(--mm-grid-color) 50%,transparent calc(50% + .5px));}
 @media(max-width:1100px){#app-ecosystem .mm-os-layout{grid-template-columns:1fr;}#app-ecosystem .mm-os-story{position:relative;top:auto;max-width:800px;}#proof-system .mm-editorial-inner{gap:40px;}#proof-system .mm-trust-heading{top:96px;}}
-@media(max-width:850px){:is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-head,#calculators .mm-lab-intro,#community .mm-community-head{grid-template-columns:1fr;gap:20px;}:is(#case-scenarios,#method-proof,#biography) .mm-editorial-copy{max-width:64ch;}#proof-system .mm-editorial-inner,#about .mm-about-grid,#method-proof .mm-editorial-process{grid-template-columns:1fr;}#proof-system .mm-trust-heading,#about .mm-author-story-photo{position:relative;top:auto;}#about .mm-author-story-photo{max-width:640px;margin-inline:auto;}#case-scenarios .mm-case-study-layout-case-card{grid-template-columns:1fr;gap:28px;}#case-scenarios .mm-case-study-layout-case-image,#case-scenarios .mm-case-study-layout-case-card:nth-child(even) .mm-case-study-layout-case-image{grid-column:1;grid-row:1;}#case-scenarios .mm-case-study-layout-case-body,#case-scenarios .mm-case-study-layout-case-card:nth-child(even) .mm-case-study-layout-case-body{grid-column:1;grid-row:2;}#case-scenarios .mm-case-study-layout-case-image img{max-height:none;}#case-scenarios .mm-case-study-layout-cases-cta{flex-direction:column;align-items:flex-start;}#biography .mm-timeline-list summary{grid-template-columns:96px minmax(0,1fr);gap:24px;}#biography .mm-timeline-content{padding-left:120px;}#calculators .mm-lab-result{border-left:0;border-top:var(--mm-editorial-rule);padding:28px 0;}#calculators .mm-toolkit-cards{grid-template-columns:1fr;}}
+@media(max-width:850px){:is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-head,#calculators .mm-lab-intro,#community .mm-community-head{grid-template-columns:1fr;gap:20px;}:is(#case-scenarios,#method-proof,#biography) .mm-editorial-copy{max-width:64ch;}#proof-system .mm-editorial-inner,#about .mm-about-grid,#method-proof .mm-editorial-process{grid-template-columns:1fr;}#proof-system .mm-trust-heading,#about .mm-author-story-photo{position:relative;top:auto;}#about .mm-author-story-photo{max-width:640px;margin-inline:auto;}#case-scenarios .mm-case-study-layout-cases-grid{grid-template-columns:1fr;}#case-scenarios .mm-case-study-layout-case-card{padding:26px 0 30px;}#case-scenarios .mm-case-study-layout-cases-cta{flex-direction:column;align-items:flex-start;}#biography .mm-timeline-list summary{grid-template-columns:96px minmax(0,1fr);gap:24px;}#biography .mm-timeline-content{padding-left:120px;}#calculators .mm-lab-result{border-left:0;border-top:var(--mm-editorial-rule);padding:28px 0;}#calculators .mm-toolkit-cards{grid-template-columns:1fr;}}
 @media(max-width:600px){:is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-title,#proof-system h2,#about h2,#calculators .mm-lab-title{font-size:clamp(2.35rem,10vw,3.5rem);}#proof-system .mm-trust-card{padding-block:28px;}#proof-system .mm-trust-years{flex-wrap:wrap;}#about .mm-author-purpose{grid-template-columns:1fr;gap:24px;}#biography .mm-timeline-list summary{grid-template-columns:72px minmax(0,1fr);gap:16px;padding-right:32px;min-height:112px;}#biography .mm-timeline-content{padding-left:0;}#biography .mm-timeline-photos{gap:16px;}#biography .mm-timeline-photos img{max-height:360px;}#method-proof .mm-editorial-step{grid-template-columns:44px minmax(0,1fr);gap:16px;}#method-proof .mm-editorial-step-num{font-size:2.5rem;}#case-scenarios .mm-case-study-case-list li{grid-template-columns:1fr;gap:4px;}#community .mm-community-card,#community .mm-community-card:first-child{padding:28px 0;border-left:0;}#community .mm-community-head h2{font-size:clamp(2.8rem,11vw,4rem);}#app-ecosystem .mm-os-wrap{width:calc(100% - 24px);}#app-ecosystem .mm-os-story h2{font-size:clamp(2.6rem,10vw,3.8rem);}#app-ecosystem .mm-os-data-choice{padding-inline:12px;}#app-ecosystem .mm-os-metrics>div,#app-ecosystem .mm-os-progress-kpis>div{padding:16px 4px;}#app-ecosystem .mm-os-metrics b,#app-ecosystem .mm-os-progress-kpis b{font-size:1.25rem;}#calculators .mm-lab-shell{border-radius:4px;}#calculators .mm-lab-hero-result strong{font-size:clamp(2.5rem,11vw,4rem);}}
 @media(prefers-reduced-motion:reduce){#app-ecosystem .mm-os-screen.active{animation:none;}}
 
@@ -218,7 +221,14 @@ html[data-theme="clarity"] .mm-plate-marks::before,html[data-theme="clarity"] .m
 #main-header .mm-logo-mark{flex:0 0 26px;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:4.2;stroke-linecap:square;stroke-linejoin:miter}
 #main-header .mm-logo-word{font:700 .78rem/1 var(--mm-font-body);letter-spacing:.3em;text-transform:uppercase;color:var(--mm-text-primary);white-space:nowrap;flex:0 1 auto;min-width:0;overflow:hidden}
 #main-header .mm-header-mobile-controls{flex:0 0 auto}
-@media(max-width:600px){#main-header .mm-header-logo-link{height:2.5rem}#main-header .mm-logo-mark{flex-basis:21px;width:21px;height:21px;stroke-width:5.4}#main-header .mm-logo-word{font-size:.64rem;letter-spacing:.22em}}
+@media(max-width:600px){#main-header .mm-header-logo-link{height:2.5rem}#main-header .mm-logo-mark{flex-basis:21px;width:21px;height:21px;stroke-width:5.4}#main-header .mm-logo-word{font-size:.68rem;letter-spacing:.2em}}
+/* Phones used to inherit the header's own gutter *and* the container's, so the brand
+   sat 47px in while the hero started at 20px and the wordmark was squeezed into a
+   clipped fragment next to the three control targets. One gutter, full lockup. */
+@media(max-width:600px){
+ #main-header{padding-inline:var(--mm-page-gutter)}
+ #main-header > .container{padding-inline:0;gap:1.25rem}
+}
 /* On the narrowest phones the lockup reduces to the monogram, and the wordmark
    clips rather than pushing the theme, language and menu controls aside. */
 @media(max-width:359px){#main-header .mm-logo{gap:0}#main-header .mm-logo-word{display:none}}
@@ -236,7 +246,6 @@ html[data-theme="clarity"] .mm-plate-marks::before,html[data-theme="clarity"] .m
 #community .mm-community-mark svg{display:block;width:100%;height:100%;fill:none;stroke:var(--mm-accent);stroke-linejoin:miter}
 
 /* ── Case studies: the outcome line must read as the payoff ──────────────*/
-#case-scenarios .mm-case-study-layout-case-image{position:relative}
 #case-scenarios .mm-case-study-case-list li.mm-case-outcome{position:relative;padding-left:20px;margin-left:-20px;background:var(--mm-accent-soft);border-top-color:var(--mm-border)}
 #case-scenarios .mm-case-study-case-list li.mm-case-outcome::before{content:'';position:absolute;left:0;top:12px;bottom:12px;width:2px;background:var(--mm-accent)}
 #case-scenarios .mm-case-study-case-list li.mm-case-outcome b{letter-spacing:.16em;text-transform:uppercase;font-size:.75rem}

@@ -111,6 +111,19 @@ html[data-theme="event-horizon"] .mm-theme-dialog, html[data-theme="event-horizo
   :root { --mm-text-primary: CanvasText; --mm-text-secondary: CanvasText; --mm-bg-primary: Canvas; --mm-border: ButtonBorder; --mm-accent: LinkText; }
   :where(button,a,input,select,textarea,summary,[role="tab"]):focus-visible { outline: 3px solid Highlight; outline-offset: 3px; }
   .mm-theme-preview, .mm-os-chart-card { border: 1px solid CanvasText; }
+  /* Card frames and the selected state are painted with theme tokens that the system
+     colour scheme erases, so each one gets a system-colour edge of its own. */
+  .mm-lab-panel, .mm-os-frame, .mm-lab-badge { border: 1px solid CanvasText; }
+  [aria-pressed="true"], [role="tab"][aria-selected="true"] { outline: 2px solid Highlight; outline-offset: -2px; }
+  /* Insights radios are invisible inputs styled through a sibling span; the system
+     palette erases that border and gradient, leaving the chosen answer unmarked.
+     Only the frame and a marker are added — recolouring the text to HighlightText
+     would paint white ink on the white canvas. */
+  #insights .mm-insights-options input:checked + span,
+  #insights .mm-insights-resource input:checked + span { outline: 2px solid Highlight; outline-offset: -2px; }
+  #insights .mm-insights-options input:checked + span::before { content: ''; flex: 0 0 9px; width: 9px; height: 9px; margin-right: 9px; border-radius: 50%; background: Highlight; }
+  #insights .mm-insights-resource input:checked + span { border: 1px solid CanvasText; }
+  #mm-scroll-progress { background: Highlight; box-shadow: none; }
   .custom-cursor, .noise-overlay { display: none; }
 }
 }

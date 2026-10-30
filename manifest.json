@@ -1,0 +1,39 @@
+{
+  "name": "MARKOVMADE — тело, питание и мышление под вашу жизнь",
+  "short_name": "MARKOVMADE",
+  "description": "Персональная система Павла Маркова: LAB с 23 инструментами расчёта, прототип Personal OS и разбор тела, питания, восстановления и дисциплины.",
+  "lang": "ru",
+  "dir": "ltr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "background_color": "#080807",
+  "theme_color": "#080807",
+  "categories": ["health", "fitness", "education"],
+  "icons": [
+    { "src": "assets/media/brand/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/media/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/media/brand/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "LAB — расчёты",
+      "short_name": "LAB",
+      "url": "./?lang=ru#calculators",
+      "icons": [{ "src": "assets/media/brand/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Personal OS",
+      "short_name": "Personal OS",
+      "url": "./?lang=ru#app-ecosystem",
+      "icons": [{ "src": "assets/media/brand/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Личный разбор",
+      "short_name": "Разбор",
+      "url": "./?lang=ru#personal-request",
+      "icons": [{ "src": "assets/media/brand/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}

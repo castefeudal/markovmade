@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preload" href="assets/media/fonts/manrope-combined.woff2" as="font" type="font/woff2" crossorigin>
     <title>MARKOVMADE | Тело, питание и мышление под вашу жизнь — Павел Марков</title>
-    <meta name="description" content="MARKOVMADE Павла Маркова: тело, питание, восстановление и мышление под реальную жизнь. Бесплатный LAB — 24 инструмента с методикой, локальной историей и следующим действием.">
+    <meta name="description" content="MARKOVMADE Павла Маркова: тело, питание, восстановление и мышление под реальную жизнь. Бесплатный LAB — 23 инструмента с методикой, локальной историей и следующим действием.">
     <meta name="author" content="Павел Марков">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="application-name" content="MARKOVMADE">
@@ -45,9 +45,10 @@
     <link rel="icon" type="image/svg+xml" href="assets/media/brand/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/media/brand/icon-32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/media/brand/icon-180.png">
+    <link rel="manifest" href="manifest.json">
 
     <!-- Динамический meta theme-color для поддержки смены тем -->
-    <meta name="theme-color" content="#050505" id="theme-color-meta">
+    <meta name="theme-color" content="#080807" id="theme-color-meta">
 
     <link rel="stylesheet" href="assets/css/fonts.css">
 <script type="application/ld+json" id="markovmade-seo-schema-v21">{
@@ -161,7 +162,7 @@
     }
   ]
 }</script>
-<script>(function(){document.documentElement.classList.add('js');var aliases={obsidian:'aurum-noir',dark:'aurum-noir',deep:'aurum-noir',ivory:'clarity',light:'clarity','ivory-atelier':'clarity','imperial-emerald':'aurum-noir','oxblood-atelier':'aurum-noir',graphite:'event-horizon',soft:'event-horizon',calm:'event-horizon','titanium-midnight':'event-horizon',contrast:'clarity','mono-access':'clarity'};var known=['aurum-noir','event-horizon','clarity'];var resolve=function(value){return aliases[value]|| (known.indexOf(value)>=0?value:null)};var value=null;try{value=resolve(localStorage.getItem('mm.theme'))||resolve(localStorage.getItem('markov-theme'))}catch(e){}value=resolve(new URLSearchParams(location.search).get('theme'))||value;document.documentElement.dataset.theme=value||'aurum-noir';var params=new URLSearchParams(location.search);var english=params.get('lang')==='en';try{if(!params.has('lang'))english=localStorage.getItem('markovmade_lang')==='en'}catch(e){}var fonts=[];if(value!=='clarity')fonts.push('cormorant-normal-'+(english?'latin':'ru'),'cormorant-italic-'+(english?'latin':'ru'));fonts.forEach(function(font){var link=document.createElement('link');link.rel='preload';link.href='assets/media/fonts/'+font+'.woff2';link.as='font';link.type='font/woff2';link.crossOrigin='anonymous';document.head.appendChild(link)})})();</script>
+<script>(function(){document.documentElement.classList.add('js');var aliases={obsidian:'aurum-noir',dark:'aurum-noir',deep:'aurum-noir',ivory:'clarity',light:'clarity','ivory-atelier':'clarity','imperial-emerald':'aurum-noir','oxblood-atelier':'aurum-noir',graphite:'event-horizon',soft:'event-horizon',calm:'event-horizon','titanium-midnight':'event-horizon',contrast:'clarity','mono-access':'clarity'};var known=['aurum-noir','event-horizon','clarity'];var resolve=function(value){return aliases[value]|| (known.indexOf(value)>=0?value:null)};var value=null;try{value=resolve(localStorage.getItem('mm.theme'))||resolve(localStorage.getItem('markov-theme'))}catch(e){}value=resolve(new URLSearchParams(location.search).get('theme'))||value;document.documentElement.dataset.theme=value||'aurum-noir';var palette={'aurum-noir':'#080807','event-horizon':'#070b14',clarity:'#f6f5f1'};var themeColor=document.getElementById('theme-color-meta');if(themeColor)themeColor.setAttribute('content',palette[document.documentElement.dataset.theme]);var params=new URLSearchParams(location.search);var english=params.get('lang')==='en';try{if(!params.has('lang'))english=localStorage.getItem('markovmade_lang')==='en'}catch(e){}var fonts=[];if(value!=='clarity')fonts.push('cormorant-normal-'+(english?'latin':'ru'),'cormorant-italic-'+(english?'latin':'ru'));fonts.forEach(function(font){var link=document.createElement('link');link.rel='preload';link.href='assets/media/fonts/'+font+'.woff2';link.as='font';link.type='font/woff2';link.crossOrigin='anonymous';document.head.appendChild(link)})})();</script>
 <link rel="stylesheet" href="assets/css/foundation.css">
 <link rel="stylesheet" href="assets/css/editorial.css">
 <link rel="stylesheet" href="assets/css/lab.css">
@@ -173,7 +174,36 @@
 <link rel="stylesheet" href="assets/css/hero.css">
 <link rel="stylesheet" href="assets/css/controls.css">
 <link rel="stylesheet" href="assets/css/header.css">
-
+<style media="print">
+/* Paper and PDF. The screen identity is three dark editorial themes; on paper that
+   is ink-heavy noise, so print gets one neutral reading surface and keeps the content. */
+@page { margin: 15mm 13mm; }
+html, body { background: #fff !important; color: #14140f !important; }
+#main-header, #mobile-menu, .theme-switch, .lang-switch, #burger-btn, .mm-noscript-nav,
+#mm-quick-actions, #mm-scroll-progress, .custom-cursor, #hero-head-video, #hero-head-canvas,
+#hero-head-fallback, .mm-lab-periods, #mm-toolkit-workspace button[type="submit"],
+[data-lang-toggle], [data-theme-toggle] { display: none !important; }
+/* The animated layers cannot exist on paper, but the portrait can: it is the face of the
+   brand and the only image on the first page. Without this the media plate printed as an
+   empty black rectangle where the photograph used to be. */
+.mm-hero-media { background: none !important; height: auto !important; min-height: 0 !important; border-radius: 0 !important; }
+.mm-hero-media::before, .mm-hero-media::after { display: none !important; }
+#hero-head-fallback { display: block !important; position: static !important; inset: auto !important; width: 100%; height: auto !important; max-height: 118mm; object-fit: cover; object-position: center 20%; }
+/* Off-screen sections are skipped by the printer unless the hint is lifted. */
+* { content-visibility: visible !important; contain-intrinsic-size: auto !important; }
+main { padding-top: 0 !important; }
+#hero { min-height: 0 !important; padding-block: 0 8mm !important; }
+section { padding-block: 6mm !important; border-bottom: .3pt solid #d8d5cc; background: #fff !important; box-shadow: none !important; }
+h1, h2, h3, h4, p, li, span, b, a, figcaption, td, th, label { color: #14140f !important; text-shadow: none !important; background: none !important; box-shadow: none !important; }
+a { text-decoration: underline; }
+#contact a[href^="http"]::after, #contact a[href^="mailto"]::after { content: " — " attr(href); font-weight: 400; }
+img, picture, video, svg { filter: none !important; box-shadow: none !important; }
+figure, .mm-case-study-layout-case-card, .mm-plate, details { break-inside: avoid; }
+details { border: 0; }
+details > *:not(summary) { display: block !important; }
+summary { list-style: none; font-weight: 700; }
+.mm-component-loading, .mm-lab-quick-tools { display: none !important; }
+</style>
 </head>
 
 <body class="bg-obsidian antialiased selection:bg-gold selection:text-obsidian">
@@ -244,9 +274,25 @@
         </div>
     </header>
 
+    <!-- Без JavaScript выпадающее меню недоступно: разделы остаются списком ссылок.
+         data-no-translate marks an intentional exemption, not a missed key: this block only
+         exists when scripting is off, and the language switch is itself scripted, so a
+         no-JS visitor always reads the Russian page. The i18n contract skips this subtree. -->
+    <noscript data-no-translate>
+        <nav class="mm-noscript-nav" aria-label="Разделы страницы">
+            <a href="#services">Услуги</a>
+            <a href="#calculators">Расчёт</a>
+            <a href="#app-ecosystem">Приложение</a>
+            <a href="#biography">Путь</a>
+            <a href="#about">Обо мне</a>
+            <a href="#community">Сообщество</a>
+            <a href="#contact">Контакты</a>
+        </nav>
+    </noscript>
+
     <!-- MOBILE MENU -->
     <div id="mobile-menu" inert aria-hidden="true" role="dialog" aria-modal="true" aria-label="Навигация" class="fixed inset-0 z-[55] bg-obsidian flex flex-col justify-center px-6 transform translate-x-full transition-transform duration-700 cubic-bezier(0.7,0,0.3,1) overflow-y-auto">
-        <button type="button" data-menu-close aria-label="Закрыть меню">×</button>
+        <button type="button" data-menu-close aria-label="Закрыть меню"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
         <nav class="flex flex-col items-center gap-8 min-h-min py-16 w-full">
             <a href="#calculators" class="interactive font-sans text-base md:text-lg font-semibold tracking-[0.08em] uppercase text-platinum transition-colors block min-h-11 flex items-center" >Расчёт</a>
             <a href="#services" class="interactive font-sans text-base md:text-lg font-semibold tracking-[0.08em] uppercase text-platinum transition-colors block min-h-11 flex items-center" >Услуги</a>
@@ -313,6 +359,8 @@
 
 
 
+        </main>
+
         <footer class="bg-charcoal py-12 px-6 border-t border-gold/10 relative overflow-hidden transition-colors duration-500">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,_rgb(var(--color-gold)/0.04),_transparent_50%)] pointer-events-none"></div>
 
@@ -321,7 +369,7 @@
                     MARKOVMADE © 2026
                 </span>
                 <button type="button" data-privacy-toggle class="footer-gold-sync-pulse font-sans text-[11px] tracking-[0.4em] uppercase transition-all duration-300 bg-transparent border-0 p-0">
-    Privacy Policy
+    Политика приватности
 </button>
                 <span class="footer-gold-sync-pulse font-sans text-[11px] tracking-[0.4em] uppercase">
                     MARKOVMADE PRODUCTION
@@ -329,8 +377,6 @@
             </div>
 
         </footer>
-
-</main>
 
     <!-- МОДАЛЬНОЕ ОКНО ПРАВИЛ -->
     <div id="privacy-modal" class="fixed inset-0 z-[10000] hidden overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="privacy-title" tabindex="-1">

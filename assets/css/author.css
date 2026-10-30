@@ -177,14 +177,14 @@ body:not(.theme-light) button:not(.calc-primary-btn):not(.calc-gold-link):not(.l
 .lead-optional-details summary::-webkit-details-marker { display: none; } }
 @layer base {
 .lead-optional-details summary span {
-    font: 900 .68rem/1.35 'Manrope','MM Body Fallback',Arial, sans-serif;
-    letter-spacing: .16em;
+    font: 900 .75rem/1.35 'Manrope','MM Body Fallback',Arial, sans-serif;
+    letter-spacing: .12em;
     text-transform: uppercase;
 } }
 @layer base {
 .lead-optional-details summary b {
-    font: 800 .62rem/1 'Manrope','MM Body Fallback',Arial, sans-serif;
-    letter-spacing: .14em;
+    font: 800 .72rem/1 'Manrope','MM Body Fallback',Arial, sans-serif;
+    letter-spacing: .1em;
     text-transform: uppercase;
     color: rgb(var(--text-platinum) / .56);
     border: 1px solid rgb(var(--color-gold) / .20);
@@ -284,7 +284,7 @@ body:not(.theme-light) button:not(.calc-primary-btn):not(.calc-gold-link):not(.l
 @layer priority {
         .lead-field span { letter-spacing: 0.12em; } }
 @layer priority {
-        .manifest-input::placeholder, textarea.manifest-input::placeholder { color: rgb(var(--text-platinum) / 0.38); text-transform: none; letter-spacing: 0; font-size: 0.88rem; } }
+        .manifest-input::placeholder, textarea.manifest-input::placeholder { color: rgb(var(--text-platinum) / 0.62); text-transform: none; letter-spacing: 0; font-size: 0.88rem; } }
 @layer priority {
         @media (max-width: 640px) {
             .lead-form-grid, .lead-action-grid { grid-template-columns: 1fr; }
@@ -499,8 +499,8 @@ body:not(.theme-light) button:not(.calc-primary-btn):not(.calc-gold-link):not(.l
     min-height: 34px;
     padding: .56rem .82rem;
     border-radius: 999px;
-    font: 900 .68rem/1 Manrope, sans-serif;
-    letter-spacing: .18em;
+    font: 900 .75rem/1 Manrope, sans-serif;
+    letter-spacing: .14em;
     text-transform: uppercase;
     border: 1px solid currentColor;
     background: rgb(255 255 255 / .045);
@@ -511,6 +511,14 @@ body:not(.theme-light) button:not(.calc-primary-btn):not(.calc-gold-link):not(.l
 #contact .contact-btn-telegram .contact-channel { color: #63D3FF; } }
 @layer priority {
 #contact .contact-btn-email .contact-channel { color: rgb(var(--color-gold)); } }
+/* The three neon channel marks were tuned for the dark themes; on Clarity's ivory
+   they fell to ~1.4:1. Same signal, readable ink. */
+@layer priority {
+html[data-theme="clarity"] #contact .contact-btn-whatsapp .contact-channel { color: var(--mm-success); } }
+@layer priority {
+html[data-theme="clarity"] #contact .contact-btn-telegram .contact-channel { color: var(--mm-focus); } }
+@layer priority {
+html[data-theme="clarity"] #contact .contact-btn-email .contact-channel { color: var(--mm-accent); } }
 @layer priority {
 #contact .contact-title {
     display: block;

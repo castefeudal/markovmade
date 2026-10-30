@@ -8,6 +8,13 @@
   let lastScrollY = 0;
   const section = document.getElementById('calculators');
   if (!section) return;
+  /* A live region that already exists when the fragment lands: screen readers only
+     announce mutations of regions that were present before the change. */
+  const status = document.createElement('p');
+  status.id = 'mm-lab-status';
+  status.className = 'sr-only';
+  status.setAttribute('role', 'status');
+  section.append(status);
   const scripts = new Map();
   function loadScript(name) {
     if (scripts.has(name)) return scripts.get(name);
@@ -37,6 +44,9 @@
       await Promise.all([loadScript('lab-history'), loadScript('lab-dashboard')]);
       await loadScript('lab-toolkit');
       await window.mmTranslate?.(section);
+      status.textContent = document.documentElement.lang === 'en'
+        ? 'LAB tools are loaded and ready.'
+        : 'Инструменты LAB загружены и готовы к работе.';
       ready = true;
       document.getElementById('mm-lab-load-error')?.remove();
       observer?.disconnect();

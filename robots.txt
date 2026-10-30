@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# MARKOVMADE — одностраничный продукт; языки различаются параметром ?lang=.
+Sitemap: https://castefeudal.github.io/markovmade/sitemap.xml

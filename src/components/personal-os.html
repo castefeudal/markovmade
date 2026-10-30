@@ -29,7 +29,7 @@
         <a href="#app-ecosystem" data-open-app-tab="insights" class="mm-os-insights-link interactive" data-mm-copy-ru="Собрать мой первый инсайт" data-mm-copy-en="Build my first insight">Собрать мой первый инсайт</a>
       </div>
 
-      <div class="mm-os-product fade-in-up" style="transition-delay:100ms" aria-label="Интерактивный прототип MARKOVMADE Personal OS">
+      <div class="mm-os-product fade-in-up" role="group" style="transition-delay:100ms" aria-label="Интерактивный прототип MARKOVMADE Personal OS">
         <div class="mm-os-frame">
           <div class="mm-os-chrome">
             <div class="mm-os-brand"><span class="mm-os-brand-mark" aria-hidden="true">M</span><div><b>MARKOVMADE</b><small>PERSONAL OS</small></div></div>
@@ -64,9 +64,9 @@
           <div class="mm-os-screen active" id="mm-os-screen-today" data-app-screen="today" role="tabpanel" aria-labelledby="mm-os-tab-today">
             <div class="mm-os-decision">
               <div class="mm-os-decision-copy"><span>РЕШЕНИЕ ДНЯ</span><h3 id="mm-os-today-decision">Сначала соберите исходные данные.</h3><p id="mm-os-today-reason">Выполните расчёт в LAB. Здесь появится следующий шаг и сигналы, на которых он основан.</p></div>
-              <div class="mm-os-score" id="mm-os-today-score" aria-label="Ресурс: ещё не рассчитан"><strong>—</strong><span>/100</span><small>ресурс</small></div>
+              <div class="mm-os-score" id="mm-os-today-score" role="group" aria-label="Ресурс: ещё не рассчитан"><strong>—</strong><span>/100</span><small>ресурс</small></div>
             </div>
-            <div class="mm-os-metrics" aria-label="Ключевые показатели дня">
+            <div class="mm-os-metrics" role="group" aria-label="Ключевые показатели дня">
               <div><span>Калории</span><b data-os-model="calories">—</b><small data-os-model-note="calories">нет расчёта</small></div>
               <div><span>Вес</span><b data-os-model="weight">—</b><small data-os-model-note="weight">нет измерения</small></div>
               <div><span>Ресурс</span><b data-os-model="readiness">—</b><small data-os-model-note="readiness">нет оценки</small></div>
@@ -140,9 +140,9 @@
               </div>
             </div>
 <div class="mm-insights-shell fade-in-up" style="transition-delay:90ms">
-      <form class="mm-insights-context" id="mm-insights-form" autocomplete="off">
+      <form class="mm-insights-context" id="mm-insights-form" autocomplete="off" aria-labelledby="mm-insights-context-title">
         <div class="mm-insights-context-head">
-          <div><span>01</span><b data-ins-copy="contextLabel">КОНТЕКСТ</b></div>
+          <div><span>01</span><b id="mm-insights-context-title" data-ins-copy="contextLabel">КОНТЕКСТ</b></div>
           <small data-ins-copy="contextHint">3 сигнала → 1 рабочий вектор</small>
         </div>
 

@@ -3,6 +3,12 @@
   const section = document.getElementById('app-ecosystem');
   if (!section) return;
   let pending, ready = false;
+  /* A live region that already exists when the fragment lands: screen readers only
+     announce mutations inside regions that were present before the change, so the
+     "loaded" notice is created at init and filled after hydration. */
+  const live = document.createElement('p');
+  live.id = 'mm-os-status'; live.className = 'sr-only'; live.setAttribute('role', 'status');
+  section.append(live);
   // The position is remembered from the passive scroll event instead of being read
   // inside the intersection callback, which forced the whole document to lay out
   // while the browser was still working out the geometry after first paint.
@@ -35,6 +41,7 @@
       await script('site-interactions');
       window.mmRefreshPersonalOS?.();
       await window.mmTranslate?.(section);
+      live.textContent = document.documentElement.lang === 'en' ? 'The Personal OS prototype is loaded and ready.' : 'Прототип Personal OS загружен и готов к работе.';
       ready = true; document.getElementById('mm-os-load-error')?.remove(); observer?.disconnect();
     })().catch(error => { pending = null; observer?.disconnect(); showFailure(); throw error; });
     return pending;

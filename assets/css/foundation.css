@@ -60,11 +60,14 @@
         @keyframes data-flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
         .animate-sync-text {
             color: rgb(var(--color-gold));
+            opacity: 1;
             animation: syncTextPulse 4s ease-in-out infinite;
         }
+        /* Same contract as the footer mark: the pulse is light, not ink. An opacity of 0.3
+           put these ten-pixel capitals under 2:1 against every theme background. */
         @keyframes syncTextPulse {
-            0%, 100% { opacity: 0.3; text-shadow: none; }
-            50% { opacity: 1; text-shadow: 0 0 15px rgb(var(--color-gold) / 0.5); }
+            0%, 100% { text-shadow: 0 0 4px rgb(var(--color-gold) / .1); }
+            50% { text-shadow: 0 0 15px rgb(var(--color-gold) / 0.5); }
         }
         @keyframes pulseReverse {
             0%, 20% { opacity: 0.4; color: #B5B5B5; text-shadow: none; }
@@ -915,8 +918,8 @@ html, body { overflow-x: hidden; }
     display: block;
     margin-bottom: .65rem;
     color: rgb(var(--color-gold));
-    font: 900 .66rem/1.2 'Manrope','MM Body Fallback',Arial, sans-serif;
-    letter-spacing: .18em;
+    font: 900 .75rem/1.25 'Manrope','MM Body Fallback',Arial, sans-serif;
+    letter-spacing: .14em;
     text-transform: uppercase;
 }
 .contact-outcome-panel strong {
@@ -1255,12 +1258,14 @@ a, button, input, select, textarea, summary { -webkit-tap-highlight-color: trans
 @keyframes mmLabIn{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:none}}
 
 .footer-gold-sync-pulse {
-                    color: rgb(var(--color-gold)); opacity: 0.3; text-shadow: 0 0 10px rgb(var(--color-gold) / 0);
+                    color: rgb(var(--color-gold)); opacity: 1; text-shadow: 0 0 10px rgb(var(--color-gold) / 0);
                     animation: syncGoldBreath 4.5s ease-in-out infinite; transition: color 0.3s ease;
                 }
+                /* The breath lives in the glow, never in the ink: fading the text itself
+                   made the only privacy entry unreadable (and frozen at 0.3 under reduced motion). */
                 @keyframes syncGoldBreath {
-                    0%, 100% { opacity: 0.25; text-shadow: 0 0 5px rgb(var(--color-gold) / 0); transform: scale(1); }
-                    50% { opacity: 0.8; text-shadow: 0 0 18px rgb(var(--color-gold) / 0.45); transform: scale(1.01); }
+                    0%, 100% { text-shadow: 0 0 5px rgb(var(--color-gold) / .08); transform: scale(1); }
+                    50% { text-shadow: 0 0 18px rgb(var(--color-gold) / .45); transform: scale(1.01); }
                 }
                 .footer-gold-sync-pulse:hover { color: #F4CF57; text-shadow: 0 0 25px rgb(var(--color-gold) / 0.6); cursor: pointer;
                 }
@@ -1385,7 +1390,7 @@ body:not(.theme-light) input, body:not(.theme-light) select, body:not(.theme-lig
     border-bottom-color: rgb(var(--color-gold) / .55);
 }
 body:not(.theme-light) input::placeholder, body:not(.theme-light) textarea::placeholder {
-    color: rgb(var(--text-platinum) / .44);
+    color: rgb(var(--text-platinum) / .60);
 }
 body:not(.theme-light) select option {
     background: #0e0e0d;
@@ -1959,3 +1964,12 @@ html[lang="en"] .tracking-luxury {
 @media (max-width:767px){
   #mobile-menu nav>a{font-size:16px;letter-spacing:.08em;display:flex;}
 } }
+
+/* ── No-JavaScript degradation ────────────────────────────────────────────
+   The privacy dialog cannot be opened without JS, and its text is the only
+   disclosure about locally stored data. Shown as a plain end-of-page block. */
+html:not(.js) #privacy-modal { display: block; position: static; overflow: visible; padding: clamp(2.5rem,6vw,4.5rem) 0; border-top: 1px solid var(--mm-border); background: var(--mm-bg-secondary); }
+html:not(.js) #privacy-modal [data-privacy-toggle] { display: none; }
+html:not(.js) #privacy-modal > div { display: block; min-height: 0; padding-inline: var(--mm-page-gutter); }
+html:not(.js) #privacy-modal .glass-panel { max-width: 46rem; margin-inline: auto; box-shadow: none; }
+html:not(.js) #manifest-form :is([type="submit"], .mm-form-consent) { display: none; }
