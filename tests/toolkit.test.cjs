@@ -39,7 +39,7 @@ test('sleep handles midnight and caffeine retains uncertainty',()=>{
   assert.equal(calculate('sleep',{bed:'08:00',wake:'16:00',awake:0}).data.hours,8);
   assert.throws(()=>calculate('sleep',{bed:'25:00',wake:'07:00',awake:30}));
   const dose=calculate('caffeine',fixtures.caffeine).data;assert.ok(dose.low<dose.high);assert.ok(Math.abs(dose.low-15.7490131236859)<1e-10);
-  assert.deepEqual(calculate('caffeine',{dose:100,hours:0}).data,{low:100,high:100});
+  assert.deepEqual(calculate('caffeine',{dose:100,hours:0},'2.0.0').data,{low:100,high:100});
   assert.equal(calculate('fatigue',fixtures.fatigue).data.reviewLoad,true);assert.equal(calculate('fatigue',{...fixtures.fatigue,days:1}).data.reviewLoad,false);
 });
 test('decision tools reject impossible counts and preserve literal user text',()=>{

@@ -78,17 +78,14 @@
     if(scrollY>0&&scrollY+innerHeight>=height-2)id=tops.at(-1)?.id||id;
     setCurrentLocation(id);
   }
-  if ('IntersectionObserver' in window && locationTargets.length) {
-    const locationObserver=new IntersectionObserver(()=>{
-      // Before the first scroll event the reader is provably at the top, where no
-      // anchored section reaches the marker and nothing is current by construction.
-      // Walking the section list instead measured every content-visibility section
-      // from scratch on each frame the document needed to settle after first paint.
-      if(!scrolled){setCurrentLocation('');return;}
-      updateCurrentLocation();
-    },{threshold:0});
+  let locationObserver=null;
+  function observeLocations(){
+    if(locationObserver||!('IntersectionObserver' in window)||!locationTargets.length)return;
+    locationObserver=new IntersectionObserver(()=>{if(scrolled)updateCurrentLocation();},{threshold:0});
     locationTargets.forEach(target=>locationObserver.observe(target));
-  }else addEventListener('load',updateCurrentLocation,{once:true});
+  }
+  // Register off-screen targets only after real movement. Their native initial
+  // intersection calculation can lay out skipped editorial sections at startup.
   // Content growing or collapsing changes the runnable height, so it only needs
   // the progress scale recomputed. The section walk and the header states belong
   // to real scrolling and resizing; running them on every resize notification
@@ -227,7 +224,12 @@
     actions.inert = y <= innerHeight;
     lastY = y;
   }
-  addEventListener('scroll', () => { scrolled = true; if (!scrollFrame) scrollFrame = requestAnimationFrame(renderScroll); }, { passive: true });
+  addEventListener('scroll', () => {
+    // Browsers can emit a zero-position scroll while the first layout settles.
+    if(!scrolled&&scrollY===0)return;
+    scrolled=true;observeLocations();
+    if(!scrollFrame)scrollFrame=requestAnimationFrame(renderScroll);
+  }, {passive:true});
   addEventListener('resize', () => {
     // The cached geometry is measured against the current viewport, so it is
     // dropped before the next frame rather than re-read inside this handler.
