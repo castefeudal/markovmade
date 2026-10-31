@@ -92,10 +92,76 @@
   };
 
   for(const definition of definitions)if(['progression','volume'].includes(definition.id)){definition.version='2.1.0';definition.review='2026-10-31';}
+  // Versioned PRO runners. Archived 2.2 inputs keep their original interpretation.
+  const progressionDefinition=definitions.find(item=>item.id==='progression');
+  const progression21=progressionDefinition.run,plates22=plateDefinition.run,caffeine22=caffeineDefinition.run;
+  const core=()=>typeof module==='object'&&module.exports?require('./lab-models.js'):globalThis.MarkovMadeModels;
+  function parsePlateInventory(value){
+    const raw=String(value??'').trim();if(!raw)return [];
+    if(raw.length>1000)throw new Error('inventory');
+    const tokens=/[;\n]/.test(raw)?raw.split(/[;\n]+/):/^\d+,\d{1,3}$/.test(raw)?[raw]:raw.split(/[,\s]+/);
+    const list=tokens.map(token=>token.trim()).filter(Boolean).map(token=>{if(!/^\d+(?:[.,]\d{1,3})?$/.test(token))throw new Error('inventory');return n(token.replace(',','.'),.001,50);});
+    if(list.length>24)throw new Error('inventory');return list;
+  }
+  plateDefinition.version='2.3.0';plateDefinition.review='2026-11-01';
+  plateDefinition.fields.find(item=>item.key==='inventory').label=pair('Блины на сторону · через ;','Plates per side · separated by ;');
+  plateDefinition.fields.find(item=>item.key==='inventory').value='';plateDefinition.fields.find(item=>item.key==='inventory').optional=true;
+  for(const key of ['target','bar'])plateDefinition.fields.find(item=>item.key===key).value='';
+  plateDefinition.formula='Bounded subset sum in integer grams. Minimise plate count at each attainable sum; include bar + total collars, then two identical sides.';
+  plateDefinition.limits=pair('Укажите каждый блин на одну сторону, до 24 штук. Разделяйте ;, дроби — через точку или запятую (2,5; 1,25). Пустой набор означает только гриф и замки. Больший вариант — сравнение, не рекомендация.','List each plate for one side, up to 24. Separate with ; and use either decimal point or comma (2.5; 1.25). An empty set means bar and collars only. The higher option is a comparison, not advice.');
+  plateDefinition.run=v=>{
+    const target=n(v.target,1,500),bar=n(v.bar,1,50),collars=v.collars===''||v.collars==null?0:n(v.collars,0,10),base=bar+collars;if(target<base)throw new Error('bar');
+    const inventory=parsePlateInventory(v.inventory).sort((a,b)=>b-a),grams=inventory.map(value=>Math.round(value*1000)),desired=(target-base)*500,total=grams.reduce((a,b)=>a+b,0),cap=Math.min(total,Math.ceil(desired)+Math.max(0,...grams));
+    const counts=new Uint8Array(cap+1);counts.fill(255);counts[0]=0;const choices=[];let highWater=0;
+    for(const weight of grams){const chosen=new Uint8Array(cap+1);for(let sum=Math.min(highWater,cap-weight);sum>=0;sum--)if(counts[sum]!==255&&counts[sum]+1<counts[sum+weight]){counts[sum+weight]=counts[sum]+1;chosen[sum+weight]=1;}choices.push(chosen);highWater=Math.min(cap,highWater+weight);}
+    let below=0,upper=null;for(let sum=0;sum<=cap;sum++)if(counts[sum]!==255){if(sum<=desired+1e-7)below=sum;if(upper===null&&sum>=desired-1e-7)upper=sum;}
+    const retrieve=sum=>{const list=[];for(let i=grams.length-1;i>=0;i--)if(choices[i][sum]){list.push(inventory[i]);sum-=grams[i];}return list.sort((a,b)=>b-a);};
+    const plates=retrieve(below),achieved=Math.round((base+below/500)*1000)/1000,above=upper===null?null:Math.round((base+upper/500)*1000)/1000,exact=Math.abs(achieved-target)<1e-7;
+    return result(pair(`${achieved} кг`,`${achieved} kg`),pair(exact?'Цель достижима. Показан симметричный комплект с наименьшим числом блинов.':'Ближайший достижимый вес не выше цели; более тяжёлый вариант показан отдельно.',exact?'The target is attainable. This symmetric setup uses the fewest plates.':'The closest attainable load not exceeding the target; a higher alternative is shown separately.'),plateDefinition.limits,[pair('Сверьте массу грифа, замков и комплект с каждой стороны до подхода.','Check the bar, collars and both sides before the set.')],pair('Используйте фактическую массу; арифметика не проверяет калибровку инвентаря.','Use actual masses; arithmetic does not verify equipment calibration.'),'high',{achieved,above,abovePlates:upper===null?[]:retrieve(upper),plates,bar,collars,perSide:below/1000,exact,remainder:Math.round((target-achieved)*1000)/1000,inventory});
+  };
+  progressionDefinition.version='2.2.0';progressionDefinition.review='2026-11-01';
+  progressionDefinition.fields.push(field('records','PRO · сравнение записанных сессий','PRO · compare recorded sessions',null,null,'',{type:'records',recordKind:'sessions',optional:true}));
+  for(const key of ['load','reps','rir','sessions'])progressionDefinition.fields.find(item=>item.key===key).value='';
+  progressionDefinition.formula='MARKOVMADE heuristic: same exercise/load/sets/technique/ROM/rest, two sessions at the rep ceiling, RIR ≥2 and increment ≤10%. No safety guarantee.';
+  progressionDefinition.run=v=>{
+    if(!String(v.records||'').trim())return progression21(v);
+    let sessions;try{sessions=JSON.parse(v.records);}catch{throw new Error('sessions');}
+    const comparison=core().compareTrainingSessions(sessions,{step:n(v.step,.5,10),ceiling:integer(v.ceiling,1,30)});
+    const labels={'consider-increase':pair('Рассмотреть небольшой шаг','Consider a small increment'),'more-observations':pair('Нужны дополнительные наблюдения','More observations needed'),'review-conditions':pair('Пересмотрите условия сравнения','Review comparison conditions'),maintain:pair('Сохранить нагрузку','Maintain the load')};
+    const reasons={observations:pair('Нужны две сессии.','Two sessions are needed.'),conditions:pair('Упражнение, вес, число подходов, техника, амплитуда или отдых различаются.','Exercise, load, set count, technique, range or rest differs.'),reps:pair('Верх диапазона повторов ещё не закреплён.','The top of the rep range is not established.'),rir:pair('Минимальный RIR ниже выбранного порога 2.','The lowest RIR is below the chosen threshold of 2.'),increment:pair('Доступный шаг превышает 10% текущего веса.','The available increment exceeds 10% of the current load.')};
+    const why=comparison.reasons.map(key=>reasons[key]);
+    return result(labels[comparison.status],pair(comparison.increase?`Вариант следующей сессии: ${comparison.next} кг. Сначала проверьте разминкой.`:why.map(item=>item[0]).join(' '),comparison.increase?`Next-session option: ${comparison.next} kg. Check during warm-up first.`:why.map(item=>item[1]).join(' ')),progressionDefinition.limits,[pair('Запишите следующую сессию тем же способом и сравните фактический результат.','Record the next session using the same protocol, then compare the result.')],pair('RIR субъективен. Одинаковые подписи протокола не доказывают одинаковую технику.','RIR is subjective. Matching protocol labels do not prove identical technique.'),'low',{...comparison,explanations:why});
+  };
+  caffeineDefinition.version='2.3.0';caffeineDefinition.review='2026-11-01';
+  caffeineDefinition.fields.push(field('bedtime','Планируемое время сна','Planned bedtime',null,null,'',{type:'time',optional:true}),field('intakes','PRO · источники и время доз за последние 24 часа до сна','PRO · sources and dose times in the 24 hours before bedtime',null,null,'',{type:'records',recordKind:'caffeine',optional:true}));
+  for(const key of ['dose','hours'])caffeineDefinition.fields.find(item=>item.key===key).value='';
+  caffeineDefinition.source=['EFSA · caffeine assessment','https://www.efsa.europa.eu/en/topics/topic/caffeine'];
+  caffeineDefinition.references=[sources.caffeine];
+  caffeineDefinition.run=v=>{
+    let doses=[];const clock=value=>{if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(value))throw new Error('time');const [h,m]=value.split(':').map(Number);return h*60+m;};
+    if(String(v.intakes||'').trim()){
+      const bedtime=clock(v.bedtime);let rows;try{rows=JSON.parse(v.intakes);}catch{throw new Error('doses');}if(!Array.isArray(rows)||rows.length<1||rows.length>9)throw new Error('doses');
+      doses=rows.map(row=>({source:text(row.source).slice(0,60),dose:n(row.dose,.1,600),hours:((bedtime-clock(row.time)+1440)%1440)/60,time:row.time}));
+    }else{
+      const legacy=caffeine22(v);doses=legacy.data.doses.map((row,index)=>({...row,source:String(index+1)}));
+    }
+    const totalDose=doses.reduce((sum,row)=>sum+row.dose,0);if(totalDose>2400)throw new Error('doses');
+    const at=(halfLife,time)=>doses.reduce((sum,row)=>sum+(row.hours+1e-8>=time?row.dose*2**(-(row.hours-time)/halfLife):0),0);
+    const scenarios=[3,5,7].map(halfLife=>({halfLife,remaining:at(halfLife,0)})),times=[...new Set([...Array.from({length:49},(_,i)=>i/2),...doses.flatMap(row=>row.hours<24?[row.hours,Math.min(24,row.hours+.000001)]:[row.hours])])].sort((a,b)=>b-a);
+    const timeline=scenarios.map(({halfLife})=>({halfLife,points:times.map(hoursBeforeBed=>({hoursBeforeBed,remaining:at(halfLife,hoursBeforeBed)}))}));
+    const latest=Math.min(...doses.map(row=>row.hours)),earlier=doses.map(row=>row.hours===latest?{...row,hours:Math.min(24,row.hours+2)}:row),earlierScenarios=[3,5,7].map(halfLife=>({halfLife,remaining:earlier.reduce((sum,row)=>sum+row.dose*2**(-row.hours/halfLife),0)}));
+    const low=scenarios[0].remaining,high=scenarios[2].remaining;
+    return result(pair(`${Math.round(low)}–${Math.round(high)} мг`,`${Math.round(low)}–${Math.round(high)} mg`),pair(`Условный остаток ${doses.length} доз к моменту сна, не концентрация в крови и не прогноз сна.`,`Hypothetical remaining amount from ${doses.length} doses at bedtime; not a blood concentration or sleep prediction.`),pair('3/5/7 часов — заданные предположения, не персональная оценка метаболизма. Время без даты трактуется как последние 24 часа перед указанным сном.','3/5/7 hours are chosen assumptions, not a personal metabolism estimate. Clock times without dates refer to the preceding 24 hours.'),[pair('Сравните время последней дозы с дневником сна; модель сама по себе не устанавливает причинность.','Compare your last-dose timing with your sleep diary; this model alone does not establish causality.')],pair('Укажите все источники и реальные дозировки. Приём лекарства и чувствительность здесь не моделируются.','Include every source and actual dose. Medication and sensitivity are not modelled here.'),'low',{low,high,totalDose,doses,scenarios,timeline,earlierScenarios,latest,referenceExceeded:totalDose>400});
+  };
+
   function calculate(id,values,requestedVersion){
     const definition=definitions.find(item=>item.id===id);if(!definition)throw new Error('model');
     if(requestedVersion==='2.0.0'&&id==='plates')return {...previousPlateRun(values),modelVersion:'2.0.0'};
     if(requestedVersion==='2.0.0'&&id==='caffeine')return {...previousCaffeineRun(values),modelVersion:'2.0.0'};
+    if(requestedVersion==='2.2.0'&&id==='plates')return {...plates22(values),modelVersion:'2.2.0'};
+    if(requestedVersion==='2.2.0'&&id==='caffeine')return {...caffeine22(values),modelVersion:'2.2.0'};
+    if(requestedVersion==='2.1.0'&&id==='progression')return {...progression21(values),modelVersion:'2.1.0'};
+    if(requestedVersion==='2.0.0'&&id==='progression')return {...progression21({...values,comparable:1}),modelVersion:'2.0.0'};
     const old=requestedVersion==='2.0.0'&&definition.version==='2.1.0';
     const inputs=old?(id==='progression'?{...values,comparable:1}:{...values,entries:''}):values;
     return {...definition.run(inputs),modelVersion:old?'2.0.0':definition.version};

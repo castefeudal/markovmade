@@ -367,5 +367,17 @@
   "Готов к рабочему плану": "Ready for a working plan",
   "Готов к строгому контролю": "Ready for close monitoring",
   "12 недель": "12 weeks",
-  "Проверьте основные показатели и выберите, что делать дальше. Расчёты и история остаются в вашем браузере.": "Review the key measures and choose what to do next. Calculations and history stay in your browser."
+  "Проверьте основные показатели и выберите, что делать дальше. Расчёты и история остаются в вашем браузере.": "Review the key measures and choose what to do next. Calculations and history stay in your browser.",
+  "Сценарий погрешности % жира": "Body-fat uncertainty scenario",
+  "± п.п. · необязательно": "± percentage points · optional",
+  "Введите своё допущение. Это анализ чувствительности, не доверительный интервал метода.": "Enter your assumption. This is sensitivity analysis, not a confidence interval for the method.",
+  "Устройство и протокол HRV/RHR": "HRV/RHR device and protocol",
+  "необязательно": "optional",
+  "Одно устройство · утром лёжа": "One device · morning, lying down",
+  "Сценарный диапазон": "Scenario range",
+  "Энергетический сценарий набора жира": "Energy-equivalent fat-gain scenario",
+  "RIR · необязательно": "RIR · optional",
+  "Протокол · техника / амплитуда": "Protocol · technique / range",
+  "Энергетический сценарий жировой массы": "Energy-equivalent fat-mass scenario",
+  "Протокол техники, амплитуды и отдыха": "Technique, range and rest protocol"
 }

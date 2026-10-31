@@ -17,11 +17,12 @@ permissions:
   contents: read
 
 concurrency:
-  group: quality-${{ github.ref }}
+  group: quality-${{ github.ref }}${{ inputs.refresh_visual_baselines && '-visual' || '' }}
   cancel-in-progress: true
 
 jobs:
   unit:
+    if: github.event_name != 'workflow_dispatch' || !inputs.refresh_visual_baselines
     name: Unit and source checks
     runs-on: ubuntu-latest
     steps:
@@ -35,6 +36,7 @@ jobs:
       - run: npm test
 
   browser:
+    if: github.event_name != 'workflow_dispatch' || !inputs.refresh_visual_baselines
     name: Browser, visual and accessibility QA
     runs-on: ubuntu-latest
     steps:
@@ -60,12 +62,14 @@ jobs:
             test-results/services/
             test-results/accessibility/
             test-results/ultimate/
+            test-results/lab-pro/
             test-results/flagship/
             test-results/text-reflow/
           if-no-files-found: ignore
           retention-days: 14
 
   performance:
+    if: github.event_name != 'workflow_dispatch' || !inputs.refresh_visual_baselines
     name: Lighthouse mobile and desktop diagnostics
     runs-on: ubuntu-latest
     steps:

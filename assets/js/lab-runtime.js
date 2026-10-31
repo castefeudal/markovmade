@@ -8,7 +8,7 @@
             if (!root) return;
 
             const STORAGE_KEY = 'markovmade-lab-v1';
-            const MODEL_VERSIONS = Object.freeze({ body:'1.0.0', nutrition:'1.0.0', overfeeding:'1.0.0', recovery:'1.0.0', progress:'1.0.0', strategy:'1.0.0' });
+            const MODEL_VERSIONS = Object.freeze({ body:'1.1.0', nutrition:'1.0.0', overfeeding:'1.0.0', recovery:'1.1.0', progress:'1.0.0', strategy:'1.0.0' });
             const {mifflin,tenHaaf,tenHaafFFM,navyBodyFat,ffmi,weightedTef,glycogenRange,average:avg,movingAverage,regressionSlope,maintenanceCalibration,plateauStatus,detectWeightOutliers,robustDailySlope,estimate1RM,personalRecoveryBaseline} = window.MarkovMadeModels;
             const K = Object.freeze({
                 kcalPerKgFatEquivalent: 7700,
@@ -57,8 +57,8 @@
             const segmentValue = name => { const b=$(`[data-segment="${name}"] button[aria-pressed="true"]`); return b ? b.dataset.value : ''; };
             const setBadge = (tool, quality, confidence) => {
                 const q=$(`[data-quality="${tool}"]`), c=$(`[data-confidence="${tool}"]`);
-                if(q) q.textContent=`Полнота: ${quality}`;
-                if(c) c.textContent=`Уверенность: ${confidence}`;
+                if(q){q.dataset.ruDynamicText=`Полнота: ${quality}`;q.textContent=window.__mmDynamicTranslate?.(q.dataset.ruDynamicText)||q.dataset.ruDynamicText;}
+                if(c){c.dataset.ruDynamicText=`Уверенность: ${confidence}`;c.textContent=window.__mmDynamicTranslate?.(c.dataset.ruDynamicText)||c.dataset.ruDynamicText;}
             };
             const error = (tool,msg='') => setText(`lab-${tool}-error`,msg);
             const display = (node, show) => { if(node) node.hidden=!show; };
@@ -76,7 +76,7 @@
             if(strengthMount){
                 if(!el('lab-e1rm-tool')){
                     const tool=document.createElement('section');tool.id='lab-e1rm-tool';tool.className='mm-lab-e1rm';tool.setAttribute('aria-labelledby','lab-e1rm-title');
-                    tool.innerHTML='<h4 id="lab-e1rm-title" data-no-translate data-ru-dynamic-text="Силовой ориентир · e1RM">Силовой ориентир · e1RM</h4><p>Расчётный максимум для сравнения динамики, а не рекомендация проверять реальный 1ПМ.</p><div class="mm-lab-fields"><div class="mm-lab-field"><label for="lab-e1rm-exercise">Упражнение</label><select id="lab-e1rm-exercise" class="mm-lab-select"><option value="squat">Присед</option><option value="bench">Жим лёжа</option><option value="deadlift">Становая тяга</option><option value="other">Другое</option></select></div><div class="mm-lab-field"><label for="lab-e1rm-load">Рабочий вес · кг</label><input id="lab-e1rm-load" class="mm-lab-input" type="number" min="1" max="500" step="0.5" inputmode="decimal"></div><div class="mm-lab-field"><label for="lab-e1rm-reps">Повторения</label><input id="lab-e1rm-reps" class="mm-lab-input" type="number" min="1" max="15" step="1" inputmode="numeric"></div></div><div class="mm-lab-actions"><button type="button" class="mm-lab-primary" id="lab-e1rm-calculate">Оценить 1ПМ</button></div><p id="lab-e1rm-result" class="mm-lab-insight" aria-live="polite">Введите вес и повторы.</p>';
+                    tool.innerHTML='<h4 id="lab-e1rm-title" data-no-translate data-ru-dynamic-text="Силовой ориентир · e1RM">Силовой ориентир · e1RM</h4><p>Расчётный максимум для сравнения динамики, а не рекомендация проверять реальный 1ПМ.</p><div class="mm-lab-fields"><div class="mm-lab-field"><label for="lab-e1rm-exercise">Упражнение</label><select id="lab-e1rm-exercise" class="mm-lab-select"><option value="squat">Присед</option><option value="bench">Жим лёжа</option><option value="deadlift">Становая тяга</option><option value="other">Другое</option></select></div><div class="mm-lab-field"><label for="lab-e1rm-load">Рабочий вес · кг</label><input id="lab-e1rm-load" class="mm-lab-input" type="number" min="1" max="500" step="0.5" inputmode="decimal"></div><div class="mm-lab-field"><label for="lab-e1rm-reps">Повторения</label><input id="lab-e1rm-reps" class="mm-lab-input" type="number" min="1" max="15" step="1" inputmode="numeric"></div></div><div class="mm-lab-fields"><div class="mm-lab-field"><label for="lab-e1rm-rir">RIR · необязательно</label><input id="lab-e1rm-rir" class="mm-lab-input" type="number" min="0" max="5" step="0.5"></div><div class="mm-lab-field"><label for="lab-e1rm-protocol">Протокол техники, амплитуды и отдыха</label><input id="lab-e1rm-protocol" class="mm-lab-input" type="text" maxlength="80"></div></div><div class="mm-lab-actions"><button type="button" class="mm-lab-primary" id="lab-e1rm-calculate">Оценить 1ПМ</button></div><p id="lab-e1rm-result" class="mm-lab-insight" aria-live="polite">Введите вес и повторы.</p>';
                     strengthMount.appendChild(tool);
                     const loadPlan=document.createElement('div');loadPlan.className='mm-lab-load-plan';loadPlan.setAttribute('data-no-translate','');loadPlan.innerHTML='<label for="lab-e1rm-increment" id="lab-e1rm-increment-label">Шаг округления · кг</label><select id="lab-e1rm-increment" class="mm-lab-select"><option value="2.5">2,5 кг</option><option value="5">5 кг</option></select><p id="lab-e1rm-load-plan" aria-live="polite"></p>';tool.appendChild(loadPlan);
                     let lastEstimate=null;
@@ -93,7 +93,8 @@
                         if(!Number.isFinite(load)||load<1||load>500||!Number.isInteger(reps)||reps<1||reps>15){out.textContent='Укажите рабочий вес от 1 до 500 кг и 1–15 повторений.';return;}
                         const estimate=estimate1RM(load,reps),history=Array.isArray(state.strength?.history)?state.strength.history:[],previous=history.filter(item=>item&&liftId(item.exercise)===exercise).slice(-1)[0];
                         lastEstimate=estimate.value;renderLoads();
-                        const entry={exercise,load,reps,value:estimate.value,date:localToday()};history.push(entry);state.strength={modelVersion:'1.0.0',history:history.slice(-90)};save();
+                        const rir=number('lab-e1rm-rir'),protocol=val('lab-e1rm-protocol').trim();if(val('lab-e1rm-rir')&&(!Number.isFinite(rir)||rir<0||rir>5)){out.textContent='RIR: укажите от 0 до 5.';return;}
+                        const entry={exercise,load,reps,value:estimate.value,date:localToday(),at:new Date().toISOString(),rir:Number.isFinite(rir)?rir:null,protocol:protocol||null,modelVersion:'1.1.0'};history.push(entry);state.strength={modelVersion:'1.1.0',calculatedAt:entry.at,history:history.slice(-90)};save();
                         const delta=previous?` · ${estimate.value-previous.value>=0?'+':''}${fmt(estimate.value-previous.value,1)} кг к предыдущей записи`:' · Запись стала начальной точкой тренда';
                         const resultText=`e1RM ≈ ${fmt(estimate.value,1)} кг · уверенность: ${estimate.confidence}${delta}. ${estimate.method}.`;
                         out.dataset.ruDynamicText=resultText;
@@ -211,7 +212,7 @@
                     $$('[data-fat-maint-auto]').forEach(n=>display(n,value==='auto'));
                 }
                 if(name==='fat-input-mode') $$('[data-fat-macros]').forEach(n=>display(n,value==='macros'));
-                if(name==='nutri-macro-scenario' && state.nutrition && Number.isFinite(state.nutrition.target)) renderNutritionMacros(state.nutrition,value);
+                if(name==='nutri-macro-scenario' && state.nutrition && Number.isFinite(state.nutrition.target) && !renderNutritionMacros(state.nutrition,value)) $('[data-segment="nutri-macro-scenario"] button').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.value===(state.nutrition.macroScenario||'balanced'))));
             }
             handleSegment('body-bf-method',segmentValue('body-bf-method'));
             handleSegment('nutri-maint-source',segmentValue('nutri-maint-source'));

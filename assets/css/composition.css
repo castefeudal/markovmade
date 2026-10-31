@@ -313,7 +313,7 @@ html[data-theme="clarity"] .mm-plate-marks::before,html[data-theme="clarity"] .m
 #contact .contact-outcome-panel p{max-width:52ch}
 /* Editorial depth follows the shared palette in every world. Static layers keep paint inexpensive. */
 @layer components {
-  :is(#services,#about,#biography,#calculators,#app-ecosystem,#method-proof,#contact){
+  :is(#services,#calculators,#contact){
     background-image:radial-gradient(ellipse at 8% 0,var(--mm-glow-primary),transparent 54%),linear-gradient(115deg,var(--mm-accent-soft),transparent 38%);
     background-repeat:no-repeat;
   }
@@ -345,11 +345,12 @@ html[data-theme="clarity"] .mm-plate-marks::before,html[data-theme="clarity"] .m
     content:"";position:absolute;z-index:-1;pointer-events:none;inset:0 0 auto auto;width:min(72%,1200px);height:640px;
     background:var(--mm-accent);opacity:.055;mask:var(--mm-scene) center/contain no-repeat;
   }
-  #services,#method-proof{--mm-scene:url('../media/scenes/method-map.svg')}
+  #method-proof{--mm-scene:url('../media/scenes/method-map.svg')}
+  #services{--mm-scene:url('../media/scenes/force-balance.svg')}
   #calculators{--mm-scene:url('../media/scenes/signal-field.svg')}
-  #app-ecosystem{--mm-scene:url('../media/scenes/system-frame.svg')}
-  #contact{--mm-scene:url('../media/scenes/method-map.svg')}
-  #contact::after{transform:rotate(180deg);opacity:.035}
+  #app-ecosystem::after{content:none}
+  #contact{--mm-scene:url('../media/scenes/closing-orbit.svg')}
+  #contact::after{opacity:.035}
   @media(prefers-reduced-motion:no-preference) and (hover:hover) and (pointer:fine){
     html:not([data-save-data]) #calculators .mm-lab-panel:not([hidden]){animation:mm-panel-enter var(--mm-motion-normal) var(--mm-ease-premium) both}
     html:not([data-save-data]) .mm-evidence[open]>:not(summary),html:not([data-save-data]) .mm-toolkit-precision[open]>:not(summary){animation:mm-panel-enter var(--mm-motion-fast) var(--mm-ease-premium) both}
@@ -363,4 +364,14 @@ html[data-theme="clarity"] .mm-plate-marks::before,html[data-theme="clarity"] .m
   /* Keep final punctuation in the text flow when the editorial accent wraps. */
   #method-proof .mm-editorial-goldline{display:inline;text-decoration:underline;text-decoration-color:var(--mm-accent);text-decoration-thickness:1px;text-underline-offset:.14em}
   #method-proof .mm-editorial-goldline::after{content:none}
+}
+
+@layer components {
+.mm-method-cycle{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));list-style:none;padding:0;margin:40px 0 64px;border-block:1px solid var(--mm-border-strong)}
+.mm-method-cycle li{padding:24px;position:relative;border-right:1px solid var(--mm-border)}
+.mm-method-cycle li:last-child{border-right:0}
+.mm-method-cycle li>span{font:600 12px/1.6 var(--mm-font-body);color:var(--mm-accent)}
+.mm-method-cycle strong{display:block;font:500 28px/1.5 var(--mm-font-display);color:var(--mm-text-primary)}
+.mm-method-cycle small{font:400 13px/1.6 var(--mm-font-body);color:var(--mm-text-secondary)}
+@media(max-width:640px){.mm-method-cycle{grid-template-columns:repeat(2,minmax(0,1fr))}.mm-method-cycle li{padding:16px}.mm-method-cycle li:nth-child(2){border-right:0}.mm-method-cycle li:nth-child(-n+2){border-bottom:1px solid var(--mm-border)}}
 }

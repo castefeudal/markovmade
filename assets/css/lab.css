@@ -859,3 +859,22 @@
     #calculators .mm-lab-tab-num{font-size:12px}
   }
 }
+
+/* A bounded desktop rail keeps the active form and result together. */
+@layer components {
+@media(min-width:1200px){
+#calculators .mm-lab-shell{display:grid;grid-template-columns:220px minmax(0,1fr);align-items:start;overflow:visible}
+#calculators .mm-lab-shell>*{grid-column:1/-1;min-width:0}
+#calculators .mm-lab-shell>.mm-lab-tabs{grid-column:1;grid-row:2;grid-template-columns:1fr;position:sticky;top:88px;max-height:calc(100svh - 108px);overflow-y:auto;border-bottom:0;border-right:1px solid var(--mm-border);padding:12px;gap:6px;scroll-padding:12px}
+#calculators .mm-lab-shell>.mm-lab-content{grid-column:2;grid-row:2;padding:24px}
+#calculators .mm-lab-tabs .mm-lab-tab{min-height:68px;padding:10px;gap:3px;scroll-margin:12px;display:grid;grid-template-columns:26px minmax(0,1fr)}
+#calculators .mm-lab-tabs .mm-lab-tab-top{grid-row:1/3;display:block}
+#calculators .mm-lab-tabs .mm-lab-tab-num{display:none}
+#calculators .mm-lab-tabs .mm-lab-tab-icon{display:inline-flex;width:24px;height:24px}
+#calculators .mm-lab-tabs .mm-lab-tab strong,#calculators .mm-lab-tabs .mm-lab-tab small{grid-column:2}
+#calculators .mm-lab-tab small{font-size:11px;line-height:1.5}
+#calculators .mm-toolkit-analysis{grid-template-columns:minmax(0,1fr)}
+}
+}
+
+@layer components {#calculators .mm-lab-hero-result small{overflow-wrap:anywhere}}

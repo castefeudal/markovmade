@@ -1,6 +1,22 @@
 (function(){
   'use strict';
   var exact = {
+"сон":"sleep",
+"энергия":"energy",
+"стресс":"stress",
+"желание тренироваться":"desire to train",
+"болезненность":"soreness",
+"самочувствие":"well-being",
+"дней":"days",
+"день":"day",
+"дня":"days",
+'Проверьте процент жира: 3–60%.':'Check body fat: 3–60%.',
+'Проверьте диапазон активности и длительность тренировок.':'Check activity ranges and workout duration.',
+'Проверьте диапазон объективных показателей.':'Check the objective measurement ranges.',
+'введённый одиночный повтор; максимальность не подтверждена':'entered single repetition; maximal effort is not confirmed',
+"Сценарий погрешности должен оставлять % жира между 0 и 70.":"The uncertainty scenario must keep body fat between 0 and 70%.",
+"Белок и жиры превышают энергию плана. Пересмотрите настройки; углеводы не подменяются отрицательным числом.":"Protein and fat exceed the plan energy. Review the settings; carbohydrates are not replaced with a negative number.",
+"Белок и жиры не помещаются в выбранную калорийность. Пересмотрите цель или темп.":"Protein and fat exceed the selected calories. Review the goal or pace.",
     'Нужен мышечный фундамент':'Muscle foundation needed',
     'Нормальная база':'Normal base',
     'Атлетичная форма':'Athletic form',
@@ -114,6 +130,81 @@
     'высокий риск по талии':'high waist-risk zone'
   };
   var parts = [
+["Повторяйте % жира одним методом и в одинаковых условиях: тренд ценнее разового абсолютного числа.","Repeat body-fat estimates using the same method and conditions; the trend matters more than one absolute value."],
+["Добавьте талию при следующем замере: она делает интерпретацию изменения формы заметно полезнее.","Add waist circumference next time to give changes in body shape more context."],
+["исходная нормализация была разработана на мужских атлетах, поэтому её нельзя трактовать как универсальный «лимит».","the original normalisation was developed in male athletes and cannot be interpreted as a universal limit."],
+["Height-adjusted FFMI использует поправку Kouri","Height-adjusted FFMI uses the Kouri correction"],
+["Что это значит:","Meaning:"],
+["Источник % жира:","Body-fat source:"],
+["введено пользователем · метод:","entered by you · method:"],
+["неизвестный метод","unknown method"],
+["наследует ошибку % жира.","inherits body-fat estimation error."],
+["% жира из","% body fat at"],
+["кг приходится на безжировую массу.","kg is fat-free mass."],
+[" кг примерно "," kg includes approximately "],
+["(1,80 − рост)","(1.80 − height)"],
+["рост²","height²"],
+["вес ×","weight ×"],
+["Держите среднее около ","Aim for an average of "],
+[" ккал/сут, а не пытайтесь идеально попасть в число каждый день."," kcal/day rather than trying to hit an exact number every day."],
+["Через 14–21 день сравните средний вес, талию, силовые и соблюдение. Если тренд не соответствует цели — корректируйте на 5–8%, а не переписывайте всё.","After 14–21 days, compare average weight, waist, strength and adherence. If the trend does not match the goal, adjust by 5–8% rather than changing everything."],
+["Сценарий меняет распределение, не качество диеты.","The scenario changes the distribution, not diet quality."],
+["Белок:","Protein:"],
+["; жиры:","; fat:"],
+["; углеводы:","; carbohydrates:"],
+[" г/кг массы"," g/kg body weight"],
+["Стартуйте около ","Start around "],
+[" ккал, но считайте "," kcal, using "],
+[" рабочим коридором. Расчётные калории поддержания сами имеют диапазон "," as a planning range. Estimated maintenance itself ranges from "],
+["оценка RMR, не прямое измерение.","RMR estimate, not a direct measurement."],
+["В SIMPLE используется только PAL. В PRO PAL отключён, поэтому шаги/работа/тренировки не накладываются на уже высокий activity multiplier.","SIMPLE uses PAL alone. PRO disables PAL to avoid adding steps, work and training on top of a high activity multiplier."],
+["Диапазон TDEE отражает практическую неопределённость модели и NEAT, а не статистический confidence interval.","The TDEE range reflects practical model and NEAT uncertainty, not a statistical confidence interval."],
+["Центральная модельная оценка ≈","Central model estimate ≈"],
+["указан пользователем","entered by you"],
+["Следующие 72 часа: часть резкого прироста массы может снизиться по мере нормализации содержимого ЖКТ, гликогена и воды. Модельная жировая масса изменяется медленнее; конкретный объём воды без измерений натрия, жидкости и запасов гликогена определить нельзя.","Over the next 72 hours, some short-term weight gain may decline as gut contents, glycogen and water normalise. Modelled fat mass changes more slowly; a specific water amount cannot be determined without sodium, fluid and glycogen measurements."],
+["Вернитесь к обычному рациону и привычной активности — не пытайтесь «отработать» всё за один день.","Return to your usual eating and activity rather than trying to compensate in one day."],
+["Взвешивайтесь 3–4 утра подряд в одинаковых условиях и смотрите на среднее.","Weigh yourself on 3–4 consecutive mornings under the same conditions and review the average."],
+["Если это единичное событие, решение принимается по недельному тренду, а не по утреннему пику.","For a single event, use the weekly trend rather than the morning peak to make decisions."],
+["Состав БЖУ неизвестен, поэтому использован широкий диапазон TEF и эффективности хранения. Это намеренно расширяет интервал вместо ложной точности.","Macro composition is unknown, so a broad TEF and storage-efficiency range is used rather than false precision."],
+["Теоретическая граница = gross surplus / 7700 и показана только как энергетический эквивалент. Для гликогена используется сценарный диапазон, а связанная вода — ориентир 2,7–4 г воды на 1 г гликогена; прочая вода/натрий/ЖКТ не моделируются псевдоточно.","The theoretical bound is gross surplus / 7700, shown only as an energy equivalent. Glycogen uses a scenario range; associated water uses an assumed 2.7–4 g per g of glycogen. Other fluid, sodium and gut contents are not estimated."],
+["Рабочее состояние","Usable readiness"],
+["Планово / без добивания","As planned / no finishers"],
+["Можно тренироваться, но сегодня плохой день для незапланированного увеличения объёма или отказных подходов.","Training may be manageable, but avoid unplanned volume increases or failure sets today."],
+["Оставьте запланированную тренировку, но не повышайте нагрузку без причины.","Keep the planned workout without increasing load for no reason."],
+["Сон не выглядит главным ограничителем по субъективной оценке — не меняйте его радикально.","Sleep is not the main limiter in this subjective assessment; avoid drastic changes."],
+["Не меняйте несколько переменных одновременно: так вы поймёте, что реально влияет на восстановление.","Change one variable at a time to understand what affects recovery."],
+["Score — прикладная эвристика самонаблюдения, не валидированный тест. Вклад сигналов показан ниже; RHR и HRV сравниваются с личной медианой после 14 качественных парных измерений, до этого можно использовать явно введённую обычную норму. Никакого медицинского диагноза, «истощения ЦНС» или вероятности травмы этот балл не выдаёт.","The score is a practical self-observation heuristic, not a validated test. Signal contributions are shown below. RHR and HRV use a personal median after 14 quality paired observations; an explicitly entered usual baseline can be used before then. The score provides no medical diagnosis, CNS-exhaustion assessment or injury probability."],
+["Решение дня:","Today’s decision:"],
+["средний темп за весь период","average rate over the full period"],
+["Недостаточно данных","Insufficient data"],
+["Сохраните план ещё 1–2 недели, если талия и производительность движутся приемлемо.","Keep the plan for another 1–2 weeks if waist and performance trends are acceptable."],
+["Меняйте один главный рычаг за раз, иначе вы не узнаете, что сработало.","Change one main variable at a time to understand what worked."],
+["Темп соответствует рабочему диапазону для устойчивого снижения массы; дальнейшее ускорение не обязательно даст лучший результат.","The rate is within the chosen working range for weight loss; increasing it may not improve the outcome."],
+["Полнота:","Completeness:"],
+["Уверенность:","Confidence:"],
+["Базовая","Basic"],
+["Хорошая","Good"],
+["Высокая","High"],
+["Выше средней","Above average"],
+["Низкая","Low"],
+["Метрика самонаблюдения","Self-observation measure"],
+["WHtR без оценки BF","WHtR without BF estimation"],
+
+
+
+
+
+
+
+
+
+["нед.","week"],
+['Индивидуальная ошибка окружностной оценки неизвестна; популяционная валидация не задаёт персональный доверительный интервал.','Individual circumference-estimate error is unknown; population validation does not provide a personal confidence interval.'],
+['кг при неизменной безжировой массе. Диапазон появляется только при заданной погрешности BF; это не обещание.','kg assuming constant fat-free mass. A range appears only with entered BF uncertainty; this is not a promise.'],
+['Безжировая масса включает воду, органы и другие ткани; это не прямое измерение мышц и не тест генетического потенциала или препаратов.','Fat-free mass includes water, organs and other tissues; this is not a direct muscle measurement or a test of genetic potential or drug use.'],
+['Это сценарный диапазон, не интервал вероятности и не прямое измерение ткани.','This is a scenario range, not a probability interval or direct tissue measurement.'],
+['Энергетический сценарий жировой массы','Energy-equivalent fat-mass scenario'],
+['сценарий','scenario'],
     ['Жир:', 'Fat:'], ['жир —', 'body fat —'], ['жир ', 'body fat '], ['жировой массы', 'fat mass'], ['жировая масса', 'fat mass'], ['Жировая масса', 'Fat mass'],
     ['Точность модели:', 'Model accuracy:'], ['точность модели:', 'model accuracy:'], ['модель:', 'model:'], ['базовая','basic'], ['расширенная','advanced'], ['уточнённая','refined'], ['экспертная','expert'], ['кг','kg'], ['ккал','kcal'], [' г',' g'],
     ['указан вручную','entered manually'], ['оценка Navy method','Navy method estimate'], ['модельная оценка из-за нехватки данных','model estimate due to insufficient data'],
@@ -132,7 +223,7 @@
     if (!isEn()) return s;
     if (exact[s]) return exact[s];
     parts.forEach(function(pair){ s = s.split(pair[0]).join(pair[1]); });
-    return s;
+    return s.replace(/(\d)\s+(дней|дня|день)(?=$|[ .;·])/g,'$1 days');
   };
   function applyVisibleCalcLang(){
     var ids=['body-accuracy','body-confidence-label','body-fatmass','body-ffmi','body-lbm','body-nffmi','body-status','body-strategy','body-strong','body-weak','body-target-weight','body-pace','body-whtr','body-whtr-note','body-decision-explain','format-first-step','format-focus','format-reason','format-send','format-start','format-title','growth-accuracy','growth-add-label','growth-gain','growth-main-label','growth-meaning','growth-multiplier','growth-risk','growth-start-label','growth-strategy','growth-term-hint','growth-total','nutri-bmr','nutri-carbs','nutri-check','nutri-fat-result','nutri-protein','nutri-rest-day','nutri-target','nutri-tdee','nutri-training-day','nutri-warning','nutri-corridor','nutri-weekly-change','nutri-water','nutrition-accuracy','nutrition-confidence-label','rec-cardio-result','rec-nutrition-result','rec-score','rec-sleep-result','rec-status','rec-training','rec-warning','rec-decision','recovery-accuracy','lab-rec-baseline','lab-e1rm-result'];
