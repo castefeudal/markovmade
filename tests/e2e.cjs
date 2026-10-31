@@ -227,9 +227,10 @@ let browser;
   assert.equal(await page.evaluate(()=>window.MarkovMadeLab.state.strength.history[0].exercise),'Жим лёжа','legacy exercise records are preserved');
   assert.equal(await page.evaluate(()=>window.MarkovMadeLab.state.strength.history.at(-1).exercise),'bench','new records use a language-independent exercise key');
 
-  assert.equal(await page.locator('[data-mm-lab-tab]').count(), 6, 'the primary LAB navigation stays focused on six tools');
+  assert.equal(await page.locator('[data-mm-lab-tab]').count(), 9, 'the primary LAB navigation presents nine tools');
   assert.equal(await page.locator('[data-mm-lab-tab="strategy"]').count(), 0, 'the heuristic strategy tool is no longer a primary calculator');
-  assert.equal(await page.locator('#mm-lab-quick-list .mm-lab-quick-open').count(), 6, 'quick access matches the six primary LAB tools');
+  const recentCount=await page.evaluate(()=>new Set(JSON.parse(localStorage.getItem('markovmade-lab-history-v1')).filter(item=>window.MarkovMadeToolkit.tools.some(tool=>tool.id===item.tool)).map(item=>item.tool)).size);
+  assert.equal(await page.locator('#mm-lab-quick-list .mm-lab-quick-open').count(), Math.min(8,recentCount), 'quick access contains actual recent tools without a duplicate catalogue');
   const saved = await page.evaluate(() => Object.values(JSON.parse(localStorage.getItem('markovmade-lab-v1') || '{}')).filter(value => value && typeof value === 'object').map(value => value.modelVersion));
   assert.ok(saved.some(version => version === '1.0.0'), 'calculation snapshots include model versions');
 

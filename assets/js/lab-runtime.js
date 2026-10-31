@@ -150,6 +150,7 @@
             function showTab(key, focusPanel=false){
                 tabs.forEach(t=>{ const active=t.dataset.mmLabTab===key; t.setAttribute('aria-selected',active?'true':'false'); t.tabIndex=active?0:-1; });
                 panels.forEach(p=>p.hidden=p.dataset.mmLabPanel!==key);
+                root.dispatchEvent(new CustomEvent('mm:lab-tab',{detail:{key}}));
                 if(focusPanel){ const p=$(`[data-mm-lab-panel="${key}"]`); if(p){ p.setAttribute('tabindex','-1'); p.focus({preventScroll:true}); } }
             }
             tabs.forEach((tab,i)=>{

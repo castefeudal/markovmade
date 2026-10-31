@@ -103,3 +103,7 @@ html[data-theme="clarity"] #hero .accent-word { color: var(--mm-accent); font-st
 @media(hover:hover){#hero .mm-primary-cta:hover,#hero .mm-secondary-cta:hover{transform:translateY(-2px);}}
 @media(max-width:600px){#hero .hero-proof-grid{gap:12px;}#hero .hero-proof-item{grid-template-columns:minmax(0,1fr);min-width:0;gap:8px;}#hero .hero-proof-icon{grid-row:auto;}#hero .hero-proof-item strong{display:none;}#hero .hero-proof-item span{font-size:.875rem;}#hero .hero-kicker{font-size:.875rem;letter-spacing:.06em;}}
 @media(prefers-reduced-motion:reduce){#hero .mm-primary-cta,#hero .mm-secondary-cta{transition:none;}#hero .mm-primary-cta:hover,#hero .mm-secondary-cta:hover{transform:none;}}
+/* Directional light stays behind the authored portrait and the reading column. */
+#hero {background-image:radial-gradient(ellipse at 76% 30%,var(--mm-glow-primary),transparent 48%);}
+#hero::after{content:"";position:absolute;z-index:0;pointer-events:none;inset:auto 0 0;height:1px;background:linear-gradient(90deg,transparent,var(--mm-accent),transparent);opacity:.45;transform-origin:left;}
+@media(prefers-reduced-motion:no-preference) and (hover:hover) and (pointer:fine){html:not([data-save-data]) #hero::after{animation:mm-hero-rule 900ms var(--mm-ease-premium) both;}@keyframes mm-hero-rule{from{transform:scaleX(.4);opacity:0}to{transform:scaleX(1);opacity:.45}}}

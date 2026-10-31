@@ -261,7 +261,7 @@
         const validated={};
         for(const [id,entry] of Object.entries(payload.lab.toolkit)){
           if(!entry||!entry.inputs||typeof entry.inputs!=='object')throw new Error('toolkit inputs');
-          const result=window.MarkovMadeToolkitModels.calculate(id,entry.inputs);
+          const result=window.MarkovMadeToolkitModels.calculate(id,entry.inputs,entry.modelVersion||entry.result?.modelVersion);
           validated[id]={inputs:entry.inputs,result,modelVersion:result.modelVersion,at:typeof entry.at==='string'?entry.at:new Date().toISOString()};
         }
         payload.lab.toolkit=validated;
@@ -274,7 +274,7 @@
         if(payload.dailyCheckins.some(item=>!item||!/^\d{4}-\d{2}-\d{2}$/.test(item.date)||!Number.isFinite(Date.parse(item.date))||new Date(item.date).toISOString().slice(0,10)!==item.date||!['weight','waist','sleep','energy','calories','adherence'].every(key=>item[key]===undefined||Number.isFinite(item[key]))))throw new Error('daily data');
         staged.push(['markovmade-lab-daily-v1',payload.dailyCheckins]);
       }
-      if(Array.isArray(payload.favorites))staged.push(['markovmade-lab-favorites-v1',payload.favorites.filter(key=>Object.hasOwn(tools,key)).slice(0,6)]);
+      if(Array.isArray(payload.favorites))staged.push(['markovmade-lab-favorites-v1',[...new Set(payload.favorites.filter(key=>Object.hasOwn(tools,key)))]]);
       if(payload.osActions!==undefined){
         if(!payload.osActions||typeof payload.osActions!=='object'||Array.isArray(payload.osActions)||Object.entries(payload.osActions).some(([key,value])=>!/^\d{4}-\d{1,2}-\d{1,2}:[0-2]$/.test(key)||typeof value!=='boolean'))throw new Error('OS actions');
         staged.push(['markovmade-os-actions-v1',payload.osActions]);

@@ -41,7 +41,8 @@
     "ceiling": 10,
     "rir": 2,
     "sessions": 2,
-    "step": 2.5
+    "step": 2.5,
+    "comparable": 1
   },
   "cardio": {
     "age": 40

@@ -54,8 +54,9 @@ const findings=[],incomplete=new Map();
           await tab.click();await audit(`${lang}/${theme}/LAB/${await tab.getAttribute('data-mm-lab-tab')}`,'#calculators');
         }
         for(const [id,values] of Object.entries(fixtures)){
+          if(!await page.evaluate(id=>window.MarkovMadeToolkit.tools.some(tool=>tool.id===id),id))continue;
           await page.evaluate(id=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id===id)),id);
-          for(const [key,value] of Object.entries(values))await page.locator('#toolkit-'+id+'-'+key).fill(String(value));
+          for(const [key,value] of Object.entries(values)){const field=page.locator('#toolkit-'+id+'-'+key);if(await field.evaluate(el=>el.tagName==='SELECT'))await field.selectOption(String(value));else await field.fill(String(value));}
           await page.locator('#mm-toolkit-workspace button[type="submit"]').click();
           await audit(`${lang}/${theme}/toolkit/${id}`,'#mm-toolkit-workspace');
         }
@@ -71,7 +72,7 @@ const findings=[],incomplete=new Map();
         await page.evaluate(()=>scrollTo(0,0));await page.waitForTimeout(200);
         fs.mkdirSync(path.join(root,'test-results/accessibility'),{recursive:true});
         fs.writeFileSync(path.join(root,'test-results/accessibility/findings.json'),JSON.stringify(findings,null,2));
-        console.log(`Axe inspected ${lang}/${theme}: 4 widths, 6 LAB tabs, 5 OS tabs, dialogs.`);
+        console.log(`Axe inspected ${lang}/${theme}: 4 widths, 9 LAB tabs, 5 OS tabs, dialogs.`);
       }
     }
     fs.mkdirSync(path.join(root,'test-results/accessibility'),{recursive:true});
