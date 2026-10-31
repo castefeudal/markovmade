@@ -14,6 +14,9 @@ function waitReady(){return new Promise((resolve,reject)=>{const timer=setTimeou
 async function runProfile(profile,url,name){
   const json=path.join(outputDir,name);
   const args=[bin,url,'--output=json',`--output-path=${json}`,'--only-categories='+categories.join(','),'--quiet','--chrome-flags=--headless=new --no-sandbox --disable-dev-shm-usage --disable-gpu','--no-enable-error-reporting'];
+  // Keep the real Linux trace for the regressing cold mobile scene. Audit URL
+  // attribution alone cannot distinguish script execution from native layout.
+  if(process.env.CI&&name==='ru-aurum-noir-mobile-1')args.push('--save-assets');
   if(profile==='desktop')args.push('--preset=desktop');
   const candidates=[process.env.CHROME_PATH,process.platform==='linux'?'/usr/bin/google-chrome':null,chromium.executablePath()].filter((value,index,all)=>value&&fs.existsSync(value)&&all.indexOf(value)===index);
   let lastError;
