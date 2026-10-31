@@ -379,5 +379,7 @@
   "RIR · необязательно": "RIR · optional",
   "Протокол · техника / амплитуда": "Protocol · technique / range",
   "Энергетический сценарий жировой массы": "Energy-equivalent fat-mass scenario",
-  "Протокол техники, амплитуды и отдыха": "Technique, range and rest protocol"
+  "Протокол техники, амплитуды и отдыха": "Technique, range and rest protocol",
+  "Необязательно. Сопоставьте изменение на весах с энергетическим сценарием; доли жира и воды не определяются.": "Optional. Compare the scale-weight change with the energy-equivalent scenario; fat and water fractions are not determined.",
+  "7–180 значений: по одному дню подряд, без пропусков. Вводите с новой строки или через ;, дроби — через точку или запятую. Для пропусков используйте дневник с датами.": "7–180 values, one per consecutive day with no gaps. Use a new line or ; between values and a decimal point or comma. Use the dated journal for missing days."
 }

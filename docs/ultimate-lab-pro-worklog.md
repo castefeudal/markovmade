@@ -3,7 +3,7 @@
 Base main: `0a3b6da`; integrated working branch / draft PR #13: `8a8b13a`.
 
 ## P0
-- CI Lighthouse consistently fails Aurum mobile (91–93) while local full matrix yields 99–100. CI JSON attributes a 383 ms task to navigation.js, dominated by native "Other" work, not script evaluation. Investigating startup intersection registration and zero-position scroll; thresholds stay unchanged. Root cause is not yet claimed resolved.
+- CI Lighthouse consistently fails Aurum mobile (91–93) while local runs yield 99–100. Initial URL attribution to navigation.js did not establish slow JavaScript. Lazy navigation registration passed its regression checks but did not fix Lighthouse. The saved Linux trace shows two BODY gradient images expanding to 16,412 px, with ~97–98 ms raster CPU tasks; renderer wall time can instead be waiting time. Removing nested navigation blur alone also did not pass the floor. Document-wide gradients have now been removed in favour of bounded section scenes; that change still needs CI confirmation. Thresholds remain unchanged.
 - PR #13 has source-only PRO models and no matching build. Its caffeine-at-zero fixture incorrectly expects the old result shape from the new version; archive test now explicitly requests 2.0.0.
 - Overfeeding UI calls heuristic scenario bounds a probability range. Correct terminology and localization are required.
 - Recovery baseline currently counts records without checking distinct measurement dates/devices; introduce a dated baseline without changing archived runners.
@@ -27,3 +27,7 @@ Base main: `0a3b6da`; integrated working branch / draft PR #13: `8a8b13a`.
 
 ## Evidence state
 Before captures at `test-results/premium/before` use main 0a3b6da, 12 language/theme/viewport combinations and eight sections. npm ci passed. Initial 37 unit tests passed. Navigation regression (zero-position event plus existing scroll/deep-link scenarios) passed Chromium/Firefox/WebKit, RU/EN and three themes. Full final validation and scientific audit are still pending.
+
+Iteration evidence: 46 current unit/source/model tests pass, including a strict decimal-comma manual-series parser. The expanded PRO browser suite passed Chromium/Firefox/WebKit across RU/EN × three themes × two widths. It exercises body sensitivity, age validation, dated journal analysis, strength history, multi-dose clock input, inventory loading and actual-session progression. New regression coverage adds truthful overeating output, recovery observations and filled-result language checks. A hidden journal screenshot exposed that its new analysis was mounted inside the manual disclosure; it now belongs to the journal workspace.
+
+Reviewed Windows and Linux contract candidates cover 30 hero scenes each (RU/EN × three themes × five widths). Their intended header changes are accepted without changing the 1.5% mismatch floor. The candidate workflow remains deliberately failing until these reviewed images are committed. It has a distinct concurrency group and does not replace push/PR quality gates.

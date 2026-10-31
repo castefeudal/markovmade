@@ -5,7 +5,7 @@
                 const days=(ed-sd)/86400000; if(!(days>=3)) return error('progress','Текущая дата должна быть позже старта минимум на 3 дня.'),null;
                 for(const [v,min,max,label] of [[sw,35,300,'Стартовый вес'],[cw,35,300,'Текущий вес']]){const m=safeRange(v,min,max,label);if(m)return error('progress',m),null;}
                 const weeks=days/7,delta=cw-sw,quickWeekly=delta/weeks; let weekly=quickWeekly,source='средний темп за весь период',daily=[];
-                const pro=currentMode('progress')==='pro'; if(pro) daily=parseDailyWeights(val('lab-prog-daily'));
+                const pro=currentMode('progress')==='pro'; if(pro)try{daily=window.MarkovMadeModels.parseManualWeights(val('lab-prog-daily'));if(daily.length&&daily.length<7)throw new Error('weights');}catch{return error('progress','Введите минимум 7 корректных весов от 35 до 300 кг. Каждый вес — с новой строки или через ;. Дроби — через точку или запятую.'),null;}
                 const possibleOutliers=detectWeightOutliers(daily),choices=state.progress.outlierChoices||{},excluded=possibleOutliers.filter(item=>choices[item.index]==='exclude').map(item=>item.index);
                 const outlierList=el('lab-prog-outliers');
                 if(outlierList){outlierList.replaceChildren();outlierList.hidden=possibleOutliers.length===0;if(possibleOutliers.length){const legend=document.createElement('legend');legend.textContent='Возможные выбросы — проверьте условия измерения';outlierList.appendChild(legend);possibleOutliers.forEach(item=>{const label=document.createElement('label'),input=document.createElement('input'),text=document.createElement('span');input.type='checkbox';input.checked=choices[item.index]!=='exclude';input.setAttribute('aria-label',`Включить измерение ${fmt(item.value,1)} килограмма`);text.textContent=`${fmt(item.value,1)} кг · день ${item.index+1} (локальный тренд ${fmt(item.localTrend,1)} кг)`;label.append(input,text);input.addEventListener('change',()=>{const next={...choices,[item.index]:input.checked?'include':'exclude'};state.progress={...state.progress,outlierChoices:next,dailyWeights:daily.slice()};save();calculateProgress();});outlierList.appendChild(label);});}}
@@ -35,3 +35,11 @@
                 mmCalcSummaries.progress=summary; updateSnapshot(); return state.progress;
             }
 
+
+            function drawProgressChart(values){
+                const wrap=el('lab-prog-chart'),path=el('lab-prog-chart-line'); if(!wrap||!path)return;
+                if(values.length<2){wrap.hidden=true;path.setAttribute('d','');return;}
+                wrap.hidden=false; const min=Math.min(...values),max=Math.max(...values),range=Math.max(.01,max-min);
+                const points=values.map((v,i)=>{const x=600*i/(values.length-1),y=90-80*(v-min)/range;return [x,y]});
+                path.setAttribute('d',points.map((p,i)=>`${i?'L':'M'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' '));
+            }

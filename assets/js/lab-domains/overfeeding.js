@@ -41,11 +41,7 @@
                 const scaleBlock=el('lab-fat-scale-block');
                 if(Number.isFinite(scale) && scale>0){
                     scaleBlock.hidden=false;
-                    const nonfatLow=Math.max(0,scale-high), nonfatHigh=Math.max(0,scale-low);
-                    setText('lab-fat-scale-text',`Вес на весах: +${fmt(scale,1)} кг. Из них модель относит к жировой массе примерно ${fmt(low,2)}–${fmt(high,2)} кг; оставшиеся ~${fmt(nonfatLow,2)}–${fmt(nonfatHigh,2)} кг не следует автоматически считать жиром.`);
-                    const glyMid=Math.min(scale,Math.max(0,(glyWaterLow+glyWaterHigh)/2)), fatMid=Math.min(scale,center), other=Math.max(0,scale-fatMid-glyMid), total=Math.max(.001,fatMid+glyMid+other);
-                    el('lab-fat-stack-fat').style.width=`${100*fatMid/total}%`; el('lab-fat-stack-gly').style.width=`${100*glyMid/total}%`; el('lab-fat-stack-other').style.width=`${100*other/total}%`;
-                    setText('lab-fat-legend-fat',`${fmt(low,2)}–${fmt(high,2)} кг`); setText('lab-fat-legend-gly',`${fmt(glyWaterLow,2)}–${fmt(glyWaterHigh,2)} кг`); setText('lab-fat-legend-other',other>0?`~${fmt(other,2)} кг, высокая неопределённость`:'не отделяется надёжно');
+                    setText('lab-fat-scale-text',`Изменение на весах: +${fmt(scale,1)} кг. Энергетический сценарий: ${fmt(low,2)}–${fmt(high,2)} кг жирового эквивалента. Фактические доли жира, воды и содержимого ЖКТ по этим данным не определяются.`);
                 } else if(scaleBlock) scaleBlock.hidden=true;
                 setText('lab-fat-72',`Следующие 72 часа: часть резкого прироста массы может снизиться по мере нормализации содержимого ЖКТ, гликогена и воды. Модельная жировая масса изменяется медленнее; конкретный объём воды без измерений натрия, жидкости и запасов гликогена определить нельзя.`);
                 const actions=gross>0?[`Вернитесь к обычному рациону и привычной активности — не пытайтесь «отработать» всё за один день.`,`Взвешивайтесь 3–4 утра подряд в одинаковых условиях и смотрите на среднее.`,`Если это единичное событие, решение принимается по недельному тренду, а не по утреннему пику.`]:['Не вводите дополнительный дефицит только из-за ощущения «переедания»: по введённым калориям избыток не подтверждается.','Продолжайте обычный план и оценивайте недельный тренд.'];

@@ -1,6 +1,14 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const m=require('../assets/js/lab-models.js');
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-9,`${a} != ${b}`);
+test('manual daily weights preserve decimal commas and reject invalid entries without silently dropping them',()=>{
+ assert.deepEqual(m.parseManualWeights('80,5\n80,4\n80.3'),[80.5,80.4,80.3]);
+ assert.deepEqual(m.parseManualWeights('80.5, 80.4, 80.3'),[80.5,80.4,80.3]);
+ assert.deepEqual(m.parseManualWeights('80,5;80,4;80,3'),[80.5,80.4,80.3]);
+ assert.deepEqual(m.parseManualWeights('80,79,78'),[80,79,78]);
+ assert.deepEqual(m.parseManualWeights(''),[]);
+ for(const value of ['80;invalid;79','80\n0\n79','80\n301\n79','80,,79'])assert.throws(()=>m.parseManualWeights(value));
+});
 test('BF sensitivity propagates explicit bounds without inventing an interval',()=>{
  const input={weight:80,height:180,bodyFat:20,delta:3,targetBodyFat:15},r=m.bodySensitivity(input);
  near(r.low.fatMass,13.6);near(r.high.fatMass,18.4);near(r.high.leanMass,61.6);near(r.low.ffmi,66.4/1.8**2);near(r.high.targetWeight,61.6/.85);

@@ -90,10 +90,10 @@
                     const liftId=value=>({'присед':'squat','squat':'squat','жим лёжа':'bench','жим лежа':'bench','bench press':'bench','становая тяга':'deadlift','deadlift':'deadlift','другое':'other','other':'other'}[String(value).trim().toLowerCase()]||value);
                     el('lab-e1rm-calculate').addEventListener('click',()=>{
                         const load=Number(String(val('lab-e1rm-load')).replace(',','.')),reps=Number(val('lab-e1rm-reps')),exercise=val('lab-e1rm-exercise'),out=el('lab-e1rm-result');
-                        if(!Number.isFinite(load)||load<1||load>500||!Number.isInteger(reps)||reps<1||reps>15){out.textContent='Укажите рабочий вес от 1 до 500 кг и 1–15 повторений.';return;}
+                        if(!Number.isFinite(load)||load<1||load>500||!Number.isInteger(reps)||reps<1||reps>15){setText('lab-e1rm-result','Укажите рабочий вес от 1 до 500 кг и 1–15 повторений.');return;}
                         const estimate=estimate1RM(load,reps),history=Array.isArray(state.strength?.history)?state.strength.history:[],previous=history.filter(item=>item&&liftId(item.exercise)===exercise).slice(-1)[0];
+                        const rir=number('lab-e1rm-rir'),protocol=val('lab-e1rm-protocol').trim();if(val('lab-e1rm-rir')&&(!Number.isFinite(rir)||rir<0||rir>5)){setText('lab-e1rm-result','RIR: укажите от 0 до 5.');return;}
                         lastEstimate=estimate.value;renderLoads();
-                        const rir=number('lab-e1rm-rir'),protocol=val('lab-e1rm-protocol').trim();if(val('lab-e1rm-rir')&&(!Number.isFinite(rir)||rir<0||rir>5)){out.textContent='RIR: укажите от 0 до 5.';return;}
                         const entry={exercise,load,reps,value:estimate.value,date:localToday(),at:new Date().toISOString(),rir:Number.isFinite(rir)?rir:null,protocol:protocol||null,modelVersion:'1.1.0'};history.push(entry);state.strength={modelVersion:'1.1.0',calculatedAt:entry.at,history:history.slice(-90)};save();
                         const delta=previous?` · ${estimate.value-previous.value>=0?'+':''}${fmt(estimate.value-previous.value,1)} кг к предыдущей записи`:' · Запись стала начальной точкой тренда';
                         const resultText=`e1RM ≈ ${fmt(estimate.value,1)} кг · уверенность: ${estimate.confidence}${delta}. ${estimate.method}.`;

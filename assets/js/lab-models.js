@@ -191,6 +191,17 @@
     const point=bf=>{const fatMass=weight*bf/100,leanMass=weight-fatMass;return {bodyFat:bf,fatMass,leanMass,ffmi:leanMass/(height/100)**2,targetWeight:Number.isFinite(targetBodyFat)&&targetBodyFat>0&&targetBodyFat<60?leanMass/(1-targetBodyFat/100):null};};
     return {modelVersion:'1.0.0',kind:'scenario arithmetic',supplied,center:point(bodyFat),low:supplied?point(bodyFat-delta):null,high:supplied?point(bodyFat+delta):null};
   }
+  function parseManualWeights(value){
+    const raw=String(value||'').trim();if(!raw)return [];
+    let tokens;
+    if(/[;\n]/.test(raw))tokens=raw.split(/[;\n]+/).map(token=>token.trim()).filter(Boolean);
+    else if(/,\s/.test(raw)||raw.includes('.')&&raw.includes(','))tokens=raw.split(/[,\s]+/);
+    else if(/\s/.test(raw))tokens=raw.split(/\s+/);
+    else if(/^\d+,\d{1,3}$/.test(raw))tokens=[raw];
+    else tokens=raw.split(',');
+    if(tokens.length>180)throw new Error('weights');
+    return tokens.map(token=>{if(!/^\d+(?:[.,]\d+)?$/.test(token))throw new Error('weights');const number=Number(token.replace(',','.'));if(!Number.isFinite(number)||number<35||number>300)throw new Error('weights');return number;});
+  }
   function utcDay(value){
     if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return null;
     const date=Date.parse(value+'T00:00:00Z');return Number.isFinite(date)&&new Date(date).toISOString().slice(0,10)===value?date/86400000:null;
@@ -237,7 +248,7 @@
   }
 
   return Object.freeze({
-    bodySensitivity, datedTrend, datedRecoveryBaseline, compareTrainingSessions,
+    bodySensitivity, datedTrend, datedRecoveryBaseline, compareTrainingSessions, parseManualWeights,
     mifflin, tenHaaf, tenHaafFFM, navyBodyFat, ffmi, tdeeFromPal, dailySurplus,
     energyEquivalentFatKg, weightedTef, glycogenRange, average, movingAverage,
     regressionSlope, maintenanceCalibration, plateauStatus, detectWeightOutliers, robustDailySlope, estimate1RM, checkinTrends, checkinComparison, dailyCalibration, personalRecoveryBaseline

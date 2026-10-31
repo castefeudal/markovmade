@@ -70,7 +70,7 @@
     const core=window.MarkovMadeModels;if(!core)return;
     for(const tool of legacy){
       const panel=root.querySelector(`[data-mm-lab-panel="${tool.id}"]`);if(!panel)continue;
-      let host=panel.querySelector('[data-analysis="'+tool.id+'"]');if(!host){host=node('section',undefined,'mm-analysis-host');host.dataset.analysis=tool.id;host.dataset.noTranslate='';(panel.querySelector('.mm-lab-result')||panel.querySelector('.mm-lab-e1rm')||panel).append(host);}host.replaceChildren();
+      let host=panel.querySelector('[data-analysis="'+tool.id+'"]');if(!host){host=node('section',undefined,'mm-analysis-host');host.dataset.analysis=tool.id;host.dataset.noTranslate='';(tool.id==='progress'?panel.querySelector('.mm-progress-workspace')||panel:panel.querySelector('.mm-lab-result')||panel.querySelector('.mm-lab-e1rm')||panel).append(host);}host.replaceChildren();
       host.append(node('span',modelKinds[tool.id],'mm-model-kind'),node('h4',p('Данные → решение','Data → decision')));
       const state=app.state[tool.id]||{};
       if(!state?.modelVersion&&!(tool.id==='progress'&&readList('markovmade-lab-daily-v1').length)){host.append(node('p',p('После расчёта здесь появятся структура результата, качество данных и сравнения.','Run a calculation to see the result structure, data quality and comparisons.'),'mm-analysis-empty'));continue;}
@@ -80,7 +80,7 @@
         const sensitivity=state.sensitivity;
         if(sensitivity?.supplied){const list=node('dl',undefined,'mm-analysis-metrics');for(const [label,lo,hi,unit]of [[p('BF · ваше допущение','BF · your assumption'),sensitivity.low.bodyFat,sensitivity.high.bodyFat,'%'],[p('Безжировая масса','Fat-free mass'),sensitivity.high.leanMass,sensitivity.low.leanMass,t(p('кг','kg'))],[p('FFMI','FFMI'),sensitivity.high.ffmi,sensitivity.low.ffmi,'']]){list.append(node('dt',label),node('dd',`${numberText(lo)}–${numberText(hi)} ${unit}`));}host.append(node('p',p('Чувствительность к введённой погрешности. Это сценарий, не доверительный интервал.','Sensitivity to your entered uncertainty. A scenario, not a confidence interval.')),list);}else host.append(node('p',p('Индивидуальная погрешность неизвестна. При необходимости задайте отдельный сценарий ± п.п. в форме.','Individual error is unknown. Enter an optional ± percentage-point scenario in the form.')));
         if(Number.isFinite(state.targetWeight))host.append(comparisonRows([{label:p('Сейчас · введённый вес','Current · entered weight'),value:state.fatMass+state.lbm},{label:p('Цель · неизменная FFM','Target · constant FFM'),value:state.targetWeight}],p('Условный целевой сценарий','Conditional target scenario')));
-        const previous=readList('markovmade-lab-history-v1').find(row=>row.tool==='body'&&row.result?.measurementMethod===state.measurementMethod&&Number.isFinite(row.result.lbm)&&row.at!==state.calculatedAt&&Math.abs(row.result.lbm-state.lbm)>.001);
+        const previous=state.measurementMethod!=='unknown'&&readList('markovmade-lab-history-v1').filter(row=>row.tool==='body'&&row.result?.measurementMethod===state.measurementMethod&&row.result.assessmentMethod===state.assessmentMethod&&row.result.height===state.height&&row.result.sex===state.sex&&Number.isFinite(row.result.lbm)&&row.result.calculatedAt!==state.calculatedAt&&Date.parse(row.at)<Date.parse(state.calculatedAt)).sort((a,b)=>Date.parse(b.at)-Date.parse(a.at))[0];
         if(previous)host.append(node('p',p(`Предыдущая запись того же метода: FFM ${numberText(previous.result.lbm)} → ${numberText(state.lbm)} кг. Условия замера не подтверждены; изменение не равно росту мышц.`,`Previous record using the same method: FFM ${numberText(previous.result.lbm)} → ${numberText(state.lbm)} kg. Conditions are unverified; the change is not muscle growth.`)));
       }
       if(tool.id==='nutrition'){
@@ -287,7 +287,8 @@
       const component=node('details',undefined,'mm-result-precision');component.dataset.standardResult='';component.dataset.noTranslate='';
       component.append(node('summary',p('Уверенность и ограничения','Confidence and limits')));
       const body=node('div',undefined,'mm-result-precision-body');
-      body.append(node('p',tool.id==='strategy'||tool.id==='recovery'?p('Уверенность: низкая · практическая эвристика','Confidence: low · practical heuristic'):p('Уверенность: умеренная','Confidence: moderate')));
+      const heuristic=['strategy','recovery','overfeeding'].includes(tool.id),limited=heuristic||/низкая|ограниченная|low|limited/i.test(state.confidence||'')||(tool.id==='progress'&&(state.dailyCount||0)<7);
+      body.append(node('p',heuristic?p('Уверенность: низкая · практическая эвристика','Confidence: low · practical heuristic'):limited?p('Уверенность: низкая','Confidence: low'):p('Уверенность: умеренная','Confidence: moderate')));
       body.append(node('p',tool.limits));
       const accuracy=node('details');accuracy.append(node('summary',p('Как улучшить точность','How to improve accuracy')),node('p',result.accuracy));body.append(accuracy);component.append(body);panel.append(component);
     }

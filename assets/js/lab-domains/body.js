@@ -52,7 +52,7 @@
                 const targetWeightLow=sensitivity.supplied?sensitivity.high.targetWeight:NaN;
                 const targetWeightHigh=sensitivity.supplied?sensitivity.low.targetWeight:NaN;
                 state.profile={...state.profile,sex,height:h,weight:w,bodyFat:round(bf,1)};
-                state.body={modelVersion:MODEL_VERSIONS.body,calculatedAt:new Date().toISOString(),sensitivity,bf,bfLow,bfHigh,fatMass,lbm,ffmi:baseFfmi,nffmi,bmi,whtr,targetBF,targetWeight,targetWeightLow,targetWeightHigh,source,confidence,measurementMethod,goal,level}; save(); applyProfile();
+                state.body={modelVersion:MODEL_VERSIONS.body,calculatedAt:new Date().toISOString(),height:h,sex,assessmentMethod:method,sensitivity,bf,bfLow,bfHigh,fatMass,lbm,ffmi:baseFfmi,nffmi,bmi,whtr,targetBF,targetWeight,targetWeightLow,targetWeightHigh,source,confidence,measurementMethod,goal,level}; save(); applyProfile();
                 setText('lab-body-main',`${fmt(bf,1)}%`);
                 setText('lab-body-range',method==='tape'?`Это ориентир по окружностной модели, а не персональный доверительный интервал. В исходных валидациях ошибка модели составляла несколько процентных пунктов; техника и места замера влияют на результат.`:`Сохранено введённое значение ${fmt(bf,1)}% без коррекции. Источник: ${source}. Точный диапазон ошибки без индивидуальной валидации не выводится.`);
                 setText('lab-body-fatmass',kg(fatMass)); setText('lab-body-lbm',kg(lbm)); setText('lab-body-ffmi',fmt(baseFfmi,1)); setText('lab-body-nffmi',fmt(nffmi,1)); setText('lab-body-bmi',fmt(bmi,1)); setText('lab-body-whtr',Number.isFinite(whtr)?fmt(whtr,2):'—');
