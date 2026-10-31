@@ -227,7 +227,7 @@
     for(const row of Array.isArray(entries)?entries:[]){if(utcDay(row?.date)===null||String(row.device||'').trim()!==selected||!Number.isFinite(row.rhr)||row.rhr<30||row.rhr>130||!Number.isFinite(row.hrv)||row.hrv<5||row.hrv>300)continue;unique.set(row.date,row);}
     const sorted=[...unique.values()].sort((a,b)=>a.date.localeCompare(b.date)),end=endDate===undefined?utcDay(sorted.at(-1)?.date):utcDay(endDate);
     if(endDate!==undefined&&end===null)throw new Error('baseline date');
-    const sample=sorted.filter(row=>utcDay(row.date)<=end&&utcDay(row.date)>end-28),ready=sample.length>=minimumDays;
+    const sample=sorted.filter(row=>utcDay(row.date)<=end&&utcDay(row.date)>end-28),ready=Boolean(selected)&&sample.length>=minimumDays;
     return {modelVersion:'1.0.0',ready,days:sample.length,required:minimumDays,rhr:ready?medianOf(sample.map(row=>row.rhr)):null,hrv:ready?medianOf(sample.map(row=>row.hrv)):null,device:selected,deviceVerified:Boolean(selected),sample};
   }
   function compareTrainingSessions(sessions,{step,ceiling}={}){

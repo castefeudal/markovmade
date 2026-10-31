@@ -1,6 +1,7 @@
 (function(){
   'use strict';
   var exact = {
+'Даты собраны, но устройство и протокол не указаны. Автоматический baseline не подтверждён.':'Dates are recorded, but the device and protocol are missing. An automatic baseline is not established.',
 "RIR: укажите от 0 до 5.":"RIR: enter a value from 0 to 5.",
 "Выберите пол.":"Select sex.",
 "Выберите пол — он нужен для окружностной модели и интерпретации.":"Select sex for the circumference equation and interpretation.",

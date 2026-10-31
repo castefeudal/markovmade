@@ -25,7 +25,7 @@ test('dated windows deduplicate dates, reject impossible dates, flag rather than
 });
 test('recovery baseline requires distinct valid dates and matching declared device',()=>{
  const rows=Array.from({length:14},(_,i)=>({date:`2026-10-${String(i+1).padStart(2,'0')}`,rhr:55+i%2,hrv:50+i%2,device:'A'}));
- const r=m.datedRecoveryBaseline(rows,{device:'A'});assert.equal(r.ready,true);near(r.rhr,55.5);assert.equal(r.deviceVerified,true);assert.equal(m.datedRecoveryBaseline(rows,{device:'A',endDate:'2026-12-01'}).ready,false,'stale measurements do not form a current baseline');
+ const r=m.datedRecoveryBaseline(rows,{device:'A'});assert.equal(r.ready,true);near(r.rhr,55.5);assert.equal(r.deviceVerified,true);assert.equal(m.datedRecoveryBaseline(rows.map(({device,...row})=>row)).ready,false,'an unnamed protocol does not become an automatic baseline');assert.equal(m.datedRecoveryBaseline(rows,{device:'A',endDate:'2026-12-01'}).ready,false,'stale measurements do not form a current baseline');
  assert.equal(m.datedRecoveryBaseline(Array(20).fill(rows[0]),{device:'A'}).ready,false);assert.equal(m.datedRecoveryBaseline(rows,{device:'B'}).days,0);assert.equal(m.datedRecoveryBaseline(rows.slice(0,13),{device:'A'}).ready,false);
 });
 const session={exercise:'bench',load:60,reps:10,sets:3,rir:2,technique:'controlled',rom:'full',rest:180};

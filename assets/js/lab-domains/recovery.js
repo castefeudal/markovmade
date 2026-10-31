@@ -24,7 +24,7 @@
                         const next=history.filter(item=>item.date!==today||String(item.device||'').trim()!==device);next.push({date:today,rhr,hrv,device,sleepHours:Number.isFinite(hours)?hours:null});
                         state.recovery.history=next.slice(-90);
                         const forming=window.MarkovMadeModels.datedRecoveryBaseline(state.recovery.history,{device,endDate:today});
-                        setText('lab-rec-baseline',forming.ready?`Личный baseline · ${forming.days} дней · RHR ${fmt(forming.rhr,0)} · HRV ${fmt(forming.hrv,0)} мс`:`Baseline формируется · ${forming.days} / ${forming.required} качественных дней`);
+                        setText('lab-rec-baseline',forming.ready?`Личный baseline · ${forming.days} дней · RHR ${fmt(forming.rhr,0)} · HRV ${fmt(forming.hrv,0)} мс`:!forming.deviceVerified&&forming.days>=forming.required?'Даты собраны, но устройство и протокол не указаны. Автоматический baseline не подтверждён.':`Baseline формируется · ${forming.days} / ${forming.required} качественных дней`);
                     }
                 }
                 score=clamp(score,0,100);
