@@ -64,3 +64,27 @@ test('old model snapshots remain reproducible without changing current progressi
  const current=calculate('progression',old);assert.equal(current.data.next,60);assert.equal(current.modelVersion,'2.1.0');
  assert.equal(calculate('volume',{...fixtures.volume,entries:'1 x 10'},'2.0.0').data.tonnage,1440);
 });
+
+test('professional plate options include collars and nearest heavier comparison',()=>{
+  const model=calculate('plates',{target:32,bar:20,collars:2,inventory:'5,3,2'});
+  assert.equal(model.modelVersion,'2.2.0');
+  assert.equal(model.data.achieved,32);
+  assert.equal(model.data.exact,true);
+  assert.equal(model.data.bar+model.data.collars+model.data.perSide*2,model.data.achieved);
+  const near=calculate('plates',{target:31,bar:20,collars:0,inventory:'4,3,3'});
+  assert.equal(near.data.achieved,28);assert.equal(near.data.above,32);
+  assert.equal(calculate('plates',{target:31,bar:20,inventory:'4,3,3'},'2.0.0').data.above,undefined);
+  assert.throws(()=>calculate('plates',{target:19,bar:20,collars:2,inventory:'5'}));
+});
+test('multi-dose caffeine correctly sums independent inputs while old snapshots remain stable',()=>{
+  const inputs={dose:100,hours:8,extra:'100@12; 50@4'},value=calculate('caffeine',inputs);
+  assert.equal(value.modelVersion,'2.2.0');assert.equal(value.data.totalDose,250);
+  for(const scenario of value.data.scenarios){
+    const reference=100*2**(-8/scenario.halfLife)+100*2**(-12/scenario.halfLife)+50*2**(-4/scenario.halfLife);
+    assert.ok(Math.abs(scenario.remaining-reference)<1e-9);
+  }
+  assert.equal(calculate('caffeine',inputs,'2.0.0').modelVersion,'2.0.0');
+  assert.equal(calculate('caffeine',inputs,'2.0.0').data.low,100*2**(-8/3));
+  assert.throws(()=>calculate('caffeine',{dose:100,hours:8,extra:'invalid'}));
+  assert.throws(()=>calculate('caffeine',{dose:100,hours:8,extra:'100@50'}));
+});
