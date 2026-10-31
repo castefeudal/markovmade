@@ -12,9 +12,7 @@ html[data-theme="event-horizon"] {
 
 html[data-theme="event-horizon"] body {
   background-color: var(--mm-bg-primary);
-  background-image:
-    radial-gradient(ellipse 58rem 31rem at 82% 13%, rgb(47 81 133 / 18%), transparent 70%),
-    radial-gradient(ellipse 51rem 38rem at 7% 50%, rgb(36 69 119 / 10%), transparent 74%);
+  background-image:none;
 }
 
 html[data-theme="event-horizon"] :is(.calc-primary-btn,.calc-gold-link,.lead-action) {
