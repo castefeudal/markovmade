@@ -37,6 +37,7 @@ const axePath=require.resolve('axe-core/axe.min.js');
     await page.locator('#mm-lab-tab-strength').click();for(const [key,value]of Object.entries({load:'60',reps:'8',rir:'2',protocol:'Controlled full range'}))await page.locator('#lab-e1rm-'+key).fill(value);await page.locator('#lab-e1rm-calculate').click();assert.equal(await page.locator('[data-analysis=strength] .mm-data-point').count(),1);
     await page.locator('#mm-lab-tab-caffeine').click();
     assert.equal(await page.locator('#mm-toolkit-result svg[role=img]').count(),0,'empty state has no invented series');
+    await page.locator('#toolkit-caffeine-dose').fill('100');await page.locator('#toolkit-caffeine-hours').fill('8');
     await page.locator('#toolkit-caffeine-bedtime').fill('23:00');
     for(const [key,value]of Object.entries({source:'Coffee',dose:'150',time:'08:00'}))await page.locator(`#toolkit-caffeine-intakes-0-${key}`).fill(value);
     assert.equal(await page.locator('#toolkit-caffeine-dose').isDisabled(),true,'PRO replaces quick inputs');
@@ -58,9 +59,21 @@ const axePath=require.resolve('axe-core/axe.min.js');
     await page.locator('#toolkit-progression-records-1-rom').fill('Partial');await page.locator('#mm-toolkit-workspace button[type=submit]').click();
     assert.equal(await page.evaluate(()=>MarkovMadeLab.state.toolkit.progression.result.data.increase),false);
     await page.locator('#mm-lab-tab-caffeine').click();assert.equal(await page.locator('#toolkit-caffeine-intakes-1-source').inputValue(),'Tea','tab changes preserve record drafts');
+    assert.equal(await page.locator('#toolkit-caffeine-dose').inputValue(),'100','disabled quick-mode drafts survive PRO tab switches');
+    assert.equal(await page.locator('#toolkit-caffeine-hours').inputValue(),'8');
     assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true);
     if(lang==='en')assert.doesNotMatch(await page.locator('.mm-toolkit-workspace').innerText(),/[А-Яа-яЁё]/,'PRO UI is translated');
     assert.deepEqual(errors,[]);
+    if(name==='chromium'&&lang==='en'&&theme==='clarity'&&width===390){
+     const at=await page.evaluate(()=>{const at=MarkovMadeLab.state.body.calculatedAt;MarkovMadeLab.state.body.calculatedAt='2020-01-02T12:00:00Z';MarkovMadeToolkit.renderSummary();return at;});
+     assert.match(await page.locator('.mm-summary-metric').filter({hasText:'Estimated body fat'}).locator('.mm-summary-metric-date').innerText(),/2020/,'a newer caffeine result does not relabel the body estimate date');
+     assert.match(await page.locator('.mm-summary-metric').filter({hasText:'Weight · entered profile'}).locator('.mm-summary-metric-date').innerText(),/not recorded/,'missing profile entry time remains unknown');
+     await page.evaluate(at=>{MarkovMadeLab.state.body.calculatedAt=at;MarkovMadeToolkit.renderSummary();},at);
+     await page.locator('#mm-lab-tab-strength').click();await page.locator('#lab-e1rm-load').fill('13.9');await page.locator('#lab-e1rm-reps').fill('1');await page.locator('#lab-e1rm-increment').selectOption('5');await page.locator('#lab-e1rm-calculate').click();
+     assert.match(await page.locator('#lab-e1rm-load-plan').innerText(),/90% ≈ 10[,.]0 kg/,'reference rounding does not turn 90% into more than e1RM');
+     assert.doesNotMatch(await page.locator('#lab-e1rm-result').innerText(),/[А-Яа-яЁё]/,'the entered-single-repetition limit is translated');
+     await page.locator('#mm-lab-tab-caffeine').click();
+    }
     if(name==='chromium'){
      await page.addScriptTag({path:axePath});const axe=await page.evaluate(async()=>axe.run(document.querySelector('#mm-toolkit-workspace'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa','wcag22aa']}}));assert.deepEqual(axe.violations.map(item=>({id:item.id,nodes:item.nodes.length})),[],'filled PRO result accessibility');
      await page.locator('#mm-toolkit-result').scrollIntoViewIfNeeded();await page.screenshot({path:`test-results/lab-pro/${lang}-${theme}-${width}-caffeine.png`});

@@ -83,7 +83,7 @@
                     const renderLoads=()=>{
                         const english=document.documentElement.lang==='en',step=Number(val('lab-e1rm-increment'))||2.5;
                         el('lab-e1rm-increment-label').textContent=english?'Rounding step · kg':'Шаг округления · кг';
-                        el('lab-e1rm-load-plan').textContent=lastEstimate?(english?'Reference loads: ':'Ориентиры нагрузки: ')+[70,80,90].map(percent=>`${percent}% ≈ ${fmt(Math.round(lastEstimate*percent/100/step)*step,1)} ${english?'kg':'кг'}`).join(' · ')+(english?' · Adjust for effort and technique.':' · Корректируйте по усилию и технике.'):(english?'Calculate e1RM to see rounded reference loads.':'Рассчитайте e1RM, чтобы увидеть округлённые ориентиры нагрузки.');
+                        el('lab-e1rm-load-plan').textContent=lastEstimate?(english?'Reference loads: ':'Ориентиры нагрузки: ')+[70,80,90].map(percent=>{const load=Math.floor(lastEstimate*percent/100/step+1e-10)*step;return load>0?`${percent}% ≈ ${fmt(load,1)} ${english?'kg':'кг'}`:`${percent}% · ${english?'below available increment':'меньше доступного шага'}`;}).join(' · ')+(english?' · Adjust for effort and technique.':' · Корректируйте по усилию и технике.'):(english?'Calculate e1RM to see rounded reference loads.':'Рассчитайте e1RM, чтобы увидеть округлённые ориентиры нагрузки.');
                     };
                     el('lab-e1rm-increment').addEventListener('change',renderLoads);
                     new MutationObserver(renderLoads).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});renderLoads();

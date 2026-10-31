@@ -95,6 +95,19 @@
   // Versioned PRO runners. Archived 2.2 inputs keep their original interpretation.
   const progressionDefinition=definitions.find(item=>item.id==='progression');
   const progression21=progressionDefinition.run,plates22=plateDefinition.run,caffeine22=caffeineDefinition.run;
+  const loadDefinition=definitions.find(item=>item.id==='load'),load20=loadDefinition.run;
+  loadDefinition.version='2.1.0';loadDefinition.review='2026-11-01';
+  loadDefinition.fields.find(item=>item.key==='max').value='';
+  loadDefinition.type='Published equation + practical RIR heuristic';
+  loadDefinition.formula='Percent load = e1RM × percent / 100. RIR heuristic = e1RM / (1 + (reps + RIR)/30). Round down to the available increment; no positive option below one increment.';
+  loadDefinition.run=v=>{
+    const previous=load20(v),max=n(v.max,10,500),pct=n(v.percent,30,95),reps=integer(v.reps,1,12),rir=integer(v.rir,0,5),step=n(v.step,.5,10);
+    const down=value=>{const rounded=Math.floor(value/step+1e-10)*step;return rounded>0?Number(rounded.toFixed(6)):null;};
+    const byPct=down(max*pct/100),byRir=down(max/(1+(reps+rir)/30)),shown=value=>value===null?'—':String(value);
+    return {...previous,value:pair(`${shown(byPct)} кг (%1RM) · ${shown(byRir)} кг (RIR)`,`${shown(byPct)} kg (%1RM) · ${shown(byRir)} kg (RIR)`),meaning:pair(`RPE ≈ ${10-rir}. Округление вниз. «—» означает, что положительный вариант меньше доступного шага; выберите меньший шаг. Сначала проверьте разминкой.`,`RPE ≈ ${10-rir}. Rounded down. “—” means a positive option is below the available increment; choose a smaller increment. Check during warm-up first.`),data:{byPct,byRir,rpe:10-rir}};
+  };
+  const auditedMetadata={recomposition:['Scenario arithmetic with user assumptions','FM = weight × BF / 100; projected BF (%) = 100 × (FM + ΔFM) / (weight + ΔFM + ΔFFM)'],phase:['Linear scenario arithmetic',null],circumference:['Measurement arithmetic','Δcm = last − first; relative change (%) = 100 × Δcm / first; weekly = Δcm × 7 / days']};
+  for(const [id,[type,formula]]of Object.entries(auditedMetadata)){const definition=definitions.find(item=>item.id===id);definition.type=type;if(formula)definition.formula=formula;}
   const core=()=>typeof module==='object'&&module.exports?require('./lab-models.js'):globalThis.MarkovMadeModels;
   function parsePlateInventory(value){
     const raw=String(value??'').trim();if(!raw)return [];
@@ -156,6 +169,7 @@
 
   function calculate(id,values,requestedVersion){
     const definition=definitions.find(item=>item.id===id);if(!definition)throw new Error('model');
+    if(requestedVersion==='2.0.0'&&id==='load')return {...load20(values),modelVersion:'2.0.0'};
     if(requestedVersion==='2.0.0'&&id==='plates')return {...previousPlateRun(values),modelVersion:'2.0.0'};
     if(requestedVersion==='2.0.0'&&id==='caffeine')return {...previousCaffeineRun(values),modelVersion:'2.0.0'};
     if(requestedVersion==='2.2.0'&&id==='plates')return {...plates22(values),modelVersion:'2.2.0'};

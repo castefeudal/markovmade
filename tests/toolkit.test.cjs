@@ -28,11 +28,24 @@ test('plate subset search handles non-greedy inventory and unreachable targets',
 });
 test('training models do not prescribe progression from a single session',()=>{
   assert.equal(calculate('volume',fixtures.volume).data.tonnage,1440);
-  assert.deepEqual(calculate('load',fixtures.load).data,{byPct:75,byRir:80,rpe:8});
+  assert.deepEqual(calculate('load',fixtures.load).data,{byPct:75,byRir:77.5,rpe:8});
   assert.equal(calculate('progression',fixtures.progression).data.next,62.5);
   assert.equal(calculate('progression',{...fixtures.progression,sessions:1}).data.next,60);
   assert.equal(calculate('progression',{...fixtures.progression,step:10}).data.next,60);
   assert.equal(calculate('cardio',fixtures.cardio).data.max,180);
+});
+test('working-load rounding never rounds above the selected reference and exposes unavailable increments',()=>{
+  const edge={max:16,percent:95,reps:1,rir:0,step:10};
+  assert.deepEqual(calculate('load',edge).data,{byPct:10,byRir:10,rpe:10});
+  assert.deepEqual(calculate('load',{...edge,max:10,percent:30,reps:12,rir:5}).data,{byPct:null,byRir:null,rpe:5});
+  for(const max of [10,16,33,100,253.5])for(const percent of [30,50,70,95])for(const step of [.5,2.5,5,10]){
+    const r=calculate('load',{max,percent,step,reps:5,rir:2}).data;
+    for(const [value,limit]of [[r.byPct,max*percent/100],[r.byRir,max/(1+7/30)]])if(value!==null){assert.ok(value>0&&value<=limit+1e-6);assert.ok(value<=max);}
+  }
+});
+test('archived working-load 2.0 rounding remains reproducible',()=>{
+  const r=calculate('load',{max:16,percent:95,reps:1,rir:0,step:10},'2.0.0');
+  assert.equal(r.modelVersion,'2.0.0');assert.deepEqual(r.data,{byPct:20,byRir:20,rpe:10});assert.equal(calculate('load',fixtures.load,'2.0.0').data.byRir,80);
 });
 test('sleep handles midnight and caffeine retains uncertainty',()=>{
   assert.equal(calculate('sleep',fixtures.sleep).data.hours,7.5);

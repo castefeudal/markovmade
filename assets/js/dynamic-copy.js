@@ -170,6 +170,9 @@
     'высокий риск по талии':'high waist-risk zone'
   };
   var parts = [
+["введённый одиночный повтор; максимальность не подтверждена","entered single repetition; maximal effort is not confirmed"],
+["среднее Epley и Brzycki","mean of Epley and Brzycki"],
+["Epley; при большем числе повторений неопределённость выше","Epley; higher repetitions increase uncertainty"],
 ["Окружность талии / живота:","Waist / abdominal circumference:"],
 ["Фактические калории поддержания:","Observed maintenance calories:"],
 ["Средние калории:","Average calories:"],

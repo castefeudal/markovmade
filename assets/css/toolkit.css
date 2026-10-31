@@ -87,6 +87,9 @@
 
 /* Data uses the shared palette; empty states never draw invented observations. */
 @layer components {
+ #calculators .mm-lab-scenarios button{display:inline-flex;align-items:center;gap:10px}
+ #calculators .mm-lab-scenarios button svg{flex:0 0 20px;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+ #calculators .mm-summary-metric-date{grid-column:1/-1;color:var(--mm-text-secondary);font:400 12px/1.6 var(--mm-font-body);overflow-wrap:anywhere}
  #calculators .mm-analysis-host{margin-top:28px;padding-top:24px;border-top:1px solid var(--mm-border-strong);min-width:0}
  #calculators .mm-model-kind{display:block;margin:0 0 12px;color:var(--mm-text-secondary);font:600 12px/1.6 var(--mm-font-body);letter-spacing:.04em}
  #calculators :is(.mm-analysis-host,.mm-comparison,.mm-data-figure,.mm-record-editor) h4{font:600 17px/1.4 var(--mm-font-body);margin:12px 0}

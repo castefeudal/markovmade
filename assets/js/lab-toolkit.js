@@ -19,6 +19,8 @@
   const primary=['body','nutrition','overfeeding','recovery','progress','strength','plates','progression','caffeine'];
   const parent={recomposition:'body',protein:'nutrition',phase:'progress',circumference:'progress',load:'strength',volume:'strength',sleep:'recovery',fatigue:'recovery'};
   const favoriteKey='markovmade-lab-favorites-v1';
+  // Drafts retain disabled quick inputs; submitted PRO records still replace them.
+  const captureDraft=form=>Object.fromEntries([...form.elements].filter(field=>field.name&&'value' in field).map(field=>[field.name,field.value]));
   const readList=key=>{try{const value=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(value)?value:[];}catch{return [];}};
   const favoriteIds=()=>readList(favoriteKey).filter(id=>tools.some(tool=>tool.id===id)).slice(0,6);
   let selected=null;
@@ -32,13 +34,13 @@
       const group=node('div',undefined,'mm-lab-scenarios');group.dataset.noTranslate='';
       group.append(node('h4',p('Дополнительные сценарии','Additional scenarios')));
       for(const tool of tools.filter(tool=>parent[tool.id]===key)){
-        const button=node('button',tool.title,'mm-lab-secondary');button.type='button';button.dataset.toolId=tool.id;button.addEventListener('click',()=>open(tool));group.append(button);
+        const button=node('button',tool.title,'mm-lab-secondary');button.prepend(icon('scenario-'+tool.id));button.type='button';button.dataset.toolId=tool.id;button.addEventListener('click',()=>open(tool));group.append(button);
       }
       root.querySelector(`[data-mm-lab-panel="${key}"]`).append(group);
     }
   }
   root.addEventListener('mm:lab-tab',event=>{
-    const activeForm=workspace.querySelector('form');if(selected&&activeForm)drafts[selected]=Object.fromEntries(new FormData(activeForm));
+    const activeForm=workspace.querySelector('form');if(selected&&activeForm)drafts[selected]=captureDraft(activeForm);
     const tool=tools.find(tool=>tool.id===event.detail.key);
     if(tool&&legacy.includes(tool)){selected=null;workspace.hidden=true;}
     if(tool&&primary.includes(tool.id)&&!legacy.includes(tool))open(tool,false);
@@ -194,7 +196,7 @@
     const key=parent[tool.id]||tool.id;
     const tab=root.querySelector(`[data-mm-lab-tab="${key}"]`);
     if(tab?.getAttribute('aria-selected')!=='true')tab?.click();
-    const activeForm=workspace.querySelector('form');if(selected&&activeForm)drafts[selected]=Object.fromEntries(new FormData(activeForm));
+    const activeForm=workspace.querySelector('form');if(selected&&activeForm)drafts[selected]=captureDraft(activeForm);
     selected=tool.id;
     if(legacy.includes(tool)){
       workspace.hidden=true;root.querySelector(`[data-mm-lab-tab="${tool.id}"]`).click();
@@ -243,7 +245,7 @@
     if(!total){summary.hidden=true;return;}
     const entries=[['weight',p('Вес · введённый профиль','Weight · entered profile'),app.state.profile.weight?`${app.state.profile.weight} ${en()?'kg':'кг'}`:null,'scale'],['bodyFat',p('Процент жира · оценка','Estimated body fat'),app.state.body?.bf?`${app.state.body.bf.toFixed(1)}%`:null,'body'],['tdee',p('Поддержание · оценка','Estimated maintenance'),Number.isFinite(app.state.nutrition?.tdee)?`${Math.round(app.state.nutrition.tdee)} ${en()?'kcal/day':'ккал/день'}`:null,'calories'],['trend',p('Изменение веса за неделю','Weekly weight change'),Number.isFinite(app.state.progress?.weekly)?`${app.state.progress.weekly>0?'+':''}${app.state.progress.weekly.toFixed(2)} ${en()?'kg/week':'кг/нед.'}`:null,'trend']];
     const metrics=node('div',undefined,'mm-toolkit-summary-metrics');
-    entries.forEach(([key,label,value,iconName])=>{if(!value)return;const card=node('article',undefined,'mm-summary-metric'),index=String(metrics.children.length+1).padStart(2,'0');card.append(node('span',index,'mm-summary-metric-index'),icon(iconName),node('span',label,'mm-summary-metric-label'),node('strong',value,'mm-summary-metric-value'));card.children[1].classList.add('mm-summary-metric-icon');metrics.append(card);});summary.append(metrics);const dates=legacy.map(tool=>app.state[tool.id]?.calculatedAt).concat(Object.values(app.state.toolkit||{}).map(record=>record.at)).filter(value=>Number.isFinite(Date.parse(value))).sort();summary.append(node('p',dates.length?p('Последний известный расчёт: ','Latest recorded calculation: '):p('У архивных записей дата расчёта может быть неизвестна.','Archived records may have no calculation timestamp.'),'mm-analysis-date'));if(dates.length)summary.lastElementChild.append(document.createTextNode(new Date(dates.at(-1)).toLocaleString(en()?'en-GB':'ru-RU')));
+    entries.forEach(([key,label,value,iconName])=>{if(!value)return;const card=node('article',undefined,'mm-summary-metric'),index=String(metrics.children.length+1).padStart(2,'0');card.append(node('span',index,'mm-summary-metric-index'),icon(iconName),node('span',label,'mm-summary-metric-label'),node('strong',value,'mm-summary-metric-value'));card.children[1].classList.add('mm-summary-metric-icon');const at={bodyFat:app.state.body?.calculatedAt,tdee:app.state.nutrition?.calculatedAt,trend:app.state.progress?.calculatedAt}[key],known=typeof at==='string'&&Number.isFinite(Date.parse(at));card.append(node('small',known?new Date(at).toLocaleString(en()?'en-GB':'ru-RU'):key==='weight'?p('Дата ввода не записана','Entry date not recorded'):p('Дата расчёта не записана','Calculation date not recorded'),'mm-summary-metric-date'));metrics.append(card);});summary.append(metrics);const dates=legacy.map(tool=>app.state[tool.id]?.calculatedAt).concat(Object.values(app.state.toolkit||{}).map(record=>record.at)).filter(value=>Number.isFinite(Date.parse(value))).sort();summary.append(node('p',dates.length?p('Последний известный расчёт: ','Latest recorded calculation: '):p('У архивных записей дата расчёта может быть неизвестна.','Archived records may have no calculation timestamp.'),'mm-analysis-date'));if(dates.length)summary.lastElementChild.append(document.createTextNode(new Date(dates.at(-1)).toLocaleString(en()?'en-GB':'ru-RU')));
     const observed=Boolean(app.state.nutrition?.calibration),trend=Number.isFinite(app.state.progress?.weekly),physical=complete.some(tool=>!['strategy','strength'].includes(tool.id));
 
     const behavioural=app.state.toolkit?.review?.result?.value||app.state.toolkit?.minimum?.result?.value;
