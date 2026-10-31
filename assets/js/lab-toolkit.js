@@ -62,11 +62,28 @@
     const accuracy=node('details',undefined,'mm-toolkit-precision');accuracy.append(node('summary',p('Как улучшить точность','How to improve accuracy')),node('p',result.accuracy));
     out.append(precision,accuracy);
     if(definition.id==='caffeine'){
-      const dose=Number(app.state.toolkit?.caffeine?.inputs?.dose),hours=Number(app.state.toolkit?.caffeine?.inputs?.hours);
-      if(Number.isFinite(dose)&&Number.isFinite(hours)){
-        const chart=node('div',undefined,'mm-caffeine-scenarios');chart.append(node('h4',p('Предполагаемый период полувыведения','Assumed half-life')));
-        for(const half of [3,5,7]){const remaining=dose*2**(-hours/half),row=node('div',undefined,'mm-caffeine-row'),bar=node('meter');bar.min=0;bar.max=Math.max(1,dose);bar.value=remaining;bar.setAttribute('aria-label',t(p(`${half} ч: ${Math.round(remaining)} мг`,`${half} h: ${Math.round(remaining)} mg`)));row.append(node('span',p(`${half} ч`,`${half} h`)),bar,node('strong',p(`${Math.round(remaining)} мг`,`${Math.round(remaining)} mg`)));chart.append(row);}out.insertBefore(chart,action);
+      const doses=result.data?.doses;
+      if(Array.isArray(doses)&&doses.length){
+        const chart=node('div',undefined,'mm-caffeine-scenarios');
+        chart.append(node('h4',p('Сценарии выведения · все введённые дозы','Elimination scenarios · all entered doses')));
+        const summary=node('p',p('Сумма введённых доз: '+result.data.totalDose+' мг. Условный остаток при трёх скоростях выведения.','Total entered intake: '+result.data.totalDose+' mg. Hypothetical remaining amounts under three elimination rates.'),'mm-caffeine-summary');chart.append(summary);
+        for(const scenario of result.data.scenarios||[]){
+          const half=scenario.halfLife,remaining=scenario.remaining,row=node('div',undefined,'mm-caffeine-row'),bar=node('meter');bar.min=0;bar.max=Math.max(1,result.data.totalDose);bar.value=remaining;
+          bar.setAttribute('aria-label',t(p(half+' ч: '+Math.round(remaining)+' мг',half+' h: '+Math.round(remaining)+' mg')));
+          row.append(node('span',p(half+' ч',half+' h')),bar,node('strong',p(Math.round(remaining)+' мг',Math.round(remaining)+' mg')));chart.append(row);
+        }
+        chart.append(node('p',p('Не определяет индивидуальное время выведения, качество сна или безопасную дозу.','Does not determine individual clearance, sleep quality or a safe dose.'),'mm-caffeine-caption'));
+        out.insertBefore(chart,action);
       }
+    }
+    if(definition.id==='plates'&&result.data){
+      const data=result.data,detail=node('div',undefined,'mm-plate-breakdown');
+      detail.append(node('h4',p('Состав комплекта','Load breakdown')));
+      const values=[p('Гриф','Bar'),p('Замки · всего','Collars · total'),p('Блины · каждая сторона','Plates · each side')];
+      const quantities=[data.bar+' кг',data.collars+' кг',data.perSide+' кг'];
+      for(let i=0;i<values.length;i++){const row=node('div',undefined,'mm-plate-row');row.append(node('span',values[i]),node('strong',p(quantities[i],quantities[i].replace('кг','kg'))));detail.append(row);}
+      if(data.above!==null&&!data.exact)detail.append(node('p',p('Для сравнения: следующий достижимый вес '+data.above+' кг. Не рекомендация увеличивать нагрузку.','For comparison: next achievable load '+data.above+' kg. Not an instruction to increase load.'),'mm-plate-caution'));
+      out.insertBefore(detail,action);
     }
     return out;
   }
@@ -110,7 +127,7 @@
         try{localStorage.setItem('markovmade-lab-v1',JSON.stringify(app.state));}catch{error.textContent=t(p('Результат рассчитан, но браузер не сохранил данные.','Calculated, but the browser could not save the data.'));}
         root.querySelectorAll('[data-profile]').forEach(input=>{if(app.state.profile[input.dataset.profile]!=null)input.value=app.state.profile[input.dataset.profile];});
         output.replaceChildren(outcome(tool,result));renderSummary();output.scrollIntoView({block:'nearest',behavior:'auto'});root.dispatchEvent(new CustomEvent('mm:toolkit-result',{detail:{id:tool.id,result}}));
-      }catch{const messages={plates:p('Цель должна быть не меньше грифа. Укажите до 24 блинов на сторону, через запятую; каждый вес кратен 0.25 кг. Десятичный разделитель — точка.','The target must be at least the bar. List up to 24 plates per side, separated by commas, in 0.25 kg increments. Use a decimal point.'),volume:p('Запишите подходы как 8 x 60; 7 x 62.5. Не больше 30 подходов, повторы — целые числа.','Enter sets as 8 x 60; 7 x 62.5. Up to 30 sets; repetitions must be whole numbers.'),sleep:p('Проверьте время сна и подъёма. Время бодрствования не должно превышать окно сна.','Check bedtime and wake time. Time awake cannot exceed the sleep opportunity.')};error.textContent=t(messages[tool.id]||p('Проверьте значения, единицы измерения и целые числа в полях повторов и сессий.','Check values, units and whole numbers for repetitions and sessions.'));error.scrollIntoView({block:'nearest',behavior:'auto'});}
+      }catch{const messages={caffeine:p('Дополнительные дозы укажите как 100@12; 50@4, максимум 8 записей. Время — часы до сна.','Enter extra doses as 100@12; 50@4, up to 8 records. Hours count backwards from bedtime.'),plates:p('Цель должна быть не меньше грифа. Укажите до 24 блинов на сторону, через запятую; каждый вес кратен 0.25 кг. Десятичный разделитель — точка.','The target must be at least the bar. List up to 24 plates per side, separated by commas, in 0.25 kg increments. Use a decimal point.'),volume:p('Запишите подходы как 8 x 60; 7 x 62.5. Не больше 30 подходов, повторы — целые числа.','Enter sets as 8 x 60; 7 x 62.5. Up to 30 sets; repetitions must be whole numbers.'),sleep:p('Проверьте время сна и подъёма. Время бодрствования не должно превышать окно сна.','Check bedtime and wake time. Time awake cannot exceed the sleep opportunity.')};error.textContent=t(messages[tool.id]||p('Проверьте значения, единицы измерения и целые числа в полях повторов и сессий.','Check values, units and whole numbers for repetitions and sessions.'));error.scrollIntoView({block:'nearest',behavior:'auto'});}
     });
     if(focus){title.focus({preventScroll:true});workspace.scrollIntoView({block:'start',behavior:'auto'});}
   }
