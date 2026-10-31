@@ -84,3 +84,19 @@
  #calculators .mm-caffeine-row meter::-webkit-meter-optimum-value{background:var(--mm-accent);border-radius:3px}
  #calculators .mm-caffeine-row meter::-moz-meter-bar{background:var(--mm-accent)}
 }
+
+/* Premium analytical readouts: quiet hierarchy and real comparison information. */
+@layer components {
+  #calculators .mm-caffeine-scenarios,#calculators .mm-plate-breakdown{margin:16px 0 8px;padding:clamp(15px,2vw,24px);border:1px solid var(--mm-border-strong);border-radius:var(--mm-radius-control);background:linear-gradient(132deg,var(--mm-accent-soft),transparent 55%),var(--mm-surface-1);}
+  #calculators .mm-caffeine-scenarios h4,#calculators .mm-plate-breakdown h4{margin:0 0 12px;font:650 15px/1.5 var(--mm-font-body);color:var(--mm-text-primary);}
+  #calculators .mm-caffeine-row{display:grid;grid-template-columns:46px minmax(0,1fr) minmax(68px,auto);align-items:center;gap:clamp(8px,1.5vw,18px);border-top:1px solid var(--mm-border);padding:10px 0;min-height:48px;}
+  #calculators .mm-caffeine-row meter{width:100%;min-width:0;height:18px;}
+  #calculators .mm-caffeine-row strong{font:650 15px/1.4 var(--mm-font-body);color:var(--mm-text-primary);text-align:right;font-variant-numeric:tabular-nums;}
+  #calculators .mm-caffeine-summary,#calculators .mm-caffeine-caption,#calculators .mm-plate-caution{margin:10px 0 0;font:400 14px/1.6 var(--mm-font-body);color:var(--mm-text-secondary);}
+  #calculators .mm-plate-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 0;border-top:1px solid var(--mm-border);font:500 14px/1.5 var(--mm-font-body);color:var(--mm-text-secondary);}
+  #calculators .mm-plate-row strong{color:var(--mm-text-primary);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  #calculators .mm-toolkit-outcome{overflow:hidden;}
+  #calculators .mm-toolkit-outcome>.mm-toolkit-value{font-variant-numeric:lining-nums;max-width:100%;text-wrap:balance;}
+  #calculators .mm-toolkit-analysis-result{scroll-margin-top:120px;}
+  @media(max-width:390px){#calculators .mm-caffeine-row{grid-template-columns:38px minmax(0,1fr) 67px;gap:7px;}#calculators .mm-caffeine-row strong{font-size:13px;}}
+}
