@@ -25,66 +25,6 @@
     "height": 640
   },
   {
-    "path": "assets/media/portfolio/04-1-XkjZ4N71.webp",
-    "width": 1448,
-    "height": 1086
-  },
-  {
-    "path": "assets/media/portfolio/04-1-XkjZ4N71-320w.webp",
-    "width": 320,
-    "height": 240
-  },
-  {
-    "path": "assets/media/portfolio/04-1-XkjZ4N71-640w.webp",
-    "width": 640,
-    "height": 480
-  },
-  {
-    "path": "assets/media/portfolio/04-1-XkjZ4N71-1024w.webp",
-    "width": 1024,
-    "height": 768
-  },
-  {
-    "path": "assets/media/portfolio/05-3-d0YD8q2V.webp",
-    "width": 1448,
-    "height": 1086
-  },
-  {
-    "path": "assets/media/portfolio/05-3-d0YD8q2V-320w.webp",
-    "width": 320,
-    "height": 240
-  },
-  {
-    "path": "assets/media/portfolio/05-3-d0YD8q2V-640w.webp",
-    "width": 640,
-    "height": 480
-  },
-  {
-    "path": "assets/media/portfolio/05-3-d0YD8q2V-1024w.webp",
-    "width": 1024,
-    "height": 768
-  },
-  {
-    "path": "assets/media/portfolio/06-2-TD3tmtjQ.webp",
-    "width": 1448,
-    "height": 1086
-  },
-  {
-    "path": "assets/media/portfolio/06-2-TD3tmtjQ-320w.webp",
-    "width": 320,
-    "height": 240
-  },
-  {
-    "path": "assets/media/portfolio/06-2-TD3tmtjQ-640w.webp",
-    "width": 640,
-    "height": 480
-  },
-  {
-    "path": "assets/media/portfolio/06-2-TD3tmtjQ-1024w.webp",
-    "width": 1024,
-    "height": 768
-  },
-  {
     "path": "assets/media/portfolio/07-markovmade-PzwZMP8H.webp",
     "width": 1378,
     "height": 1280
@@ -618,46 +558,6 @@
     "path": "assets/media/editorial/bio-craft-b.avif",
     "width": 1600,
     "height": 1066
-  },
-  {
-    "path": "assets/media/editorial/bio-legacy-face-320w.webp",
-    "width": 320,
-    "height": 320
-  },
-  {
-    "path": "assets/media/editorial/bio-legacy-face-640w.webp",
-    "width": 640,
-    "height": 640
-  },
-  {
-    "path": "assets/media/editorial/bio-legacy-face-1024w.webp",
-    "width": 1024,
-    "height": 1024
-  },
-  {
-    "path": "assets/media/editorial/bio-legacy-face.webp",
-    "width": 1126,
-    "height": 1126
-  },
-  {
-    "path": "assets/media/editorial/bio-legacy-face-320w.avif",
-    "width": 320,
-    "height": 320
-  },
-  {
-    "path": "assets/media/editorial/bio-legacy-face-640w.avif",
-    "width": 640,
-    "height": 640
-  },
-  {
-    "path": "assets/media/editorial/bio-legacy-face-1024w.avif",
-    "width": 1024,
-    "height": 1024
-  },
-  {
-    "path": "assets/media/editorial/bio-legacy-face.avif",
-    "width": 1126,
-    "height": 1126
   },
   {
     "path": "assets/media/editorial/bio-origin-a-320w.webp",

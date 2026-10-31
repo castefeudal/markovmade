@@ -50,7 +50,10 @@ test('no legacy service emoji remain in the rendered markup', () => {
 
 test('all content images are local WebP files with dimensions and alt text', () => {
   const images = [...html.matchAll(/<img\b[^>]*>/gs)].map(match => match[0]);
-  assert.ok(images.length >= 20);
+  // Eighteen documentary plates: hero, eight service directions, the case plate, the author
+  // plate and seven biography plates. The fabricated client before/after collages and the
+  // AI-smoothed portrait were removed deliberately, so the floor sits below the old count.
+  assert.ok(images.length >= 16, 'the documentary image set stays substantial');
   for (const image of images) {
     const src = image.match(/\bsrc="([^"]+)"/);
     assert.ok(src, `image has a source: ${image.slice(0, 80)}`);

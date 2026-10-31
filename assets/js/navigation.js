@@ -20,6 +20,9 @@
     if (burger) burger.setAttribute('aria-expanded', String(open));
     if (main) main.inert = open;
     if (header) header.inert = open;
+    // `menu-open` changes how the document scrolls, so the measured geometry and
+    // the recorded anchor offset belong to the state before this call.
+    invalidateGeometry();
     if (open) menu.querySelector('a,button')?.focus();
     else if (returnFocus?.isConnected) { returnFocus.focus({preventScroll:true}); returnFocus = null; }
   }
@@ -38,6 +41,22 @@
   const locationLinks = [...document.querySelectorAll('#main-header nav a[href^="#"], #mobile-menu nav a[href^="#"]')];
   const locationTargets = [...new Set(locationLinks.map(link => document.getElementById(link.getAttribute('href').slice(1))).filter(Boolean))].sort((a,b)=>a.compareDocumentPosition(b)&Node.DOCUMENT_POSITION_FOLLOWING?-1:1);
   let currentLocation=null;
+  /* Geometry is measured once and reused for every scroll frame. Reading a rect
+     inside the same frame that toggles the header classes and the quick-action
+     `inert` flag makes the browser recompute the document on the next frame, and
+     with thirteen content-visibility sections that reflow is a ~360 ms blocked
+     task on a throttled mobile CPU — the single largest cost in the Lighthouse
+     Performance budget. The cache is dropped wherever the document can have
+     changed shape: a resize, a font swap, a lazy component landing or a menu. */
+  let metrics=null;
+  function measure(){
+    const marker=Math.min(innerHeight*.75,Math.max((header?.offsetHeight||72)+24,innerHeight*.5));
+    const tops=locationTargets.map(target=>({id:target.id,top:target.getBoundingClientRect().top+scrollY}));
+    metrics={marker,tops,height:document.documentElement.scrollHeight};
+    return metrics;
+  }
+  function geometry(){return metrics||measure();}
+  function invalidateGeometry(){metrics=null;}
   function setCurrentLocation(id) {
     if(currentLocation===id)return;
     currentLocation=id;
@@ -49,13 +68,14 @@
   function updateCurrentLocation() {
     // Resolve the complete document order, not just the entries changed in one
     // observer callback. Keep a section current through its supporting content.
-    const marker=Math.min(innerHeight*.75,Math.max((header?.offsetHeight||72)+24,innerHeight*.5));
+    const {marker,tops,height}=geometry();
+    const line=scrollY+marker;
     let id='';
-    for(const target of locationTargets){
-      if(target.getBoundingClientRect().top>marker)break;
+    for(const target of tops){
+      if(target.top>line)break;
       id=target.id;
     }
-    if(scrollY>0&&scrollY+innerHeight>=document.documentElement.scrollHeight-2)id=locationTargets.at(-1)?.id||id;
+    if(scrollY>0&&scrollY+innerHeight>=height-2)id=tops.at(-1)?.id||id;
     setCurrentLocation(id);
   }
   if ('IntersectionObserver' in window && locationTargets.length) {
@@ -73,7 +93,11 @@
   // the progress scale recomputed. The section walk and the header states belong
   // to real scrolling and resizing; running them on every resize notification
   // forced layout for each frame the document took to settle after first paint.
+  // Observing `main` rather than every section also keeps the observer out of a
+  // feedback loop: a section un-skipping its content-visibility placeholder is
+  // reported by the height of the whole document it belongs to.
   if('ResizeObserver' in window&&main)new ResizeObserver(()=>{
+    invalidateGeometry();
     if(!resizeFrame)resizeFrame=requestAnimationFrame(renderProgress);
   }).observe(main);
   let navigationRequest=0;
@@ -150,6 +174,7 @@
   addEventListener('popstate',restore);
   addEventListener('hashchange',restore);
   document.addEventListener('mm:component-recovered',event=>{
+    invalidateGeometry();
     const hash=location.hash;
     if((event.detail?.id==='calculators'&&/^#(?:calculators$|lab-|mm-lab-)/.test(hash))||
        (event.detail?.id==='app-ecosystem'&&/^#(?:app-ecosystem$|insights|mm-os-)/.test(hash)))navigate(hash,{focus:false,behavior:'instant'});
@@ -182,7 +207,7 @@
     // The bar is empty at the top whatever the document height turns out to be,
     // so the frames the page spends settling after first paint need no layout read.
     if (!scrolled) return;
-    progress.style.transform = `scaleX(${Math.min(1, scrollY / Math.max(1, document.documentElement.scrollHeight - innerHeight))})`;
+    progress.style.transform = `scaleX(${Math.min(1, scrollY / Math.max(1, geometry().height - innerHeight))})`;
   }
   function renderScroll() {
     scrollFrame = 0;
@@ -194,7 +219,7 @@
     if (!scrolled) return;
     const y = scrollY;
     updateCurrentLocation();
-    progress.style.transform = `scaleX(${Math.min(1, y / Math.max(1, document.documentElement.scrollHeight - innerHeight))})`;
+    progress.style.transform = `scaleX(${Math.min(1, y / Math.max(1, geometry().height - innerHeight))})`;
     const down = y > 200 && y > lastY + 2;
     header?.classList.toggle('scrolled-down', down && !document.body.classList.contains('menu-open'));
     header?.classList.toggle('scrolled-up', !down);
@@ -204,6 +229,9 @@
   }
   addEventListener('scroll', () => { scrolled = true; if (!scrollFrame) scrollFrame = requestAnimationFrame(renderScroll); }, { passive: true });
   addEventListener('resize', () => {
+    // The cached geometry is measured against the current viewport, so it is
+    // dropped before the next frame rather than re-read inside this handler.
+    invalidateGeometry();
     if (innerWidth > 1180 && menu && !menu.inert) setMenu(false);
     if (!scrollFrame) scrollFrame = requestAnimationFrame(renderScroll);
   }, { passive: true });

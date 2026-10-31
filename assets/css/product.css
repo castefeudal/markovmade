@@ -138,7 +138,7 @@
 .mm-lab-outliers input{width:18px;height:18px;accent-color:var(--mm-accent)}
 
 /* Keep the long editorial page cheap to lay out before each section approaches view. */
-#decision-hub, #proof-system, #case-scenarios, #calculators, #calculator-decision, #personal-request, #app-ecosystem, #services, #method-proof, #about, #biography, #principles, #community, #quick-faq, #contact{content-visibility:auto;contain-intrinsic-size:auto 1100px}
+#proof-system, #case-scenarios, #calculators, #calculator-decision, #personal-request, #app-ecosystem, #services, #method-proof, #about, #biography, #community, #quick-faq, #contact{content-visibility:auto;contain-intrinsic-size:auto 1100px}
 
 /* A compact, factual return surface for the LAB. */
 .mm-lab-periods{display:flex;align-items:center;gap:.3rem;flex:0 0 auto;padding:.25rem;border:1px solid var(--mm-border);border-radius:999px;background:var(--mm-bg-secondary)}
@@ -170,6 +170,14 @@
 /* Stable space while a below-fold interactive component enters. */
 [data-component][aria-busy="true"] { min-height: 30rem; }
 .mm-component-loading { position: relative; z-index: 3; padding: 2rem; color: var(--mm-text-secondary); font: 500 1rem/1.6 var(--mm-font-body); }
+/* The offline notice must stay quiet but readable once the fragment has hydrated. */
+.mm-component-off { display: none; max-width: 44rem; margin: 0 auto; padding: clamp(1.25rem,3vw,2rem); color: var(--mm-text-secondary); font: 400 .9375rem/1.65 var(--mm-font-body); }
+.mm-component-off a { color: var(--mm-text-primary); text-decoration: underline; text-underline-offset: 3px; }
+[data-component]:not(.visible) .mm-component-off { display: block; }
+[data-component].visible .mm-component-loading { display: none; }
+/* The request form has no server endpoint: without JS it must say so, not submit nowhere. */
+.mm-form-off { max-width: 44rem; margin: 0 auto 1.5rem; padding: clamp(1rem,2vw,1.5rem); border: 1px solid var(--mm-border); border-radius: var(--mm-radius-card); background: var(--mm-surface-1); color: var(--mm-text-secondary); font: 400 .9375rem/1.65 var(--mm-font-body); }
+.mm-form-off a { color: var(--mm-text-primary); text-decoration: underline; text-underline-offset: 3px; }
 }
 @layer components {
   #calculators .mm-lab-icon-sprite{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}

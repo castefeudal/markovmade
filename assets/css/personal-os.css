@@ -554,7 +554,7 @@
 #app-ecosystem{isolation:isolate;overflow-anchor:none;}
 #app-ecosystem::after{content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;opacity:.32;background-image:linear-gradient(rgb(var(--color-gold)/.045) 1px,transparent 1px),linear-gradient(90deg,rgb(var(--color-gold)/.045) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(to bottom,transparent,black 18%,black 82%,transparent);-webkit-mask-image:linear-gradient(to bottom,transparent,black 18%,black 82%,transparent);}
 #app-ecosystem .mm-os-story{position:relative;z-index:2;}
-#app-ecosystem .mm-os-insights-link{display:inline-flex;align-items:center;gap:10px;margin-top:22px;color:rgb(var(--color-gold));font:850 14px/1 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase;}
+#app-ecosystem .mm-os-insights-link{display:inline-flex;align-items:center;gap:10px;min-height:24px;padding-block:5px;margin-top:22px;color:rgb(var(--color-gold));font:850 14px/1 Manrope,sans-serif;letter-spacing:.12em;text-transform:uppercase;}
 #app-ecosystem .mm-os-insights-link::after{content:"↗";font-size:14px;transform:translateY(-1px);transition:transform .25s ease;}
 #app-ecosystem .mm-os-insights-link:hover::after, #app-ecosystem .mm-os-insights-link:focus-visible::after{transform:translate(3px,-3px);}
 #app-ecosystem .mm-os-product{--os-px:72%;--os-py:26%;position:relative;isolation:isolate;}
@@ -590,10 +590,13 @@
 #insights .mm-insights-shell{display:grid;grid-template-columns:minmax(380px,.86fr) minmax(520px,1.14fr);border:1px solid rgba(212,175,55,.15);border-radius:32px;overflow:hidden;background:#0b0b0b;box-shadow:0 54px 150px rgba(0,0,0,.46),inset 0 1px rgba(255,255,255,.03);}
 #insights .mm-insights-context{padding:clamp(28px,3.3vw,48px);background:linear-gradient(145deg,#101010,#0b0b0b);border-right:1px solid var(--ins-line);}
 #insights .mm-insights-context-head{display:flex;align-items:center;justify-content:space-between;gap:18px;padding-bottom:22px;border-bottom:1px solid var(--ins-line);}
-#insights .mm-insights-context-head>div{display:flex;align-items:center;gap:10px;}
-#insights .mm-insights-context-head span{color:var(--ins-gold);font:900 14px/1 Manrope,sans-serif;letter-spacing:.12em;}
+#insights .mm-insights-context-head>div{flex:0 0 auto;display:flex;align-items:center;gap:10px;}
+/* The step numeral is a label, not text: the global anywhere-wrap rule used to break
+   "01" into two stacked digits because the hint line refused to shrink below its own
+   min-content width. The numeral group keeps its measure and the hint takes the squeeze. */
+#insights .mm-insights-context-head span{flex:0 0 auto;white-space:nowrap;color:var(--ins-gold);font:900 14px/1 Manrope,sans-serif;letter-spacing:.12em;}
 #insights .mm-insights-context-head b{color:var(--ins-text);font:850 14px/1 Manrope,sans-serif;letter-spacing:.15em;}
-#insights .mm-insights-context-head small{color:var(--ins-faint);font:700 14px/1 Manrope,sans-serif;letter-spacing:.06em;}
+#insights .mm-insights-context-head small{min-width:0;text-align:right;color:var(--ins-faint);font:700 14px/1.35 Manrope,sans-serif;letter-spacing:.06em;}
 #insights .mm-insights-fieldset{margin:26px 0 0;padding:0;border:0;min-width:0;}
 #insights .mm-insights-fieldset legend{width:100%;margin:0 0 13px;color:var(--ins-text);font:800 14px/1.35 Manrope,sans-serif;}
 #insights .mm-insights-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
@@ -620,7 +623,7 @@
 #insights .mm-insights-result-top{display:flex;align-items:center;justify-content:space-between;gap:18px;position:relative;z-index:1;}
 #insights .mm-insights-result-badge{display:inline-flex;align-items:center;gap:9px;color:#d4af37;font:900 14px/1 Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;}
 #insights .mm-insights-result-badge i{width:6px;height:6px;border-radius:50%;background:#d4af37;box-shadow:0 0 0 6px rgba(212,175,55,.07);}
-#insights .mm-insights-result-id{color:rgba(245,241,232,.32);font:750 14px/1 Manrope,sans-serif;letter-spacing:.12em;}
+#insights .mm-insights-result-id{white-space:nowrap;color:rgba(245,241,232,.32);font:750 14px/1 Manrope,sans-serif;letter-spacing:.12em;}
 #insights .mm-insights-result-id b{color:rgba(212,175,55,.64);font-weight:850;}
 #insights .mm-insights-result-main{position:relative;z-index:1;margin-top:38px;padding-bottom:28px;border-bottom:1px solid rgba(245,241,232,.085);}
 #insights .mm-insights-eyebrow{color:rgba(212,175,55,.72);font:900 14px/1 Manrope,sans-serif;letter-spacing:.17em;}

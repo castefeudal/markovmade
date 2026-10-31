@@ -30,3 +30,13 @@
 @media (max-width: 1180px) { #main-header.scrolled-down { transform:translateY(-100%); } #main-header { padding-block: .625rem; } #main-header > .container > nav { display: none; } #main-header .mm-header-mobile-controls { display: flex; } }
 @media (prefers-reduced-motion: reduce) { #main-header, #mobile-menu { transition: none; } }
 html.js:not([data-critical-ready]) #main-header { visibility: hidden; } }
+
+/* Without JavaScript the panel cannot open and the switches cannot switch:
+   the section list stays in the flow and the state-only controls leave. */
+html:not(.js) :is(.theme-switch, .lang-switch, #burger-btn) { display: none; }
+.mm-noscript-nav { display: none; }
+@media (max-width: 1180px) {
+  .mm-noscript-nav { display: flex; flex-wrap: wrap; gap: .25rem .5rem; width: min(var(--mm-content-width), calc(100% - 2 * var(--mm-page-gutter))); margin-inline: auto; padding: 5.25rem 0 .5rem; border-bottom: 1px solid var(--mm-border); }
+  .mm-noscript-nav a { display: inline-flex; align-items: center; min-height: 2.75rem; padding: .25rem .5rem; color: var(--mm-text-secondary); font: 650 .8125rem/1 var(--mm-font-body); letter-spacing: .06em; text-transform: uppercase; text-decoration: none; }
+  .mm-noscript-nav a:hover, .mm-noscript-nav a:focus-visible { color: var(--mm-text-primary); text-decoration: underline; }
+}

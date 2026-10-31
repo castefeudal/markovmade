@@ -308,13 +308,13 @@ let browser;
   await page.waitForFunction(() => document.activeElement.matches('#manifest-form button[type="submit"]'));
   assert.equal(await page.locator('#access-card').evaluate(el => el.inert), true, 'the hidden request preview leaves the accessibility tree');
   await page.locator('.mm-request-details > summary').click();
-  for(const image of await page.locator('#case-scenarios .mm-case-study-layout-case-image img').all()){
-    await image.scrollIntoViewIfNeeded();
-    const imageState=await image.evaluate(async el=>{await el.decode();return {loaded:el.naturalWidth>0,fit:getComputedStyle(el).objectFit,ratio:el.naturalWidth/el.naturalHeight,rendered:el.getBoundingClientRect().width/el.getBoundingClientRect().height};});
-    assert.equal(imageState.loaded,true,'every case photo loads');
-    assert.equal(imageState.fit,'contain','framed case photos are not cropped');
-    assert.ok(Math.abs(imageState.ratio-imageState.rendered)<.035,`case photo keeps its natural proportions (${imageState.ratio} vs ${imageState.rendered})`);
-  }
+  const casePlate=page.locator('#case-scenarios .mm-case-study-plate img');
+  await casePlate.scrollIntoViewIfNeeded();
+  const plateState=await casePlate.evaluate(async el=>{await el.decode();return {loaded:el.naturalWidth>0,ratio:el.naturalWidth/el.naturalHeight,rendered:el.getBoundingClientRect().width/el.getBoundingClientRect().height};});
+  assert.equal(plateState.loaded,true,'the documentary plate of the work scenarios loads');
+  assert.ok(Math.abs(plateState.ratio-plateState.rendered)<.06,`the case plate is not distorted (${plateState.ratio} vs ${plateState.rendered})`);
+  assert.equal(await page.locator('#case-scenarios .mm-case-study-layout-case-card').count(),4,'all four work scenarios stay in the ledger');
+  assert.equal(await page.locator('#case-scenarios img[alt*="до и после"]').count(),0,'the section shows no before/after client collages');
   const community=page.locator('#community');
   assert.equal(await community.locator('.mm-community-card').count(),3,'the community section keeps its original three membership themes');
   assert.equal(await community.locator('.mm-community-cta a').getAttribute('href'),'#personal-request','joining goes to the short request flow');

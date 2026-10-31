@@ -3,9 +3,9 @@ const {chromium}=require('playwright');
 const {startServer,root}=require('./browser-helpers.cjs');
 const fixtures=require('./toolkit-fixtures.json');
 const themes=['aurum-noir','event-horizon','clarity'];
+const findings=[],incomplete=new Map();
 (async()=>{
   const server=await startServer();let browser;
-  const findings=[];
   try {
     browser=await chromium.launch({headless:true});
     const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
@@ -17,12 +17,29 @@ const themes=['aurum-noir','event-horizon','clarity'];
     await page.addScriptTag({path:require.resolve('axe-core/axe.min.js')});
     async function audit(label,selector) {
       await page.evaluate(async()=>{await window.mmLanguageReady;await document.fonts.ready;await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));});
-      const result=await page.evaluate(async selector=>window.axe.run(selector?document.querySelector(selector):document,{
-        runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']},
-        rules:{'heading-order':{enabled:true},'label-content-name-mismatch':{enabled:true}}
-      }),selector);
+      const result=await page.evaluate(async selector=>{
+        const run=await window.axe.run(selector?document.querySelector(selector):document,{
+          runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21a','wcag21aa','wcag22aa']},
+          rules:{'heading-order':{enabled:true},'label-content-name-mismatch':{enabled:true}}
+        });
+        // Only the two lists a human can act on: hard failures and the checks axe
+        // could not decide. Returning the whole result kept every passing node in memory.
+        return {
+          violations:run.violations.map(v=>({id:v.id,impact:v.impact,help:v.help,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))})),
+          incomplete:run.incomplete.map(v=>({id:v.id,help:v.help,nodes:v.nodes.map(n=>n.target)}))
+        };
+      },selector);
       if(result.violations.length){fs.mkdirSync(path.join(root,'test-results/accessibility'),{recursive:true});await page.screenshot({path:path.join(root,'test-results/accessibility',label.replace(/[^a-z0-9-]/gi,'-')+'.png'),fullPage:true});}
       for(const v of result.violations)findings.push({label,id:v.id,impact:v.impact,help:v.help,nodes:v.nodes.map(n=>({target:n.target,summary:n.failureSummary}))});
+      // A green axe run is not proof of an accessible page: "incomplete" means the rule
+      // could not be decided automatically. Counted and reported instead of discarded.
+      for(const v of result.incomplete) {
+        const seen = incomplete.get(v.id) || {id:v.id,help:v.help,nodes:0,labels:new Set(),targets:new Set()};
+        seen.nodes += v.nodes.length;
+        seen.labels.add(label);
+        for(const target of v.nodes) seen.targets.add(Array.isArray(target) ? target.join(' ') : String(target));
+        incomplete.set(v.id, seen);
+      }
     }
     for(const lang of ['ru','en']) {
       if(lang==='en'){await page.locator('[data-lang-toggle]:visible').first().click();await page.waitForFunction(()=>document.documentElement.lang==='en');await page.waitForTimeout(800);}
@@ -59,6 +76,10 @@ const themes=['aurum-noir','event-horizon','clarity'];
     }
     fs.mkdirSync(path.join(root,'test-results/accessibility'),{recursive:true});
     fs.writeFileSync(path.join(root,'test-results/accessibility/findings.json'),JSON.stringify(findings,null,2));
+    const manual=[...incomplete.values()].sort((a,b)=>b.nodes-a.nodes).map(entry=>({id:entry.id,help:entry.help,nodes:entry.nodes,scenes:[...entry.labels],targets:[...entry.targets].slice(0,12)}));
+    fs.writeFileSync(path.join(root,'test-results/accessibility/incomplete.json'),JSON.stringify(manual,null,2));
+    const manualNodes=manual.reduce((total,entry)=>total+entry.nodes,0);
+    console.log(`Axe could not decide ${manualNodes} node checks across ${manual.length} rules (written to incomplete.json): ${manual.map(entry=>`${entry.id}×${entry.nodes}`).join(', ')||'none'}.`);
     if(findings.length){console.error(JSON.stringify(findings,null,2));process.exitCode=1;}
     else console.log('Axe WCAG 2.2 AA, heading hierarchy and visible-label names passed across RU/EN and all three themes.');
   }finally{await browser?.close();await server.close();}

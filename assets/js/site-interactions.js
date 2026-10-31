@@ -76,7 +76,11 @@
       var l=lang(), c=COPY[l];
       root.querySelectorAll('[data-ins-copy]').forEach(function(el){var key=el.getAttribute('data-ins-copy');if(c[key]){
         if(key==='title'){
-          var parts=c[key].split('. ');el.innerHTML=(parts[0]?parts[0]+'.':'')+(parts[1]?'<br><em>'+parts.slice(1).join('. ')+'</em>':'');
+          /* Split the first sentence onto its own line; keep an existing full stop
+             instead of re-adding one (the RU/EN titles already end with '.', so the
+             rebuilt markup used to render a doubled period). */
+          var parts=String(c[key]).split('. '), lead=parts.shift()||'';
+          el.innerHTML=(lead&&!/\.$/.test(lead)?lead+'.':lead)+(parts.length?'<br><em>'+parts.join('. ')+'</em>':'');
         }else{el.textContent=c[key];}
       }});
     }

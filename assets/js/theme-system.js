@@ -74,7 +74,11 @@
       button.setAttribute('aria-label', label);
       button.setAttribute('title', label);
       button.setAttribute('aria-haspopup', 'dialog');
-      button.setAttribute('aria-controls', 'mm-theme-dialog');
+      /* The relationship only means anything while the panel is on screen. A closed
+         <dialog> is not rendered, so keeping aria-controls pointed at it leaves the
+         reference unresolvable for assistive technology and for every audit. */
+      if (dialog && dialog.open) button.setAttribute('aria-controls', 'mm-theme-dialog');
+      else button.removeAttribute('aria-controls');
       var visible = button.querySelector('.theme-switch-text');
       if (visible) visible.textContent = copy('Тема', 'Theme');
     });
@@ -99,6 +103,7 @@
   }
 
   function closeAndRestore() {
+    updateLabels();
     if (preview) { apply(selected); preview = null; }
     if (returnFocus && returnFocus.isConnected) returnFocus.focus();
   }
@@ -109,7 +114,7 @@
     dialog.id = 'mm-theme-dialog';
     dialog.className = 'mm-theme-dialog';
     dialog.setAttribute('aria-labelledby', 'mm-theme-title');
-    dialog.innerHTML = '<div class="mm-theme-head"><div><span class="mm-theme-overline">MARKOVMADE · APPEARANCE</span><h2 id="mm-theme-title" data-theme-title></h2><p data-theme-intro></p></div><button class="mm-theme-close" type="button" data-theme-close><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div class="mm-theme-options" role="group" aria-label="Appearance themes">' +
+    dialog.innerHTML = '<div class="mm-theme-head"><div><span class="mm-theme-overline">MARKOVMADE · APPEARANCE</span><h2 id="mm-theme-title" data-theme-title></h2><p data-theme-intro></p></div><button class="mm-theme-close" type="button" data-theme-close><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div class="mm-theme-options" role="group" aria-labelledby="mm-theme-title">' +
       Object.keys(themes).map(function (name) {
         return '<button class="mm-theme-option" type="button" data-theme-value="' + name + '" aria-pressed="false"><span class="mm-theme-preview" aria-hidden="true"><i></i><b>84</b><small data-theme-metric-label>READY</small></span><span class="mm-theme-copy"><b data-theme-name></b><small data-theme-description></small></span></button>';
       }).join('') + '</div><p class="mm-theme-note" data-theme-note></p>';
@@ -152,6 +157,7 @@
     updateLabels();
     syncSelected();
     if (!dialog.open) dialog.showModal();
+    updateLabels();
   }
 
   function init() {

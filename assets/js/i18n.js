@@ -2,6 +2,14 @@
     'use strict';
     var DICT = Object.assign({}, window.mmCriticalCopy || {}, window.mmLocaleCopy || {});
     var ATTR_DICT = {
+  "Павел Марков подростком у кирпичной стены рядом со скульптурой рыцаря в доспехах": "Pavel Markov as a teenager beside an armoured knight statue against a brick wall",
+  "Павел Марков подростком в футбольной форме на траве": "Pavel Markov as a teenager in football kit on a grass pitch",
+  "Павел Марков в 20 лет: на столе разложены накопления": "Pavel Markov at 20 with his savings laid out on the table",
+  "Павел Марков на фотосъёмке в историческом костюме в зимнем лесу": "Pavel Markov on a costume photo shoot in a winter forest",
+  "Павел Марков с микрофоном перед залом на закрытой встрече": "Pavel Markov speaking into a microphone in front of a room",
+  "Павел Марков на сцене Blockchain Life 2022": "Pavel Markov on the Blockchain Life 2022 stage",
+  "Павел Марков у воды на закате": "Pavel Markov by the water at sunset",
+  "Павел Марков на встрече с участниками сообщества": "Pavel Markov meeting community members",
   "Сценарий распределения макронутриентов": "Macronutrient distribution scenario",
   "Сменить тему: тёмная / светлая": "Switch theme: dark / light",
   "Сменить тему: тёмная или светлая": "Switch theme: dark or light",
@@ -78,11 +86,11 @@
     var META = {
         ru: {
             title: 'MARKOVMADE | Тело и питание под вашу жизнь — Павел Марков',
-            description: 'MARKOVMADE Павла Маркова: тело, питание, восстановление и мышление под реальную жизнь. Бесплатный LAB — 24 инструмента с методикой, локальной историей и следующим действием.'
+            description: 'MARKOVMADE Павла Маркова: тело, питание, восстановление и мышление под реальную жизнь. Бесплатный LAB — 23 инструмента с методикой, локальной историей и следующим действием.'
         },
         en: {
             title: 'MARKOVMADE | Pavel Markov — body and nutrition for your life',
-            description: 'Pavel Markov’s MARKOVMADE: body, nutrition, recovery and thinking for real life. Free LAB: 24 tools with methods, local history and actionable next steps.'
+            description: 'Pavel Markov’s MARKOVMADE: body, nutrition, recovery and thinking for real life. Free LAB: 23 tools with methods, local history and actionable next steps.'
         }
     };
     window.mmAddTranslations=function(copy){Object.assign(DICT,copy);};

@@ -62,7 +62,15 @@
     shown.forEach(tool=>{
       const button=node('button',undefined,'mm-toolkit-card');button.type='button';button.dataset.toolId=tool.id;
       const head=node('span',undefined,'mm-toolkit-card-head');head.append(node('span',categories[tool.category]),icon(categoryIcons[tool.category]||'compass'));button.append(head,node('strong',tool.title),node('span',tool.subtitle));button.setAttribute('aria-controls',models.definitions.includes(tool)?workspace.id:'mm-lab-'+tool.id);button.addEventListener('click',()=>open(tool));
-      const item=node('article',undefined,'mm-toolkit-item'),favorite=node('button',favorites.includes(tool.id)?'★':'☆','mm-toolkit-favorite');favorite.type='button';favorite.setAttribute('aria-pressed',String(favorites.includes(tool.id)));favorite.setAttribute('aria-label',t(favorites.includes(tool.id)?p('Убрать из избранного: ','Remove favorite: '):p('В избранное: ','Add favorite: '))+t(tool.title));
+      const item=node('article',undefined,'mm-toolkit-item'),favorite=node('button',undefined,'mm-toolkit-favorite');favorite.type='button';
+      /* The star is a picture of a state, not a word: as button text it becomes the
+         visible label and "В избранное: …" fails WCAG 2.5.3 (label in name). It is also
+         a glyph whose rendering depends on the fallback font. */
+      const star=document.createElementNS('http://www.w3.org/2000/svg','svg'),starPath=document.createElementNS('http://www.w3.org/2000/svg','path');
+      star.setAttribute('viewBox','0 0 24 24');star.setAttribute('class','mm-toolkit-favorite-icon');star.setAttribute('aria-hidden','true');star.setAttribute('focusable','false');
+      starPath.setAttribute('d','M12 3.7l2.55 5.17 5.7.83-4.12 4.02.97 5.68L12 16.6l-5.1 2.8.97-5.68L3.75 9.7l5.7-.83z');
+      star.append(starPath);favorite.append(star);
+      favorite.setAttribute('aria-pressed',String(favorites.includes(tool.id)));favorite.setAttribute('aria-label',t(favorites.includes(tool.id)?p('Убрать из избранного: ','Remove favorite: '):p('В избранное: ','Add favorite: '))+t(tool.title));
       favorite.addEventListener('click',()=>{
         const current=favoriteIds(),next=current.includes(tool.id)?current.filter(id=>id!==tool.id):[...current,tool.id];
         if(next.length>6){count.textContent=t(p('В избранном уже 6 инструментов. Уберите один, чтобы добавить новый.','You have 6 favorites. Remove one before adding another.'));return;}
