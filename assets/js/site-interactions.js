@@ -1,3 +1,4 @@
+if(navigator.connection?.saveData)document.documentElement.setAttribute('data-save-data','');
 (function(){
   'use strict';
 

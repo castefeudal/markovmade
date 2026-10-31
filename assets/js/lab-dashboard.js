@@ -4,9 +4,9 @@
   const DAILY_KEY='markovmade-lab-daily-v1';
   const FAV_KEY='markovmade-lab-favorites-v1';
   const HISTORY_KEY='markovmade-lab-history-v1';
-  const tools={body:['Состав тела','Body'],nutrition:['Питание','Nutrition'],overfeeding:['Переедание','Overfeeding'],recovery:['Ресурс','Recovery'],progress:['Прогресс','Progress'],strength:['Сила','Strength']};
-  for(const definition of window.MarkovMadeToolkitModels?.definitions||[])tools[definition.id]=definition.title;
-  const toolIcons={body:'body',nutrition:'calories',overfeeding:'balance',recovery:'recovery',progress:'trend',strength:'strength'};
+  const tools={body:['Состав тела','Body'],nutrition:['Питание','Nutrition'],overfeeding:['Переедание','Overfeeding'],recovery:['Ресурс','Recovery'],progress:['Прогресс','Progress'],strength:['Сила','Strength'],plates:['Штанга','Plates'],progression:['Прогрессия','Progression'],caffeine:['Кофеин','Caffeine']};
+  for(const tool of window.MarkovMadeToolkitModels?.definitions||[])if(!['cardio','adherence','friction','minimum','ifthen','review'].includes(tool.id))tools[tool.id]=tool.title;
+  const toolIcons={body:'body',nutrition:'calories',overfeeding:'balance',recovery:'recovery',progress:'trend',strength:'strength',plates:'plates',progression:'progression',caffeine:'caffeine'};
   const $=id=>document.getElementById(id);
   const en=()=>document.documentElement.lang==='en';
   const copy=(ru,english)=>en()?english:ru;
@@ -160,13 +160,14 @@
   function renderQuick(){
     const root=$('mm-lab-quick-list');if(!root)return;
     const fav=favorites(),recent=[...new Set(history().map(item=>item.tool))];
-    const order=[...new Set([...fav,...recent,...Object.keys(tools).slice(0,6)])].slice(0,8);
+    const order=[...new Set([...fav,...recent])].slice(0,8);
     root.replaceChildren();
+    if(!order.length){const empty=document.createElement('p');empty.className='mm-lab-note';empty.textContent=copy('Здесь появятся избранные и недавние расчёты. Выберите раздел выше.','Favorites and recent calculations will appear here. Choose a section above.');root.append(empty);}
     order.forEach(key=>{
       const item=document.createElement('span');item.className='mm-lab-quick-item';
       const go=document.createElement('button');go.type='button';go.className='mm-lab-quick-open';const icon=document.createElementNS('http://www.w3.org/2000/svg','svg'),use=document.createElementNS('http://www.w3.org/2000/svg','use');icon.setAttribute('aria-hidden','true');icon.setAttribute('focusable','false');use.setAttribute('href',`#mm-icon-${toolIcons[key]||'compass'}`);icon.append(use);go.append(icon,document.createTextNode(tools[key][Number(en())]));go.addEventListener('click',()=>openTool(key));
       const star=document.createElement('button');star.type='button';star.className='mm-lab-quick-favorite';star.textContent=fav.includes(key)?'★':'☆';star.setAttribute('aria-pressed',String(fav.includes(key)));star.setAttribute('aria-label',copy(`${fav.includes(key)?'Убрать из избранного':'В избранное'}: ${tools[key][0]}`,`${fav.includes(key)?'Remove favorite':'Add favorite'}: ${tools[key][1]}`));
-      star.addEventListener('click',()=>{const next=fav.includes(key)?fav.filter(item=>item!==key):[...fav,key];if(next.length>6){status(copy('В избранном уже 6 инструментов. Сначала уберите один.','You have 6 favorites. Remove one first.'));return;}if(write(FAV_KEY,next)){$('calculators').dispatchEvent(new CustomEvent('mm:favorites-change'));}else status(copy('Браузер не сохранил избранное.','The browser could not save favorites.'));renderQuick();});
+      star.addEventListener('click',()=>{const all=read(FAV_KEY,[]),next=fav.includes(key)?all.filter(item=>item!==key):[...all,key];if(next.filter(id=>Object.hasOwn(tools,id)).length>6){status(copy('В избранном уже 6 инструментов. Сначала уберите один.','You have 6 favorites. Remove one first.'));return;}if(write(FAV_KEY,next)){$('calculators').dispatchEvent(new CustomEvent('mm:favorites-change'));}else status(copy('Браузер не сохранил избранное.','The browser could not save favorites.'));renderQuick();});
       item.append(go,star);root.appendChild(item);
     });
     const repeat=$('mm-lab-repeat-last');repeat.disabled=history().length===0;

@@ -1,5 +1,8 @@
 <section id="calculators" class="mm-lab-section">
   <svg class="mm-lab-icon-sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="mm-icon-plates" viewBox="0 0 24 24"><path d="M2 12h20M5 7v10M8 5v14M16 5v14M19 7v10"/></symbol>
+    <symbol id="mm-icon-progression" viewBox="0 0 24 24"><path d="M3 20h18M5 16v-4h4v4m2 0V8h4v8m2 0V4h4v12M4 8l5-4 5 1 6-3"/></symbol>
+    <symbol id="mm-icon-caffeine" viewBox="0 0 24 24"><path d="M4 8h12v7a6 6 0 0 1-12 0V8Zm12 1h2a3 3 0 0 1 0 6h-2M7 2v3m5-3v3M3 22h15"/></symbol>
     <symbol id="mm-icon-body" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.5"/><path d="M7.5 20v-3.2A5.2 5.2 0 0 1 12.7 12h0a5.2 5.2 0 0 1 5.2 5.2V20M8.4 12.9l-2.1 2.2v3.1m9.3-5.3 2.1 2.2v3.1M9.3 8.5l2.7 1.2 2.7-1.2"/></symbol>
     <symbol id="mm-icon-calories" viewBox="0 0 24 24"><path d="M13.2 2.8c.8 3.2-1.4 4.8-3 6.7-1.4 1.6-2 3-1.6 4.8.3 1.3 1.2 2.1 2.4 2.5-.2-1.8.8-2.9 2.2-4 1.2 1.7 2.8 2.6 2.8 4.9A4.7 4.7 0 0 1 11.3 22 7.3 7.3 0 0 1 4 14.7c0-4.1 2.7-7.2 6.1-9.1-.1 2.1.4 3.4 1.5 4.1.8-2.1 1.9-4.4 1.6-6.9Z"/></symbol>
     <symbol id="mm-icon-balance" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v9l6.4 6.4M12 12l5.1-5.1M5.7 18.3 12 12"/></symbol>
@@ -79,9 +82,15 @@
           <strong>Силовые</strong>
           <small>e1RM · рабочие веса</small>
         </button>
+<button type="button" class="mm-lab-tab" data-mm-lab-tab="plates" role="tab" aria-selected="false" aria-controls="mm-lab-plates" tabindex="-1" id="mm-lab-tab-plates" data-no-translate><span class="mm-lab-tab-top"><span class="mm-lab-tab-num">07</span><span class="mm-lab-tab-icon" aria-hidden="true"><svg><use href="#mm-icon-plates"/></svg></span></span><strong data-copy-ru="Конфигуратор штанги" data-copy-en="Plate configuration">Конфигуратор штанги</strong><small data-copy-ru="гриф · блины · симметрия" data-copy-en="bar · plates · symmetry">гриф · блины · симметрия</small></button>
+<button type="button" class="mm-lab-tab" data-mm-lab-tab="progression" role="tab" aria-selected="false" aria-controls="mm-lab-progression" tabindex="-1" id="mm-lab-tab-progression" data-no-translate><span class="mm-lab-tab-top"><span class="mm-lab-tab-num">08</span><span class="mm-lab-tab-icon" aria-hidden="true"><svg><use href="#mm-icon-progression"/></svg></span></span><strong data-copy-ru="Прогрессия нагрузки" data-copy-en="Load progression">Прогрессия нагрузки</strong><small data-copy-ru="повторы · RIR · следующий вес" data-copy-en="reps · RIR · next load">повторы · RIR · следующий вес</small></button>
+<button type="button" class="mm-lab-tab" data-mm-lab-tab="caffeine" role="tab" aria-selected="false" aria-controls="mm-lab-caffeine" tabindex="-1" id="mm-lab-tab-caffeine" data-no-translate><span class="mm-lab-tab-top"><span class="mm-lab-tab-num">09</span><span class="mm-lab-tab-icon" aria-hidden="true"><svg><use href="#mm-icon-caffeine"/></svg></span></span><strong data-copy-ru="Кофеин и сон" data-copy-en="Caffeine and sleep">Кофеин и сон</strong><small data-copy-ru="доза · время · сценарий" data-copy-en="dose · time · scenario">доза · время · сценарий</small></button>
       </div>
 
       <div class="mm-lab-content">
+<section class="mm-lab-panel" id="mm-lab-plates" data-mm-lab-panel="plates" role="tabpanel" aria-labelledby="mm-lab-tab-plates" hidden></section>
+<section class="mm-lab-panel" id="mm-lab-progression" data-mm-lab-panel="progression" role="tabpanel" aria-labelledby="mm-lab-tab-progression" hidden></section>
+<section class="mm-lab-panel" id="mm-lab-caffeine" data-mm-lab-panel="caffeine" role="tabpanel" aria-labelledby="mm-lab-tab-caffeine" hidden></section>
         <!-- 01 BODY -->
         <section class="mm-lab-panel" id="mm-lab-body" data-mm-lab-panel="body" role="tabpanel" aria-labelledby="mm-lab-tab-body">
           <div class="mm-lab-toolhead"><div><span class="eyebrow">01 / СОСТАВ ТЕЛА</span><h3>Состав тела: основные показатели</h3><p>Посмотрите процент жира, жировую и безжировую массу, FFMI и ориентир по весу. Если вы не знаете процент жира, его можно примерно оценить по замерам талии, шеи и роста.</p></div><div class="mm-lab-mode" data-mode-switch="body"><button type="button" aria-pressed="true" data-mode="quick">Быстро</button><button type="button" aria-pressed="false" data-mode="pro">Подробно</button></div></div>

@@ -311,3 +311,56 @@ html[data-theme="clarity"] .mm-plate-marks::before,html[data-theme="clarity"] .m
 @media(min-width:1024px){#contact .contact-outcome-panel{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
 #contact .contact-outcome-panel strong{max-width:26ch}
 #contact .contact-outcome-panel p{max-width:52ch}
+/* Editorial depth follows the shared palette in every world. Static layers keep paint inexpensive. */
+@layer components {
+  :is(#services,#about,#biography,#calculators,#app-ecosystem,#method-proof,#contact){
+    background-image:radial-gradient(ellipse at 8% 0,var(--mm-glow-primary),transparent 54%),linear-gradient(115deg,var(--mm-accent-soft),transparent 38%);
+    background-repeat:no-repeat;
+  }
+  :is(#services,#about,#biography,#calculators,#app-ecosystem,#method-proof,#contact)::before{
+    content:"";display:block;width:min(100%,var(--mm-content-width));height:1px;margin:0 auto clamp(24px,3vw,48px);
+    background:linear-gradient(90deg,transparent,var(--mm-border-strong) 18%,var(--mm-accent) 52%,transparent);
+  }
+  #calculators .mm-lab-shell{border:1px solid var(--mm-border-strong);box-shadow:inset 0 1px var(--mm-border),var(--mm-shadow-floating);background:var(--mm-surface-1)}
+  #calculators .mm-lab-topbar{background:linear-gradient(105deg,var(--mm-accent-soft),transparent 70%)}
+  #calculators .mm-lab-tab{min-width:0;min-height:112px;border-radius:var(--mm-radius-control);box-shadow:inset 0 1px var(--mm-border);transition:background var(--mm-motion-fast),border-color var(--mm-motion-fast),color var(--mm-motion-fast)}
+  #calculators .mm-lab-tab[aria-selected="true"]{border-color:var(--mm-accent);background:linear-gradient(120deg,var(--mm-accent-soft),var(--mm-surface-2));box-shadow:inset 3px 0 var(--mm-accent)}
+  #calculators .mm-lab-tab strong{overflow-wrap:anywhere}
+  #calculators .mm-lab-tab:focus-visible{outline:2px solid var(--mm-focus);outline-offset:2px}
+  #calculators .mm-lab-scenarios{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;padding-top:24px;border-top:1px solid var(--mm-border-strong)}
+  #calculators .mm-lab-scenarios h4{width:100%;margin:0 0 4px;color:var(--mm-text-secondary);font:600 15px/1.5 var(--mm-font-body)}
+  #calculators .mm-lab-scenarios button{min-height:48px;white-space:normal;text-align:left}
+  #calculators .mm-toolkit-workspace{padding:clamp(20px,3vw,40px);border:1px solid var(--mm-border-strong);border-radius:var(--mm-radius-card);background:linear-gradient(135deg,var(--mm-accent-soft),transparent 40%),var(--mm-bg-secondary)}
+  #calculators .mm-lab-panel:has(>.mm-toolkit-workspace):is([data-mm-lab-panel="plates"],[data-mm-lab-panel="progression"],[data-mm-lab-panel="caffeine"])>.mm-toolkit-workspace{margin-top:0}
+  #calculators .mm-toolkit-workspace>h3{font:500 var(--mm-type-h3)/1.2 var(--mm-font-display);color:var(--mm-text-primary);margin:0 0 12px}
+  #calculators .mm-caffeine-row{display:grid;grid-template-columns:40px minmax(0,1fr) 84px;gap:12px;align-items:center;min-height:44px;color:var(--mm-text-secondary)}
+  #calculators .mm-caffeine-row meter{width:100%;height:16px;accent-color:var(--mm-accent)}
+  #calculators .mm-caffeine-row strong{text-align:right;font-size:15px}
+  @media(max-width:640px){#calculators .mm-lab-tab{min-height:116px}#calculators .mm-toolkit-workspace{padding:16px}#calculators .mm-lab-scenarios button{width:100%}}
+  @media(prefers-reduced-motion:reduce){#calculators .mm-lab-tab{transition:none}}
+}
+@layer components {
+  :is(#services,#method-proof,#calculators,#app-ecosystem,#contact){position:relative;isolation:isolate}
+  :is(#services,#method-proof,#calculators,#app-ecosystem,#contact)::after{
+    content:"";position:absolute;z-index:-1;pointer-events:none;inset:0 0 auto auto;width:min(72%,1200px);height:640px;
+    background:var(--mm-accent);opacity:.055;mask:var(--mm-scene) center/contain no-repeat;
+  }
+  #services,#method-proof{--mm-scene:url('../media/scenes/method-map.svg')}
+  #calculators{--mm-scene:url('../media/scenes/signal-field.svg')}
+  #app-ecosystem{--mm-scene:url('../media/scenes/system-frame.svg')}
+  #contact{--mm-scene:url('../media/scenes/method-map.svg')}
+  #contact::after{transform:rotate(180deg);opacity:.035}
+  @media(prefers-reduced-motion:no-preference) and (hover:hover) and (pointer:fine){
+    html:not([data-save-data]) #calculators .mm-lab-panel:not([hidden]){animation:mm-panel-enter var(--mm-motion-normal) var(--mm-ease-premium) both}
+    html:not([data-save-data]) .mm-evidence[open]>:not(summary),html:not([data-save-data]) .mm-toolkit-precision[open]>:not(summary){animation:mm-panel-enter var(--mm-motion-fast) var(--mm-ease-premium) both}
+    html:not([data-save-data]) #calculators .mm-lab-scenarios button{transition:transform var(--mm-motion-fast),border-color var(--mm-motion-fast)}
+    html:not([data-save-data]) #calculators .mm-lab-scenarios button:hover{transform:translateY(-2px);border-color:var(--mm-accent)}
+  }
+  @keyframes mm-panel-enter{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  @media(max-width:640px){:is(#services,#method-proof,#calculators,#app-ecosystem,#contact)::after{width:100%;height:360px;opacity:.035}}
+}
+@layer components {
+  /* Keep final punctuation in the text flow when the editorial accent wraps. */
+  #method-proof .mm-editorial-goldline{display:inline;text-decoration:underline;text-decoration-color:var(--mm-accent);text-decoration-thickness:1px;text-underline-offset:.14em}
+  #method-proof .mm-editorial-goldline::after{content:none}
+}

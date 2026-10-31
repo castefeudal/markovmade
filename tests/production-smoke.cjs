@@ -27,7 +27,7 @@ const base=process.env.BASE_URL||'https://castefeudal.github.io/markovmade/';
       assert.equal(await page.locator('[data-mm-lab-panel="body"]').isVisible(),true);
       await page.locator('#lab-body-weight').fill('100');
       await page.locator('#lab-body-height').fill('188');
-      assert.equal(await page.evaluate(()=>window.MarkovMadeToolkit.tools.length),23);
+      assert.equal(await page.evaluate(()=>window.MarkovMadeToolkit.tools.length),17);
       await page.evaluate(()=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='protein')));
       assert.equal(await page.locator('#toolkit-protein-weight').inputValue(),'100','shared profile reaches production toolkit');
       await page.locator('#mm-toolkit-workspace button[type="submit"]').click();

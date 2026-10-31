@@ -15,5 +15,5 @@ const {startServer,root}=require('./browser-helpers.cjs');
   await page.evaluate(()=>scrollTo(0,0));await page.locator('#burger-btn').click();await fits('#mobile-menu','mobile menu');await page.keyboard.press('Escape');await page.locator('.theme-switch:visible').first().click();await fits('#mm-theme-dialog','theme dialog');await page.keyboard.press('Escape');
   if(name==='chromium'&&lang==='ru'&&theme==='aurum-noir'){fs.mkdirSync(root+'/test-results/text-reflow',{recursive:true});await page.locator('#mm-os-tab-today').click();await page.locator('#mm-os-screen-today').screenshot({path:root+'/test-results/text-reflow/today-200-percent.png'});}
   await page.close();
- }console.log('200% text reflow verified: '+name+' · RU/EN × three themes · 320px · HERO, six LAB panels, five OS panels, menu and theme dialog.');}finally{await browser.close();}
+ }console.log('200% text reflow verified: '+name+' · RU/EN × three themes · 320px · HERO, nine LAB panels, five OS panels, menu and theme dialog.');}finally{await browser.close();}
  }}finally{await server.close();}})().catch(error=>{console.error(error);process.exitCode=1;});

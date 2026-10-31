@@ -86,11 +86,11 @@
     var META = {
         ru: {
             title: 'MARKOVMADE | Тело и питание под вашу жизнь — Павел Марков',
-            description: 'MARKOVMADE Павла Маркова: тело, питание, восстановление и мышление под реальную жизнь. Бесплатный LAB — 23 инструмента с методикой, локальной историей и следующим действием.'
+            description: 'MARKOVMADE Павла Маркова: тело, питание, восстановление и мышление под реальную жизнь. Бесплатный LAB — 9 основных инструментов с методикой, локальной историей и следующим действием.'
         },
         en: {
             title: 'MARKOVMADE | Pavel Markov — body and nutrition for your life',
-            description: 'Pavel Markov’s MARKOVMADE: body, nutrition, recovery and thinking for real life. Free LAB: 23 tools with methods, local history and actionable next steps.'
+            description: 'Pavel Markov’s MARKOVMADE: body, nutrition, recovery and thinking for real life. Free LAB: 9 core tools with methods, local history and actionable next steps.'
         }
     };
     window.mmAddTranslations=function(copy){Object.assign(DICT,copy);};

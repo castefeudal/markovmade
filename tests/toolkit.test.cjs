@@ -50,3 +50,17 @@ test('decision tools reject impossible counts and preserve literal user text',()
   const literal='<img src=x onerror=alert(1)>';assert.equal(calculate('minimum',{action:literal,minutes:5}).data.action,literal);
 });
 
+
+test('progression requires explicit comparability and per-set volume sums different loads',()=>{
+ assert.equal(calculate('progression',{...fixtures.progression,comparable:0}).data.increase,false);
+ const {comparable,...old}=fixtures.progression;assert.equal(calculate('progression',old).data.increase,false);
+ assert.deepEqual(calculate('volume',{...fixtures.volume,entries:'8 x 60; 7 x 62.5; 6 x 65'}).data,{tonnage:1307.5,repetitions:21});
+ assert.throws(()=>calculate('volume',{...fixtures.volume,entries:'8 x 60; invalid'}));
+});
+
+test('old model snapshots remain reproducible without changing current progression safety',()=>{
+ const {comparable,...old}=fixtures.progression;
+ const previous=calculate('progression',old,'2.0.0');assert.equal(previous.data.next,62.5);assert.equal(previous.modelVersion,'2.0.0');
+ const current=calculate('progression',old);assert.equal(current.data.next,60);assert.equal(current.modelVersion,'2.1.0');
+ assert.equal(calculate('volume',{...fixtures.volume,entries:'1 x 10'},'2.0.0').data.tonnage,1440);
+});
