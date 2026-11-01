@@ -1,0 +1,45 @@
+# Ultimate premium / LAB PRO — execution evidence
+
+Base main: `0a3b6da`; integrated working branch / draft PR #13: `8a8b13a`.
+
+## P0
+- CI Lighthouse consistently fails Aurum mobile (91–93) while local runs yield 99–100. Initial URL attribution to navigation.js did not establish slow JavaScript. Lazy navigation registration passed its regression checks but did not fix Lighthouse. The saved Linux trace shows two BODY gradient images expanding to 16,412 px, with ~97–98 ms raster CPU tasks; renderer wall time can instead be waiting time. Removing nested navigation blur alone also did not pass the floor. Document-wide gradients have now been removed in favour of bounded section scenes; that change still needs CI confirmation. Thresholds remain unchanged.
+- PR #13 has source-only PRO models and no matching build. Its caffeine-at-zero fixture incorrectly expects the old result shape from the new version; archive test now explicitly requests 2.0.0.
+- Overfeeding UI calls heuristic scenario bounds a probability range. Correct terminology and localization are required.
+- Recovery baseline currently counts records without checking distinct measurement dates/devices; introduce a dated baseline without changing archived runners.
+
+## P1
+- Body: propagate an explicitly entered BF uncertainty scenario to FM/LBM/FFMI/target; do not invent an error bar.
+- Calories: formula/calibration/plan comparison, quality of actual records and scenario labels.
+- Overfeeding: separate fat-equivalent scenario, glycogen-associated water and unmodelled gut/sodium components.
+- Recovery: measured RHR/HRV/sleep timeline and device comparability, separate heuristic readiness.
+- Progress: real dated 7/14/28-day windows, robust trend, observed spread, missingness and no silent outlier deletion.
+- Strength: comparable lift history, optional RIR and protocol, formulas and reference load planning.
+- Plates: preserve PR #13, add clear decimal parsing, optimized bounded search and symmetric diagram.
+- Progression: actual multiple-session comparison with transparent rule failures.
+- Caffeine: clock-time multiple sources, cumulative scenario timeline and last-dose comparison; preserve archived models.
+- Summary: classify measurements/estimates/scenarios, show timestamp and data sufficiency.
+- Art direction: create distinct focal scenes and quiet sections, improve LAB composition rather than duplicate the catalogue.
+
+## P2
+- Consistent finite result/details/diagram motion; respect keyboard, touch, reduced motion and Save-Data.
+- Responsive and 200% typography, live regions, empty/error states, five/ten specified widths, all themes and languages.
+
+## Evidence state
+Before captures at `test-results/premium/before` use main 0a3b6da, 12 language/theme/viewport combinations and eight sections. npm ci passed. Initial 37 unit tests passed. Navigation regression (zero-position event plus existing scroll/deep-link scenarios) passed Chromium/Firefox/WebKit, RU/EN and three themes. Full final validation and scientific audit are still pending.
+
+Iteration evidence: 46 current unit/source/model tests pass, including a strict decimal-comma manual-series parser. The expanded PRO browser suite passed Chromium/Firefox/WebKit across RU/EN × three themes × two widths. It exercises body sensitivity, age validation, dated journal analysis, strength history, multi-dose clock input, inventory loading and actual-session progression. New regression coverage adds truthful overeating output, recovery observations and filled-result language checks. A hidden journal screenshot exposed that its new analysis was mounted inside the manual disclosure; it now belongs to the journal workspace.
+
+Reviewed Windows and Linux contract candidates cover 30 hero scenes each (RU/EN × three themes × five widths). Their intended header changes are accepted without changing the 1.5% mismatch floor. The candidate workflow remains deliberately failing until these reviewed images are committed. It has a distinct concurrency group and does not replace push/PR quality gates.
+
+Confirmed performance checkpoint: Linux push run [41252370137](https://github.com/castefeudal/markovmade/actions/runs/41252370137), code `b46504e`, passes the complete Lighthouse job. All 12 scene medians are 100 in Performance/Accessibility/Best Practices/SEO (three cold samples each). Individual Performance samples include one 97 and two 99 scores; 33/36 samples are 100 in all categories. Against run 41251224001, RU Aurum mobile median TBT changes from ~330 ms to 0 and median LCP from ~1954 ms to ~1805 ms. The new trace has no BODY PaintImage records; its maximum raster CPU duration is ~6.3 ms rather than ~98.2 ms. Thresholds and simulated throttling were not changed.
+
+Windows before/after default medians remain 99 mobile / 100 desktop. This is not evidence of a general field-speed gain. Field CWV/INP and human device/screen-reader review remain unperformed. The latest filled-result refinements require a final current-head browser/CI pass; live acceptance status is recorded in [PR #13](https://github.com/castefeudal/markovmade/pull/13), not inferred from this implementation checkpoint.
+
+Final implementation additions: eight distinct embedded-action SVG symbols, per-metric dates in SUMMARY (unknown dates remain unknown), preservation of disabled QUICK drafts while submitting PRO-only records, and explicit working-load rounding down. The latter fixes a valid-input case where an e1RM of 16 kg with a 10 kg increment previously produced 20 kg. Current load model 2.1.0 has a null/unavailable result below one increment; archived 2.0.0 keeps its original arithmetic. The primary strength reference table also rounds down. All 48 unit/source/model tests pass, including the 80-combination reference-bound regression and archived-load fixtures; a focused English browser check verifies the actual load form and primary reference table. The complete final suite and current-head CI are required before changing PR readiness.
+
+QUICK/PRO usability pass: optional recorded rows now start in native disclosures, while saved active PRO rows reopen with an explicit active count. Caffeine bedtime stays with the clock-time PRO inputs. Native validation reveals a closed disclosure before focusing its invalid control. Removing entered rows marks the cached result stale; repeated input does not repeatedly rewrite the same live status message. A focused browser story verified quick calculation, PRO replacement of quick inputs, invalid hidden-dose recovery, draft retention and stale-result marking. No additional equation changes were made in this pass.
+
+Final confidence audit separates data completeness from model validity: readiness and overeating stay low, manual trends are capped at moderate and stay low with potential spikes, and one entered repetition does not establish a maximum. All 48 unit/source/model checks pass after this change. The full Windows `test:ci` suite passed at 2d0bc6c; the changed confidence stories require the current-head browser pass. One Linux PR run had an intermittent Firefox plate-result assertion while its matching push run passed; the assertion now waits for the rendered result and reports native invalid controls on failure, without changing model arithmetic or acceptance criteria.
+
+Visual review covers before/after contact sheets for all eight sections in RU/EN, three themes and mobile/desktop. Authentic photos, portrait crop and author narrative are retained. The new desktop LAB rail, bounded section scenes, method cycle and separate observed/scenario figures were inspected. Screenshots are QA fixtures, not preloaded user records. Screen-reader sessions, physical-device review and field CWV/INP remain outside the evidence collected here.

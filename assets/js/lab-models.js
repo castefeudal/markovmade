@@ -114,7 +114,7 @@
   }
   function estimate1RM(loadKg, reps) {
     if (!Number.isFinite(loadKg) || loadKg <= 0 || !Number.isInteger(reps) || reps < 1 || reps > 15) throw new Error('Enter a positive load and 1–15 repetitions.');
-    if (reps === 1) return {value:loadKg, confidence:'Высокая', method:'введённый одиночный максимум'};
+    if (reps === 1) return {value:loadKg, confidence:'Ограниченная', method:'введённый одиночный повтор; максимальность не подтверждена'};
     const epley = loadKg * (1 + reps / 30);
     const brzycki = reps < 12 ? loadKg * 36 / (37 - reps) : epley;
     const value = (epley + brzycki) / 2;
@@ -183,7 +183,72 @@
     return {ready:true,days:valid.length,required:minimumDays,rhr:median(sample.map(entry=>entry.rhr)),hrv:median(sample.map(entry=>entry.hrv))};
   }
 
+  // Sensitivity to an explicitly chosen BF error, not a confidence interval.
+  function bodySensitivity({weight,height,bodyFat,delta=null,targetBodyFat=null}){
+    if(!Number.isFinite(weight)||weight<35||weight>300||!Number.isFinite(height)||height<120||height>230||!Number.isFinite(bodyFat)||bodyFat<=0||bodyFat>=70)throw new Error('body inputs');
+    const supplied=delta!==null&&delta!==''&&delta!==undefined;
+    if(supplied&&(!Number.isFinite(delta)||delta<0||bodyFat-delta<=0||bodyFat+delta>=70))throw new Error('body uncertainty');
+    const point=bf=>{const fatMass=weight*bf/100,leanMass=weight-fatMass;return {bodyFat:bf,fatMass,leanMass,ffmi:leanMass/(height/100)**2,targetWeight:Number.isFinite(targetBodyFat)&&targetBodyFat>0&&targetBodyFat<60?leanMass/(1-targetBodyFat/100):null};};
+    return {modelVersion:'1.0.0',kind:'scenario arithmetic',supplied,center:point(bodyFat),low:supplied?point(bodyFat-delta):null,high:supplied?point(bodyFat+delta):null};
+  }
+  function parseManualWeights(value){
+    const raw=String(value||'').trim();if(!raw)return [];
+    let tokens;
+    if(/[;\n]/.test(raw))tokens=raw.split(/[;\n]+/).map(token=>token.trim()).filter(Boolean);
+    else if(/,\s/.test(raw)||raw.includes('.')&&raw.includes(','))tokens=raw.split(/[,\s]+/);
+    else if(/\s/.test(raw))tokens=raw.split(/\s+/);
+    else if(/^\d+,\d{1,3}$/.test(raw))tokens=[raw];
+    else tokens=raw.split(',');
+    if(tokens.length>180)throw new Error('weights');
+    return tokens.map(token=>{if(!/^\d+(?:[.,]\d+)?$/.test(token))throw new Error('weights');const number=Number(token.replace(',','.'));if(!Number.isFinite(number)||number<35||number>300)throw new Error('weights');return number;});
+  }
+  function utcDay(value){
+    if(typeof value!=='string'||!/^\d{4}-\d{2}-\d{2}$/.test(value))return null;
+    const date=Date.parse(value+'T00:00:00Z');return Number.isFinite(date)&&new Date(date).toISOString().slice(0,10)===value?date/86400000:null;
+  }
+  function medianOf(values){const sorted=values.slice().sort((a,b)=>a-b),half=Math.floor(sorted.length/2);return sorted.length?(sorted.length%2?sorted[half]:(sorted[half-1]+sorted[half])/2):null;}
+  function datedTrend(entries,days=28,endDate){
+    if(![7,14,28].includes(days))throw new Error('trend window');
+    const unique=new Map();
+    for(const row of Array.isArray(entries)?entries:[]){const day=utcDay(row?.date);if(day!==null&&Number.isFinite(row.weight)&&row.weight>=35&&row.weight<=300)unique.set(row.date,{...row,day});}
+    const sorted=[...unique.values()].sort((a,b)=>a.day-b.day),end=endDate===undefined?sorted.at(-1)?.day:utcDay(endDate);
+    if(endDate!==undefined&&end===null)throw new Error('trend date');
+    const observations=sorted.filter(row=>row.day<=end&&row.day>end-days),count=observations.length,span=count?observations.at(-1).day-observations[0].day:0;
+    const slopes=[];for(let i=0;i<count;i++)for(let j=i+1;j<count;j++)slopes.push((observations[j].weight-observations[i].weight)/(observations[j].day-observations[i].day));
+    const dailySlope=medianOf(slopes),center=count?medianOf(observations.map(row=>row.weight)):null;
+    const intercept=dailySlope===null?null:medianOf(observations.map(row=>row.weight-dailySlope*(row.day-observations[0].day)));
+    const residuals=observations.map(row=>row.weight-(intercept+dailySlope*(row.day-observations[0].day))),residualMedian=medianOf(residuals),mad=medianOf(residuals.map(value=>Math.abs(value-residualMedian)));
+    const flags=dailySlope===null?[]:observations.filter((row,i)=>Math.abs(residuals[i]-residualMedian)>Math.max(.5,3*1.4826*mad)).map(row=>row.date);
+    const waist=observations.filter(row=>Number.isFinite(row.waist)&&row.waist>=40&&row.waist<=200),adherence=observations.filter(row=>Number.isFinite(row.adherence)&&row.adherence>=0&&row.adherence<=100);
+    return {modelVersion:'1.0.0',kind:'dated statistical trend',days,count,span,ready:count>=7&&span>=6,coverage:count/days,observations,dailySlope,weeklySlope:dailySlope===null?null:dailySlope*7,intercept,median:center,min:count?Math.min(...observations.map(row=>row.weight)):null,max:count?Math.max(...observations.map(row=>row.weight)):null,mad,flags,waistChange:waist.length>=2?waist.at(-1).waist-waist[0].waist:null,adherenceCount:adherence.length,adherenceMean:adherence.length?average(adherence.map(row=>row.adherence)):null};
+  }
+  function datedRecoveryBaseline(entries,{minimumDays=14,device='',endDate}={}){
+    const unique=new Map(),selected=String(device).trim();
+    for(const row of Array.isArray(entries)?entries:[]){if(utcDay(row?.date)===null||String(row.device||'').trim()!==selected||!Number.isFinite(row.rhr)||row.rhr<30||row.rhr>130||!Number.isFinite(row.hrv)||row.hrv<5||row.hrv>300)continue;unique.set(row.date,row);}
+    const sorted=[...unique.values()].sort((a,b)=>a.date.localeCompare(b.date)),end=endDate===undefined?utcDay(sorted.at(-1)?.date):utcDay(endDate);
+    if(endDate!==undefined&&end===null)throw new Error('baseline date');
+    const sample=sorted.filter(row=>utcDay(row.date)<=end&&utcDay(row.date)>end-28),ready=Boolean(selected)&&sample.length>=minimumDays;
+    return {modelVersion:'1.0.0',ready,days:sample.length,required:minimumDays,rhr:ready?medianOf(sample.map(row=>row.rhr)):null,hrv:ready?medianOf(sample.map(row=>row.hrv)):null,device:selected,deviceVerified:Boolean(selected),sample};
+  }
+  function compareTrainingSessions(sessions,{step,ceiling}={}){
+    if(!Array.isArray(sessions)||sessions.length>12||!Number.isFinite(step)||step<=0||step>10||!Number.isInteger(ceiling)||ceiling<1||ceiling>30)throw new Error('session inputs');
+    const clean=sessions.map(row=>{
+      const item={...row};for(const key of ['exercise','technique','rom'])if(typeof item[key]!=='string'||!item[key].trim()||item[key].length>80)throw new Error('session protocol');else item[key]=item[key].trim();
+      for(const [key,min,max,whole]of [['load',1,500,false],['reps',1,30,true],['sets',1,30,true],['rir',0,5,false],['rest',15,900,true]])if(!Number.isFinite(item[key])||item[key]<min||item[key]>max||(whole&&!Number.isInteger(item[key])))throw new Error('session range');return item;
+    });
+    const last=clean.at(-1),reasons=[],norm=value=>String(value).trim().toLowerCase();
+    if(clean.length<2)reasons.push('observations');
+    const recent=clean.slice(-2),comparable=recent.length===2&&['exercise','load','sets','technique','rom','rest'].every(key=>norm(recent[0][key])===norm(recent[1][key]));
+    if(clean.length>=2&&!comparable)reasons.push('conditions');
+    if(recent.some(row=>row.reps<ceiling))reasons.push('reps');
+    if(recent.some(row=>row.rir<2))reasons.push('rir');
+    if(last&&step/last.load>.1)reasons.push('increment');
+    const increase=Boolean(last&&comparable&&!reasons.length),status=increase?'consider-increase':clean.length<2?'more-observations':!comparable?'review-conditions':'maintain';
+    return {modelVersion:'1.0.0',kind:'MARKOVMADE heuristic',status,increase,comparable,reasons,sessions:clean,next:last?(increase?last.load+step:last.load):null};
+  }
+
   return Object.freeze({
+    bodySensitivity, datedTrend, datedRecoveryBaseline, compareTrainingSessions, parseManualWeights,
     mifflin, tenHaaf, tenHaafFFM, navyBodyFat, ffmi, tdeeFromPal, dailySurplus,
     energyEquivalentFatKg, weightedTef, glycogenRange, average, movingAverage,
     regressionSlope, maintenanceCalibration, plateauStatus, detectWeightOutliers, robustDailySlope, estimate1RM, checkinTrends, checkinComparison, dailyCalibration, personalRecoveryBaseline

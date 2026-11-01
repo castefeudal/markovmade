@@ -663,10 +663,9 @@ body:not(.theme-light) progress, body:not(.theme-light) meter {
     accent-color: rgb(var(--color-gold));
 }
 body:not(.theme-light) {
-    background:
-        radial-gradient(circle at 24% 0%, rgb(var(--color-gold) / .045), transparent 34rem),
-        radial-gradient(circle at 82% 18%, rgb(255 255 255 / .025), transparent 30rem),
-        rgb(var(--bg-obsidian));
+    /* Section owners provide bounded light. A document-sized gradient is
+       rerasterised when lazy sections replace their intrinsic placeholders. */
+    background: rgb(var(--bg-obsidian));
 }
 .section-block::before {
     content: '';

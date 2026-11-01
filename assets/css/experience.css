@@ -65,17 +65,18 @@ html[data-theme="clarity"] #services .mm-service-summary-main strong{font-family
 #services{position:relative;isolation:isolate;border-block:1px solid var(--mm-border);background:radial-gradient(ellipse at 9% 22%,rgb(var(--color-gold)/.055),transparent 42%),linear-gradient(180deg,var(--mm-bg-secondary),var(--mm-bg-primary) 94%);}
 
 /* The fixed controls stay useful while taking up less of the page. */
-#main-header{background:color-mix(in srgb,var(--mm-bg-primary) 88%,transparent);backdrop-filter:blur(16px) saturate(125%);}
+/* Opaque navigation avoids nested backdrop raster work on software-rendered mobile. */
+#main-header{background:var(--mm-bg-primary);backdrop-filter:none;}
 #mm-scroll-progress{height:2px;box-shadow:0 0 14px rgb(var(--color-gold)/.22);}
 #mm-quick-actions{flex-direction:row;align-items:center;gap:8px;}
-#mm-quick-actions .mm-quick-btn{width:46px;min-width:46px;height:46px;min-height:46px;padding:0;border-color:var(--mm-border-strong);background:color-mix(in srgb,var(--mm-surface-1) 91%,transparent);box-shadow:0 10px 28px rgb(0 0 0/.2);backdrop-filter:blur(18px);letter-spacing:0;}
+#mm-quick-actions .mm-quick-btn{width:46px;min-width:46px;height:46px;min-height:46px;padding:0;border-color:var(--mm-border-strong);background:var(--mm-surface-1);box-shadow:0 10px 28px rgb(0 0 0/.2);backdrop-filter:none;letter-spacing:0;}
 #mm-quick-actions .mm-quick-btn.wide{padding:0;}
 #mm-quick-actions .mm-quick-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
 #mm-quick-actions .mm-quick-btn:hover{transform:translateY(-2px);border-color:var(--mm-accent);background:var(--mm-accent-soft);color:var(--mm-accent);}
 #mm-quick-actions .mm-quick-btn:focus-visible{outline:2px solid var(--mm-focus);outline-offset:3px;}
 
 /* A single, tactile control family for theme, language, menu and contact. */
-#main-header nav>div{gap:6px;padding:4px;border:1px solid var(--mm-border);border-radius:17px;background:color-mix(in srgb,var(--mm-surface-1) 64%,transparent);backdrop-filter:blur(14px);}
+#main-header nav>div{gap:6px;padding:4px;border:1px solid var(--mm-border);border-radius:17px;background:var(--mm-surface-1);backdrop-filter:none;}
 #main-header .theme-switch,#main-header .lang-switch{position:relative;isolation:isolate;overflow:hidden;width:44px;min-width:44px;height:44px;min-height:44px;padding:0;border:1px solid transparent;border-radius:13px;background:transparent;color:var(--mm-text-secondary);transition:color .22s ease,background .22s ease,border-color .22s ease,transform .22s var(--mm-ease-premium),box-shadow .22s ease;}
 #main-header .theme-switch:hover,#main-header .lang-switch:hover{transform:translateY(-1px);border-color:rgb(var(--color-gold)/.2);background:var(--mm-accent-soft);color:var(--mm-text-primary);box-shadow:inset 0 1px rgb(255 255 255/.06);}
 #main-header .theme-switch:active,#main-header .lang-switch:active{transform:scale(.95);}
@@ -106,7 +107,7 @@ html[data-theme="clarity"] #services .mm-service-summary-main strong{font-family
 #access-card:focus-visible{outline:2px solid var(--mm-focus);outline-offset:5px;}
 
 @media(max-width:1180px){
-  #main-header .mm-header-mobile-controls{gap:5px;padding:4px;border:1px solid var(--mm-border);border-radius:17px;background:color-mix(in srgb,var(--mm-surface-1) 72%,transparent);box-shadow:0 8px 24px rgb(0 0 0/.1),inset 0 1px rgb(255 255 255/.045);backdrop-filter:blur(14px);}
+  #main-header .mm-header-mobile-controls{gap:5px;padding:4px;border:1px solid var(--mm-border);border-radius:17px;background:var(--mm-surface-1);box-shadow:0 8px 24px rgb(0 0 0/.1),inset 0 1px rgb(255 255 255/.045);backdrop-filter:none;}
   #main-header .mm-header-mobile-controls .theme-switch,#main-header .mm-header-mobile-controls .lang-switch,#main-header .mm-header-mobile-controls #burger-btn{flex:0 0 44px;width:44px;min-width:44px;height:44px;min-height:44px;padding:0;border:1px solid transparent;border-radius:13px;}
   #main-header .mm-header-mobile-controls #burger-btn{align-items:center;gap:6px;}
 }

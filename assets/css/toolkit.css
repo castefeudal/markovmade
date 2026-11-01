@@ -84,3 +84,76 @@
  #calculators .mm-caffeine-row meter::-webkit-meter-optimum-value{background:var(--mm-accent);border-radius:3px}
  #calculators .mm-caffeine-row meter::-moz-meter-bar{background:var(--mm-accent)}
 }
+
+/* Data uses the shared palette; empty states never draw invented observations. */
+@layer components {
+ #calculators .mm-lab-scenarios button{display:inline-flex;align-items:center;gap:10px}
+ #calculators .mm-lab-scenarios button svg{flex:0 0 20px;width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round}
+ #calculators .mm-summary-metric-date{grid-column:1/-1;color:var(--mm-text-secondary);font:400 12px/1.6 var(--mm-font-body);overflow-wrap:anywhere}
+ #calculators .mm-record-disclosure{grid-column:1/-1;min-width:0}
+ #calculators .mm-record-disclosure>summary{min-height:48px;padding:14px;border:1px solid var(--mm-border-strong);border-radius:var(--mm-radius-control);background:var(--mm-surface-1);color:var(--mm-text-primary);font:600 14px/1.6 var(--mm-font-body);cursor:pointer;overflow-wrap:anywhere}
+ #calculators .mm-record-disclosure[open]>summary{border-color:var(--mm-accent)}
+ #calculators .mm-record-disclosure>summary:focus-visible{outline:2px solid var(--mm-focus);outline-offset:3px}
+ #calculators .mm-analysis-host{margin-top:28px;padding-top:24px;border-top:1px solid var(--mm-border-strong);min-width:0}
+ #calculators .mm-model-kind{display:block;margin:0 0 12px;color:var(--mm-text-secondary);font:600 12px/1.6 var(--mm-font-body);letter-spacing:.04em}
+ #calculators :is(.mm-analysis-host,.mm-comparison,.mm-data-figure,.mm-record-editor) h4{font:600 17px/1.4 var(--mm-font-body);margin:12px 0}
+ #calculators :is(.mm-analysis-host,.mm-record-editor,.mm-comparison) p{font:400 14px/1.65 var(--mm-font-body);color:var(--mm-text-secondary);overflow-wrap:anywhere}
+ #calculators .mm-data-figure{margin:24px 0;padding:18px 0;border-block:1px solid var(--mm-border);min-width:0}
+ #calculators :is(.mm-data-figure,.mm-plate-diagram) figcaption{font:600 14px/1.6 var(--mm-font-body);color:var(--mm-text-primary);margin-bottom:12px}
+ #calculators .mm-data-figure svg{display:block;width:100%;height:180px;overflow:visible}
+ #calculators .mm-data-grid{stroke:var(--mm-chart-grid);stroke-width:1}
+ #calculators .mm-data-line{fill:none;stroke:var(--mm-data-primary);stroke-width:2;vector-effect:non-scaling-stroke}
+ #calculators .mm-data-point{fill:var(--mm-data-primary);stroke:var(--mm-bg-primary);stroke-width:1.5}
+ #calculators .mm-data-flag{fill:var(--mm-text-primary);stroke:var(--mm-accent);stroke-width:2}
+ #calculators .mm-data-line.mm-series-1{stroke:var(--mm-data-secondary);stroke-dasharray:7 4}
+ #calculators .mm-data-line.mm-series-2{stroke:var(--mm-text-primary);stroke-dasharray:2 4}
+ #calculators .mm-data-x-ticks{display:flex;justify-content:space-between;gap:8px;font:400 11px/1.5 var(--mm-font-body);color:var(--mm-text-secondary);font-variant-numeric:tabular-nums}
+ #calculators .mm-data-legend{display:flex;flex-wrap:wrap;gap:8px 16px;margin:12px 0;font:500 12px/1.5 var(--mm-font-body);color:var(--mm-text-secondary)}
+ #calculators .mm-series-label::before{content:'';display:inline-block;width:18px;border-top:2px solid var(--mm-data-primary);margin-right:6px;vertical-align:middle}
+ #calculators .mm-series-label.mm-series-1::before{border-color:var(--mm-data-secondary);border-top-style:dashed}
+ #calculators .mm-series-label.mm-series-2::before{border-color:var(--mm-text-primary);border-top-style:dotted}
+ #calculators :is(.mm-data-scale,.mm-data-axis,.mm-analysis-date){font:400 12px/1.6 var(--mm-font-body);color:var(--mm-text-secondary)}
+ #calculators .mm-comparison{margin:24px 0}
+ #calculators .mm-comparison-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(50px,.7fr) auto;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--mm-border);font:400 13px/1.6 var(--mm-font-body)}
+ #calculators .mm-comparison-row meter{width:100%;min-width:0;accent-color:var(--mm-accent)}
+ #calculators .mm-comparison-row strong{font-variant-numeric:tabular-nums}
+ #calculators .mm-mass-stack{display:flex;height:18px;gap:3px;margin:18px 0}
+ #calculators .mm-mass-fat{background:var(--mm-data-primary)}
+ #calculators .mm-mass-lean{background:var(--mm-data-secondary)}
+ #calculators .mm-analysis-metrics{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;font:400 14px/1.6 var(--mm-font-body)}
+ #calculators .mm-analysis-metrics dd{margin:0;font-variant-numeric:tabular-nums}
+ #calculators .mm-analysis-windows{display:flex;flex-wrap:wrap;gap:8px}
+ #calculators .mm-analysis-windows [aria-pressed=true]{border-color:var(--mm-accent);background:var(--mm-accent-soft)}
+ #calculators :is(.mm-record-editor,.mm-record-row){min-width:0;margin:18px 0;padding:16px;border:1px solid var(--mm-border-strong);border-radius:var(--mm-radius-control)}
+ #calculators :is(.mm-record-editor,.mm-record-row) legend{padding:0 6px;font:600 13px/1.6 var(--mm-font-body);color:var(--mm-text-primary);max-width:100%}
+ #calculators .mm-record-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ #calculators .mm-record-row>.mm-lab-secondary{margin-top:14px}
+ #calculators .mm-plate-diagram{margin:24px 0 12px}
+ #calculators .mm-plate-diagram svg{width:100%;height:auto;display:block}
+ #calculators .mm-bar-shaft{stroke:var(--mm-text-secondary);stroke-width:6}
+ #calculators .mm-bar-grip{fill:var(--mm-data-secondary)}
+ #calculators .mm-bar-plate{fill:var(--mm-accent-soft);stroke:var(--mm-accent);stroke-width:2}
+ @media(max-width:480px){#calculators .mm-record-fields{grid-template-columns:1fr}#calculators .mm-comparison-row{grid-template-columns:minmax(0,1fr) auto}#calculators .mm-comparison-row meter{grid-row:2;grid-column:1/-1}}
+}
+/* Premium analytical readouts: quiet hierarchy and real comparison information. */
+@layer components {
+  #calculators .mm-caffeine-scenarios,#calculators .mm-plate-breakdown{margin:16px 0 8px;padding:clamp(15px,2vw,24px);border:1px solid var(--mm-border-strong);border-radius:var(--mm-radius-control);background:linear-gradient(132deg,var(--mm-accent-soft),transparent 55%),var(--mm-surface-1);}
+  #calculators .mm-caffeine-scenarios h4,#calculators .mm-plate-breakdown h4{margin:0 0 12px;font:650 15px/1.5 var(--mm-font-body);color:var(--mm-text-primary);}
+  #calculators .mm-caffeine-row{display:grid;grid-template-columns:46px minmax(0,1fr) minmax(68px,auto);align-items:center;gap:clamp(8px,1.5vw,18px);border-top:1px solid var(--mm-border);padding:10px 0;min-height:48px;}
+  #calculators .mm-caffeine-row meter{width:100%;min-width:0;height:18px;}
+  #calculators .mm-caffeine-row strong{font:650 15px/1.4 var(--mm-font-body);color:var(--mm-text-primary);text-align:right;font-variant-numeric:tabular-nums;}
+  #calculators .mm-caffeine-summary,#calculators .mm-caffeine-caption,#calculators .mm-plate-caution{margin:10px 0 0;font:400 14px/1.6 var(--mm-font-body);color:var(--mm-text-secondary);}
+  #calculators .mm-plate-row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:10px 0;border-top:1px solid var(--mm-border);font:500 14px/1.5 var(--mm-font-body);color:var(--mm-text-secondary);}
+  #calculators .mm-plate-row strong{color:var(--mm-text-primary);font-variant-numeric:tabular-nums;white-space:nowrap;}
+  #calculators .mm-toolkit-outcome{overflow:hidden;}
+  #calculators .mm-toolkit-outcome>.mm-toolkit-value{font-variant-numeric:lining-nums;max-width:100%;text-wrap:balance;}
+  #calculators .mm-toolkit-analysis-result{scroll-margin-top:120px;}
+  @media(max-width:390px){#calculators .mm-caffeine-row{grid-template-columns:38px minmax(0,1fr) 67px;gap:7px;}#calculators .mm-caffeine-row strong{font-size:13px;}}
+}
+
+@layer components {
+#calculators .mm-comparison-row meter::-webkit-meter-bar{background:var(--mm-surface-2);border:1px solid var(--mm-border-strong);border-radius:3px}
+#calculators .mm-comparison-row meter::-webkit-meter-optimum-value{background:var(--mm-accent)}
+#calculators .mm-comparison-row meter::-moz-meter-bar{background:var(--mm-accent)}
+@media(prefers-reduced-motion:no-preference) and (hover:hover) and (pointer:fine){html:not([data-save-data]) #calculators .mm-toolkit-outcome{animation:mm-panel-enter var(--mm-motion-normal) var(--mm-ease-premium) both}}
+}

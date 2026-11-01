@@ -367,5 +367,19 @@
   "Готов к рабочему плану": "Ready for a working plan",
   "Готов к строгому контролю": "Ready for close monitoring",
   "12 недель": "12 weeks",
-  "Проверьте основные показатели и выберите, что делать дальше. Расчёты и история остаются в вашем браузере.": "Review the key measures and choose what to do next. Calculations and history stay in your browser."
+  "Проверьте основные показатели и выберите, что делать дальше. Расчёты и история остаются в вашем браузере.": "Review the key measures and choose what to do next. Calculations and history stay in your browser.",
+  "Сценарий погрешности % жира": "Body-fat uncertainty scenario",
+  "± п.п. · необязательно": "± percentage points · optional",
+  "Введите своё допущение. Это анализ чувствительности, не доверительный интервал метода.": "Enter your assumption. This is sensitivity analysis, not a confidence interval for the method.",
+  "Устройство и протокол HRV/RHR": "HRV/RHR device and protocol",
+  "необязательно": "optional",
+  "Одно устройство · утром лёжа": "One device · morning, lying down",
+  "Сценарный диапазон": "Scenario range",
+  "Энергетический сценарий набора жира": "Energy-equivalent fat-gain scenario",
+  "RIR · необязательно": "RIR · optional",
+  "Протокол · техника / амплитуда": "Protocol · technique / range",
+  "Энергетический сценарий жировой массы": "Energy-equivalent fat-mass scenario",
+  "Протокол техники, амплитуды и отдыха": "Technique, range and rest protocol",
+  "Необязательно. Сопоставьте изменение на весах с энергетическим сценарием; доли жира и воды не определяются.": "Optional. Compare the scale-weight change with the energy-equivalent scenario; fat and water fractions are not determined.",
+  "7–180 значений: по одному дню подряд, без пропусков. Вводите с новой строки или через ;, дроби — через точку или запятую. Для пропусков используйте дневник с датами.": "7–180 values, one per consecutive day with no gaps. Use a new line or ; between values and a decimal point or comma. Use the dated journal for missing days."
 }

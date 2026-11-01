@@ -11,6 +11,8 @@ const fixtures=require('./toolkit-fixtures.json');
       await page.goto(server.url+`/?lang=${lang}&theme=${theme}`);await page.evaluate(async()=>{await window.mmLoadLab();await window.mmLoadLanguage();await window.mmLanguageReady;});
       assert.equal(await page.locator('.mm-lab-daily .mm-lab-kicker').count(),0,'the removed daily LAB kicker is not rendered');
       assert.equal(await page.locator('.mm-lab-tab-icon svg use').count(),9,'nine primary LAB sections use the custom SVG icon set');
+      assert.equal(await page.locator('.mm-lab-scenarios button svg use').count(),8,'embedded actions use the same SVG icon family');
+      assert.equal(await page.locator('.mm-lab-scenarios button svg use').evaluateAll(nodes=>new Set(nodes.map(node=>node.getAttribute('href'))).size),8,'each embedded action has its own symbol');
       assert.equal(await page.locator('.mm-checkin-label svg use').count(),7,'daily input labels have matching visual icons');
       assert.equal(await page.locator('.mm-lab-daily-trends small svg use').count(),4,'daily trend cards have matching visual icons');
       assert.equal(await page.locator('.mm-toolkit-card-head svg').count(),0,'the competing catalogue is removed');
@@ -29,7 +31,7 @@ const fixtures=require('./toolkit-fixtures.json');
         assert.equal(await page.locator('#mm-toolkit-workspace').evaluate(el=>el.scrollWidth<=el.clientWidth+2),true,`${id} workspace overflow`);
       }
       assert.equal(await page.evaluate(()=>Object.keys(JSON.parse(localStorage.getItem('markovmade-lab-v1')).toolkit).length),11);
-      assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-history-v1')).filter(item=>['2.0.0','2.1.0'].includes(item.modelVersion)).length),11);
+      assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-history-v1')).filter(item=>['2.0.0','2.1.0','2.2.0','2.3.0'].includes(item.modelVersion)).length),11);
       // Imported literal strings are rendered as text, never markup.
       await page.evaluate(()=>{const state=window.MarkovMadeLab.state;state.profile.weight=80;state.progress=state.progress||{};state.progress.weekly=-.42;localStorage.setItem('markovmade-lab-v1',JSON.stringify(state));});
       await page.evaluate(()=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='plates')));await page.locator('#toolkit-plates-inventory').fill('<img src=x onerror=alert(1)>');await page.locator('#mm-toolkit-workspace button[type="submit"]').click();assert.equal(await page.locator('#mm-toolkit-result img').count(),0);

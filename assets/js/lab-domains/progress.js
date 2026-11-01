@@ -5,7 +5,7 @@
                 const days=(ed-sd)/86400000; if(!(days>=3)) return error('progress','Текущая дата должна быть позже старта минимум на 3 дня.'),null;
                 for(const [v,min,max,label] of [[sw,35,300,'Стартовый вес'],[cw,35,300,'Текущий вес']]){const m=safeRange(v,min,max,label);if(m)return error('progress',m),null;}
                 const weeks=days/7,delta=cw-sw,quickWeekly=delta/weeks; let weekly=quickWeekly,source='средний темп за весь период',daily=[];
-                const pro=currentMode('progress')==='pro'; if(pro) daily=parseDailyWeights(val('lab-prog-daily'));
+                const pro=currentMode('progress')==='pro'; if(pro)try{daily=window.MarkovMadeModels.parseManualWeights(val('lab-prog-daily'));if(daily.length&&daily.length<7)throw new Error('weights');}catch{return error('progress','Введите минимум 7 корректных весов от 35 до 300 кг. Каждый вес — с новой строки или через ;. Дроби — через точку или запятую.'),null;}
                 const possibleOutliers=detectWeightOutliers(daily),choices=state.progress.outlierChoices||{},excluded=possibleOutliers.filter(item=>choices[item.index]==='exclude').map(item=>item.index);
                 const outlierList=el('lab-prog-outliers');
                 if(outlierList){outlierList.replaceChildren();outlierList.hidden=possibleOutliers.length===0;if(possibleOutliers.length){const legend=document.createElement('legend');legend.textContent='Возможные выбросы — проверьте условия измерения';outlierList.appendChild(legend);possibleOutliers.forEach(item=>{const label=document.createElement('label'),input=document.createElement('input'),text=document.createElement('span');input.type='checkbox';input.checked=choices[item.index]!=='exclude';input.setAttribute('aria-label',`Включить измерение ${fmt(item.value,1)} килограмма`);text.textContent=`${fmt(item.value,1)} кг · день ${item.index+1} (локальный тренд ${fmt(item.localTrend,1)} кг)`;label.append(input,text);input.addEventListener('change',()=>{const next={...choices,[item.index]:input.checked?'include':'exclude'};state.progress={...state.progress,outlierChoices:next,dailyWeights:daily.slice()};save();calculateProgress();});outlierList.appendChild(label);});}}
@@ -26,12 +26,21 @@
                 } else { meaning='Главный сигнал — согласованность веса, талии и производительности. Один показатель не должен автоматически отменять остальные.'; actions.push('Сохраняйте одинаковые условия измерения и принимайте решение по тренду.'); }
                 if(pro){ if(Number.isFinite(adherence)&&adherence<75) actions.push('Соблюдение <75%: прежде чем урезать калории или добавлять кардио, улучшите воспроизводимость плана.'); }
                 actions.push('Меняйте один главный рычаг за раз, иначе вы не узнаете, что сработало.');
+                const confidence=daily.length>=7&&!possibleOutliers.length?'Умеренная':'Низкая';
                 state.profile.weight=cw; const bfn=pro?number('lab-prog-bf-now'):NaN; if(Number.isFinite(bfn)) state.profile.bodyFat=bfn;
-                state.progress={...state.progress,modelVersion:MODEL_VERSIONS.progress,days,weeks,delta,waistDelta,weekly,weeklyPct,plateau,eta,source,dailyCount:daily.length,goal,dailyWeights:daily.slice(),outlierChoices:choices}; save(); applyProfile();
+                state.progress={...state.progress,modelVersion:MODEL_VERSIONS.progress,confidence,calculatedAt:new Date().toISOString(),startDate:val('lab-prog-start-date'),endDate:val('lab-prog-end-date'),days,weeks,delta,waistDelta,weekly,weeklyPct,plateau,eta,source,dailyCount:daily.length,goal,dailyWeights:daily.slice(),outlierChoices:choices}; save(); applyProfile();
                 const etaRange=Number.isFinite(eta)?`${Math.max(1,Math.floor(eta*.8/2)*2)}–${Math.max(2,Math.ceil(eta*1.2/2)*2)} нед. · ориентир, не обещание`: '—';
                 setText('lab-prog-main',`${weekly>=0?'+':''}${fmt(weekly,2)} кг / нед.`); setText('lab-prog-sub',source); setText('lab-prog-weight-delta',`${delta>=0?'+':''}${fmt(delta,1)} кг`); setText('lab-prog-waist-delta',Number.isFinite(waistDelta)?`${waistDelta>=0?'+':''}${fmt(waistDelta,1)} см`:'—'); setText('lab-prog-weekly-pct',`${weeklyPct>=0?'+':''}${fmt(weeklyPct,2)}%`); setText('lab-prog-plateau',plateau); setText('lab-prog-eta',etaRange); setText('lab-prog-data',daily.length>=7?`${daily.length-excluded.length} из ${daily.length} весов в тренде`:`${fmt(days,0)} дней`); setText('lab-prog-meaning',`Что это значит: ${meaning}`); setHTMLSafeList('lab-prog-actions',actions);
-                setBadge('progress',daily.length>=14?'Высокая':daily.length>=7||weeks>=3?'Хорошая':'Базовая',daily.length>=14?'Выше средней':daily.length>=7?'Умеренная':'Низкая');
+                setBadge('progress',daily.length>=14?'Высокая':daily.length>=7||weeks>=3?'Хорошая':'Базовая',confidence);
                 const summary=`MARKOVMADE LAB — Прогресс\nПериод: ${fmt(days,0)} дней\nВес: ${fmt(sw,1)} → ${fmt(cw,1)} кг (${delta>=0?'+':''}${fmt(delta,1)} кг)\nСредний темп: ${weekly>=0?'+':''}${fmt(weekly,2)} кг/нед. (${weeklyPct>=0?'+':''}${fmt(weeklyPct,2)}%/нед.)${Number.isFinite(waistDelta)?`\nТалия: ${waistDelta>=0?'+':''}${fmt(waistDelta,1)} см`:''}\nПлато: ${plateau}\n\nВес за один день — шум. Тренд — сигнал.\nMARKOVMADE / Pavel Markov`;
                 mmCalcSummaries.progress=summary; updateSnapshot(); return state.progress;
             }
 
+
+            function drawProgressChart(values){
+                const wrap=el('lab-prog-chart'),path=el('lab-prog-chart-line'); if(!wrap||!path)return;
+                if(values.length<2){wrap.hidden=true;path.setAttribute('d','');return;}
+                wrap.hidden=false; const min=Math.min(...values),max=Math.max(...values),range=Math.max(.01,max-min);
+                const points=values.map((v,i)=>{const x=600*i/(values.length-1),y=90-80*(v-min)/range;return [x,y]});
+                path.setAttribute('d',points.map((p,i)=>`${i?'L':'M'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' '));
+            }

@@ -1,9 +1,11 @@
             function energyModel(){
                 const sex=val('lab-nutri-sex'), age=number('lab-nutri-age'), h=number('lab-nutri-height'), w=number('lab-nutri-weight');
                 if(!sex) throw new Error('Выберите пол.');
-                for(const [v,min,max,label] of [[h,120,230,'Рост'],[w,35,300,'Вес']]){ const m=safeRange(v,min,max,label); if(m) throw new Error(m); }
+                for(const [v,min,max,label] of [[age,18,90,'Возраст'],[h,120,230,'Рост'],[w,35,300,'Вес']]){ const m=safeRange(v,min,max,label); if(m) throw new Error(m); }
                 const mode=currentMode('nutrition'), pro=mode!=='quick', athlete=val('lab-nutri-athlete')==='athlete';
-                const bf=number('lab-nutri-bf'); let rmr,rmrMethod;
+                const bf=number('lab-nutri-bf');if(Number.isFinite(bf)&&(bf<3||bf>60))throw new Error('Проверьте процент жира: 3–60%.');
+                if(pro)for(const [id,min,max]of [['lab-nutri-steps',0,50000],['lab-nutri-strength-n',0,14],['lab-nutri-strength-min',0,240],['lab-nutri-cardio-n',0,14],['lab-nutri-cardio-min',0,240]])if(val(id).trim()&&(!Number.isFinite(number(id))||number(id)<min||number(id)>max))throw new Error('Проверьте диапазон активности и длительность тренировок.');
+                let rmr,rmrMethod;
                 if(pro && athlete && age>=18 && age<=35){ rmr=tenHaaf(sex,age,h,w); rmrMethod='ten Haaf (атлеты 18–35)'; }
                 else { rmr=mifflin(sex,age,h,w); rmrMethod='Mifflin–St Jeor'; }
                 let tdee,tdeeLow,tdeeHigh,tdeeMethod,confidence='Низкая';
@@ -53,6 +55,8 @@
                 const fatLow=Math.max(fatFloor,targetLow*share/9), fatHigh=Math.max(fatLow,targetHigh*share/9);
                 const carbMid=Math.max(0,(target-pMid*4-fatMid*9)/4);
                 const carbLow=Math.max(0,(targetLow-pHigh*4-fatHigh*9)/4), carbHigh=Math.max(0,(targetHigh-pLow*4-fatLow*9)/4);
+                if(pMid*4+fatMid*9>target){error('nutrition','Белок и жиры превышают энергию плана. Пересмотрите настройки; углеводы не подменяются отрицательным числом.');return null;}
+                error('nutrition');
                 nutrition.macroScenario=scenario; nutrition.fatLow=fatLow; nutrition.fatHigh=fatHigh; nutrition.fatMid=fatMid; nutrition.carbLow=carbLow; nutrition.carbHigh=carbHigh; nutrition.carbMid=carbMid;
                 setText('lab-nutri-fat',`${fmt(fatLow,0)}–${fmt(fatHigh,0)} г`); setText('lab-nutri-carb',`${fmt(carbLow,0)}–${fmt(carbHigh,0)} г`);
                 if(mmCalcSummaries.nutrition){ mmCalcSummaries.nutrition=mmCalcSummaries.nutrition.replace(/Жиры: .*\n/,`Жиры: ${fmt(fatLow,0)}–${fmt(fatHigh,0)} г\n`).replace(/Углеводы: .*\n/,`Углеводы: ${fmt(carbLow,0)}–${fmt(carbHigh,0)} г\n`); }
@@ -80,15 +84,18 @@
                 const pMid=(pLow+pHigh)/2;
                 const fatLow=Math.max(e.w*0.6,center*0.20/9), fatHigh=Math.max(fatLow,center*0.30/9), fatMid=(fatLow+fatHigh)/2;
                 const carbLow=Math.max(0,(low-pHigh*4-fatHigh*9)/4), carbHigh=Math.max(0,(high-pLow*4-fatLow*9)/4), carbMid=Math.max(0,(center-pMid*4-fatMid*9)/4);
+                const chosenScenario=segmentValue('nutri-macro-scenario')||'balanced',chosenShare=chosenScenario==='higher-carb'?.20:chosenScenario==='higher-fat'?.35:.25,chosenFat=Math.max(e.w*.6,center*chosenShare/9);
+                if(pMid*4+chosenFat*9>center)return error('nutrition','Белок и жиры не помещаются в выбранную калорийность. Пересмотрите цель или темп.'),null;
                 state.profile={sex:e.sex,age:e.age,height:e.h,weight:e.w,bodyFat:Number.isFinite(e.bf)?e.bf:state.profile.bodyFat};
-                state.nutrition={modelVersion:MODEL_VERSIONS.nutrition,...e,goal,pace,targetLow:low,target:center,targetHigh:high,pLow,pHigh,pMid,fatLow,fatHigh,fatMid,carbLow,carbHigh,carbMid}; save(); applyProfile();
+                state.nutrition={modelVersion:MODEL_VERSIONS.nutrition,calculatedAt:new Date().toISOString(),...e,goal,pace,targetLow:low,target:center,targetHigh:high,pLow,pHigh,pMid,fatLow,fatHigh,fatMid,carbLow,carbHigh,carbMid}; save(); applyProfile();
                 setText('lab-nutri-main',`${fmt(low,0)}–${fmt(high,0)} ккал`); setText('lab-nutri-center',kcal(center)); setText('lab-nutri-rmr',kcal(e.rmr)); setText('lab-nutri-rmr-method',e.rmrMethod); setText('lab-nutri-tdee',`${fmt(e.tdeeLow,0)}–${fmt(e.tdeeHigh,0)}`); setText('lab-nutri-tdee-method',e.tdeeMethod);
                 display($('[data-calibration-output]'),!!e.calibration);
                 setText('lab-nutri-formula-estimate',e.calibration?(fmt(e.formulaTdeeLow,0)+'–'+fmt(e.formulaTdeeHigh,0)+' ккал'):'—');
                 setText('lab-nutri-formula-note',e.calibration?'Mifflin × PAL · модельная оценка':'—');
                 setText('lab-nutri-protein',`${fmt(pLow,0)}–${fmt(pHigh,0)} г`); setText('lab-nutri-protein-note',pNote);
                 const macroScenario=segmentValue('nutri-macro-scenario')||'balanced';
-                const macroRange=renderNutritionMacros(state.nutrition={modelVersion:MODEL_VERSIONS.nutrition,...e,goal,pace,targetLow:low,target:center,targetHigh:high,pLow,pHigh,pMid,fatLow,fatHigh,fatMid,carbLow,carbHigh,carbMid},macroScenario);
+                const macroRange=renderNutritionMacros(state.nutrition,macroScenario);
+                if(!macroRange)return null;
                 const shownFatLow=macroRange.fatLow,shownFatHigh=macroRange.fatHigh,shownCarbLow=macroRange.carbLow,shownCarbHigh=macroRange.carbHigh;
                 let meaning=`Стартуйте около ${fmt(center,0)} ккал, но считайте ${fmt(low,0)}–${fmt(high,0)} рабочим коридором. Расчётные калории поддержания сами имеют диапазон ${fmt(e.tdeeLow,0)}–${fmt(e.tdeeHigh,0)} ккал.`;
                 if(e.tdeeMethod==='фактические калории поддержания') meaning+=' Здесь ваш наблюдаемый maintenance имеет приоритет над predictive equation.';
