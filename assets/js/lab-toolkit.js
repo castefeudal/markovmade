@@ -127,6 +127,7 @@
     const out=node('div',undefined,'mm-toolkit-outcome');
     out.append(node('span',saved?p('Сохранённый расчёт','Saved calculation'):p('Расчёт','Estimate'),'mm-toolkit-result-label'),node('p',result.value,'mm-toolkit-value'),node('p',result.meaning,'mm-toolkit-meaning'));
     if(result.modelVersion&&result.modelVersion!==definition.version)out.append(node('p',p(`Модель снимка: ${result.modelVersion}. Новый расчёт: ${definition.version}.`,`Snapshot model: ${result.modelVersion}. New calculation: ${definition.version}.`),'mm-toolkit-meaning'));
+    if(definition.id==='load'&&result.modelVersion==='2.0.0')out.append(node('p',p('Архивная модель округляла к ближайшему шагу, иногда выше исходного ориентира. Перед планированием нагрузки пересчитайте в текущей версии.','The archived model rounded to the nearest increment, sometimes above the original reference. Recalculate with the current version before planning a load.'),'mm-toolkit-meaning'));
     out.insertBefore(node('span',modelKinds[definition.id]||p('Расчёт','Calculation'),'mm-model-kind'),out.firstChild);
     const confidence={high:p('Высокая · для арифметики введённых данных','High · for arithmetic on your inputs'),moderate:p('Умеренная','Moderate'),low:p('Низкая','Low')};
     const action=node('section',undefined,'mm-toolkit-next-step');action.append(node('h4',p('Следующий шаг','Next step')));
@@ -170,13 +171,16 @@
     return out;
   }
   function recordEditor(tool,field,raw){
-    const group=node('fieldset',undefined,'mm-record-editor');group.dataset.recordEditor=field.key;group.append(node('legend',field.label));
+    const disclosure=node('details',undefined,'mm-record-disclosure'),toggle=node('summary',field.label);disclosure.dataset.recordDisclosure=field.key;disclosure.append(toggle);
+    disclosure.addEventListener('invalid',()=>{disclosure.open=true;},true);
+    const group=node('fieldset',undefined,'mm-record-editor');group.dataset.recordEditor=field.key;group.append(node('legend',field.recordKind==='caffeine'?p('Источники и дозы','Sources and doses'):p('Записанные тренировки','Recorded workouts')));
     const hidden=node('input');hidden.type='hidden';hidden.id='toolkit-'+tool.id+'-'+field.key;hidden.name=field.key;group.append(hidden);
     const caffeine=field.recordKind==='caffeine',specs=caffeine?[['source',p('Источник','Source'),'text'],['dose',p('Доза · мг','Dose · mg'),'number',.1,600],['time',p('Время приёма','Dose time'),'time']]:[['exercise',p('Упражнение','Exercise'),'text'],['load',p('Вес · кг','Load · kg'),'number',1,500],['sets',p('Подходы','Sets'),'number',1,30],['reps',p('Минимум повторов','Fewest reps'),'number',1,30],['rir',p('Минимальный RIR','Lowest RIR'),'number',0,5],['technique',p('Протокол техники','Technique protocol'),'text'],['rom',p('Амплитуда · протокол','Range · protocol'),'text'],['rest',p('Отдых · секунд','Rest · seconds'),'number',15,900]];
     let records=[];try{const value=JSON.parse(raw||'[]');if(Array.isArray(value))records=value;}catch{}
     if(!records.length)records=caffeine?[{}]:[{},{}];
     const rows=node('div',undefined,'mm-record-rows'),add=node('button',caffeine?p('Добавить источник','Add source'):p('Добавить сессию','Add session'),'mm-lab-secondary');add.type='button';
     const sync=()=>{const entered=records.filter(record=>Object.values(record).some(value=>value!==null&&value!==undefined&&value!==''));hidden.value=entered.length?JSON.stringify(entered):'';
+      toggle.textContent=t(field.label)+(entered.length?' · '+entered.length+' '+t(p('активных','active')):'');
       const form=group.closest('form');if(form){for(const key of caffeine?['dose','hours','extra']:['load','reps','rir','sessions','comparable']){const input=form.elements.namedItem(key);if(input)input.disabled=Boolean(entered.length);}if(caffeine&&form.elements.bedtime)form.elements.bedtime.required=Boolean(entered.length);}
     };
     function render(focus=false){rows.replaceChildren();records.forEach((record,index)=>{
@@ -185,10 +189,10 @@
         if(type==='number'){input.min=min;input.max=max;input.step=['reps','sets','rest'].includes(key)?'1':'any';input.inputMode='decimal';}if(type==='text')input.maxLength=80;
         input.addEventListener('input',()=>{record[key]=type==='number'?(input.value===''?null:Number(input.value)):input.value;sync();});cell.append(caption,input);grid.append(cell);
       }
-      const remove=node('button',caffeine?p('Удалить источник','Remove source'):p('Удалить сессию','Remove session'),'mm-lab-secondary');remove.type='button';remove.setAttribute('aria-label',t(caffeine?p(`Удалить источник ${index+1}`,`Remove source ${index+1}`):p(`Удалить сессию ${index+1}`,`Remove session ${index+1}`)));remove.addEventListener('click',()=>{records.splice(index,1);render();add.focus();});row.append(grid,remove);rows.append(row);
+      const remove=node('button',caffeine?p('Удалить источник','Remove source'):p('Удалить сессию','Remove session'),'mm-lab-secondary');remove.type='button';remove.setAttribute('aria-label',t(caffeine?p(`Удалить источник ${index+1}`,`Remove source ${index+1}`):p(`Удалить сессию ${index+1}`,`Remove session ${index+1}`)));remove.addEventListener('click',()=>{const previous=hidden.value;records.splice(index,1);render();if(hidden.value!==previous)hidden.dispatchEvent(new Event('input',{bubbles:true}));add.focus();});row.append(grid,remove);rows.append(row);
     });sync();if(focus)rows.lastElementChild?.querySelector('input')?.focus();add.disabled=records.length>=(caffeine?9:12);}
     add.addEventListener('click',()=>{records.push({});render(true);});
-    group.append(node('p',caffeine?p('Эти строки заменяют быстрый ввод доз выше. Укажите время сна; часы относятся к предшествующим 24 часам.','These rows replace the quick dose inputs above. Enter bedtime; clock times refer to the preceding 24 hours.'):p('Эти записи заменяют вес, повторы и RIR быстрого режима. Верх диапазона и доступный шаг берутся из полей выше. Одинаковые названия протокола не доказывают одинаковую технику.','These records replace quick-mode load, reps and RIR. The rep ceiling and increment come from the fields above. Matching protocol names do not prove identical technique.'),'mm-record-hint'),rows,add);render();group.sync=sync;return group;
+    group.append(node('p',caffeine?p('Эти строки заменяют быстрый ввод доз выше. Укажите время сна; часы относятся к предшествующим 24 часам.','These rows replace the quick dose inputs above. Enter bedtime; clock times refer to the preceding 24 hours.'):p('Эти записи заменяют вес, повторы и RIR быстрого режима. Верх диапазона и доступный шаг берутся из полей выше. Одинаковые названия протокола не доказывают одинаковую технику.','These records replace quick-mode load, reps and RIR. The rep ceiling and increment come from the fields above. Matching protocol names do not prove identical technique.'),'mm-record-hint'),rows,add);render();group.sync=sync;disclosure.append(group);disclosure.open=Boolean(hidden.value);return disclosure;
   }
 
   function open(tool,focus=true){
@@ -206,7 +210,7 @@
     const form=node('form'),fields=node('div',undefined,'mm-toolkit-fields');form.noValidate=false;
     const previous=app.state.toolkit?.[tool.id]?.inputs||{};
     for(const field of tool.fields){
-      if(field.type==='records'){fields.append(recordEditor(tool,field,drafts[tool.id]?.[field.key]??previous[field.key]??field.value));continue;}
+      if(field.type==='records'){const editor=recordEditor(tool,field,drafts[tool.id]?.[field.key]??previous[field.key]??field.value);if(field.recordKind==='caffeine'){const bedtime=fields.querySelector('#toolkit-caffeine-bedtime')?.closest('.mm-lab-field');if(bedtime)editor.querySelector('legend').after(bedtime);}fields.append(editor);continue;}
       const group=node('div',undefined,'mm-lab-field'),label=node('label',field.label),input=node(field.type==='select'?'select':'input');input.id='toolkit-'+tool.id+'-'+field.key;label.htmlFor=input.id;input.name=field.key;if(field.type==='select'){for(const [value,label] of field.options){const option=node('option',label);option.value=value;input.append(option);}}else input.type=field.type||'number';input.className='mm-lab-input';input.required=!field.optional;
       if(input.type==='number'){input.min=field.min;input.max=field.max;input.step='any';input.inputMode='decimal';}
       else if(input.type==='text')input.maxLength=1000;
@@ -223,7 +227,7 @@
     layout.append(form,output);workspace.append(title,node('p',tool.subtitle),favorite,layout);
     fields.querySelectorAll('[data-record-editor]').forEach(editor=>editor.sync());
     if(app.state.toolkit?.[tool.id]?.result)output.replaceChildren(outcome(tool,app.state.toolkit[tool.id].result,true));
-    form.addEventListener('input',()=>{const label=output.querySelector('.mm-toolkit-result-label');if(label)label.textContent=t(p('Параметры изменены · пересчитайте результат','Inputs changed · run the calculation again'));});
+    form.addEventListener('input',()=>{const label=output.querySelector('.mm-toolkit-result-label'),message=t(p('Параметры изменены · пересчитайте результат','Inputs changed · run the calculation again'));if(label&&label.textContent!==message)label.textContent=message;});
     form.addEventListener('submit',event=>{
       event.preventDefault();const inputs=Object.fromEntries(new FormData(form));
       try{

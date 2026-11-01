@@ -873,7 +873,6 @@
 #calculators .mm-lab-tabs .mm-lab-tab-icon{display:inline-flex;width:24px;height:24px}
 #calculators .mm-lab-tabs .mm-lab-tab strong,#calculators .mm-lab-tabs .mm-lab-tab small{grid-column:2}
 #calculators .mm-lab-tab small{font-size:11px;line-height:1.5}
-#calculators .mm-toolkit-analysis{grid-template-columns:minmax(0,1fr)}
 }
 }
 
