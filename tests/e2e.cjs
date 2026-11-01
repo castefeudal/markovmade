@@ -203,6 +203,7 @@ let browser;
   assert.equal(await page.locator('#lab-progress-error').textContent(), '');
   assert.notEqual(await page.locator('#lab-prog-main').textContent(), '—');
   assert.equal(await page.locator('#lab-prog-outliers label').count(), 1, 'isolated spike is surfaced for review');
+  assert.match(await page.locator('[data-confidence="progress"]').textContent(),/Низкая/,'14 readings with an unresolved spike do not automatically gain high confidence');
   await page.locator('#lab-prog-outliers input').uncheck();
   const progressState=await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-v1')).progress);
   assert.equal(progressState.dailyWeights.length,weights.length,'outlier choice never deletes raw readings');

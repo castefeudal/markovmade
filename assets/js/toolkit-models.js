@@ -108,6 +108,7 @@
   };
   const auditedMetadata={recomposition:['Scenario arithmetic with user assumptions','FM = weight × BF / 100; projected BF (%) = 100 × (FM + ΔFM) / (weight + ΔFM + ΔFFM)'],phase:['Linear scenario arithmetic',null],circumference:['Measurement arithmetic','Δcm = last − first; relative change (%) = 100 × Δcm / first; weekly = Δcm × 7 / days']};
   for(const [id,[type,formula]]of Object.entries(auditedMetadata)){const definition=definitions.find(item=>item.id===id);definition.type=type;if(formula)definition.formula=formula;}
+  for(const definition of definitions)if(['recomposition','circumference','protein','phase','load','volume','sleep','fatigue','plates','progression','caffeine'].includes(definition.id))definition.review='2026-11-01';
   const core=()=>typeof module==='object'&&module.exports?require('./lab-models.js'):globalThis.MarkovMadeModels;
   function parsePlateInventory(value){
     const raw=String(value??'').trim();if(!raw)return [];
