@@ -25,7 +25,7 @@
       body: result => Number.isFinite(result.bf) ? `${result.bf.toFixed(1)}% · FFMI ${Number(result.ffmi).toFixed(1)}` : '—',
       nutrition: result => Number.isFinite(result.tdee) ? `~${Math.round(result.tdee)} ${copy('ккал','kcal')}` : '—',
       overfeeding: result => Number.isFinite(result.low) && Number.isFinite(result.high) ? `${result.low.toFixed(2)}–${result.high.toFixed(2)} kg` : '—',
-      recovery: result => Number.isFinite(result.score) ? `${Math.round(result.score)}/100` : '—',
+      recovery: result => Array.isArray(result.signals)?String(result.signals.length)+' '+copy('сигналов','signals'):Number.isFinite(result.score) ? `${Math.round(result.score)}/100` : '—',
       progress: result => Number.isFinite(result.weekly) ? `${result.weekly >= 0 ? '+' : ''}${result.weekly.toFixed(2)} kg/week` : '—',
       strategy: result => result.main || '—'
     };
@@ -97,7 +97,7 @@
       body:[['bf','% жира','Body fat','%',1],['fatMass','Жировая масса','Fat mass','kg',1],['lbm','Безжировая масса','Lean mass','kg',1],['ffmi','FFMI','FFMI','',1],['bmi','Индекс массы тела','Body mass index','',1],['whtr','Талия / рост','Waist / height','',2],['targetWeight','Целевой вес · сценарий','Target weight · scenario','kg',1]],
       nutrition:[['tdee','Поддержание','Maintenance','kcal',0],['target','Цель калорий','Calorie target','kcal',0],['pMid','Белок','Protein','g',0],['fatMid','Жиры','Fats','g',0],['carbMid','Углеводы','Carbs','g',0]],
       overfeeding:[['center','Вероятная прибавка жира','Estimated fat gain','kg',2],['scale','Изменение на весах','Scale change','kg',2]],
-      recovery:[['score','Ресурс','Readiness','/100',0]],
+      recovery:[['signalsCount','Сигналы для перепроверки','Signals to review','',0],['observedHours','Сон','Sleep','h',1],['score','Прежняя шкала','Legacy score','/100',0]],
       progress:[['weekly','Недельный темп','Weekly pace','kg/week',2],['delta','Изменение веса','Weight change','kg',1],['waistDelta','Изменение талии','Waist change','cm',1]],
       strategy:[['main','Главный рычаг','Primary lever','',0]]
     };
@@ -180,7 +180,7 @@
       calories: Number.isFinite(nutrition.target) ? [`~${n(nutrition.target)} kcal`,copy('рабочая цель','working target')] :
         Number.isFinite(nutrition.tdee) ? [`~${n(nutrition.tdee)} kcal`,copy('поддержание','maintenance')] : ['—',copy('нет расчёта','not calculated')],
       weight: Number.isFinite(profile.weight) ? [`${n(profile.weight)} ${unit}`,progress.source || copy('данные профиля','profile data')] : ['—',copy('нет измерения','no measurement')],
-      readiness: Number.isFinite(recovery.score) ? [`${Math.round(recovery.score)}/100`,recovery.status || copy('самооценка','self-report')] : ['—',copy('нет оценки','not scored')],
+      readiness: Array.isArray(recovery.signals)?[String(recovery.signals.length),copy('сигналов для перепроверки','signals to review')]:Number.isFinite(recovery.score) ? [`${Math.round(recovery.score)}/100`,recovery.status || copy('самооценка','self-report')] : ['—',copy('нет оценки','not scored')],
       trend: Number.isFinite(progress.weekly) ? [`${progress.weekly >= 0 ? '+' : ''}${n(progress.weekly)} ${unit}`,progress.plateau === 'Возможен' ? copy('возможное плато','possible plateau') : copy('среднее за неделю','weekly trend')] : ['—',copy('нужны измерения','measurements needed')]
     };
     Object.entries(values).forEach(([key, parts]) => {
@@ -198,6 +198,7 @@
     if(state.strategy && state.strategy.main){
       decision=state.strategy.main; reason=state.strategy.reason || reason; signal=state.strategy.control || signal;
       explanation=copy(`Сверьте результат через ${state.strategy.horizon || 14} дней и меняйте один фактор за раз.`,`Review in ${state.strategy.horizon || 14} days and change one factor at a time.`);
+    }else if(recovery.signals?.length){decision=copy('Перепроверьте восстановление перед нагрузкой.','Review recovery signals before loading.');reason=copy('В LAB отмечены выраженные субъективные сигналы. Проверьте условия, разминку и динамику.','LAB contains pronounced self-reported signals. Check conditions, warm-up and changes over time.');signal=copy('Сигналы самонаблюдения','Self-observation signals');explanation=String(recovery.signals.length);
     }else if(Number.isFinite(recovery.score) && recovery.score<55){
       decision=copy('Приоритет — восстановление.','Prioritise recovery.'); reason=recovery.status || reason;
       signal=copy('Снизьте цену нагрузки','Reduce training load'); explanation=copy('Основано на оценке восстановления в LAB.','Based on the recovery assessment in LAB.');

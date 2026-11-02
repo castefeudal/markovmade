@@ -373,5 +373,13 @@
   "Среднее за день": "Daily average",
   "Один день": "One day",
   "Наблюдаемый ограничитель": "Observed limiting signal",
-  "Сопоставьте сон, энергию, стресс и самочувствие; это не тест готовности.": "Compare sleep, energy, stress and wellbeing; this is not a readiness test."
+  "Сопоставьте сон, энергию, стресс и самочувствие; это не тест готовности.": "Compare sleep, energy, stress and wellbeing; this is not a readiness test.",
+  "Допущение ошибки учёта калорий · ±%": "Assumed calorie logging error · ±%",
+  "Выбранный сценарий, не доверительный интервал. 10% — исходное допущение, его можно изменить.": "Selected scenario, not a confidence interval. 10% is an editable starting assumption.",
+  "Вес после переедания ≠ жир. Сравните потребление и поддержание за один период. Результат — условный энергетический эквивалент; гликоген и связанная вода показаны отдельно, без обещания точного изменения тканей.": "Weight after overeating is not fat. Compare intake and maintenance over the same period. The result is a conditional energy equivalent; glycogen and associated water are separate scenarios, not precise tissue predictions.",
+  "Как учитывать активность в PRO": "How to account for activity in PRO",
+  "PAL уже включает шаги, работу, тренировки и TEF": "PAL already includes steps, work, training and TEF",
+  "Компоненты · отдельный условный сценарий": "Components · separate conditional scenario",
+  "Выберите один способ. В компонентном сценарии укажите только шаги вне тренировок; прочая активность не должна повторять шаги или net MET. TEF 10% — допущение, предпочтительнее калибровка по наблюдениям.": "Choose one method. In the component scenario, enter only steps outside training; other activity must not repeat steps or net MET. TEF 10% is an assumption; observed calibration is preferable.",
+  "Прочая активность вне шагов и тренировок · ккал/день": "Other activity outside steps and training · kcal/day"
 }

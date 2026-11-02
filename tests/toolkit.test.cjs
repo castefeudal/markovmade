@@ -28,7 +28,7 @@ test('plate subset search handles non-greedy inventory and unreachable targets',
 });
 test('training models do not prescribe progression from a single session',()=>{
   assert.equal(calculate('volume',fixtures.volume).data.tonnage,1440);
-  assert.deepEqual(calculate('load',fixtures.load).data,{byPct:75,byRir:80,rpe:8});
+  assert.equal(calculate('load',fixtures.load).data.byPct,75);assert.equal(calculate('load',fixtures.load).data.byRir,77.5);
   assert.equal(calculate('progression',fixtures.progression).data.next,62.5);
   assert.equal(calculate('progression',{...fixtures.progression,sessions:1}).data.next,60);
   assert.equal(calculate('progression',{...fixtures.progression,step:10}).data.next,60);
@@ -61,6 +61,6 @@ test('progression requires explicit comparability and per-set volume sums differ
 test('old model snapshots remain reproducible without changing current progression safety',()=>{
  const {comparable,...old}=fixtures.progression;
  const previous=calculate('progression',old,'2.0.0');assert.equal(previous.data.next,62.5);assert.equal(previous.modelVersion,'2.0.0');
- const current=calculate('progression',old);assert.equal(current.data.next,60);assert.equal(current.modelVersion,'2.1.0');
+ const current=calculate('progression',old);assert.equal(current.data.next,60);assert.equal(current.modelVersion,'3.0.0');
  assert.equal(calculate('volume',{...fixtures.volume,entries:'1 x 10'},'2.0.0').data.tonnage,1440);
 });

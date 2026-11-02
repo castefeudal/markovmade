@@ -267,3 +267,10 @@
 @media(max-width:480px){.mm-checkin-primary{grid-template-columns:1fr;}}
 @media(prefers-reduced-motion:reduce){.mm-progress-plus,.mm-progress-plus>span{transition:none;}}
 }
+
+/* Before their stylesheet is requested, off-screen sections have no styled
+   content to paint. Keep their intrinsic placeholders rather than eagerly
+   materialising the browser's large content-visibility:auto proximity range. */
+@layer components {
+html.js:not([data-section-styles-ready]) #main-content>section:not(#hero){content-visibility:hidden;contain-intrinsic-size:auto 1100px}
+}

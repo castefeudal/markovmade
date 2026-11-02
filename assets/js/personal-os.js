@@ -125,7 +125,7 @@
         action(panel,copy('Открыть график и добавить измерение','Open chart and add a reading'),'progress');
         panel=prepare('recovery',copy('Ваш ресурс','Your recovery signals'),copy('Самооценка и практическая эвристика. Это не диагноз и не разрешение на нагрузку.','Self-report and a practical heuristic. This is not a diagnosis or clearance to train.'));
         var recovery=state.recovery||{};
-        metric(panel,copy('Оценка LAB','LAB estimate'),Number.isFinite(recovery.score)?fmt(recovery.score)+'/100':'—',Number.isFinite(recovery.score)?copy('Практическая эвристика, не медицинский индекс','Practical heuristic, not a medical index'):copy('Сначала выполните оценку ресурса в LAB','Run a recovery assessment in LAB first'));
+        metric(panel,copy('Наблюдения LAB','LAB observations'),Array.isArray(recovery.signals)?String(recovery.signals.length)+' '+copy('сигналов','signals'):Number.isFinite(recovery.score)?fmt(recovery.score)+'/100':'—',Number.isFinite(recovery.score)?copy('Практическая эвристика, не медицинский индекс','Practical heuristic, not a medical index'):copy('Сначала выполните оценку ресурса в LAB','Run a recovery assessment in LAB first'));
         metric(panel,copy('Последний сон','Latest sleep'),latestSleep?fmt(latestSleep.value)+' '+copy('ч','h'):'—',latestSleep?latestSleep.date:copy('Нет доступных наблюдений','No available observations'));
         metric(panel,copy('Последняя энергия','Latest energy'),latestEnergy?fmt(latestEnergy.value)+'/10':'—',latestEnergy?latestEnergy.date:copy('Нет доступных наблюдений','No available observations'));
         action(panel,copy('Добавить оценку ресурса','Add a recovery assessment'),'recovery');

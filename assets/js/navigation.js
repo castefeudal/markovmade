@@ -207,7 +207,7 @@
     updateCurrentLocation();
     progress.style.transform = `scaleX(${Math.min(1, y / Math.max(1, geometry().height - innerHeight))})`;
     const down = y > 200 && y > lastY + 2;
-    header?.classList.toggle('scrolled-down', down && !document.body.classList.contains('menu-open'));
+    header?.classList.toggle('scrolled-down', down && !header.contains(document.activeElement) && !document.body.classList.contains('menu-open'));
     header?.classList.toggle('scrolled-up', !down);
     actions.classList.toggle('visible', y > innerHeight);
     actions.inert = y <= innerHeight;

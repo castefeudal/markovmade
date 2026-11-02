@@ -64,3 +64,14 @@ html[data-theme="clarity"] #calculators .mm-lab-panel::before { filter:brightnes
 @media(max-width:500px) { .mm-science-view { padding:14px; } .mm-science-row { grid-template-columns:minmax(0,1fr) auto; } .mm-science-row meter { grid-row:2; grid-column:1/-1; } }
 }
 @layer components { #calculators .mm-lab-toolhead>div { min-width:0; } #calculators .mm-lab-toolhead :is(h3,p),#calculators .mm-lab-hero-result strong { overflow-wrap:anywhere; } }
+@layer components {
+.mm-session-editor { min-width:0; padding:0; border:0; margin:24px 0; }
+.mm-session-editor legend { font:500 1.5rem/1.2 var(--mm-font-display); margin-bottom:20px; }
+.mm-session-set { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; padding:16px; margin-bottom:14px; border:1px solid var(--mm-border); border-radius:12px; background:var(--signature-paper); }
+.mm-session-set>strong { grid-column:1/-1; color:var(--mm-accent); }
+.mm-session-set label { min-width:0; font-size:.75rem; color:var(--mm-text-secondary); }
+.mm-session-set input { display:block; width:100%; margin-top:8px; }
+.mm-session-set input[type=checkbox] { width:24px; height:24px; accent-color:var(--mm-accent); }
+}
+@layer components { .mm-session-queue-item { display:flex; gap:12px; justify-content:space-between; align-items:center; padding:16px; border-top:1px solid var(--mm-border); overflow-wrap:anywhere; } .mm-session-editor>button { margin:8px 8px 8px 0; } }
+@layer components { .mm-workout-report { margin-block:24px; overflow-x:auto; max-width:100%; } .mm-workout-report table { width:100%; border-collapse:collapse; font-size:.8rem; } .mm-workout-report :is(th,td) { padding:10px 6px; border-bottom:1px solid var(--mm-border); text-align:start; overflow-wrap:anywhere; } .mm-workout-report p { font-size:.8rem; color:var(--mm-text-secondary); } .mm-strength-trend svg { display:block; width:100%; height:auto; color:var(--mm-accent); } }

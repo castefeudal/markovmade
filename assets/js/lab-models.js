@@ -70,7 +70,7 @@
     }
     return denominator ? numerator / denominator : 0;
   }
-  function maintenanceCalibration(weights, averageCalories, completenessPct=100, adherencePct=90, waistDelta=NaN) {
+  function maintenanceCalibration(weights, averageCalories, completenessPct=100, adherencePct=90, waistDelta=NaN, intakeErrorPct=10) {
     if (!Array.isArray(weights) || weights.some(value => !Number.isFinite(value) || value <= 0)) throw new Error('Daily weights must be positive finite values.');
     if (weights.length < 14 || weights.length > 28) throw new Error('Calibration requires 14–28 daily weights.');
     if (!Number.isFinite(averageCalories) || averageCalories < 1000 || averageCalories > 8000) throw new Error('Average calories must be between 1000 and 8000 kcal/day.');
@@ -84,11 +84,13 @@
     const meanWeight=average(weights), changePctPerWeek=slopeKgPerDay*7/meanWeight*100;
     const stable=Math.abs(changePctPerWeek)<.10 && (!Number.isFinite(waistDelta)||Math.abs(waistDelta)<.5);
     const formulaEnergy=stable?[averageCalories,averageCalories]:[averageCalories-slopeKgPerDay*9000,averageCalories-slopeKgPerDay*7000];
-    const uncertainty=Math.max(stable?150:100,noiseKg*7000/Math.sqrt(weights.length));
+    if(!Number.isFinite(intakeErrorPct)||intakeErrorPct<0||intakeErrorPct>30)throw new Error('Intake error scenario must be 0–30 percent.');
+    const uncertainty=averageCalories*intakeErrorPct/100;
     const low=Math.max(1000,Math.min(...formulaEnergy)-uncertainty), high=Math.min(8000,Math.max(...formulaEnergy)+uncertainty);
+    if(low>high||!Number.isFinite(low)||!Number.isFinite(high))throw new Error('Observed energy scenario is incompatible with the supported range.');
     const quality=completenessPct>=90&&adherencePct>=85&&noiseKg<=.7?'Хорошая':completenessPct>=75&&adherencePct>=70&&noiseKg<=1.2?'Средняя':'Низкая';
     const confidence=weights.length>=21&&completenessPct>=90&&adherencePct>=90&&noiseKg<=.5?'Выше средней':weights.length>=14&&completenessPct>=75&&adherencePct>=70&&noiseKg<=1.2?'Умеренная':'Низкая';
-    return {days:weights.length,averageCalories,slopeKgPerDay,changePctPerWeek,noiseKg,stable,low,high,value:(low+high)/2,quality,confidence,completenessPct,adherencePct,waistDelta:Number.isFinite(waistDelta)?waistDelta:null,energyAssumption:stable?'stable trend: average intake weighted as observed maintenance':'energy balance sensitivity: 7000–9000 kcal/kg, not a fixed conversion'};
+    return {modelVersion:'2.0.0',intervalType:'scenario',intakeErrorPct,days:weights.length,averageCalories,slopeKgPerDay,changePctPerWeek,noiseKg,stable,low,high,value:(low+high)/2,quality,confidence,completenessPct,adherencePct,waistDelta:Number.isFinite(waistDelta)?waistDelta:null,energyAssumption:stable?'stable trend: average intake weighted as observed maintenance':'energy balance sensitivity: 7000–9000 kcal/kg, not a fixed conversion'};
   }
   function detectWeightOutliers(values) {
     if (!Array.isArray(values) || values.length < 3) return [];

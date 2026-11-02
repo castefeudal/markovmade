@@ -38,7 +38,7 @@ test('interactive references and IDs are unique and resolvable', () => {
 
 test('calculator snapshots record the model version that produced them', () => {
   for (const model of ['body','nutrition','overfeeding','recovery','progress','strategy']) {
-    const version=['nutrition','overfeeding','recovery','progress'].includes(model)?'2':'1';
+    const version=model==='recovery'?'3':['nutrition','overfeeding','progress'].includes(model)?'2':'1';
     assert.match(runtime, new RegExp(`${model}:\\s*'${version}\\.0\\.0'`));
     assert.match(runtime, new RegExp(`state\\.${model}=\\{(?:\\.\\.\\.state\\.${model},)?modelVersion:MODEL_VERSIONS\\.${model}`));
   }
