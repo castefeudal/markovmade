@@ -8,7 +8,7 @@ html.js:not([data-critical-ready]) #hero>.container{visibility:hidden}
 #hero .hero-content-premium>div:first-child{margin-bottom:1.5rem}
 #hero h1{overflow-wrap:anywhere;max-width:100%;margin:0 0 1.5rem;color:var(--mm-text-primary);font:var(--mm-font-hero);letter-spacing:var(--mm-tracking-display);text-wrap:balance}
 #hero .accent-word{color:var(--mm-accent);font-weight:400;font-style:italic}
-#hero .hero-content-premium>p{max-width:49ch;margin:0 0 1.75rem;color:var(--mm-text-secondary);font:var(--mm-font-primary);letter-spacing:0;text-wrap:pretty}
+#hero .hero-content-premium>p{max-width:34rem;margin:0 0 1.75rem;color:var(--mm-text-secondary);font:var(--mm-font-primary);letter-spacing:0;text-wrap:pretty}
 #hero .hero-gold-emphasis{color:inherit;font-weight:700}
 #hero .hero-kicker{display:inline-flex;align-items:center;gap:.75rem;padding:0;color:var(--mm-accent);font:var(--mm-font-micro);letter-spacing:.08em}
 #hero .hero-kicker-dot{display:none}

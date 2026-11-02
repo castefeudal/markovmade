@@ -63,7 +63,7 @@
   /* Twelve semantic roles: editorial display and precision UI share metrics. */
   --mm-font-editorial:var(--mm-font-display);
   --mm-font-numeric:var(--mm-font-body);
-  --mm-font-hero:500 clamp(3.75rem,6.4vw,7.25rem)/1.02 var(--mm-font-display);
+  --mm-font-hero:500 clamp(3.75rem,6.4vw,6rem)/1.02 var(--mm-font-display);
   --mm-font-section-display:500 clamp(2.7rem,4.5vw,5rem)/1.07 var(--mm-font-editorial);
   --mm-font-section-heading:500 clamp(2rem,3.1vw,3.4rem)/1.15 var(--mm-font-editorial);
   --mm-font-card-heading:600 clamp(1.35rem,2.1vw,2rem)/1.22 var(--mm-font-body);
@@ -84,7 +84,7 @@
   --mm-card-padding:clamp(20px,2.8vw,36px);
   --mm-control-height:52px;
   --mm-grid-gap:clamp(20px,3vw,48px);
-  --mm-type-display:clamp(3.75rem,6.4vw,7.25rem);
+  --mm-type-display:clamp(3.75rem,6.4vw,6rem);
   --mm-type-h1:clamp(2.7rem,4.5vw,5rem);
   --mm-type-h2:clamp(2rem,3.1vw,3.4rem);
   --mm-type-h3:clamp(1.35rem,2.1vw,2rem);
