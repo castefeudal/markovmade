@@ -4,7 +4,7 @@ const {startServer,root}=require('./browser-helpers.cjs');
 const captureLinux=process.platform==='linux'&&!fs.existsSync(path.join(__dirname,'visual-baselines/linux/contract-ru-aurum-noir-320.png'));
 if(captureLinux)process.env.UPDATE_VISUAL_BASELINES='1';
 const {assertVisualBaseline}=require('./visual-regression.cjs');
-const widths=[320,360,375,390,430,768,1024,1280,1366,1440,1600,1920,2560];
+const widths=[320,360,375,390,428,430,600,768,1024,1280,1366,1440,1600,1920,2560];
 const themes=['aurum-noir','event-horizon','clarity'];
 const output=path.join(root,'test-results/contracts');fs.mkdirSync(output,{recursive:true});
 function luminance(rgb){const c=rgb.match(/[\d.]+/g).slice(0,3).map(Number).map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4});return .2126*c[0]+.7152*c[1]+.0722*c[2];}
@@ -103,8 +103,9 @@ async function assertCta(page,label) {
           console.log(`Contracts passed: ${name} ${lang} ${theme}, 320–2560px`);
         }
       }
-      // Keyboard dialog behavior and focus restoration are checked independently.
-      await page.setViewportSize({width:390,height:844});
+      // Settle the responsive poster and resize handlers before the keyboard contract.
+      // Firefox can deliver the previous desktop resize after the first click.
+      await page.setViewportSize({width:390,height:844});await settleResponsivePoster(page);
       await page.locator('#burger-btn').click();
       assert.equal(await page.locator('#mobile-menu').getAttribute('aria-hidden'),'false');
       assert.equal(await page.locator('#main-content').evaluate(el=>el.inert),true);

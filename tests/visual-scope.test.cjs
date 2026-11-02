@@ -1,0 +1,2 @@
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),crypto=require('node:crypto');
+test('visual reconstruction preserves every business, persistence, localisation and interaction source byte',()=>{for(const [file,expected]of Object.entries(require('./visual-scope.json'))){const bytes=fs.readFileSync(file,'utf8').replace(/\r\n/g,'\n');assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),expected,file+' must remain unchanged');}});
