@@ -49,7 +49,7 @@
                 const {w,target,targetLow,targetHigh,pLow,pHigh,pMid}=nutrition;
                 const share=scenario==='higher-carb'?.20:scenario==='higher-fat'?.35:.25;
                 const fatFloor=w*.6;
-                const fatMid=Math.max(fatFloor,target*share/9);
+                const fatMid=Math.min(Math.max(fatFloor,target*share/9),(target-pMid*4)/9);
                 const fatLow=Math.max(fatFloor,targetLow*share/9), fatHigh=Math.max(fatLow,targetHigh*share/9);
                 const carbMid=Math.max(0,(target-pMid*4-fatMid*9)/4);
                 const carbLow=Math.max(0,(targetLow-pHigh*4-fatHigh*9)/4), carbHigh=Math.max(0,(targetHigh-pLow*4-fatLow*9)/4);
@@ -77,7 +77,8 @@
                 } else if(Number.isFinite(e.bf) && e.bf>(e.sex==='male'?25:35)){
                     pLow=lbm*2.0; pHigh=lbm*2.6; pNote='FFM-based practical range, чтобы высокий BF не завышал белок';
                 }
-                const pMid=(pLow+pHigh)/2;
+                if(pLow*4+e.w*.6*9>low){error('nutrition','Выбранная калорийность не вмещает нижние ориентиры белка и жиров. Пересмотрите цель или исходные данные.');return null;}
+                const pMid=Math.min((pLow+pHigh)/2,(center-e.w*.6*9)/4);
                 const fatLow=Math.max(e.w*0.6,center*0.20/9), fatHigh=Math.max(fatLow,center*0.30/9), fatMid=(fatLow+fatHigh)/2;
                 const carbLow=Math.max(0,(low-pHigh*4-fatHigh*9)/4), carbHigh=Math.max(0,(high-pLow*4-fatLow*9)/4), carbMid=Math.max(0,(center-pMid*4-fatMid*9)/4);
                 state.profile={sex:e.sex,age:e.age,height:e.h,weight:e.w,bodyFat:Number.isFinite(e.bf)?e.bf:state.profile.bodyFat};

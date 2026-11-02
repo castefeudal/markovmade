@@ -8,7 +8,7 @@
   const pair=(ru,en)=>[ru,en];
   const sources={
     protein:['Morton et al. 2018','https://pubmed.ncbi.nlm.nih.gov/28698222/'],
-    strength:['ACSM progression models 2009','https://pubmed.ncbi.nlm.nih.gov/19204579/'],
+    strength:['ACSM Resistance Training Position Stand 2026','https://pubmed.ncbi.nlm.nih.gov/41843416/'],
     cardio:['Tanaka et al. 2001','https://pubmed.ncbi.nlm.nih.gov/11153730/'],
     sleep:['AASM / SRS adult sleep consensus','https://aasm.org/advocacy/position-statements/adult-sleep-duration-health-advisory/'],
     caffeine:['Drake et al. 2013','https://pmc.ncbi.nlm.nih.gov/articles/PMC3805807/'],
@@ -39,8 +39,53 @@
     model('review','progress',pair('Еженедельный пересмотр','Weekly decision review'),pair('Факт → вывод → один следующий шаг','Fact → conclusion → one next step'),[field('fact','Что произошло · наблюдаемый факт','What happened · observed fact',null,null,'',{type:'text'}),field('lesson','Какой вывод проверяю','The conclusion I want to test',null,null,'',{type:'text'}),field('action','Один шаг на 7 дней','One action for 7 days',null,null,'',{type:'text'})],'Separate observation, interpretation and next experiment',pair('Рамка принятия решения. Не доказывает причинность и не оценивает психическое состояние.','Decision framework. Does not establish causality or assess mental health.'),null,v=>{const fact=text(v.fact),lesson=text(v.lesson),action=text(v.action);return result(pair(action,action),pair(`${fact} → ${lesson}`,`${fact} → ${lesson}`),pair('Вывод может объясняться другими факторами.','Other factors may explain your observation.'),[pair('Меняйте один фактор и назначьте пересмотр через 7 дней.','Change one factor and schedule a review in 7 days.')],pair('Добавьте факты о выполнении и динамике.','Add adherence and trend observations.'),'low',{fact,lesson,action});})
   ];
   for(const definition of definitions)if(['progression','volume'].includes(definition.id)){definition.version='2.1.0';definition.review='2026-10-31';}
+/* Grand Edition: explicit scenarios, bounded inventory and calendar observations. */
+const previousModels=new Map(definitions.map(d=>[d.id,{run:d.run,version:d.version}]));
+const revise=(id,fields,formula,run)=>{const d=definitions.find(x=>x.id===id);d.fields=fields;d.formula=formula;d.run=run;d.version='3.0.0';d.review='2026-11-02';};
+const platesDefinition=definitions.find(x=>x.id==='plates');
+revise('plates',[...platesDefinition.fields,field('collars','Замки · общий вес пары, кг','Collars · total pair mass, kg',0,10,0)],'Integer grams; bounded subset sum; minimise plates at each reachable weight; bar + collars + 2 × side',v=>{
+ const target=n(v.target,1,500),bar=n(v.bar,1,50),collars=n(v.collars??0,0,10),base=Math.round((bar+collars)*1000),goal=Math.round(target*1000);
+ const inventory=text(v.inventory).split(/[;,\s]+/).map(x=>n(x,.25,50));
+ if(inventory.length>24||inventory.some(x=>Math.abs(x*1000-Math.round(x*1000))>1e-6))throw new Error('inventory');
+ const dp=new Map([[0,[]]]);
+ for(const plate of inventory)for(const [sum,list] of [...dp]){const next=sum+Math.round(plate*1000),candidate=[...list,plate];if(!dp.has(next)||candidate.length<dp.get(next).length)dp.set(next,candidate);}
+ const weights=[...dp.keys()].sort((a,b)=>a-b),below=weights.filter(x=>base+2*x<=goal).at(-1),above=weights.find(x=>base+2*x>=goal),chosen=below??above;
+ const plates=dp.get(chosen).slice().sort((a,b)=>b-a),achieved=(base+2*chosen)/1000,lower=below===undefined?null:(base+2*below)/1000,upper=above===undefined?null:(base+2*above)/1000;
+ return {...result(pair(`${achieved} кг · ${plates.length?plates.join(' + '):'без блинов'} на сторону`,`${achieved} kg · ${plates.length?plates.join(' + '):'no plates'} per side`),pair(`Ниже: ${lower??'—'} кг · выше: ${upper??'—'} кг. Замки: ${collars} кг.`,`Below: ${lower??'—'} kg · above: ${upper??'—'} kg. Collars: ${collars} kg.`),pair('Расчёт по указанному инвентарю, без учёта допуска фактической массы.','Arithmetic using entered inventory; actual mass tolerances are not included.'),[pair('Собирайте от крупных блинов к малым; повторите набор на другой стороне и закрепите замки.','Load large to small; mirror the other side and secure collars.')],pair('Каждое число — один блин на сторону. Повторяйте номинал для нескольких блинов.','Each number is one plate per side. Repeat denominations for multiple plates.'),'high',{achieved,plates,remainder:target-achieved,lower,upper,bar,collars,exact:goal===base+2*chosen}),modelVersion:'3.0.0'};
+});
+const clock=value=>{if(!/^\d{2}:\d{2}$/.test(value))throw new Error('time');const [h,m]=value.split(':').map(Number);if(h>23||m>59)throw new Error('time');return h+m/60;};
+revise('caffeine',[field('dose','Одна доза · мг','Single dose · mg',0,600,100),field('hours','До сна · часов (для одной дозы)','Hours before bed (single dose)',0,48,8),field('bedtime','Сон · HH:MM','Bedtime · HH:MM',null,null,'23:00',{type:'text'}),field('doses','Несколько доз: HH:MM=мг; HH:MM=мг','Multiple doses: HH:MM=mg; HH:MM=mg',null,null,'',{type:'text',optional:true})],'remaining = Σ dose × 2^(−elapsedHours / halfLife); clock doses refer to the preceding 24 h before bed',v=>{
+ const bed=clock(v.bedtime||'23:00');let doses=[{dose:n(v.dose,0,600),hours:n(v.hours,0,48)}];
+ if(v.doses?.trim()){doses=text(v.doses).split(';').map(row=>{const parts=row.trim().split('=');if(parts.length!==2)throw new Error('doses');const time=clock(parts[0].trim());return {dose:n(parts[1],0,600),hours:(bed-time+24)%24};});if(doses.length>12)throw new Error('doses');}
+ const remain=(half,offset=0)=>doses.reduce((sum,d)=>sum+(d.hours+offset>=0?d.dose*2**(-(d.hours+offset)/half):0),0),scenarios=[3,5,7].map(half=>({half,remaining:remain(half)}));
+ const timeline=Array.from({length:49},(_,i)=>{const offset=i/2-16;return {hours:offset,remaining:remain(5,offset)};});
+ const low=scenarios[0].remaining,high=scenarios[2].remaining;
+ return {...result(pair(`${Math.round(low)}–${Math.round(high)} мг к моменту сна`,`${Math.round(low)}–${Math.round(high)} mg at bedtime`),pair(`${doses.length} доз. Время относится к 24 часам перед сном; одинаковое время означает приём перед сном.`,`${doses.length} doses. Times refer to the 24 hours before bed; identical times mean dosing at bedtime.`),pair('3–7 ч — сценарии, не доверительный интервал. Модель не предсказывает бессонницу или индивидуальную скорость выведения.','3–7 h are scenarios, not a confidence interval. The model does not predict insomnia or individual clearance.'),[pair('Сдвиньте последнюю дозу раньше и сравните сон за неделю.','Move the last dose earlier and compare sleep over a week.')],pair('Учтите все источники и дозы; исключите двусмысленность дат при сменной работе.','Include every source and dose; clarify dates for shift work.'),'low',{low,high,doses,scenarios,timeline}),modelVersion:'3.0.0'};
+});
+const calendarRows=raw=>{
+ const rows=text(raw).split(';').map(line=>{const match=/^(\d{4}-\d{2}-\d{2})\s*=\s*(\d+(?:[.,]\d+)?)$/.exec(line.trim());if(!match)throw new Error('date');const time=Date.parse(match[1]+'T00:00:00Z');if(!Number.isFinite(time)||new Date(time).toISOString().slice(0,10)!==match[1])throw new Error('date');return {date:match[1],day:time/86400000,value:n(match[2],20,300)};}).sort((a,b)=>a.day-b.day);
+ if(rows.length<3||rows.length>90||new Set(rows.map(x=>x.date)).size!==rows.length)throw new Error('observations');return rows;
+};
+revise('circumference',[field('observations','Замеры: YYYY-MM-DD=см; YYYY-MM-DD=см (минимум 3)','Measurements: YYYY-MM-DD=cm; YYYY-MM-DD=cm (at least 3)',null,null,'',{type:'text'})],'Theil–Sen: median of all (value[j] − value[i]) / calendarDays[i,j]',v=>{
+ const rows=calendarRows(v.observations),slopes=[];for(let i=0;i<rows.length;i++)for(let j=i+1;j<rows.length;j++)slopes.push((rows[j].value-rows[i].value)/(rows[j].day-rows[i].day));slopes.sort((a,b)=>a-b);const mid=Math.floor(slopes.length/2),slope=slopes.length%2?slopes[mid]:(slopes[mid-1]+slopes[mid])/2,span=rows.at(-1).day-rows[0].day;
+ return {...result(pair(`${(slope*7).toFixed(2)} см/нед.`,`${(slope*7).toFixed(2)} cm/week`),pair(`${rows.length} замеров за ${span} дней. Пропущенные даты не сжимаются.`,`${rows.length} measurements over ${span} days. Missing dates are not compressed.`),pair('Тренд не определяет изменение жира. Ошибки ленты сохраняются; прогноз срока не строится.','Trend does not identify fat change. Tape error remains; no deadline is predicted.'),[pair('Повторяйте один и тот же замер в одинаковых условиях.','Repeat the same measurement under consistent conditions.')],pair('Не объединяйте разные окружности. Добавьте 3–4 недели наблюдений.','Do not mix different circumferences. Add 3–4 weeks of observations.'),'low',{rows,weekly:slope*7,span}),modelVersion:'3.0.0'};
+});
+definitions.find(x=>x.id==='circumference').title=pair('Календарный тренд окружности','Calendar circumference trend');
+
+  definitions.push(model('session','training',pair('Тренировка · план и факт','Training · plan and actual'),pair('Журнал подходов с датой, упражнением и RIR','Set log with date, exercise and RIR'),[
+    field('date','Дата · YYYY-MM-DD','Date · YYYY-MM-DD',null,null,'',{type:'text'}),field('exercise','Упражнение / оборудование / амплитуда','Exercise / equipment / range of motion',null,null,'',{type:'text'}),field('plan','План: повторы × кг; повторы × кг','Plan: reps × kg; reps × kg',null,null,'8x60; 8x60; 8x60',{type:'text'}),field('actual','Факт: повторы × кг × RIR; …','Actual: reps × kg × RIR; …',null,null,'',{type:'text',optional:true}),field('rest','План отдыха · секунд','Planned rest · seconds',30,600,120)
+  ],'Per-set volume = repetitions × external load; plan and actual remain separate; no hypertrophy score',pair('Отдых и план задаёт пользователь. Сравнивайте только одинаковые упражнения, оборудование и технику.','Rest and plan are user-defined. Compare only identical exercise, equipment and technique.'),'strength',v=>{
+    if(!/^\d{4}-\d{2}-\d{2}$/.test(v.date)||!Number.isFinite(Date.parse(v.date))||new Date(v.date).toISOString().slice(0,10)!==v.date)throw new Error('date');
+    const exercise=text(v.exercise),rest=integer(v.rest,30,600),parse=(raw,actual)=>text(raw).split(';').map(row=>{const cols=row.trim().split(/[x×*]/);if(cols.length!==(actual?3:2))throw new Error('sets');return {reps:integer(cols[0],1,100),load:n(cols[1],0,500),rir:actual?n(cols[2],0,10):null};});
+    const plan=parse(v.plan,false),actual=v.actual?.trim()?parse(v.actual,true):[];if(plan.length>30||actual.length>30)throw new Error('sets');
+    const total=rows=>rows.reduce((sum,row)=>sum+row.reps*row.load,0),planned=total(plan),performed=total(actual);
+    return result(pair(`${actual.length} / ${plan.length} подходов · ${performed} кг`,`${actual.length} / ${plan.length} sets · ${performed} kg`),pair(`План: ${planned} кг тоннажа. Факт: ${performed} кг. Разница: ${performed-planned} кг. Это не оценка стимула роста.`,`Planned tonnage: ${planned} kg. Actual: ${performed} kg. Difference: ${performed-planned} kg. This does not rate growth stimulus.`),pair('Тоннаж зависит от упражнения и амплитуды; RIR — субъективное наблюдение.','Tonnage depends on exercise and range of motion; RIR is self-reported.'),[pair(actual.length?'Сравните фактические повторы и RIR с планом перед изменением нагрузки.':'Запишите фактические подходы после тренировки.',actual.length?'Compare actual reps and RIR with the plan before changing load.':'Record actual sets after training.')],pair('Сохраняйте название упражнения, оборудование и технику одинаковыми.','Keep exercise, equipment and technique consistent.'),'high',{date:v.date,exercise,plan,actual,planned,performed,rest});
+  },'User plan + exact training arithmetic'));
+  definitions.at(-1).version='1.0.0';definitions.at(-1).review='2026-11-02';
   function calculate(id,values,requestedVersion){
     const definition=definitions.find(item=>item.id===id);if(!definition)throw new Error('model');
+    const previous=previousModels.get(id);
+    if(requestedVersion&&previous&&requestedVersion===previous.version&&definition.version==='3.0.0')return {...previous.run(values),modelVersion:previous.version};
     const old=requestedVersion==='2.0.0'&&definition.version==='2.1.0';
     const inputs=old?(id==='progression'?{...values,comparable:1}:{...values,entries:''}):values;
     return {...definition.run(inputs),modelVersion:old?'2.0.0':definition.version};

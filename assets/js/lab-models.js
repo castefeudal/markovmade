@@ -99,10 +99,10 @@
     }
     return found;
   }
-  function robustDailySlope(values, excludedIndices=[]) {
+  function robustDailySlope(values, excludedIndices=[], calendarDays=[]) {
     if(!Array.isArray(values)||values.length<2)return NaN;
     const excluded=new Set(excludedIndices),slopes=[];
-    for(let i=0;i<values.length;i++)if(!excluded.has(i))for(let j=i+1;j<values.length;j++)if(!excluded.has(j))slopes.push((values[j]-values[i])/(j-i));
+    for(let i=0;i<values.length;i++)if(!excluded.has(i))for(let j=i+1;j<values.length;j++)if(!excluded.has(j)){const elapsed=calendarDays.length?calendarDays[j]-calendarDays[i]:j-i;if(elapsed>0)slopes.push((values[j]-values[i])/elapsed);}
     if(!slopes.length)return NaN;
     slopes.sort((a,b)=>a-b);const mid=Math.floor(slopes.length/2);return slopes.length%2?slopes[mid]:(slopes[mid-1]+slopes[mid])/2;
   }
@@ -114,11 +114,9 @@
   }
   function estimate1RM(loadKg, reps) {
     if (!Number.isFinite(loadKg) || loadKg <= 0 || !Number.isInteger(reps) || reps < 1 || reps > 15) throw new Error('Enter a positive load and 1–15 repetitions.');
-    if (reps === 1) return {value:loadKg, confidence:'Высокая', method:'введённый одиночный максимум'};
     const epley = loadKg * (1 + reps / 30);
-    const brzycki = reps < 12 ? loadKg * 36 / (37 - reps) : epley;
-    const value = (epley + brzycki) / 2;
-    return {value, confidence:reps <= 5 ? 'Умеренная' : reps <= 8 ? 'Ограниченная' : 'Низкая', method:reps < 12 ? 'среднее Epley и Brzycki' : 'Epley; при большем числе повторений неопределённость выше'};
+    const brzycki = loadKg * 36 / (37 - reps);
+    return {value:epley, epley, brzycki, spread:Math.abs(epley-brzycki), single:reps===1?loadKg:null, modelVersion:'2.0.0', confidence:reps <= 5 ? 'Умеренная' : reps <= 8 ? 'Ограниченная' : 'Низкая', method:'Epley; Brzycki показан отдельно; одиночный подход не подтверждает измеренный 1ПМ'};
   }
   function checkinTrends(entries, days, today=new Date()) {
     if (![7,14,28].includes(days)) throw new Error('Trend window must be 7, 14 or 28 days.');

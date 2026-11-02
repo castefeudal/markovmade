@@ -81,8 +81,8 @@ test('maintenance calibration requires 14–28 days and reports assumptions and 
 });
 
 test('e1RM fixtures are bounded by rep count and reduce confidence as reps rise', () => {
-  assert.equal(model.estimate1RM(100,1).value,100);
-  near(model.estimate1RM(100,5).value,114.58,.02);
+  assert.equal(model.estimate1RM(100,1).single,100);
+  near(model.estimate1RM(100,5).value,116.6666667,.0001);
   assert.equal(model.estimate1RM(100,5).confidence,'Умеренная');
   assert.equal(model.estimate1RM(100,10).confidence,'Низкая');
   assert.throws(()=>model.estimate1RM(100,16),/1–15/);

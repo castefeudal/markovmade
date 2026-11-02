@@ -2,7 +2,7 @@ const test=require('node:test'),assert=require('node:assert/strict');
 const {calculate,definitions}=require('../assets/js/toolkit-models.js');
 const fixtures=require('./toolkit-fixtures.json');
 test('every added model produces bilingual result, uncertainty, action and evidence metadata',()=>{
-  assert.equal(definitions.length,17);
+  assert.equal(definitions.length,18);
   for(const definition of definitions){
     const result=calculate(definition.id,fixtures[definition.id]);
     for(const key of ['value','meaning','uncertainty','accuracy'])assert.ok(result[key].length===2&&result[key].every(value=>typeof value==='string'&&value.length>0),definition.id+' '+key);
@@ -24,7 +24,7 @@ test('plate subset search handles non-greedy inventory and unreachable targets',
   const result=calculate('plates',fixtures.plates);assert.equal(result.data.achieved,67.5);assert.equal(result.data.plates.reduce((a,b)=>a+b,0)*2+20,67.5);
   assert.equal(calculate('plates',{target:32,bar:20,inventory:'4, 3, 3'}).data.achieved,32);
   assert.equal(calculate('plates',{target:31,bar:20,inventory:'4, 3, 3'}).data.achieved,28);
-  assert.throws(()=>calculate('plates',{target:10,bar:20,inventory:'10'}));
+  assert.equal(calculate('plates',{target:10,bar:20,inventory:'10'}).data.upper,20);
 });
 test('training models do not prescribe progression from a single session',()=>{
   assert.equal(calculate('volume',fixtures.volume).data.tonnage,1440);
@@ -39,7 +39,7 @@ test('sleep handles midnight and caffeine retains uncertainty',()=>{
   assert.equal(calculate('sleep',{bed:'08:00',wake:'16:00',awake:0}).data.hours,8);
   assert.throws(()=>calculate('sleep',{bed:'25:00',wake:'07:00',awake:30}));
   const dose=calculate('caffeine',fixtures.caffeine).data;assert.ok(dose.low<dose.high);assert.ok(Math.abs(dose.low-15.7490131236859)<1e-10);
-  assert.deepEqual(calculate('caffeine',{dose:100,hours:0}).data,{low:100,high:100});
+  assert.equal(calculate('caffeine',{dose:100,hours:0}).data.low,100);assert.equal(calculate('caffeine',{dose:100,hours:0}).data.high,100);
   assert.equal(calculate('fatigue',fixtures.fatigue).data.reviewLoad,true);assert.equal(calculate('fatigue',{...fixtures.fatigue,days:1}).data.reviewLoad,false);
 });
 test('decision tools reject impossible counts and preserve literal user text',()=>{

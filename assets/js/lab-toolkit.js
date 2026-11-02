@@ -9,15 +9,15 @@
   const legacy=[
     {id:'body',category:'body',title:p('Состав тела · FFMI · целевой вес','Body composition · FFMI · target weight'),subtitle:p('Жир, LBM, FFMI и normalized FFMI вместе','Fat, LBM, FFMI and normalised FFMI together'),type:'Published equation + scenario',formula:'US Navy / Hodgdon–Beckett; LBM = weight × (1 − BF/100); FFMI = LBM / height²; normalised FFMI = FFMI + 6.3 × (1.8 − height); target weight = LBM / (1 − target BF/100)',limits:p('Не измеряет жир напрямую. Целевой вес предполагает сохранение LBM; диапазон ±3% — выбранный запас, не доверительный интервал.','Does not measure fat directly. Target weight assumes constant LBM; ±3% is a chosen planning margin, not a confidence interval.'),source:models.sources.body},
     {id:'nutrition',category:'nutrition',title:p('Калории и БЖУ · QUICK / PRO / adaptive','Calories and macros · QUICK / PRO / adaptive'),subtitle:p('TDEE, цель и калибровка по 14–28 дням','TDEE, targets and 14–28-day calibration'),type:'Published equations + practical calibration',formula:'Mifflin–St Jeor / ten Haaf; TDEE = RMR × PAL. Adaptive: mean intake − Theil–Sen weight slope × assumed 7000–9000 kcal/kg.',limits:p('Не измеряет расход энергии. Калибровка зависит от полноты учёта, воды и соблюдения; качественный наблюдаемый тренд приоритетнее прогностической формулы.','Does not measure energy expenditure. Calibration depends on logging, water and adherence; high-quality observed data take priority over prediction.'),source:['Mifflin et al. 1990','https://pubmed.ncbi.nlm.nih.gov/2305711/']},
-    {id:'overfeeding',category:'nutrition',title:p('Переедание и изменение веса','Overeating and weight change'),subtitle:p('Энергетический сценарий, вода и гликоген','Energy scenario, water and glycogen'),type:'MARKOVMADE practical heuristic',formula:'Energy-equivalent surplus / 7700; separate assumed TEF and glycogen-associated water scenarios.',limits:p('Не предсказывает фактическую прибавку жира. Коэффициенты и запасы гликогена меняются.','Does not predict actual fat gain. Energy factors and glycogen stores vary.'),source:['Hall et al. 2011','https://pubmed.ncbi.nlm.nih.gov/21872751/']},
+    {id:'overfeeding',category:'nutrition',title:p('Переедание и изменение веса','Overeating and weight change'),subtitle:p('Энергетический сценарий, вода и гликоген','Energy scenario, water and glycogen'),type:'MARKOVMADE practical heuristic',formula:'Surplus = period intake − daily maintenance × days; energy-equivalent scenarios / 7000–9000; no second TEF deduction.',limits:p('Не предсказывает фактическую прибавку жира. Коэффициенты и запасы гликогена меняются.','Does not predict actual fat gain. Energy factors and glycogen stores vary.'),source:['Hall et al. 2011','https://pubmed.ncbi.nlm.nih.gov/21872751/']},
     {id:'recovery',category:'recovery',title:p('Readiness · HRV / RHR baseline','Readiness · HRV / RHR baseline'),subtitle:p('Личные сигналы и минимум 14 наблюдений','Personal signals and at least 14 observations'),type:'MARKOVMADE practical heuristic',formula:'Self-reported weighted signals; personal RHR/HRV baseline = median of last 14–28 valid paired observations.',limits:p('Не медицинский score, не диагноз и не тест готовности. Значения разных устройств несопоставимы.','Not a medical score, diagnosis or readiness test. Different devices are not interchangeable.'),source:['HRV measurement recommendations','https://pubmed.ncbi.nlm.nih.gov/8838590/']},
     {id:'progress',category:'progress',title:p('Тренд веса · плато · ETA · коррекция','Weight trend · plateau · ETA · adjustment'),subtitle:p('Theil–Sen, средние и проверка выбросов','Theil–Sen, averages and outlier review'),type:'Statistical trend + practical heuristic',formula:'Median pairwise daily slopes; moving average; MAD flags. Plateau/ETA/calorie adjustment use practical thresholds.',limits:p('Тренд не отделяет жир от воды. Выбросы требуют проверки, а ETA — условный линейный сценарий.','The trend cannot separate fat from water. Outliers require review and ETA is a conditional linear scenario.'),source:['Sen 1968','https://doi.org/10.1080/01621459.1968.10480934']},
-    {id:'strength',category:'training',title:p('Силовой ориентир · e1RM','Strength reference · e1RM'),subtitle:p('Оценка максимума по весу и повторам','Estimate a maximum from load and repetitions'),type:'Published equations',formula:'Epley: load × (1 + reps/30); Brzycki: load × 36/(37 − reps); average, with reduced confidence at high repetitions.',limits:p('Не измеряет реальный 1ПМ. Техника, RIR и упражнение меняют ошибку; не предложение проверять максимум.','Does not measure actual 1RM. Technique, RIR and exercise affect error; not a recommendation to test a maximum.'),source:['Brzycki 1993','https://doi.org/10.1080/07303084.1993.10606684']}
-  ].map(item=>({...item,version:'1.0.0',review:models.review}));
-  const retired=new Set(['cardio','adherence','friction','minimum','ifthen','review']);
+    {id:'strength',category:'training',title:p('Силовой ориентир · e1RM','Strength reference · e1RM'),subtitle:p('Оценка максимума по весу и повторам','Estimate a maximum from load and repetitions'),type:'Published equations',formula:'Epley: load × (1 + reps/30); Brzycki: load × 36/(37 − reps); separate results, with reduced confidence at high repetitions.',limits:p('Не измеряет реальный 1ПМ. Техника, RIR и упражнение меняют ошибку; не предложение проверять максимум.','Does not measure actual 1RM. Technique, RIR and exercise affect error; not a recommendation to test a maximum.'),source:['Brzycki 1993','https://doi.org/10.1080/07303084.1993.10606684']}
+  ].map(item=>({...item,version:['strength','nutrition','overfeeding','recovery','progress'].includes(item.id)?'2.0.0':'1.0.0',review:'2026-11-02'}));
+  const retired=new Set(['cardio','adherence','friction','phase','minimum','ifthen','review']);
   const tools=[...legacy,...models.definitions.filter(tool=>!retired.has(tool.id))];
   const primary=['body','nutrition','overfeeding','recovery','progress','strength','plates','progression','caffeine'];
-  const parent={recomposition:'body',protein:'nutrition',phase:'progress',circumference:'progress',load:'strength',volume:'strength',sleep:'recovery',fatigue:'recovery'};
+  const parent={session:'strength',recomposition:'body',protein:'nutrition',phase:'progress',circumference:'progress',load:'strength',volume:'strength',sleep:'recovery',fatigue:'recovery'};
   const favoriteKey='markovmade-lab-favorites-v1';
   const readList=key=>{try{const value=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(value)?value:[];}catch{return [];}};
   const favoriteIds=()=>readList(favoriteKey).filter(id=>tools.some(tool=>tool.id===id)).slice(0,6);
@@ -61,12 +61,27 @@
     const precision=node('details',undefined,'mm-toolkit-precision');precision.append(node('summary',p('Уверенность и ограничения','Confidence and limits')),node('p',confidence[result.confidence]||confidence.low),node('p',result.uncertainty));
     const accuracy=node('details',undefined,'mm-toolkit-precision');accuracy.append(node('summary',p('Как улучшить точность','How to improve accuracy')),node('p',result.accuracy));
     out.append(precision,accuracy);
-    if(definition.id==='caffeine'){
-      const dose=Number(app.state.toolkit?.caffeine?.inputs?.dose),hours=Number(app.state.toolkit?.caffeine?.inputs?.hours);
-      if(Number.isFinite(dose)&&Number.isFinite(hours)){
-        const chart=node('div',undefined,'mm-caffeine-scenarios');chart.append(node('h4',p('Предполагаемый период полувыведения','Assumed half-life')));
-        for(const half of [3,5,7]){const remaining=dose*2**(-hours/half),row=node('div',undefined,'mm-caffeine-row'),bar=node('meter');bar.min=0;bar.max=Math.max(1,dose);bar.value=remaining;bar.setAttribute('aria-label',t(p(`${half} ч: ${Math.round(remaining)} мг`,`${half} h: ${Math.round(remaining)} mg`)));row.append(node('span',p(`${half} ч`,`${half} h`)),bar,node('strong',p(`${Math.round(remaining)} мг`,`${Math.round(remaining)} mg`)));chart.append(row);}out.insertBefore(chart,action);
-      }
+    if(definition.id==='plates'&&result.data?.plates){
+      const data=result.data,graphic=node('div',undefined,'mm-barbell-engineering');
+      const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 760 220');svg.setAttribute('role','img');svg.setAttribute('aria-label',t(p(`Штанга ${data.achieved} кг: ${data.plates.join(', ')} кг на каждой стороне`,`Barbell ${data.achieved} kg: ${data.plates.join(', ')} kg on each side`)));
+      const shape=(tag,attrs)=>{const el=document.createElementNS(svg.namespaceURI,tag);for(const [k,v] of Object.entries(attrs))el.setAttribute(k,v);svg.append(el);return el;};
+      shape('path',{d:'M30 180H730 M380 25V195','class':'mm-engineering-rule'});
+      shape('rect',{x:35,y:103,width:690,height:14,rx:7,'class':'mm-bar-shaft'});
+      shape('rect',{x:260,y:98,width:240,height:24,rx:6,'class':'mm-bar-grip'});
+      for(const side of [-1,1]){let cursor=side===-1?250:510;for(const plate of data.plates){const width=Math.min(12+plate*.55,200/Math.max(1,data.plates.length)-3),height=48+plate*3.7;const x=side===-1?cursor-width:cursor;shape('rect',{x,y:110-height/2,width,height,rx:3,'class':'mm-bar-plate'});cursor+=side*(width+3);}shape('rect',{x:side===-1?cursor-9:cursor,y:91,width:9,height:38,rx:2,'class':'mm-bar-collar'});}
+      graphic.append(node('span','01 / BARBELL ENGINEERING','mm-instrument-kicker'),svg,node('p',p('Симметричная сборка · крупные блины внутри · замки снаружи','Symmetric assembly · large plates inside · collars outside')));out.insertBefore(graphic,action);
+    }
+    if(definition.id==='caffeine'&&result.data?.scenarios){
+      const chart=node('div',undefined,'mm-caffeine-scenarios');chart.append(node('h4',p('Остаток к моменту сна · сценарии','Remaining at bedtime · scenarios')));
+      for(const scenario of result.data.scenarios){const row=node('div',undefined,'mm-caffeine-row'),bar=node('meter');bar.min=0;bar.max=Math.max(1,...result.data.doses.map(d=>d.dose),result.data.high);bar.value=scenario.remaining;bar.setAttribute('aria-label',`${scenario.half} h: ${Math.round(scenario.remaining)} mg`);row.append(node('span',`${scenario.half} h`),bar,node('strong',`${Math.round(scenario.remaining)} mg`));chart.append(row);}
+      if(result.data.timeline){const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 600 210');svg.setAttribute('role','img');svg.setAttribute('aria-label',t(p('Сценарий остатка кофеина, полувыведение 5 ч; отметка сна в 0 ч','Caffeine residual scenario, half-life 5 h; bedtime at 0 h')));const points=result.data.timeline,max=Math.max(1,...points.map(r=>r.remaining));const draw=(tag,attrs,copy)=>{const el=document.createElementNS(svg.namespaceURI,tag);for(const[k,v]of Object.entries(attrs))el.setAttribute(k,v);if(copy)el.textContent=copy;svg.append(el);};draw('rect',{x:380,y:10,width:190,height:160,fill:'currentColor',opacity:'.06'});draw('path',{d:'M20 170H580 M380 10V170',stroke:'currentColor','stroke-dasharray':'3 6',opacity:'.4'});draw('polyline',{points:points.map(r=>`${20+(r.hours+16)/24*540},${170-r.remaining/max*145}`).join(' '),fill:'none',stroke:'currentColor','stroke-width':2});for(const [x,copy]of [[20,'−16 h'],[380,en()?'Bedtime / 0 h':'Сон / 0 ч'],[535,'+8 h']])draw('text',{x,y:198,fill:'currentColor','font-size':13},copy);svg.classList.add('mm-dose-chart');chart.append(svg,node('p',p('Кривая: модель 5 ч. Подъёмы — введённые дозы; затенение — 8 часов после момента сна, не измеренный сон.','Curve: 5 h model. Rises mark entered doses; shading is the 8 hours after bedtime, not measured sleep.')));}
+      out.insertBefore(chart,action);
+    }
+    if(result.data?.rows){
+      const figure=node('figure',undefined,'mm-calendar-chart'),rows=result.data.rows,svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 600 200');svg.setAttribute('role','img');svg.setAttribute('aria-label',t(p('Наблюдения по календарным датам','Observations by calendar date')));
+      const lo=Math.min(...rows.map(x=>x.value))-1,hi=Math.max(...rows.map(x=>x.value))+1;
+      const points=rows.map(r=>`${20+(r.day-rows[0].day)/result.data.span*560},${180-(r.value-lo)/(hi-lo)*150}`).join(' '),line=document.createElementNS(svg.namespaceURI,'polyline');line.setAttribute('points',points);line.setAttribute('fill','none');line.setAttribute('stroke','currentColor');line.setAttribute('stroke-width','2');svg.append(line);figure.append(svg);
+      const table=node('table'),body=node('tbody');for(const row of rows){const tr=node('tr');tr.append(node('th',row.date),node('td',`${row.value} cm`));body.append(tr);}table.append(body);const details=node('details');details.append(node('summary',p('Все наблюдения','All observations')),table);figure.append(node('figcaption',p('Ваши замеры · расстояния соответствуют датам','Your measurements · distances follow calendar dates')),details);out.insertBefore(figure,action);
     }
     return out;
   }
@@ -88,7 +103,8 @@
       const group=node('div',undefined,'mm-lab-field'),label=node('label',field.label),input=node(field.type==='select'?'select':'input');input.id='toolkit-'+tool.id+'-'+field.key;label.htmlFor=input.id;input.name=field.key;if(field.type==='select'){for(const [value,label] of field.options){const option=node('option',label);option.value=value;input.append(option);}}else input.type=field.type||'number';input.className='mm-lab-input';input.required=!field.optional;
       if(input.type==='number'){input.min=field.min;input.max=field.max;input.step='any';input.inputMode='decimal';}
       else if(input.type==='text')input.maxLength=1000;
-      const stored=field.profile?app.state.profile[field.profile]:undefined;input.value=drafts[tool.id]?.[field.key]??stored??previous[field.key]??field.value;
+      const stored=field.profile?app.state.profile[field.profile]:undefined;input.value=drafts[tool.id]?.[field.key]??previous[field.key]??stored??field.value;
+      if(tool.id==='session'&&field.key==='date'&&!input.value){const now=new Date();input.value=new Date(now-now.getTimezoneOffset()*60000).toISOString().slice(0,10);}
       group.append(label,input);fields.append(group);
     }
     const button=node('button',p('Получить результат','Get result'),'mm-lab-primary');button.type='submit';const error=node('p');error.setAttribute('role','alert');
@@ -100,7 +116,7 @@
     const empty=node('div',undefined,'mm-toolkit-empty-result');empty.append(icon(tool.id==='plates'?'plates':tool.id==='progression'?'progression':tool.id==='caffeine'?'caffeine':'compass'),node('h4',p('Ваш следующий шаг','Your next step')),node('p',p('Заполните форму и выполните расчёт. Здесь появятся результат, допущения и конкретное действие.','Complete the form and run the calculation. Your result, assumptions and a practical action will appear here.')));output.append(empty);
     layout.append(form,output);workspace.append(title,node('p',tool.subtitle),favorite,layout);
     if(app.state.toolkit?.[tool.id]?.result)output.replaceChildren(outcome(tool,app.state.toolkit[tool.id].result,true));
-    form.addEventListener('input',()=>{const label=output.querySelector('.mm-toolkit-result-label');if(label)label.textContent=t(p('Параметры изменены · пересчитайте результат','Inputs changed · run the calculation again'));});
+    form.addEventListener('input',()=>{if(tool.id==='plates'){try{const preview=models.calculate(tool.id,Object.fromEntries(new FormData(form)));output.replaceChildren(outcome(tool,preview));output.querySelector('.mm-toolkit-result-label').textContent=t(p('Предпросмотр · сохраните расчёт кнопкой','Preview · save using the result button'));}catch{}}const label=output.querySelector('.mm-toolkit-result-label');if(label)label.textContent=t(p('Параметры изменены · пересчитайте результат','Inputs changed · run the calculation again'));});
     form.addEventListener('submit',event=>{
       event.preventDefault();const inputs=Object.fromEntries(new FormData(form));
       try{
@@ -172,10 +188,17 @@
       const accuracy=node('details');accuracy.append(node('summary',p('Как улучшить точность','How to improve accuracy')),node('p',result.accuracy));body.append(accuracy);component.append(body);panel.append(component);
     }
   }
-  function localise(){renderScenarios();renderSummary();legacyEvidence();window.mmLanguageReady?.then(legacyResult);if(selected&&models.definitions.some(item=>item.id===selected))open(models.definitions.find(item=>item.id===selected),false);}
+  function renderScience(){
+    root.querySelectorAll('[data-science-view]').forEach(el=>el.remove());
+    const view=(id,title,rows,caption)=>{const panel=document.getElementById('mm-lab-'+id),host=panel?.querySelector('.mm-lab-result')||panel;if(!host||!rows.length)return;const box=node('figure',undefined,'mm-science-view');box.dataset.scienceView='';box.dataset.noTranslate='';box.append(node('figcaption',title));const max=Math.max(1,...rows.map(r=>r[1]));for(const [label,value,unit]of rows){const row=node('div',undefined,'mm-science-row'),meter=node('meter');meter.min=0;meter.max=max;meter.value=value;meter.setAttribute('aria-label',t(label)+': '+value.toFixed(1)+' '+unit);row.append(node('span',label),meter,node('strong',value.toFixed(1)+' '+unit));box.append(row);}box.append(node('p',caption));host.append(box);};
+    const b=app.state.body;if(Number.isFinite(b?.bf)&&Number.isFinite(b?.lbm)){view('body',p('Состав массы · модель','Mass composition · model'),[[p('Жировая масса','Fat mass'),b.fatMass,'kg'],[p('Безжировая масса','Fat-free mass'),b.lbm,'kg']],p('FFM включает воду, органы, кости и мышцы. Это расчёт по введённой оценке жира.','FFM includes water, organs, bone and muscle. Calculated from your entered body-fat estimate.'));}
+    const n=app.state.nutrition;if(Number.isFinite(n?.tdee)){const rows=[[p('RMR · оценка','RMR · estimate'),n.rmr,'kcal'],[p('TDEE · оценка','TDEE · estimate'),n.tdee,'kcal'],[p('Рабочая цель','Working target'),n.target,'kcal']].filter(r=>Number.isFinite(r[1]));view('nutrition',p('Энергетические ориентиры','Energy references'),rows,p('Это отдельные ориентиры; их нельзя складывать. TDEE уже включает активность и TEF.','These are separate references; do not add them. TDEE already includes activity and TEF.'));}
+    const r=app.state.recovery;if(r?.history?.length){const latest=r.history.at(-1),base=r.history.slice(0,-1).slice(-28),valid=base.filter(x=>Number.isFinite(x.rhr));if(valid.length>=14){const sorted=valid.map(x=>x.rhr).sort((a,b)=>a-b),mid=Math.floor(sorted.length/2),median=sorted.length%2?sorted[mid]:(sorted[mid-1]+sorted[mid])/2;view('recovery',p('RHR · наблюдения, уд/мин','RHR · observations, bpm'),[[p('Личная медиана','Personal median'),median,'bpm'],[p('Последняя запись','Latest entry'),latest.rhr,'bpm']],p('Сопоставляйте одинаковое устройство и протокол. Разница сама по себе не диагноз.','Compare the same device and protocol. A difference alone is not a diagnosis.'));}}
+  }
+  function localise(){renderScience();renderScenarios();renderSummary();legacyEvidence();window.mmLanguageReady?.then(legacyResult);if(selected&&models.definitions.some(item=>item.id===selected))open(models.definitions.find(item=>item.id===selected),false);}
   new MutationObserver(localise).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
-  root.addEventListener('mm:lab-state',()=>{renderSummary();legacyResult();});
-  root.addEventListener('click',event=>{if(event.target.closest('[data-calc]'))setTimeout(legacyResult,0);});
+  root.addEventListener('mm:lab-state',()=>{renderScience();renderSummary();legacyResult();});
+  root.addEventListener('click',event=>{if(event.target.closest('[data-calc]'))setTimeout(()=>{legacyResult();renderScience();},0);});
   document.getElementById('mm-lab-clear-all')?.addEventListener('click',()=>{
     renderSummary();
     if(!app.state.toolkit){
@@ -185,6 +208,6 @@
       const tool=models.definitions.find(tool=>tool.id===active);if(tool)open(tool,false);
     }
   });
-  renderScenarios();renderSummary();legacyEvidence();
+  renderScience();renderScenarios();renderSummary();legacyEvidence();
   window.MarkovMadeToolkit={tools,primary,open,renderSummary};
 })();

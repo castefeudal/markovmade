@@ -6,9 +6,7 @@
     "leanChange": 1
   },
   "circumference": {
-    "before": 90,
-    "after": 88,
-    "days": 14
+    "observations": "2026-10-01=90; 2026-10-08=89; 2026-10-15=88"
   },
   "protein": {
     "weight": 80
@@ -83,5 +81,12 @@
     "fact": "three sessions",
     "lesson": "morning works",
     "action": "keep morning sessions"
+  },
+  "session": {
+    "date": "2026-11-02",
+    "exercise": "Bench / barbell",
+    "plan": "8x60; 8x60; 8x60",
+    "actual": "8x60x2; 7x62.5x1; 6x65x1",
+    "rest": 120
   }
 }

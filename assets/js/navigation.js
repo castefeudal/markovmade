@@ -78,28 +78,14 @@
     if(scrollY>0&&scrollY+innerHeight>=height-2)id=tops.at(-1)?.id||id;
     setCurrentLocation(id);
   }
-  if ('IntersectionObserver' in window && locationTargets.length) {
-    const locationObserver=new IntersectionObserver(()=>{
-      // Before the first scroll event the reader is provably at the top, where no
-      // anchored section reaches the marker and nothing is current by construction.
-      // Walking the section list instead measured every content-visibility section
-      // from scratch on each frame the document needed to settle after first paint.
-      if(!scrolled){setCurrentLocation('');return;}
-      updateCurrentLocation();
-    },{threshold:0});
-    locationTargets.forEach(target=>locationObserver.observe(target));
-  }else addEventListener('load',updateCurrentLocation,{once:true});
-  // Content growing or collapsing changes the runnable height, so it only needs
-  // the progress scale recomputed. The section walk and the header states belong
-  // to real scrolling and resizing; running them on every resize notification
-  // forced layout for each frame the document took to settle after first paint.
-  // Observing `main` rather than every section also keeps the observer out of a
-  // feedback loop: a section un-skipping its content-visibility placeholder is
-  // reported by the height of the whole document it belongs to.
-  if('ResizeObserver' in window&&main)new ResizeObserver(()=>{
-    invalidateGeometry();
-    if(!resizeFrame)resizeFrame=requestAnimationFrame(renderProgress);
-  }).observe(main);
+  // Observing the full deferred document during bootstrap materialises section
+  // geometry on mobile. Install observers only after genuine scrolling begins.
+  let observing=false;
+  function observeNavigation(){
+    if(observing)return;observing=true;
+    if('IntersectionObserver' in window){const observer=new IntersectionObserver(()=>{invalidateGeometry();if(!scrollFrame)scrollFrame=requestAnimationFrame(renderScroll);},{threshold:0});locationTargets.forEach(target=>observer.observe(target));}
+    if('ResizeObserver' in window&&main)new ResizeObserver(()=>{invalidateGeometry();if(!resizeFrame)resizeFrame=requestAnimationFrame(renderProgress);}).observe(main);
+  }
   let navigationRequest=0;
   function savePosition(){
     const marker=innerHeight*.3;
@@ -227,7 +213,7 @@
     actions.inert = y <= innerHeight;
     lastY = y;
   }
-  addEventListener('scroll', () => { scrolled = true; if (!scrollFrame) scrollFrame = requestAnimationFrame(renderScroll); }, { passive: true });
+  addEventListener('scroll', () => { if(scrollY===0&&!scrolled)return;scrolled = true;observeNavigation(); if (!scrollFrame) scrollFrame = requestAnimationFrame(renderScroll); }, { passive: true });
   addEventListener('resize', () => {
     // The cached geometry is measured against the current viewport, so it is
     // dropped before the next frame rather than re-read inside this handler.
