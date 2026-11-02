@@ -1,3 +1,5 @@
+/* Role policy: Cormorant for editorial display; Manrope for controls, data, units and tables.
+   Existing local font bytes and metric-matched fallbacks are retained. */
 /* Self-hosted subsets. Metric-matched local faces keep first-paint geometry
    stable while the authored fonts download, including Cyrillic paragraphs. */
 @font-face{font-family:'MM Body Fallback';src:local('Arial');size-adjust:100.34%;ascent-override:106.24%;descent-override:29.90%;line-gap-override:0%}

@@ -859,3 +859,104 @@
     #calculators .mm-lab-tab-num{font-size:12px}
   }
 }
+/* Current LAB component owner: common roles, coherent geometry, intrinsic height. */
+@layer components {
+#calculators{padding-block:clamp(56px,6vw,96px)}
+#calculators .mm-lab-wrap{width:min(var(--mm-content-width),calc(100% - 2 * var(--mm-page-gutter)))}
+#calculators .mm-lab-intro{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);align-items:end;gap:12px 48px;max-width:none;text-align:start;margin:0 0 28px}
+#calculators .mm-lab-kicker{grid-column:1/-1;font:var(--mm-font-micro);letter-spacing:var(--mm-tracking-micro);color:var(--mm-accent)}
+#calculators .mm-lab-title{font:var(--mm-font-section-display);letter-spacing:var(--mm-tracking-display);margin:0;max-width:20ch;text-wrap:balance}
+#calculators .mm-lab-intro>p{margin:0;max-width:44ch;font:var(--mm-font-secondary);color:var(--mm-text-secondary);text-wrap:pretty}
+#calculators .mm-lab-flow{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px 24px;list-style:none;margin:8px 0 0;padding:0;border:0;background:none}
+#calculators .mm-lab-flow li{display:flex;align-items:center;gap:8px;min-height:28px;font:var(--mm-font-micro);color:var(--mm-text-secondary)}
+#calculators .mm-lab-flow i{font:inherit;font-style:normal;font-variant-numeric:tabular-nums;color:var(--mm-accent);background:none;border:0;padding:0;width:auto;height:auto}
+#calculators .mm-lab-shell{border:1px solid var(--mm-border-strong);border-radius:24px;background:var(--mm-bg-primary);box-shadow:var(--mm-shadow-card);overflow:visible}
+#calculators .mm-lab-topbar{padding:20px 24px;border-radius:24px 24px 0 0;background:var(--mm-surface-sheen),var(--mm-bg-secondary);border-bottom:1px solid var(--mm-border)}
+#calculators .mm-lab-brand{font:var(--mm-font-label);letter-spacing:.04em}
+#calculators .mm-lab-privacy{font:var(--mm-font-micro);letter-spacing:0;color:var(--mm-text-secondary)}
+#calculators .mm-lab-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:20px 24px;background:none;border:0}
+#calculators .mm-lab-tab{position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:space-between;gap:10px;min-width:0;min-height:112px;margin:0;padding:16px 18px;text-align:start;border:1px solid var(--mm-border);border-radius:16px;background:var(--mm-surface-sheen),var(--mm-surface-1);box-shadow:inset 0 1px var(--mm-edge-highlight);color:var(--mm-text-primary);transition:border-color var(--mm-motion-fast),background var(--mm-motion-fast),transform var(--mm-motion-fast)}
+#calculators .mm-lab-tab-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0}
+#calculators .mm-lab-tab-num{font:var(--mm-font-micro);font-variant-numeric:tabular-nums;letter-spacing:.04em;color:var(--mm-text-muted)}
+#calculators .mm-lab-tab-icon{display:grid;place-items:center;width:32px;height:32px;border:0;border-radius:10px;background:var(--mm-accent-soft);color:var(--mm-accent)}
+#calculators .mm-lab-tab-icon svg{width:22px;height:22px;stroke-width:1.65}
+#calculators .mm-lab-tab strong{font:var(--mm-font-label);font-size:1rem;letter-spacing:-.015em;text-wrap:balance;overflow-wrap:anywhere}
+#calculators .mm-lab-tab small{font:var(--mm-font-secondary);font-size:.875rem;color:var(--mm-text-secondary)}
+#calculators .mm-lab-tab[aria-selected=true]{border-color:var(--mm-accent);background:var(--mm-surface-metal),var(--mm-surface-2);box-shadow:inset 3px 0 var(--mm-accent),inset 0 1px var(--mm-edge-highlight)}
+#calculators .mm-lab-tab[aria-selected=true] .mm-lab-tab-num{color:var(--mm-accent)}
+#calculators .mm-lab-tab:focus-visible{outline:3px solid var(--mm-focus);outline-offset:3px}
+#calculators .mm-lab-panel{padding:clamp(20px,3vw,36px);border-top:1px solid var(--mm-border);border-radius:0 0 24px 24px}
+#calculators .mm-lab-toolhead{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;min-height:0;margin:0 0 28px;padding:0 0 24px;border:0;border-bottom:1px solid var(--mm-border);border-radius:0;background:none}
+#calculators .mm-lab-toolhead>div{min-width:0}
+#calculators .mm-lab-toolhead h3{font:var(--mm-font-instrument);letter-spacing:var(--mm-tracking-heading);margin:6px 0 10px;text-wrap:balance;overflow-wrap:anywhere}
+#calculators .mm-lab-toolhead p{font:var(--mm-font-secondary);color:var(--mm-text-secondary);max-width:68ch;margin:0;text-wrap:pretty}
+#calculators .mm-lab-toolhead .eyebrow{font:var(--mm-font-micro);letter-spacing:.06em;color:var(--mm-accent)}
+#calculators .mm-lab-mode{flex:0 0 auto;display:flex;flex-wrap:wrap;gap:4px;padding:4px;border:1px solid var(--mm-border);border-radius:14px;background:var(--mm-bg-secondary)}
+#calculators .mm-lab-mode button{min-height:44px;padding:10px 14px;border-radius:10px;font:var(--mm-font-micro);letter-spacing:.02em;white-space:normal}
+#calculators .mm-lab-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,3vw,44px);align-items:start}
+#calculators .mm-lab-form{padding:4px 0;border:0;border-radius:0;background:none;box-shadow:none;min-width:0}
+#calculators .mm-lab-section-title{font:var(--mm-font-label);letter-spacing:.035em;margin:0 0 18px;text-transform:none}
+#calculators .mm-lab-fields{gap:18px 16px;align-items:start}
+#calculators .mm-lab-field{min-width:0}
+#calculators .mm-lab-field label{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;margin-bottom:8px;font:var(--mm-font-label);letter-spacing:0;text-transform:none;color:var(--mm-text-primary)}
+#calculators .mm-lab-field label em{margin-inline-start:auto;color:var(--mm-text-muted);font:var(--mm-font-micro);font-style:normal}
+#calculators .mm-lab-field small{display:block;margin-top:8px;font:var(--mm-font-secondary);font-size:.875rem;color:var(--mm-text-secondary);letter-spacing:0}
+#calculators :is(.mm-lab-input,.mm-lab-select,.mm-lab-textarea){box-sizing:border-box;min-width:0;width:100%;min-height:var(--mm-control-height);padding:13px 15px;border:1px solid var(--mm-border-strong);border-radius:var(--mm-radius-control);background:var(--mm-input-bg);box-shadow:var(--mm-shadow-inset);color:var(--mm-text-primary);font:600 1rem/1.5 var(--mm-font-body);font-variant-numeric:tabular-nums;letter-spacing:0;transition:border-color var(--mm-motion-fast),box-shadow var(--mm-motion-fast)}
+#calculators .mm-lab-textarea{min-height:132px;resize:vertical}
+#calculators :is(.mm-lab-input,.mm-lab-select,.mm-lab-textarea):focus{border-color:var(--mm-accent);outline:2px solid var(--mm-focus);outline-offset:2px;box-shadow:var(--mm-shadow-inset)}
+#calculators input[type=checkbox]{width:24px;height:24px;min-height:24px;padding:0;accent-color:var(--mm-accent);box-shadow:none}
+#calculators :is(.mm-lab-input,.mm-lab-select,.mm-lab-textarea):disabled{opacity:.6;border-style:dashed;cursor:not-allowed}
+#calculators .mm-lab-segment{display:flex;flex-wrap:wrap;gap:4px;padding:4px;border:1px solid var(--mm-border);border-radius:14px;background:var(--mm-bg-secondary)}
+#calculators .mm-lab-segment button{flex:1 1 120px;min-height:44px;padding:10px 12px;font:var(--mm-font-label);letter-spacing:0;text-transform:none;border-radius:10px}
+#calculators .mm-lab-result{min-width:0;padding:var(--mm-card-padding);border:1px solid var(--mm-border);border-radius:20px;background:var(--mm-surface-sheen),var(--mm-bg-secondary);box-shadow:var(--mm-shadow-card)}
+#calculators .mm-lab-result-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding-bottom:16px;border-bottom:1px solid var(--mm-border)}
+#calculators .mm-lab-result-head>span{font:var(--mm-font-label);letter-spacing:.03em;text-transform:none}
+#calculators .mm-lab-badges{display:flex;flex-wrap:wrap;gap:6px 10px}
+#calculators .mm-lab-badge{padding:3px 0;border:0;border-radius:0;background:none;color:var(--mm-text-secondary);font:var(--mm-font-micro);letter-spacing:0;text-transform:none}
+#calculators .mm-lab-hero-result{padding:24px 0}
+#calculators .mm-lab-hero-result small{display:block;margin-bottom:12px;font:var(--mm-font-label);letter-spacing:0;color:var(--mm-text-secondary);text-transform:none}
+#calculators .mm-lab-hero-result strong{display:block;font:var(--mm-font-result);font-variant-numeric:tabular-nums;letter-spacing:-.04em;overflow-wrap:anywhere;color:var(--mm-text-primary)}
+#calculators .mm-lab-hero-result p{font:var(--mm-font-secondary);color:var(--mm-text-secondary);margin:14px 0 0}
+#calculators .mm-lab-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+#calculators .mm-lab-metric{min-width:0;padding:16px 0;border:0;border-top:1px solid var(--mm-border);border-radius:0;background:none;box-shadow:none}
+#calculators .mm-lab-metric small{display:block;font:var(--mm-font-micro);letter-spacing:0;line-height:1.5;color:var(--mm-text-secondary);text-transform:none}
+#calculators .mm-lab-metric b{display:block;margin-top:8px;font:650 clamp(1.05rem,1.6vw,1.45rem)/1.35 var(--mm-font-numeric);font-variant-numeric:tabular-nums;letter-spacing:-.02em;overflow-wrap:anywhere}
+#calculators :is(.mm-lab-insight,.mm-lab-decision){margin-top:20px;padding:18px 20px;border:1px solid var(--mm-border);border-inline-start:3px solid var(--mm-accent);border-radius:4px 14px 14px 4px;background:var(--mm-accent-soft);color:var(--mm-text-secondary);font:var(--mm-font-secondary)}
+#calculators .mm-lab-decision h4{font:var(--mm-font-label);margin:0 0 10px;color:var(--mm-text-primary)}
+#calculators :is(.mm-lab-decision li,.mm-lab-details-body){font:var(--mm-font-secondary);color:var(--mm-text-secondary)}
+#calculators .mm-lab-details{margin-top:16px;border:1px solid var(--mm-border);border-radius:12px;background:var(--mm-bg-primary)}
+#calculators .mm-lab-details>summary{padding:12px 16px;font:var(--mm-font-label);min-height:48px}
+#calculators .mm-lab-details-body{padding:8px 16px 18px}
+#calculators .mm-lab-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;align-items:center}
+#calculators :is(.mm-lab-primary,.mm-lab-secondary){min-height:48px;padding:12px 18px;border-radius:12px;font:var(--mm-font-action);letter-spacing:.01em;text-transform:none}
+#calculators .mm-lab-primary{background:var(--mm-accent);color:var(--mm-on-accent);box-shadow:inset 0 1px var(--mm-edge-highlight),0 6px 18px rgb(0 0 0 / 8%)}
+#calculators .mm-lab-secondary{border:1px solid var(--mm-border-strong);background:var(--mm-surface-sheen),var(--mm-surface-1);color:var(--mm-text-primary)}
+#calculators .mm-lab-error:not(:empty){margin-top:16px;padding:12px 16px;border:1px solid var(--mm-danger);border-radius:12px;background:var(--mm-bg-secondary);font:var(--mm-font-secondary);color:var(--mm-danger)}
+@media(hover:hover) and (pointer:fine){#calculators .mm-lab-tab:hover{border-color:var(--mm-accent);transform:translateY(-2px)}}
+@media(max-width:1000px){#calculators .mm-lab-toolhead{flex-direction:column;gap:18px}#calculators .mm-lab-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:850px){#calculators .mm-lab-intro,#calculators .mm-lab-layout{grid-template-columns:1fr}#calculators .mm-lab-intro{gap:14px}#calculators .mm-lab-title{max-width:24ch}#calculators .mm-lab-intro>p{max-width:62ch}}
+@media(max-width:640px){#calculators .mm-lab-intro{margin-bottom:22px}#calculators .mm-lab-title{font-size:clamp(2.35rem,9.5vw,3.4rem)}#calculators .mm-lab-flow{gap:6px 16px;margin-top:0}#calculators .mm-lab-tabs{grid-template-columns:repeat(2,minmax(0,1fr));padding:16px;gap:8px}#calculators .mm-lab-tab{min-height:108px;padding:14px}#calculators .mm-lab-tab strong{font-size:.9375rem}#calculators .mm-lab-topbar{padding:16px}#calculators .mm-lab-panel{padding:18px 16px}#calculators .mm-lab-toolhead{padding-bottom:20px;margin-bottom:22px}#calculators .mm-lab-toolhead h3{font-size:1.5rem}#calculators .mm-lab-mode{width:100%}#calculators .mm-lab-mode button{flex:1}#calculators .mm-lab-result{padding:20px 16px}#calculators .mm-lab-hero-result strong{font-size:clamp(2rem,9.3vw,3rem)}#calculators .mm-lab-actions>:is(button,a){flex:1 1 140px}}
+@media(max-width:360px){#calculators .mm-lab-tab{padding:12px;min-height:112px}#calculators .mm-lab-metrics{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){#calculators :is(.mm-lab-tab,.mm-lab-input,.mm-lab-select,.mm-lab-textarea){transition:none}#calculators .mm-lab-tab:hover{transform:none}}
+}
+@layer components {
+@media(max-width:640px){
+ #calculators .mm-lab-tabs{grid-template-columns:none;grid-template-rows:1fr;grid-auto-flow:column;grid-auto-columns:minmax(152px,46%);overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x proximity;scroll-padding-inline:16px;padding-bottom:20px;scrollbar-width:thin;scrollbar-color:var(--mm-border-strong) transparent}
+ #calculators .mm-lab-tab{scroll-snap-align:start;min-height:108px}
+}
+}
+@layer components {
+#calculators .mm-lab-clear{font:var(--mm-font-label);letter-spacing:0;text-transform:none;min-height:44px;padding:10px 14px;border-radius:var(--mm-radius-control)}
+@media(max-width:600px){#calculators .mm-lab-topbar{padding:16px;gap:12px}#calculators .mm-lab-brand{font-size:13px}#calculators .mm-lab-privacy{font-size:13px;line-height:1.55}#calculators .mm-lab-clear{min-height:44px}}
+}
+/* Final optical rules: long labels and numerical units share stable baselines. */
+@layer components {
+#calculators .mm-lab-hero-result{align-items:baseline;gap:8px 12px;flex-wrap:wrap}
+#calculators .mm-lab-hero-result :is(small,span){font:var(--mm-font-secondary);letter-spacing:0}
+#calculators :is(.mm-lab-input,.mm-lab-select,.mm-lab-textarea):disabled{opacity:.65;cursor:not-allowed}
+#calculators .mm-lab-field:focus-within>label{color:var(--mm-accent)}
+#calculators :is(.mm-lab-actions,.mm-lab-mode){row-gap:8px}
+#calculators .mm-lab-toolhead :is(h3,p){text-wrap:pretty}
+#calculators :is(.mm-lab-note,.mm-lab-source,.mm-lab-help){font-size:.875rem;line-height:1.65}
+@media(prefers-contrast:more){#calculators :is(.mm-lab-result,.mm-lab-tab,.mm-lab-input,.mm-lab-select){border-color:var(--mm-text-secondary)}}
+}
