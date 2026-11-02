@@ -97,3 +97,10 @@ html[data-theme=clarity] #calculators .mm-lab-panel::before{filter:brightness(.6
 @media(max-width:500px){.mm-science-view{padding:16px}.mm-science-row{grid-template-columns:minmax(0,1fr) auto}.mm-science-row meter{grid-row:2;grid-column:1/-1}}
 @media(min-width:1181px){.mm-session-set{grid-template-columns:repeat(3,minmax(0,1fr))}.mm-session-set>.mm-lab-secondary{grid-column:1/-1;justify-self:end}}
 }
+@layer components {
+#contact>.container,body>footer>.container{width:min(var(--mm-content-width),calc(100% - 2 * var(--mm-page-gutter)));max-width:var(--mm-content-width);padding-inline:0;margin-inline:auto}
+body>footer{padding:40px 0;background:var(--mm-surface-sheen),var(--mm-bg-secondary);border-top:1px solid var(--mm-border-strong)}
+body>footer .footer-gold-sync-pulse{font:var(--mm-font-micro);letter-spacing:.06em;color:var(--mm-text-secondary);animation:none}
+body>footer [data-privacy-toggle]{min-height:44px;padding:10px 14px;border:1px solid var(--mm-border);border-radius:var(--mm-radius-control);background:var(--mm-surface-1)}
+body>footer [data-privacy-toggle]:focus-visible{outline:3px solid var(--mm-focus);outline-offset:4px}
+}

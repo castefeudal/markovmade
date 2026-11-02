@@ -960,3 +960,8 @@
 #calculators :is(.mm-lab-note,.mm-lab-source,.mm-lab-help){font-size:.875rem;line-height:1.65}
 @media(prefers-contrast:more){#calculators :is(.mm-lab-result,.mm-lab-tab,.mm-lab-input,.mm-lab-select){border-color:var(--mm-text-secondary)}}
 }
+@layer components {
+#calculators .mm-lab-panel{overflow-wrap:anywhere}
+#calculators .mm-lab-mode{flex-wrap:wrap;min-width:0}
+#calculators .mm-lab-mode button{flex:1 1 max-content;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere}
+}
