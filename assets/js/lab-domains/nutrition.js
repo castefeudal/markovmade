@@ -111,7 +111,7 @@
                     const m=number('lab-fat-maint'); const er=safeRange(m,1000,8000,'Калории поддержания'); if(er) throw new Error(er);
                     return {value:m,low:m*0.97,high:m*1.03,label:'указан пользователем',confidence:'Выше средней'};
                 }
-                if(state.nutrition && Number.isFinite(state.nutrition.tdee)) return {value:state.nutrition.tdee,low:state.nutrition.tdeeLow,high:state.nutrition.tdeeHigh,label:'из MARKOVMADE Calories',confidence:state.nutrition.confidence||'Умеренная'};
+                if(state.nutrition && Number.isFinite(state.nutrition.tdee)&&state.nutrition.sex===sex&&state.nutrition.age===age&&state.nutrition.h===h&&state.nutrition.w===w) return {value:state.nutrition.tdee,low:state.nutrition.tdeeLow,high:state.nutrition.tdeeHigh,label:'из MARKOVMADE Calories',confidence:state.nutrition.confidence||'Умеренная'};
                 const pal=Number(val('lab-fat-pal')||1.5), rmr=mifflin(sex,age,h,w), m=rmr*pal;
                 return {value:m,low:m*.90,high:m*1.10,label:'рассчитан автоматически',confidence:'Низкая'};
             }

@@ -1,6 +1,8 @@
 (function(){
   'use strict';
   var exact = {
+"Нет выраженных сигналов":"No pronounced signals",
+"оценка сна 3/10 или ниже":"self-rated sleep at 3/10 or below",
 "Есть сигналы для перепроверки":"Signals need review",
 "Выраженные сигналы по этим ответам не отмечены":"No pronounced signals in these answers",
 "Проверьте разминкой; не повышайте нагрузку":"Check in warm-up; do not increase load",

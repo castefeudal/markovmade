@@ -32,6 +32,7 @@
                 // score. The score is retained only for historical compatibility.
                 const observedHours=pro?number('lab-rec-hours'):NaN,signals=[];
                 if(Number.isFinite(observedHours)&&observedHours<6)signals.push('сон менее 6 часов');
+                if(values[0]<=3)signals.push('оценка сна 3/10 или ниже');
                 if(values[1]<=3)signals.push('энергия 3/10 или ниже');
                 if(values[2]>=8)signals.push('стресс 8/10 или выше');
                 if(values[4]>=8)signals.push('болезненность 8/10 или выше');
@@ -40,11 +41,11 @@
                 training=signals.length?'Проверьте разминкой; не повышайте нагрузку':'Проверьте обычную нагрузку разминкой';
                 decision=signals.length?'Отмечено: '+signals.join('; ')+'. Сначала перепроверьте самочувствие и разминку; при сохраняющихся необычных симптомах обратитесь за индивидуальной оценкой.':'Сохраните план, если разминка и фактическая работоспособность обычные. Отсутствие этих сигналов не подтверждает готовность автоматически.';
                 state.recovery={...state.recovery,modelVersion:MODEL_VERSIONS.recovery,legacyScore:score,score:null,signals,signalsCount:signals.length,observedHours:Number.isFinite(observedHours)?observedHours:null,status,training,positive:labels[positiveIndex],limiter:labels[limiterIndex],adjustments,proCount,contributions}; save();
-                setText('lab-rec-main',labels[limiterIndex]); setText('lab-rec-status',status); el('lab-rec-bar').style.width='0%';el('lab-rec-bar').parentElement.hidden=true; setText('lab-rec-positive',labels[positiveIndex]); setText('lab-rec-limiter',labels[limiterIndex]); setText('lab-rec-training',training); setText('lab-rec-meaning',`Решение дня: ${decision}`);
+                setText('lab-rec-main',signals.length?labels[limiterIndex]:'Нет выраженных сигналов'); setText('lab-rec-status',status); el('lab-rec-bar').style.width='0%';el('lab-rec-bar').parentElement.hidden=true; setText('lab-rec-positive',labels[positiveIndex]); setText('lab-rec-limiter',labels[limiterIndex]); setText('lab-rec-training',training); setText('lab-rec-meaning',`Решение дня: ${decision}`);
                 const acts=[signals.length===0?'Оставьте запланированную тренировку, но не повышайте нагрузку без причины.':'Сократите объём или перенесите тяжёлую работу; сохраните движение в восстановительном формате.',values[0]<=5?'Сегодня главный ROI — сон: не пытайтесь компенсировать его стимуляторами и дополнительной нагрузкой.':'Сон не выглядит главным ограничителем по субъективной оценке — не меняйте его радикально.',adjustments.length?`Контекст для перепроверки: ${adjustments.join(', ')}.`:'Не меняйте несколько переменных одновременно: так вы поймёте, что реально влияет на восстановление.'];
                 setHTMLSafeList('lab-rec-actions',acts); setText('lab-rec-method','Показаны ваши наблюдения. Правила перепроверки MARKOVMADE: сон <6 ч, энергия или самочувствие ≤3/10, стресс или болезненность ≥8/10. Это открытые эвристические пороги, не валидированный тест готовности. RHR и HRV сравнивайте с личной медианой и одним протоколом; изменения не являются диагнозом.');
                 const breakdown=el('lab-rec-breakdown'); if(breakdown){breakdown.replaceChildren();labels.map((label,i)=>({label,value:values[i]})).forEach(item=>{const row=document.createElement('div'),name=document.createElement('span'),value=document.createElement('b');row.className='mm-lab-metric';name.textContent=item.label;value.textContent=`${fmt(item.value,0)} / 10`;row.append(name,value);breakdown.appendChild(row);});}
-                setBadge('recovery',pro&&proCount>=3?'Высокая':pro?'Хорошая':'Базовая',pro&&proCount>=3?'Умеренная':'Низкая');
+                setBadge('recovery',pro&&proCount>=3?'Высокая':pro?'Хорошая':'Базовая','Низкая · авторские правила');
                 const summary=`MARKOVMADE Readiness\nОграничитель: ${labels[limiterIndex]} — ${status}\nСильный фактор: ${labels[positiveIndex]}\nОграничитель: ${labels[limiterIndex]}\nТренировка: ${training}\n\n${decision}\nMARKOVMADE / Pavel Markov`;
                 mmCalcSummaries.recovery=summary; updateSnapshot(); return state.recovery;
             }

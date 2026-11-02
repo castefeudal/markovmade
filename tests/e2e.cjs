@@ -178,7 +178,7 @@ let browser;
   for (const [id,value] of [['lab-rec-sleep','10'],['lab-rec-energy','10'],['lab-rec-stress','1'],['lab-rec-desire','10'],['lab-rec-soreness','1'],['lab-rec-well','10']]) await page.locator('#'+id).fill(value);
   await page.locator('[data-calc="recovery"]').click();
   assert.equal(await page.locator('#lab-recovery-error').textContent(), '');
-  assert.match(await page.locator('#lab-rec-main').textContent(), /сон/, 'recovery shows the observed limiting signal');
+  assert.match(await page.locator('#lab-rec-main').textContent(), /Нет выраженных сигналов/, 'recovery does not invent a limiter for uniformly favourable answers');
   assert.match(await page.locator('#lab-rec-status').textContent(), /Выраженные сигналы/);
   for (const [id,value] of [['lab-rec-sleep','2'],['lab-rec-energy','2'],['lab-rec-stress','10'],['lab-rec-desire','2'],['lab-rec-soreness','10'],['lab-rec-well','2']]) await page.locator('#'+id).fill(value);
   await page.locator('[data-calc="recovery"]').click();
