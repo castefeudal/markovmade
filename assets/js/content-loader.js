@@ -15,7 +15,7 @@
   }
   function load() {
     if(pending)return pending;
-    pending=Promise.all(['app-runtime','media-interactions','situation-quiz'].map(script)).then(()=>{
+    pending=Promise.all([window.mmLoadStyles?.(),...['app-runtime','media-interactions','situation-quiz'].map(script)]).then(()=>{
       ready=true;autoFailed=false;
       failures.forEach((target,status)=>{
         if(status.id==='lead-form-error'){status.replaceChildren();status.classList.remove('mm-content-load-status');delete status.dataset.contentLoadError;}
