@@ -19,25 +19,21 @@
                     } else setText('lab-fat-macro-check',`Калории из БЖУ: ~${fmt(macroKcal,0)} — согласуются с общей калорийностью в разумных пределах.`);
                     const pK=p*4,fK=f*9,cK=c*4,aK=a*7; tef=weightedTef(pK,fK,cK,aK); fatShare=macroKcal>0?fK/macroKcal:.33;
                 }
+                const intakeBasis=val('lab-fat-intake-basis')||'total';
+                if(intakeBasis==='single'&&days!==1)return error('overfeeding','Для одного дня выберите период 1 день.'),null;
+                if(intakeBasis==='average')intake*=days;
                 const gross=Math.max(0,intake-maint.value*days);
                 const grossLow=Math.max(0,intake-maint.high*days), grossHigh=Math.max(0,intake-maint.low*days);
                 const theoretical=gross/K.kcalPerKgFatEquivalent;
                 let low=0,center=0,high=0,netMid=0,effMid=0;
-                if(gross>0){
-                    const netLow=grossLow*(1-tef.high), netHigh=grossHigh*(1-tef.low); netMid=gross*(1-tef.mid);
-                    if(macroMode){ effMid=clamp(.80+.12*fatShare,.78,.93); }
-                    else effMid=.84;
-                    const effLow=macroMode?clamp(effMid-.07,.72,.90):.72, effHigh=macroMode?clamp(effMid+.07,.82,.96):.95;
-                    low=Math.max(0,netLow*effLow/K.kcalPerKgFatEquivalent);
-                    high=Math.max(low,netHigh*effHigh/K.kcalPerKgFatEquivalent);
-                    center=netMid*effMid/K.kcalPerKgFatEquivalent;
-                    center=clamp(center,low,high);
-                }
+                // Maintenance already includes diet thermogenesis. Do not deduct
+                // TEF again or invent an energy-storage efficiency coefficient.
+                low=grossLow/9000;high=grossHigh/7000;center=theoretical;netMid=gross;effMid=1;
                 const scale=pro?number('lab-fat-scale'):NaN, status=val('lab-fat-gly-status')||'unknown', training=val('lab-fat-training')||'none';
                 const gly=glycogenRange(status,training,macroMode?c:NaN), glyWaterLow=gly[0]*(1+K.glycogenWaterLow)/1000, glyWaterHigh=gly[1]*(1+K.glycogenWaterHigh)/1000;
                 state.profile={sex,age,height:h,weight:w,bodyFat:Number.isFinite(number('lab-fat-bf'))?number('lab-fat-bf'):state.profile.bodyFat};
-                state.overfeeding={modelVersion:MODEL_VERSIONS.overfeeding,days,intake,maint,gross,grossLow,grossHigh,theoretical,low,center,high,macroMode,macroKcal,tef,effMid,scale,gly,glyWaterLow,glyWaterHigh}; save(); applyProfile();
-                setText('lab-fat-main',gross<=0?'≈ 0 кг':`${fmt(low,2)}–${fmt(high,2)} кг`); setText('lab-fat-center',gross<=0?'По введённым данным энергетического избытка нет.':`Центральная модельная оценка ≈ ${fmt(center,2)} кг. Это диапазон вероятности, а не прямое измерение ткани.`); setText('lab-fat-surplus',kcal(gross)); setText('lab-fat-theoretical',gross>0?`~${fmt(theoretical,2)} кг`:'~0 кг'); setText('lab-fat-maint-result',kcal(maint.value)); setText('lab-fat-maint-note',maint.label);
+                state.overfeeding={modelVersion:MODEL_VERSIONS.overfeeding,days,intake,intakeBasis,maint,gross,grossLow,grossHigh,theoretical,low,center,high,macroMode,macroKcal,tef,effMid,scale,gly,glyWaterLow,glyWaterHigh}; save(); applyProfile();
+                setText('lab-fat-main',high<=0?'≈ 0 кг':`${fmt(low,2)}–${fmt(high,2)} кг`); setText('lab-fat-center',high<=0?'По введённым данным энергетического избытка нет.':`Центральная модельная оценка ≈ ${fmt(center,2)} кг. Это условные сценарные границы, не вероятностный интервал и не измерение ткани.`); setText('lab-fat-surplus',kcal(gross)); setText('lab-fat-theoretical',gross>0?`~${fmt(theoretical,2)} кг`:'~0 кг'); setText('lab-fat-maint-result',kcal(maint.value)); setText('lab-fat-maint-note',maint.label);
                 const scaleBlock=el('lab-fat-scale-block');
                 if(Number.isFinite(scale) && scale>0){
                     scaleBlock.hidden=false;
@@ -52,10 +48,10 @@
                 setHTMLSafeList('lab-fat-actions',actions);
                 const comp=val('lab-fat-comp'); let deficit=comp==='custom'?number('lab-fat-comp-custom'):Number(comp); const compNode=el('lab-fat-comp-result');
                 if(pro && Number.isFinite(deficit) && deficit>0 && center>0){ const d=center*K.kcalPerKgFatEquivalent/deficit; compNode.hidden=false; setText('lab-fat-comp-result',`Как долго избыток влияет на план: при дополнительном дефиците ~${fmt(deficit,0)} ккал/сут энергетический эквивалент центральной оценки составляет ~${fmt(d,1)} дня. Это не рекомендация голодать: обычно рациональнее вернуться к плану и распределить коррекцию мягко.`); } else if(compNode) compNode.hidden=true;
-                const methodText=macroMode?`Для дополнительной еды TEF рассчитан как взвешенная оценка по введённым белкам, жирам, углеводам и алкоголю; центральная оценка ≈ ${Math.round(tef.mid*100)}% энергии этой смеси. Затем использован диапазон эффективности хранения, согласованный с controlled-overfeeding данными, где жирный избыток хранился эффективнее углеводного. Это прикладная модель, не индивидуальное измерение.`:`Состав БЖУ неизвестен, поэтому использован широкий диапазон TEF и эффективности хранения. Это намеренно расширяет интервал вместо ложной точности.`;
-                setText('lab-fat-method',`${methodText} Теоретическая граница = gross surplus / 7700 и показана только как энергетический эквивалент. Для гликогена используется сценарный диапазон, а связанная вода — ориентир 2,7–4 г воды на 1 г гликогена; прочая вода/натрий/ЖКТ не моделируются псевдоточно.`);
+                const methodText='Избыток = потребление за весь период − суточное поддержание × дни. Поддержание уже включает TEF: повторного вычитания нет. Границы = избыток / 7000–9000 ккал/кг, центральный ориентир /7700. Это выбранная чувствительность энергетического эквивалента, не вероятностный интервал и не измерение жировой ткани. Гликоген и связанная вода показаны отдельно как сценарий; натрий и содержимое ЖКТ не оценены точно.';
+                setText('lab-fat-method',methodText);
                 setBadge('overfeeding',macroMode?'Высокая':pro?'Хорошая':'Базовая',maint.confidence==='Выше средней'&&macroMode?'Выше средней':pro?'Умеренная':'Низкая');
-                const summary=`MARKOVMADE FAT GAIN MODEL\nПериод: ${fmt(days,0)} дн.\nКалории поддержания: ~${fmt(maint.value,0)} ккал/сут (${maint.label})\nПотребление: ${fmt(intake,0)} ккал\nЭнергетический избыток: ~${fmt(gross,0)} ккал\n\nВероятный набор жировой массы: ${fmt(low,2)}–${fmt(high,2)} кг\nЦентральная оценка: ~${fmt(center,2)} кг\nТеоретическая энергетическая граница: ~${fmt(theoretical,2)} кг${Number.isFinite(scale)?`\nИзменение веса на весах: ${scale>=0?'+':''}${fmt(scale,1)} кг`:''}\n\nПрибавка на весах ≠ жировая масса.\nMARKOVMADE / Pavel Markov`;
+                const summary=`MARKOVMADE FAT GAIN MODEL\nПериод: ${fmt(days,0)} дн.\nКалории поддержания: ~${fmt(maint.value,0)} ккал/сут (${maint.label})\nПотребление: ${fmt(intake,0)} ккал\nЭнергетический избыток: ~${fmt(gross,0)} ккал\n\nСценарий изменения жировой массы: ${fmt(low,2)}–${fmt(high,2)} кг\nЦентральная оценка: ~${fmt(center,2)} кг\nТеоретическая энергетическая граница: ~${fmt(theoretical,2)} кг${Number.isFinite(scale)?`\nИзменение веса на весах: ${scale>=0?'+':''}${fmt(scale,1)} кг`:''}\n\nПрибавка на весах ≠ жировая масса.\nMARKOVMADE / Pavel Markov`;
                 mmCalcSummaries.overfeeding=summary; updateSnapshot(); return state.overfeeding;
             }
 

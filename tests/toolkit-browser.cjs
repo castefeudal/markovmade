@@ -21,7 +21,7 @@ const fixtures=require('./toolkit-fixtures.json');
       for(const [id,values] of Object.entries(fixtures)){
         if(!await page.evaluate(id=>window.MarkovMadeToolkit.tools.some(tool=>tool.id===id),id))continue;
         await page.evaluate(id=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id===id)),id);
-        for(const [key,value] of Object.entries(values)){const field=page.locator(`#toolkit-${id}-${key}`);if(await field.evaluate(el=>el.tagName==='SELECT'))await field.selectOption(String(value));else await field.fill(String(value));}
+        for(const [key,value] of Object.entries(values)){const field=page.locator(`#toolkit-${id}-${key}`);await field.evaluate(el=>{const details=el.closest('details');if(details)details.open=true;});if(await field.evaluate(el=>el.tagName==='SELECT'))await field.selectOption(String(value));else await field.fill(String(value));}
         try{await page.locator('#mm-toolkit-workspace button[type="submit"]').click();}catch(error){console.error('Toolkit submit failed: '+name+'/'+lang+'/'+theme+'/'+id);console.error(await page.locator('#mm-toolkit-workspace button[type="submit"]').evaluate(async el=>{const samples=[];for(let i=0;i<8;i++){await new Promise(resolve=>requestAnimationFrame(resolve));const r=el.getBoundingClientRect();samples.push({top:r.top,height:r.height,scrollY,documentHeight:document.documentElement.scrollHeight});}return samples;}));throw error;}assert.equal(await page.locator('#mm-toolkit-result .mm-toolkit-outcome').count(),1,`${name}/${lang}/${theme}/${id}`);
         assert.ok((await page.locator('#mm-toolkit-result').innerText()).length>100);
         assert.equal(await page.locator('#mm-lab-repeat-last').isEnabled(),true,'repeat-last refreshes after the result reaches history');
@@ -29,7 +29,7 @@ const fixtures=require('./toolkit-fixtures.json');
         assert.equal(await page.locator('#mm-toolkit-workspace').evaluate(el=>el.scrollWidth<=el.clientWidth+2),true,`${id} workspace overflow`);
       }
       assert.equal(await page.evaluate(()=>Object.keys(JSON.parse(localStorage.getItem('markovmade-lab-v1')).toolkit).length),11);
-      assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-history-v1')).filter(item=>['2.0.0','2.1.0'].includes(item.modelVersion)).length),11);
+      assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-history-v1')).filter(item=>['1.0.0','2.0.0','2.1.0','3.0.0'].includes(item.modelVersion)).length),11);
       // Imported literal strings are rendered as text, never markup.
       await page.evaluate(()=>{const state=window.MarkovMadeLab.state;state.profile.weight=80;state.progress=state.progress||{};state.progress.weekly=-.42;localStorage.setItem('markovmade-lab-v1',JSON.stringify(state));});
       await page.evaluate(()=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='plates')));await page.locator('#toolkit-plates-inventory').fill('<img src=x onerror=alert(1)>');await page.locator('#mm-toolkit-workspace button[type="submit"]').click();assert.equal(await page.locator('#mm-toolkit-result img').count(),0);

@@ -28,25 +28,39 @@
                 score=clamp(score,0,100);
                 const positiveIndex=scores.indexOf(Math.max(...scores)), limiterIndex=scores.indexOf(Math.min(...scores));
                 let status,training,decision;
-                if(score>=80){status='Ресурс хороший';training='По плану';decision='Большинство сигналов поддерживает обычную нагрузку. Не добавляйте объём только потому, что score высокий.'}
-                else if(score>=65){status='Рабочее состояние';training='Планово / без добивания';decision='Можно тренироваться, но сегодня плохой день для незапланированного увеличения объёма или отказных подходов.'}
-                else if(score>=50){status='Накопилась нагрузка';training='Снизить объём';decision='Вероятно, больше пользы даст уменьшение объёма/интенсивности и приоритет сна, чем ещё одна тяжёлая сессия.'}
-                else {status='Ресурс низкий';training='Восстановительная нагрузка';decision='Сигналы сходятся в сторону восстановления. Если состояние необычное, выраженное или сохраняется — не трактуйте score как диагноз и оцените здоровье отдельно.'}
-                state.recovery={...state.recovery,modelVersion:MODEL_VERSIONS.recovery,score,status,training,positive:labels[positiveIndex],limiter:labels[limiterIndex],adjustments,proCount,contributions}; save();
-                setText('lab-rec-main',`${fmt(score,0)} / 100`); setText('lab-rec-status',status); el('lab-rec-bar').style.width=`${score}%`; setText('lab-rec-positive',labels[positiveIndex]); setText('lab-rec-limiter',labels[limiterIndex]); setText('lab-rec-training',training); setText('lab-rec-meaning',`Решение дня: ${decision}`);
-                const acts=[score>=65?'Оставьте запланированную тренировку, но не повышайте нагрузку без причины.':'Сократите объём или перенесите тяжёлую работу; сохраните движение в восстановительном формате.',values[0]<=5?'Сегодня главный ROI — сон: не пытайтесь компенсировать его стимуляторами и дополнительной нагрузкой.':'Сон не выглядит главным ограничителем по субъективной оценке — не меняйте его радикально.',adjustments.length?`PRO-контекст, который тянет score вниз: ${adjustments.join(', ')}.`:'Не меняйте несколько переменных одновременно: так вы поймёте, что реально влияет на восстановление.'];
-                setHTMLSafeList('lab-rec-actions',acts); setText('lab-rec-method','Score — прикладная эвристика самонаблюдения, не валидированный тест. Вклад сигналов показан ниже; RHR и HRV сравниваются с личной медианой после 14 качественных парных измерений, до этого можно использовать явно введённую обычную норму. Никакого медицинского диагноза, «истощения ЦНС» или вероятности травмы этот балл не выдаёт.');
-                const breakdown=el('lab-rec-breakdown'); if(breakdown){breakdown.replaceChildren();contributions.forEach(item=>{const row=document.createElement('div'),name=document.createElement('span'),value=document.createElement('b');row.className='mm-lab-metric';name.textContent=item.label;value.textContent=`${item.value>0?'+':''}${fmt(item.value,0)}`;row.append(name,value);breakdown.appendChild(row);});}
-                setBadge('recovery',pro&&proCount>=3?'Высокая':pro?'Хорошая':'Базовая',pro&&proCount>=3?'Умеренная':'Низкая');
-                const summary=`MARKOVMADE Readiness\nРесурс: ${fmt(score,0)}/100 — ${status}\nСильный фактор: ${labels[positiveIndex]}\nОграничитель: ${labels[limiterIndex]}\nТренировка: ${training}\n\n${decision}\nMARKOVMADE / Pavel Markov`;
+                // New decisions use visible observations, not the legacy weighted
+                // score. The score is retained only for historical compatibility.
+                const observedHours=pro?number('lab-rec-hours'):NaN,signals=[];
+                if(Number.isFinite(observedHours)&&observedHours<6)signals.push('сон менее 6 часов');
+                if(values[0]<=3)signals.push('оценка сна 3/10 или ниже');
+                if(values[1]<=3)signals.push('энергия 3/10 или ниже');
+                if(values[2]>=8)signals.push('стресс 8/10 или выше');
+                if(values[4]>=8)signals.push('болезненность 8/10 или выше');
+                if(values[5]<=3)signals.push('самочувствие 3/10 или ниже');
+                status=signals.length?'Есть сигналы для перепроверки':'Выраженные сигналы по этим ответам не отмечены';
+                training=signals.length?'Проверьте разминкой; не повышайте нагрузку':'Проверьте обычную нагрузку разминкой';
+                decision=signals.length?'Отмечено: '+signals.join('; ')+'. Сначала перепроверьте самочувствие и разминку; при сохраняющихся необычных симптомах обратитесь за индивидуальной оценкой.':'Сохраните план, если разминка и фактическая работоспособность обычные. Отсутствие этих сигналов не подтверждает готовность автоматически.';
+                state.recovery={...state.recovery,modelVersion:MODEL_VERSIONS.recovery,legacyScore:score,score:null,signals,signalsCount:signals.length,observedHours:Number.isFinite(observedHours)?observedHours:null,status,training,positive:labels[positiveIndex],limiter:labels[limiterIndex],adjustments,proCount,contributions}; save();
+                setText('lab-rec-main',signals.length?labels[limiterIndex]:'Нет выраженных сигналов'); setText('lab-rec-status',status); el('lab-rec-bar').style.width='0%';el('lab-rec-bar').parentElement.hidden=true; setText('lab-rec-positive',labels[positiveIndex]); setText('lab-rec-limiter',labels[limiterIndex]); setText('lab-rec-training',training); setText('lab-rec-meaning',`Решение дня: ${decision}`);
+                const acts=[signals.length===0?'Оставьте запланированную тренировку, но не повышайте нагрузку без причины.':'Сократите объём или перенесите тяжёлую работу; сохраните движение в восстановительном формате.',values[0]<=5?'Сегодня главный ROI — сон: не пытайтесь компенсировать его стимуляторами и дополнительной нагрузкой.':'Сон не выглядит главным ограничителем по субъективной оценке — не меняйте его радикально.',adjustments.length?`Контекст для перепроверки: ${adjustments.join(', ')}.`:'Не меняйте несколько переменных одновременно: так вы поймёте, что реально влияет на восстановление.'];
+                setHTMLSafeList('lab-rec-actions',acts); setText('lab-rec-method','Показаны ваши наблюдения. Правила перепроверки MARKOVMADE: сон <6 ч, энергия или самочувствие ≤3/10, стресс или болезненность ≥8/10. Это открытые эвристические пороги, не валидированный тест готовности. RHR и HRV сравнивайте с личной медианой и одним протоколом; изменения не являются диагнозом.');
+                const breakdown=el('lab-rec-breakdown'); if(breakdown){breakdown.replaceChildren();labels.map((label,i)=>({label,value:values[i]})).forEach(item=>{const row=document.createElement('div'),name=document.createElement('span'),value=document.createElement('b');row.className='mm-lab-metric';name.textContent=item.label;value.textContent=`${fmt(item.value,0)} / 10`;row.append(name,value);breakdown.appendChild(row);});}
+                setBadge('recovery',pro&&proCount>=3?'Высокая':pro?'Хорошая':'Базовая','Низкая · авторские правила');
+                const summary=`MARKOVMADE Readiness\nОграничитель: ${labels[limiterIndex]} — ${status}\nСильный фактор: ${labels[positiveIndex]}\nОграничитель: ${labels[limiterIndex]}\nТренировка: ${training}\n\n${decision}\nMARKOVMADE / Pavel Markov`;
                 mmCalcSummaries.recovery=summary; updateSnapshot(); return state.recovery;
             }
 
             function parseDailyWeights(text){ return String(text||'').split(/[\s,;]+/).map(x=>Number(x.replace(',','.'))).filter(x=>Number.isFinite(x)&&x>30&&x<350); }
-            function drawProgressChart(values){
+            function parseCalendarWeights(raw){
+                if(!String(raw).includes('='))return {values:parseDailyWeights(raw),days:[],dates:[]};
+                const rows=String(raw).trim().split(/[;\n]+/).filter(x=>x.trim()).map(row=>{const m=/^(\d{4}-\d{2}-\d{2})\s*=\s*(\d+(?:[.,]\d+)?)$/.exec(row.trim());if(!m)throw new Error('Даты: YYYY-MM-DD=кг; минимум 7 замеров.');const day=Date.parse(m[1]+'T00:00:00Z')/86400000,weight=Number(m[2].replace(',','.'));if(!Number.isFinite(day)||new Date(day*86400000).toISOString().slice(0,10)!==m[1]||weight<35||weight>300)throw new Error('Проверьте дату и вес.');return {date:m[1],day,weight};}).sort((a,b)=>a.day-b.day);
+                if(new Set(rows.map(r=>r.date)).size!==rows.length||rows.length>90)throw new Error('Даты должны быть уникальными; не больше 90 замеров.');
+                return {values:rows.map(r=>r.weight),days:rows.map(r=>r.day),dates:rows.map(r=>r.date)};
+            }
+            function drawProgressChart(values,calendarDays=[]){
                 const wrap=el('lab-prog-chart'),path=el('lab-prog-chart-line'); if(!wrap||!path)return;
                 if(values.length<2){wrap.hidden=true;path.setAttribute('d','');return;}
                 wrap.hidden=false; const min=Math.min(...values),max=Math.max(...values),range=Math.max(.01,max-min);
-                const points=values.map((v,i)=>{const x=600*i/(values.length-1),y=90-80*(v-min)/range;return [x,y]});
+                const points=values.map((v,i)=>{const x=600*(calendarDays.length?(calendarDays[i]-calendarDays[0])/Math.max(1,calendarDays.at(-1)-calendarDays[0]):i/(values.length-1)),y=90-80*(v-min)/range;return [x,y]});
                 path.setAttribute('d',points.map((p,i)=>`${i?'L':'M'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' '));
             }

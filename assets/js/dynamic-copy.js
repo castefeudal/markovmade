@@ -1,6 +1,22 @@
 (function(){
   'use strict';
   var exact = {
+"Нет выраженных сигналов":"No pronounced signals",
+"оценка сна 3/10 или ниже":"self-rated sleep at 3/10 or below",
+"Есть сигналы для перепроверки":"Signals need review",
+"Выраженные сигналы по этим ответам не отмечены":"No pronounced signals in these answers",
+"Проверьте разминкой; не повышайте нагрузку":"Check in warm-up; do not increase load",
+"Проверьте обычную нагрузку разминкой":"Check your usual load in warm-up",
+"сон менее 6 часов":"sleep under 6 hours",
+"энергия 3/10 или ниже":"energy at 3/10 or below",
+"стресс 8/10 или выше":"stress at 8/10 or above",
+"болезненность 8/10 или выше":"soreness at 8/10 or above",
+"самочувствие 3/10 или ниже":"wellbeing at 3/10 or below",
+"Наблюдаемый ограничитель":"Observed limiting signal",
+"Контекст для перепроверки:":"Context to review:",
+"Показаны ваши наблюдения. Правила перепроверки MARKOVMADE: сон <6 ч, энергия или самочувствие ≤3/10, стресс или болезненность ≥8/10. Это открытые эвристические пороги, не валидированный тест готовности. RHR и HRV сравнивайте с личной медианой и одним протоколом; изменения не являются диагнозом.":"Your observations are shown. MARKOVMADE review rules: sleep <6 h, energy or wellbeing ≤3/10, stress or soreness ≥8/10. These are transparent heuristic thresholds, not a validated readiness test. Compare RHR and HRV with your personal median using the same protocol; changes are not a diagnosis.",
+"Избыток = потребление за весь период − суточное поддержание × дни. Поддержание уже включает TEF: повторного вычитания нет. Границы = избыток / 7000–9000 ккал/кг, центральный ориентир /7700. Это выбранная чувствительность энергетического эквивалента, не вероятностный интервал и не измерение жировой ткани. Гликоген и связанная вода показаны отдельно как сценарий; натрий и содержимое ЖКТ не оценены точно.":"Surplus = period intake − daily maintenance × days. Maintenance already includes TEF; it is not deducted again. Bounds = surplus / 7000–9000 kcal/kg; the central reference uses /7700. This is selected energy-equivalent sensitivity, not a probability interval or measured fat tissue. Glycogen and associated water are separate scenarios; sodium and gut contents are not precisely estimated.",
+
     'Нужен мышечный фундамент':'Muscle foundation needed',
     'Нормальная база':'Normal base',
     'Атлетичная форма':'Athletic form',
@@ -114,6 +130,11 @@
     'высокий риск по талии':'high waist-risk zone'
   };
   var parts = [
+["Отмечено: ", "Observed: "],
+[". Сначала перепроверьте самочувствие и разминку; при сохраняющихся необычных симптомах обратитесь за индивидуальной оценкой.", ". First review wellbeing and warm-up; seek individual assessment if unusual symptoms persist."],
+["Сохраните план, если разминка и фактическая работоспособность обычные. Отсутствие этих сигналов не подтверждает готовность автоматически.", "Keep the plan if warm-up and actual performance are usual. Absence of these signals does not automatically establish readiness."],
+["Epley; Brzycki показан отдельно; одиночный подход не подтверждает измеренный 1ПМ", "Epley; Brzycki is separate; a single does not establish a measured maximum"],
+
     ['Жир:', 'Fat:'], ['жир —', 'body fat —'], ['жир ', 'body fat '], ['жировой массы', 'fat mass'], ['жировая масса', 'fat mass'], ['Жировая масса', 'Fat mass'],
     ['Точность модели:', 'Model accuracy:'], ['точность модели:', 'model accuracy:'], ['модель:', 'model:'], ['базовая','basic'], ['расширенная','advanced'], ['уточнённая','refined'], ['экспертная','expert'], ['кг','kg'], ['ккал','kcal'], [' г',' g'],
     ['указан вручную','entered manually'], ['оценка Navy method','Navy method estimate'], ['модельная оценка из-за нехватки данных','model estimate due to insufficient data'],

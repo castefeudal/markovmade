@@ -1,7 +1,7 @@
             function energyModel(){
                 const sex=val('lab-nutri-sex'), age=number('lab-nutri-age'), h=number('lab-nutri-height'), w=number('lab-nutri-weight');
                 if(!sex) throw new Error('Выберите пол.');
-                for(const [v,min,max,label] of [[h,120,230,'Рост'],[w,35,300,'Вес']]){ const m=safeRange(v,min,max,label); if(m) throw new Error(m); }
+                for(const [v,min,max,label] of [[age,18,90,'Возраст'],[h,120,230,'Рост'],[w,35,300,'Вес']]){ const m=safeRange(v,min,max,label); if(m) throw new Error(m); }
                 const mode=currentMode('nutrition'), pro=mode!=='quick', athlete=val('lab-nutri-athlete')==='athlete';
                 const bf=number('lab-nutri-bf'); let rmr,rmrMethod;
                 if(pro && athlete && age>=18 && age<=35){ rmr=tenHaaf(sex,age,h,w); rmrMethod='ten Haaf (атлеты 18–35)'; }
@@ -19,14 +19,14 @@
                     const averageCalories=number('lab-nutri-calibration-calories'), completenessPct=number('lab-nutri-calibration-completeness'), adherencePct=number('lab-nutri-calibration-adherence'), waistDelta=number('lab-nutri-calibration-waist');
                     const calorieError=safeRange(averageCalories,1000,8000,'Средние калории'), completenessError=safeRange(completenessPct,0,100,'Полнота записей'), adherenceError=safeRange(adherencePct,0,100,'Соблюдение плана');
                     if(calorieError||completenessError||adherenceError) throw new Error(calorieError||completenessError||adherenceError);
-                    calibration=maintenanceCalibration(weights,averageCalories,completenessPct,adherencePct,waistDelta);
+                    calibration=maintenanceCalibration(weights,averageCalories,completenessPct,adherencePct,waistDelta,number('lab-nutri-calibration-error'));
                     const pal=Number(val('lab-nutri-pal')||1.5); formulaTdee=rmr*pal; formulaTdeeLow=formulaTdee*.9; formulaTdeeHigh=formulaTdee*1.1;
                     tdee=calibration.value;tdeeLow=calibration.low;tdeeHigh=calibration.high;tdeeMethod='наблюдаемые данные · 14–28 дней';confidence=calibration.confidence;
-                    calibrationInput={weights,averageCalories,completenessPct,adherencePct,waistDelta:Number.isFinite(waistDelta)?waistDelta:null};
+                    calibrationInput={intakeErrorPct:calibration.intakeErrorPct,weights,averageCalories,completenessPct,adherencePct,waistDelta:Number.isFinite(waistDelta)?waistDelta:null};
                 } else if(pro && maintSource==='measured'){
                     const measured=number('lab-nutri-measured'); const m=safeRange(measured,1000,8000,'Фактические калории поддержания'); if(m) throw new Error(m);
                     tdee=measured; tdeeLow=measured*0.97; tdeeHigh=measured*1.03; tdeeMethod='фактические калории поддержания'; confidence='Выше средней';
-                } else if(pro){
+                } else if(pro&&val('lab-nutri-activity-model')==='components'){
                     const steps=number('lab-nutri-steps'), sn=number('lab-nutri-strength-n'), sm=number('lab-nutri-strength-min'), cn=number('lab-nutri-cardio-n'), cm=number('lab-nutri-cardio-min');
                     const work=val('lab-nutri-work')||'sedentary', cmet=Number(val('lab-nutri-cardio-int')||7);
                     const stepN=Number.isFinite(steps)?steps:0;
@@ -34,11 +34,11 @@
                     const walking=K.walkingKcalKgKm*w*distanceKm;
                     const strength=finite(sn,sm)?Math.max(0,K.strengthMet-1)*w*(sm/60)*(sn/7):0;
                     const cardio=finite(cn,cm)?Math.max(0,cmet-1)*w*(cm/60)*(cn/7):0;
-                    const workAdj=work==='active'?rmr*0.12:work==='mixed'?rmr*0.05:0;
+                    const workAdj=number('lab-nutri-other-energy');if(!Number.isFinite(workAdj)||workAdj<0||workAdj>1500)throw new Error('Проверьте сценарий прочей активности: 0–1500 ккал/день, без шагов и тренировок.');
                     const preTef=rmr+walking+strength+cardio+workAdj;
                     tdee=preTef/(1-K.mixedDietTef);
-                    tdeeLow=tdee*0.90; tdeeHigh=tdee*1.10; tdeeMethod='PRO: RMR + шаги + работа + тренировки + TEF';
-                    confidence=(Number.isFinite(steps)&&Number.isFinite(sn)&&Number.isFinite(sm))?'Умеренная':'Низкая';
+                    tdeeLow=tdee*0.90; tdeeHigh=tdee*1.10; tdeeMethod='PRO-сценарий: RMR + шаги вне тренировок + net MET + заданная прочая активность; TEF 10%';
+                    confidence='Низкая';
                 } else {
                     const pal=Number(val('lab-nutri-pal')||1.5); tdee=rmr*pal; tdeeLow=tdee*0.90; tdeeHigh=tdee*1.10; tdeeMethod=`RMR × PAL ${pal}`; confidence='Низкая';
                 }
@@ -49,7 +49,7 @@
                 const {w,target,targetLow,targetHigh,pLow,pHigh,pMid}=nutrition;
                 const share=scenario==='higher-carb'?.20:scenario==='higher-fat'?.35:.25;
                 const fatFloor=w*.6;
-                const fatMid=Math.max(fatFloor,target*share/9);
+                const fatMid=Math.min(Math.max(fatFloor,target*share/9),(target-pMid*4)/9);
                 const fatLow=Math.max(fatFloor,targetLow*share/9), fatHigh=Math.max(fatLow,targetHigh*share/9);
                 const carbMid=Math.max(0,(target-pMid*4-fatMid*9)/4);
                 const carbLow=Math.max(0,(targetLow-pHigh*4-fatHigh*9)/4), carbHigh=Math.max(0,(targetHigh-pLow*4-fatLow*9)/4);
@@ -77,7 +77,8 @@
                 } else if(Number.isFinite(e.bf) && e.bf>(e.sex==='male'?25:35)){
                     pLow=lbm*2.0; pHigh=lbm*2.6; pNote='FFM-based practical range, чтобы высокий BF не завышал белок';
                 }
-                const pMid=(pLow+pHigh)/2;
+                if(pLow*4+e.w*.6*9>low){error('nutrition','Выбранная калорийность не вмещает нижние ориентиры белка и жиров. Пересмотрите цель или исходные данные.');return null;}
+                const pMid=Math.min((pLow+pHigh)/2,(center-e.w*.6*9)/4);
                 const fatLow=Math.max(e.w*0.6,center*0.20/9), fatHigh=Math.max(fatLow,center*0.30/9), fatMid=(fatLow+fatHigh)/2;
                 const carbLow=Math.max(0,(low-pHigh*4-fatHigh*9)/4), carbHigh=Math.max(0,(high-pLow*4-fatLow*9)/4), carbMid=Math.max(0,(center-pMid*4-fatMid*9)/4);
                 state.profile={sex:e.sex,age:e.age,height:e.h,weight:e.w,bodyFat:Number.isFinite(e.bf)?e.bf:state.profile.bodyFat};
@@ -110,7 +111,7 @@
                     const m=number('lab-fat-maint'); const er=safeRange(m,1000,8000,'Калории поддержания'); if(er) throw new Error(er);
                     return {value:m,low:m*0.97,high:m*1.03,label:'указан пользователем',confidence:'Выше средней'};
                 }
-                if(state.nutrition && Number.isFinite(state.nutrition.tdee)) return {value:state.nutrition.tdee,low:state.nutrition.tdeeLow,high:state.nutrition.tdeeHigh,label:'из MARKOVMADE Calories',confidence:state.nutrition.confidence||'Умеренная'};
+                if(state.nutrition && Number.isFinite(state.nutrition.tdee)&&state.nutrition.sex===sex&&state.nutrition.age===age&&state.nutrition.h===h&&state.nutrition.w===w) return {value:state.nutrition.tdee,low:state.nutrition.tdeeLow,high:state.nutrition.tdeeHigh,label:'из MARKOVMADE Calories',confidence:state.nutrition.confidence||'Умеренная'};
                 const pal=Number(val('lab-fat-pal')||1.5), rmr=mifflin(sex,age,h,w), m=rmr*pal;
                 return {value:m,low:m*.90,high:m*1.10,label:'рассчитан автоматически',confidence:'Низкая'};
             }

@@ -4,7 +4,7 @@ const root=path.resolve(__dirname,'..');
 const base=process.env.BASE_URL||'https://castefeudal.github.io/markovmade/';
 (async()=>{
   // Verify the served bytes, including the crop, rather than a cached old build.
-  for(const file of ['index.html','assets/dist/site.css','assets/dist/lab.html','assets/dist/personal-os.html','assets/dist/hero-media.js','assets/dist/toolkit-models.js','assets/dist/lab-toolkit.js','assets/dist/lab-runtime.js','assets/dist/share-preview.js','assets/dist/locales/shared.en.json','assets/dist/locales/lab.en.json','assets/dist/locales/personal-os.en.json','assets/media/fonts/manrope-combined.woff2',...Object.keys(require('./hero-crop.json').assets)]){
+  for(const file of ['index.html','assets/dist/site.css','assets/dist/lab.html','assets/dist/personal-os.html','assets/dist/hero-media.js','assets/dist/toolkit-models.js','assets/dist/lab-toolkit.js','assets/dist/lab-runtime.js','assets/dist/share-preview.js','assets/dist/locales/shared.en.json','assets/dist/locales/lab.en.json','assets/dist/locales/personal-os.en.json','assets/media/fonts/manrope-combined.woff2',...['performance','biological','energy','signal','blueprint','editorial'].map(name=>'assets/media/signature/'+name+'.svg'),'assets/dist/lab-models.js','assets/dist/navigation.js','assets/dist/style-loader.js',...Object.keys(require('./hero-crop.json').assets)]){
     const url=new URL(file,base);url.searchParams.set('qa',process.env.COMMIT_SHA||Date.now());
     const response=await fetch(url);assert.equal(response.status,200,file);
     const actual=Buffer.from(await response.arrayBuffer());
@@ -32,6 +32,7 @@ const base=process.env.BASE_URL||'https://castefeudal.github.io/markovmade/';
       assert.equal(await page.locator('#toolkit-protein-weight').inputValue(),'100','shared profile reaches production toolkit');
       await page.locator('#mm-toolkit-workspace button[type="submit"]').click();
       assert.match(await page.locator('#mm-toolkit-result .mm-toolkit-value').innerText(),/160–220/);
+      await page.locator('#mm-lab-tab-plates').click();await page.locator('#toolkit-plates-target').fill('35');await page.locator('#toolkit-plates-collars').fill('2.5');await page.locator('#mm-toolkit-workspace button[type="submit"]').click();assert.equal(await page.evaluate(()=>window.MarkovMadeLab.state.toolkit.plates.result.data.achieved),35);assert.equal(await page.locator('.mm-bar-plate').count(),4);
       const broken=await page.evaluate(()=>{
         const known=new Set([...document.querySelectorAll('[id]')].map(el=>el.id));
         return [...document.querySelectorAll('a[href^="#"]')].map(el=>el.getAttribute('href')).filter(href=>href.length>1&&!known.has(decodeURIComponent(href.slice(1))));

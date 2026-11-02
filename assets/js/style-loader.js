@@ -7,8 +7,8 @@
     pending = new Promise((resolve, reject) => {
       const sheet = document.createElement('link');
       sheet.rel = 'stylesheet'; sheet.href = 'assets/dist/site.css';
-      sheet.onload = resolve;
-      sheet.onerror = () => { pending = null; sheet.remove(); reject(new Error('Section styles failed to load')); };
+      sheet.onload = () => {document.documentElement.dataset.sectionStylesReady='true';resolve();};
+      sheet.onerror = () => {document.documentElement.dataset.sectionStylesReady='fallback'; pending = null; sheet.remove(); reject(new Error('Section styles failed to load')); };
       document.head.appendChild(sheet);
     });
     return pending;

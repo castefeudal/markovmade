@@ -56,7 +56,7 @@ const findings=[],incomplete=new Map();
         for(const [id,values] of Object.entries(fixtures)){
           if(!await page.evaluate(id=>window.MarkovMadeToolkit.tools.some(tool=>tool.id===id),id))continue;
           await page.evaluate(id=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id===id)),id);
-          for(const [key,value] of Object.entries(values)){const field=page.locator('#toolkit-'+id+'-'+key);if(await field.evaluate(el=>el.tagName==='SELECT'))await field.selectOption(String(value));else await field.fill(String(value));}
+          for(const [key,value] of Object.entries(values)){const field=page.locator('#toolkit-'+id+'-'+key);await field.evaluate(el=>{const details=el.closest('details');if(details)details.open=true;});if(await field.evaluate(el=>el.tagName==='SELECT'))await field.selectOption(String(value));else await field.fill(String(value));}
           await page.locator('#mm-toolkit-workspace button[type="submit"]').click();
           await audit(`${lang}/${theme}/toolkit/${id}`,'#mm-toolkit-workspace');
         }
