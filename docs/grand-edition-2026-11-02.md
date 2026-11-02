@@ -36,7 +36,7 @@ The previous CI artifact (`41243547286`) attributed a 386 ms long task to naviga
 
 ## Verification
 
-45 unit tests initially pass, including ten new deterministic model tests. Dedicated Grand browser test covers RU/EN × three themes × widths 320, 360, 390, 428, 768, 1024, 1440, 1920 and 2560; plate symmetry, multi-dose midnight scenarios, exact plan/actual tonnage and reload persistence. Existing browser, accessibility, paint, visual, Lighthouse and production gates remain required. Final CI/deployment evidence is linked in the PR.
+46 unit tests initially pass, including eleven new deterministic model tests. Dedicated Grand browser test covers RU/EN × three themes × widths 320, 360, 390, 428, 768, 1024, 1440, 1920 and 2560; plate symmetry, multi-dose midnight scenarios, exact plan/actual tonnage and reload persistence. Existing browser, accessibility, paint, visual, Lighthouse and production gates remain required. Final CI/deployment evidence is linked in the PR.
 
 Axe's automated checks leave background-image contrast checks incomplete; no claim of human accessibility certification or field CWV/INP is made. Visual screenshots are review evidence, not proof of subjective design excellence. Authored-copy seal changes are limited to deliberately corrected readiness phrases, the corrected overfeeding scope paragraph and new localisation entries; visual baselines are not regenerated.
 

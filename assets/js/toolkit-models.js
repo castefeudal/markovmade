@@ -56,8 +56,8 @@ revise('plates',[...platesDefinition.fields,field('collars','Замки · об�
 });
 const clock=value=>{if(!/^\d{2}:\d{2}$/.test(value))throw new Error('time');const [h,m]=value.split(':').map(Number);if(h>23||m>59)throw new Error('time');return h+m/60;};
 revise('caffeine',[field('dose','Одна доза · мг','Single dose · mg',0,600,100),field('hours','До сна · часов (для одной дозы)','Hours before bed (single dose)',0,48,8),field('bedtime','Сон · HH:MM','Bedtime · HH:MM',null,null,'23:00',{type:'text'}),field('doses','Несколько доз: HH:MM=мг; HH:MM=мг','Multiple doses: HH:MM=mg; HH:MM=mg',null,null,'',{type:'text',optional:true})],'remaining = Σ dose × 2^(−elapsedHours / halfLife); clock doses refer to the preceding 24 h before bed',v=>{
- const bed=clock(v.bedtime||'23:00');let doses=[{dose:n(v.dose,0,600),hours:n(v.hours,0,48)}];
- if(v.doses?.trim()){doses=text(v.doses).split(';').map(row=>{const parts=row.trim().split('=');if(parts.length!==2)throw new Error('doses');const time=clock(parts[0].trim());return {dose:n(parts[1],0,600),hours:(bed-time+24)%24};});if(doses.length>12)throw new Error('doses');}
+ const bed=clock(v.bedtime||'23:00');let doses=[];
+ if(v.doses?.trim()){doses=text(v.doses).split(';').map(row=>{const parts=row.trim().split('=');if(parts.length!==2)throw new Error('doses');const time=clock(parts[0].trim());return {dose:n(parts[1],0,600),hours:(bed-time+24)%24};});if(doses.length>12)throw new Error('doses');}else doses=[{dose:n(v.dose,0,600),hours:n(v.hours,0,48)}];
  const remain=(half,offset=0)=>doses.reduce((sum,d)=>sum+(d.hours+offset>=0?d.dose*2**(-(d.hours+offset)/half):0),0),scenarios=[3,5,7].map(half=>({half,remaining:remain(half)}));
  const timeline=Array.from({length:49},(_,i)=>{const offset=i/2-16;return {hours:offset,remaining:remain(5,offset)};});
  const low=scenarios[0].remaining,high=scenarios[2].remaining;
