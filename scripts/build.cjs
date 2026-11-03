@@ -56,7 +56,7 @@ function extractComponent(html, className, name) {
     criticalCopy=await page.evaluate(()=>{
       const copy={},walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
       let node;while(node=walker.nextNode()) {
-        if(!node.parentElement.closest('#hero,#main-header,#mobile-menu'))continue;
+        if(!node.parentElement.closest('#hero,#main-header,#mobile-menu,#skip-to-main'))continue;
         const text=node.nodeValue.replace(/\s+/g,' ').trim();
         if(window.__buildDictionary[text])copy[text]=window.__buildDictionary[text];
       }
@@ -70,7 +70,7 @@ function extractComponent(html, className, name) {
         document.body.className=theme==='clarity'?'theme-light theme-clarity':theme==='event-horizon'?'theme-cosmos':'';
         for(const selector of selectors) {
       const neutral = selector.replace(/::[\w-]+(?:\([^)]*\))?/g,'').replace(/:(hover|active|focus-visible|focus-within|focus|visited|disabled|enabled)(?![\w-])/g,'');
-          try { if([...document.querySelectorAll(neutral)].some(el => el===document.documentElement || el===document.body || el.closest('#hero,#main-header,#mobile-menu'))) used.add(selector); }
+          try { if([...document.querySelectorAll(neutral)].some(el => el===document.documentElement || el===document.body || el.closest('#hero,#main-header,#mobile-menu,#skip-to-main'))) used.add(selector); }
           catch { /* Unsupported selectors remain in the full sheet. */ }
         }
       }
@@ -80,7 +80,7 @@ function extractComponent(html, className, name) {
   const used=new Set(matches);
   const critical=tree.clone();
   critical.walkRules(rule => {
-    if (!used.has(rule.selector) && !/content-visibility|contain-intrinsic-size/.test(rule.toString()) && !/#hero\b|\.mm-hero\b|main-header|mobile-menu|menu-open|theme-switch|lang-switch|burger-btn|mm-theme-|theme-preview|mm-quick|mm-scroll-progress|data-mm-surface|mm-surface-light|mm-context-halo|mm-result-glint|:root/.test(rule.selector)) rule.remove();
+    if (!used.has(rule.selector) && !/content-visibility|contain-intrinsic-size/.test(rule.toString()) && !/#hero\b|\.mm-hero\b|main-header|mobile-menu|menu-open|theme-switch|lang-switch|burger-btn|mm-theme-|theme-preview|mm-quick|mm-scroll-progress|mm-skip-link|skip-to-main|data-mm-surface|mm-surface-light|mm-context-halo|mm-result-glint|:root/.test(rule.selector)) rule.remove();
   });
   // Below-fold keyframes are not needed to paint the shell.
   critical.walkAtRules(rule => { if (/keyframes/.test(rule.name) || (rule.nodes && !rule.nodes.length)) rule.remove(); });

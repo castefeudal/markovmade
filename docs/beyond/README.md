@@ -35,7 +35,7 @@ Hero has an architectural rail, framed identity and proof ledger. LAB is a numbe
 
 ## Pass 4 — Optical perfection
 
-Captured 18 RU/EN × three-world × 390/768/1440 scenarios, each with 12 sections, nine tool views and all five OS panels. Reviewed Hero, service, biography, LAB, strength forms, OS and contact views directly and in contact sheets. Fixed legacy unlayered experience rules that overrode component owners; removed duplicate panel-entry animation rules. Header is now the sole geometry/material owner. Original 30 hero contracts and 18 UI reference candidates were separately reviewed on Windows before approval; no mismatch thresholds changed. The final full CSS is 403840 bytes and shell critical CSS 59802 bytes, smaller than the intermediate pass.
+Captured 18 RU/EN × three-world × 390/768/1440 scenarios, each with 12 sections, nine tool views and all five OS panels. Reviewed Hero, service, biography, LAB, strength forms, OS and contact views directly and in contact sheets. Fixed legacy unlayered experience rules that overrode component owners; removed duplicate panel-entry animation rules. Header is now the sole geometry/material owner. Original 30 hero contracts and 18 UI reference candidates were separately reviewed on Windows before approval; no mismatch thresholds changed. The final full CSS is 403840 bytes and shell critical CSS 60355 bytes, smaller than the intermediate pass.
 
 ## Pass 5 — Real-world quality (in progress)
 
@@ -73,3 +73,9 @@ The final action check also measures the real Hero arrow offset and stationary C
 ## Production cold-paint follow-up
 
 Public first-pointer verification caught an 8px navigation shift before the full section stylesheet loaded. The contact button received an unstyled inline light child, creating one additional flex gap. The critical extractor now retains transient motion-layer structural rules, so every light is absolute and pointer-transparent from the first intent. The delayed-module cold test checks all header-link and Hero CTA bounds without loading section CSS, in all three engines. Production asset bytes and calculator smoke passed before this narrow correction; the follow-up receives its own normal CI and release verification.
+
+## Cold keyboard utility follow-up
+
+A public cold header capture exposed the skip-to-main link as an unstyled blue line before section CSS. The shell extractor now explicitly retains its existing hidden/default and visible/focus rules. A separate real-keyboard test blocks section CSS, checks that the link begins above the viewport and becomes visible when focused. The authored link and navigation behavior remain intact.
+
+The existing authored English skip label is included in the critical translation subset and the same original-text WeakMap as other shell copy. The utility check runs in RU and EN with section CSS blocked; the exact language-loader selector addition is normalized before the original source hash comparison.
