@@ -36,7 +36,9 @@
     const originals=window.mmTextOriginals=new WeakMap();
     const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
     let node;while(node=walker.nextNode()) {
-      if(!node.parentElement.closest('#hero,#main-header,#mobile-menu'))continue;
+/* BEGIN BEYOND PRESENTATION: critical keyboard copy */
+      if(!node.parentElement.closest('#hero,#main-header,#mobile-menu,#skip-to-main'))continue;
+/* END BEYOND PRESENTATION: critical keyboard copy */
       const key=node.nodeValue.replace(/\s+/g,' ').trim(),value=window.mmCriticalCopy?.[key];
       if(!value)continue;
       originals.set(node,node.nodeValue);
