@@ -49,3 +49,8 @@ See interaction-inventory.md for state ownership and static fallbacks. Local int
 ### Final optical corrections
 
 Restored `object-fit:contain` for service previews after the functional photograph contract caught cropping. All three engines now pass all four disclosures, both languages, three themes and five widths. The 200% Firefox reflow run exposed a long-word/metadata overflow in the day decision; it is corrected with wrapping and flexible metadata, without reducing type size. Native scroll-timeline enhancement fades only the opening architectural rail during exit, with a static fallback; page restoration rearms the motion observers. Reviewed all 48 Linux reference candidates from workflow 41615359696 before copying them. Unchanged tolerances apply to the following normal runs.
+
+### Cold-load correction
+
+An actual 800ms module-delay test reproduced a stale first pointer: after leaving the header before the module arrived, its shell settled at x=2.303px. The loader now retains only the newest native pointer event while loading, clears it on leave/blur, replays it once and removes temporary tracking listeners. This also carries a first touch pointer type into the enhancement on hybrid devices. The interaction suite repeats the delayed quick-exit scenario in every engine.
+The full-content navigation/marker integration assertions wait for LAB, OS, editorial content and translation to finish loading before measuring the document. Deferred-resource behavior is exercised separately by the cold-motion and existing navigation-loading tests. A focused manual Linux workflow is available for diagnosing motion independently of the full release gate, and navigation failures retain an actual screenshot and geometry/current-section state.

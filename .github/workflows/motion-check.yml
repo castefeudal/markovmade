@@ -1,0 +1,24 @@
+name: Focused motion diagnostics
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  motion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run build
+      - run: node tests/beyond-motion.cjs
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: focused-motion-evidence
+          path: test-results/beyond/
+          retention-days: 14
