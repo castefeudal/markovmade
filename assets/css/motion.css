@@ -13,8 +13,8 @@
 .mm-lab-result,.mm-toolkit-outcome,.mm-os-connected-decision{position:relative;isolation:isolate}
 @media(hover:hover) and (pointer:fine){
  [data-mm-surface=action]:hover{box-shadow:inset 0 1px var(--mm-edge-highlight),0 8px 22px rgb(0 0 0 / 12%)}
- #hero .mm-primary-cta:hover>svg:last-child,.mm-editorial-cta:hover>svg:last-child{transform:translateX(4px)}
- #hero .mm-primary-cta>svg:last-child,.mm-editorial-cta>svg:last-child{transition:transform var(--mm-duration-control) var(--mm-ease-magnetic)}
+ #hero .mm-primary-cta:hover>svg:last-of-type,.mm-editorial-cta:hover>svg:last-of-type{transform:translateX(4px)}
+ #hero .mm-primary-cta>svg:last-of-type,.mm-editorial-cta>svg:last-of-type{transition:transform var(--mm-duration-control) var(--mm-ease-magnetic)}
  #services summary:hover .mm-service-toggle{transform:rotate(90deg);border-color:var(--mm-accent);background:var(--mm-accent-soft)}
  #services .mm-service-toggle{transition:transform var(--mm-duration-navigation) var(--mm-ease-magnetic),background var(--mm-duration-control)}
 }
@@ -26,7 +26,7 @@
 #mobile-menu nav>a:focus-visible{animation:none}
 @keyframes mm-menu-item{from{opacity:.7;transform:translateY(9px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce),(pointer:coarse){.mm-context-halo{display:none}.mm-surface-light{display:none}}
-@media(prefers-reduced-motion:reduce){#mobile-menu nav>a{animation:none}#hero .mm-primary-cta>svg:last-child,.mm-editorial-cta>svg:last-child{transform:none;transition:none}}
+@media(prefers-reduced-motion:reduce){#mobile-menu nav>a{animation:none}#hero .mm-primary-cta>svg:last-of-type,.mm-editorial-cta>svg:last-of-type{transform:none;transition:none}}
 html[data-save-data] .mm-context-halo,html[data-save-data] .mm-surface-light{display:none}html[data-save-data] #mobile-menu nav>a{animation:none}
 @media(forced-colors:active){.mm-context-halo,.mm-surface-light,.mm-result-glint,.mm-nav-indicator{display:none}#main-header>.container::before{background:Canvas;border:1px solid CanvasText}#main-header .nav-link[aria-current=location]{outline:2px solid LinkText}}
 }
