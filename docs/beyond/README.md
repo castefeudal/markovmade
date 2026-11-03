@@ -14,7 +14,7 @@ The static header now has a single component owner. Its hit boxes remain station
 
 The existing SHA-256 source manifest remains unchanged. Exactly marked presentation regions in theme-system.js (explicit theme confirmation/dismissal only), site-interactions.js (the old uncached ambient-light handler) and media-interactions.js (editorial animation only) can differ; the guard restores the exact original region from a fixture and checks the original whole-file hash. Theme persistence, model logic, Insights, data and all other source bytes remain sealed. The previous report-focus attribute exception remains explicit.
 
-## Remaining passes
+## Five-pass sequence
 
 2. Interaction mastering: actual pixels, geometry stability, shared indicator, spring return, preference changes, keyboard/touch/Save-Data, theme transition, no per-move layout reads.
 3. Visual reconstruction: Hero, control families, layered cards, LAB, Personal OS, editorial worlds, 404 and error/empty views.
@@ -27,7 +27,7 @@ The existing SHA-256 source manifest remains unchanged. Exactly marked presentat
 Firefox exposed an input interception during hover-driven root View Transitions: preview colour changed but the actual selection click never reached the button. The final ownership keeps all original preview painting synchronous and byte-identical. Native transitions are started only after an explicit selection click, around dialog dismissal; snapshot pseudo-elements are pointer-transparent. This reveals the confirmed world from the control without interrupting preview or preference persistence. The test checks real dialog closure, stored preference and restored focus, not merely the new palette.
 ## Pass 2 — Interaction mastering
 
-The actual hover captures show a moving marker and local light across all six language/theme contexts. Chromium and Firefox pass stable geometry, settling return, cached pointer reads, reduced-motion cancellation, current-section tracking, compact material, confirmed theme persistence/closure/focus, language switching, touch, Save-Data and nine required widths. Windows WebKit uses Windows display scaling and its native keyboard preference skips links in the Tab sequence; the test normalizes the CSS viewport and checks native-control keyboard focus before explicitly checking navigation focus styling. Full WebKit execution is a release gate.
+The actual hover captures show a moving marker and local light across all six language/theme contexts. Chromium and Firefox pass stable geometry, settling return, cached pointer reads, reduced-motion cancellation, current-section tracking, compact material, confirmed theme persistence/closure/focus, language switching, touch, Save-Data and nine required widths. Windows WebKit uses Windows display scaling and its native keyboard preference skips links in the Tab sequence; the test normalizes the CSS viewport and checks native-control keyboard focus before explicitly checking navigation focus styling. The final run passes all six scenes, touch and Save-Data in WebKit too; Windows touch protocol coordinates are converted from CSS pixels to the backing window, then real menu opening is asserted.
 
 ## Pass 3 — Visual reconstruction
 
@@ -35,11 +35,15 @@ Hero has an architectural rail, framed identity and proof ledger. LAB is a numbe
 
 ## Pass 4 — Optical perfection
 
-Captured 18 RU/EN × three-world × 390/768/1440 scenarios, each with 12 sections, nine tool views and all five OS panels. Reviewed Hero, service, biography, LAB, strength forms, OS and contact views directly and in contact sheets. Fixed legacy unlayered experience rules that overrode component owners; removed duplicate panel-entry animation rules. Header is now the sole geometry/material owner. Original 30 hero contracts and 18 UI reference candidates were separately reviewed on Windows before approval; no mismatch thresholds changed. The full CSS is 402732 bytes and shell critical CSS 56774 bytes, smaller than the intermediate pass.
+Captured 18 RU/EN × three-world × 390/768/1440 scenarios, each with 12 sections, nine tool views and all five OS panels. Reviewed Hero, service, biography, LAB, strength forms, OS and contact views directly and in contact sheets. Fixed legacy unlayered experience rules that overrode component owners; removed duplicate panel-entry animation rules. Header is now the sole geometry/material owner. Original 30 hero contracts and 18 UI reference candidates were separately reviewed on Windows before approval; no mismatch thresholds changed. The final full CSS is 403294 bytes and shell critical CSS 57122 bytes, smaller than the intermediate pass.
 
 ## Pass 5 — Real-world quality (in progress)
 
-48 unit/source checks pass. Axe reports no violations across RU/EN, three themes, four widths, nine LAB tools, five OS tabs and dialogs; automated contrast has incomplete checks on layered backgrounds and is supplemented by the existing explicit contrast contracts. All three engines pass the 320–2560 composition/contrast matrix. Remaining release gates: full interaction/browser run, isolated streamed paint and performance, Linux candidate review, exact-head normal CI, PR integration, Pages and production-byte smoke.
+48 unit/source checks pass. Axe reports no violations across RU/EN, three themes, four widths, nine LAB tools, five OS tabs and dialogs; automated contrast has incomplete checks on layered backgrounds and is supplemented by the explicit contrast contracts. All three engines pass the 320�2560 composition/contrast matrix, the magnetic interaction suite and 200% text reflow. The four service disclosures pass in three engines, RU/EN, three themes and five widths. The 404 surface was inspected at 320 and 1440 pixels.
+
+The isolated three-sample Lighthouse run passes with mobile median 99/100/100/100 and desktop 100/100/100/100. A prior run overlapping several browser suites failed due to host contention and is not treated as a passing performance result. The delayed-stream/delayed-font paint matrix passes all 24 contexts with CLS below .001. Formula, storage and behavior hashes retain their original manifest.
+
+Release authority is the normal, non-refresh Quality run on the final pushed SHA, followed by merge, main Quality, Pages build commit equality and production byte/functional/magnetic smoke. The live release/check links are maintained in [PR #16](https://github.com/castefeudal/markovmade/pull/16); a capture-only workflow never counts as a passing release.
 
 See interaction-inventory.md for state ownership and static fallbacks. Local intermediate evidence is under ignored test-results/beyond and test-results/visual-excellence/beyond-pass-4; Linux release evidence is retained by CI.
 ### Final optical corrections
