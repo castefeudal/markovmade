@@ -80,7 +80,7 @@ function extractComponent(html, className, name) {
   const used=new Set(matches);
   const critical=tree.clone();
   critical.walkRules(rule => {
-    if (!used.has(rule.selector) && !/content-visibility|contain-intrinsic-size/.test(rule.toString()) && !/#hero\b|\.mm-hero\b|main-header|mobile-menu|menu-open|theme-switch|lang-switch|burger-btn|mm-theme-|theme-preview|mm-quick|mm-scroll-progress|:root/.test(rule.selector)) rule.remove();
+    if (!used.has(rule.selector) && !/content-visibility|contain-intrinsic-size/.test(rule.toString()) && !/#hero\b|\.mm-hero\b|main-header|mobile-menu|menu-open|theme-switch|lang-switch|burger-btn|mm-theme-|theme-preview|mm-quick|mm-scroll-progress|data-mm-surface|mm-surface-light|mm-context-halo|mm-result-glint|:root/.test(rule.selector)) rule.remove();
   });
   // Below-fold keyframes are not needed to paint the shell.
   critical.walkAtRules(rule => { if (/keyframes/.test(rule.name) || (rule.nodes && !rule.nodes.length)) rule.remove(); });

@@ -35,7 +35,7 @@ Hero has an architectural rail, framed identity and proof ledger. LAB is a numbe
 
 ## Pass 4 — Optical perfection
 
-Captured 18 RU/EN × three-world × 390/768/1440 scenarios, each with 12 sections, nine tool views and all five OS panels. Reviewed Hero, service, biography, LAB, strength forms, OS and contact views directly and in contact sheets. Fixed legacy unlayered experience rules that overrode component owners; removed duplicate panel-entry animation rules. Header is now the sole geometry/material owner. Original 30 hero contracts and 18 UI reference candidates were separately reviewed on Windows before approval; no mismatch thresholds changed. The final full CSS is 403840 bytes and shell critical CSS 57668 bytes, smaller than the intermediate pass.
+Captured 18 RU/EN × three-world × 390/768/1440 scenarios, each with 12 sections, nine tool views and all five OS panels. Reviewed Hero, service, biography, LAB, strength forms, OS and contact views directly and in contact sheets. Fixed legacy unlayered experience rules that overrode component owners; removed duplicate panel-entry animation rules. Header is now the sole geometry/material owner. Original 30 hero contracts and 18 UI reference candidates were separately reviewed on Windows before approval; no mismatch thresholds changed. The final full CSS is 403840 bytes and shell critical CSS 59802 bytes, smaller than the intermediate pass.
 
 ## Pass 5 — Real-world quality (in progress)
 
@@ -69,3 +69,7 @@ The same-host trace also reproduces raster stalls in the original base. Aurum's 
 Measured correction: on the same roughly 3000 benchmark-index host, the base RU/Aurum median is 94 with 134-182ms simulated TBT. Current is 96 with zero TBT in samples 2 and 3; its first diagnostic cold-browser sample is 89 and remains visible in the trace report. The heaviest current raster task falls to 16ms from about 120ms. All six reviewed Aurum section screenshots are pixel-identical after bounding the body textures; the 18-section comparison stays below 0.038% changed pixels. The normal release matrix, with its existing browser-infrastructure warmup and three cold-site samples, remains the acceptance gate.
 
 The final action check also measures the real Hero arrow offset and stationary CTA box in all 18 engine/language/theme scenes. The SVG selector uses last-of-type so the aria-hidden appended light element cannot suppress its directional hover state.
+
+## Production cold-paint follow-up
+
+Public first-pointer verification caught an 8px navigation shift before the full section stylesheet loaded. The contact button received an unstyled inline light child, creating one additional flex gap. The critical extractor now retains transient motion-layer structural rules, so every light is absolute and pointer-transparent from the first intent. The delayed-module cold test checks all header-link and Hero CTA bounds without loading section CSS, in all three engines. Production asset bytes and calculator smoke passed before this narrow correction; the follow-up receives its own normal CI and release verification.
