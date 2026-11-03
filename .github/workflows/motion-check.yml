@@ -1,6 +1,13 @@
 name: Focused motion diagnostics
 on:
   workflow_dispatch:
+  push:
+    branches: [codex/**]
+    paths:
+      - assets/js/motion-loader.js
+      - assets/js/magnetic-motion.js
+      - tests/beyond-motion.cjs
+      - .github/workflows/motion-check.yml
 permissions:
   contents: read
 jobs:
