@@ -1,6 +1,6 @@
 # Visual Excellence — review record
 
-Visual work starts at main `75f54e8bcb51ba3f471919740d73093ebdb78887`. The photographs, fonts and authored copy remain authentic. All JavaScript sources, calculator domains and locale files are sealed by `tests/visual-scope.test.cjs`; the recorded SHA-256 values compare normalised source bytes.
+Visual work starts at main `75f54e8bcb51ba3f471919740d73093ebdb78887`. The photographs, fonts and authored copy remain authentic. JavaScript sources, calculator domains and locale files are sealed by `tests/visual-scope.test.cjs`; the recorded SHA-256 values compare normalised source bytes. The only JS presentation exception is one native `tabIndex=0` attribute on the scrollable report; the test removes that exact marker once, then checks the original hash.
 
 ## Three visual passes
 
@@ -14,6 +14,7 @@ Visual work starts at main `75f54e8bcb51ba3f471919740d73093ebdb78887`. The photo
 - `ART_PASS=final node tests/visual-excellence.capture.cjs` captures the representative final set.
 - `ART_PASS=pass-3 ART_FULL=1 node tests/visual-excellence.capture.cjs` captures RU/EN × three themes × 390/768/1440, the twelve section compositions, nine LAB directions in empty/PRO states and five OS panels.
 - `node tests/visual-excellence-states.capture.cjs` captures calculated results for six primary models and all available toolkit instruments, session editor, error, history and share preview at 390/768/1440; also checks the eleven requested widths from 320 to 2560. Detail crops suppress fixed navigation/progress overlays only during the crop so they cannot obscure the component.
+- `node tests/visual-excellence-report.capture.cjs` checks report fit at eleven widths and native keyboard scrolling at 320px for RU/EN and all themes.
 - `node tests/visual-excellence-montage.cjs` produces review contact sheets plus a filename manifest. These are review aids; the original PNG files remain in `test-results/visual-excellence`.
 
 The product contract matrix additionally includes 428 and 600px, plus the existing widths. Firefox keyboard checks settle the responsive image and resize event before opening the menu. Assertions and screenshot mismatch thresholds remain unchanged.
@@ -46,3 +47,5 @@ The normal Windows visual suite passed all three engines, both languages, three 
 The final 390px rendered-pixel audit found zero text contrast failures: Aurum 509 text runs, Horizon 509, Clarity 493. It first exposed a 4.40:1 active Aurum tab number; the corrected primary-text colour passes AA. The report header keeps its final column label unbroken; targeted report capture validates all six language/theme contexts at eleven widths, with detail images at 390/768/1440.
 
 The seven after images above have been refreshed from the final composition. The 2026-11-03 paused checkpoint is retained as historical context; its pending list is superseded by this resume record and the exact-head checks attached to PR #15. Merge and production verification remain separate release gates recorded on the PR.
+
+CI identified keyboard access to the narrow report scroll region. A native tab stop and visible focus ring now expose it; the targeted report check focuses the region at 320px and verifies actual ArrowRight scrolling. The mobile table uses the full result width and keeps its first/last column headings intact. Calculator, persistence and localisation source hashes remain the originals.

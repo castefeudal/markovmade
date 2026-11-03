@@ -472,5 +472,19 @@
       "checked": 493,
       "failing": 0
     }
-  ]
+  ],
+  "sourcePresentationException": "One section.tabIndex=0 attribute in lab-toolkit.js; the original SHA-256 is checked after removing that exact single marker.",
+  "reportKeyboardScroll": {
+    "width": 320,
+    "languages": [
+      "ru",
+      "en"
+    ],
+    "themes": [
+      "aurum-noir",
+      "event-horizon",
+      "clarity"
+    ],
+    "actualArrowRightScrollVerified": true
+  }
 }
