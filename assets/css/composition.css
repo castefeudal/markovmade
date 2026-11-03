@@ -286,12 +286,9 @@ html[data-theme="clarity"] .mm-plate-marks::before,html[data-theme="clarity"] .m
   #contact{--mm-scene:url('../media/scenes/method-map.svg')}
   #contact::after{transform:rotate(180deg);opacity:.035}
   @media(prefers-reduced-motion:no-preference) and (hover:hover) and (pointer:fine){
-    html:not([data-save-data]) #calculators .mm-lab-panel:not([hidden]){animation:mm-panel-enter var(--mm-motion-normal) var(--mm-ease-premium) both}
-    html:not([data-save-data]) .mm-evidence[open]>:not(summary),html:not([data-save-data]) .mm-toolkit-precision[open]>:not(summary){animation:mm-panel-enter var(--mm-motion-fast) var(--mm-ease-premium) both}
     html:not([data-save-data]) #calculators .mm-lab-scenarios button{transition:transform var(--mm-motion-fast),border-color var(--mm-motion-fast)}
     html:not([data-save-data]) #calculators .mm-lab-scenarios button:hover{transform:translateY(-2px);border-color:var(--mm-accent)}
   }
-  @keyframes mm-panel-enter{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
   @media(max-width:640px){:is(#services,#method-proof,#calculators,#app-ecosystem,#contact)::after{width:100%;height:360px;opacity:.035}}
 }
 @layer components {

@@ -4,15 +4,15 @@
  const root=document.documentElement,header=document.getElementById('main-header'),nav=header?.querySelector('nav'),indicator=header?.querySelector('.mm-nav-indicator');
  const reduced=matchMedia('(prefers-reduced-motion: reduce)'),fine=matchMedia('(hover:hover) and (pointer:fine)');
  const connection=navigator.connection,animations=new Map(),decorated=new WeakSet(),surfaceStates=new Map(),digests=new WeakMap();
- const actions='.mm-primary-cta,.mm-secondary-cta,.mm-editorial-cta,.mm-lab-primary,.mm-lab-secondary,.mm-lab-clear,.mm-toolkit-favorite,.mm-quick-btn,.theme-switch,.lang-switch,[data-theme-value],#main-header a[href="#contact"],.lead-action,.contact-btn';
+ const actions='.mm-primary-cta,.mm-secondary-cta,.mm-editorial-cta,.mm-lab-primary,.mm-lab-secondary,.mm-lab-clear,.mm-lab-tab,.mm-os-tab,[data-mode],.mm-lab-segment button,.mm-toolkit-favorite,.mm-quick-btn,.theme-switch,.lang-switch,[data-theme-value],#main-header a[href="#contact"],.lead-action,.contact-btn';
  const surfaces='#services details>summary,.contact-value-card,#community .mm-community-card,#proof-system .mm-trust-card,#app-ecosystem .mm-os-product';
- let frame=0,frames=0,reads=0,cache=new WeakMap(),activeSurface=null,hoverLink=null,focusLink=null,lastAction=0,lastType='mouse',themeTransition=null,sceneObserver;
+ let frame=0,frames=0,reads=0,cache=new WeakMap(),activeSurface=null,hoverLink=null,focusLink=null,lastAction=0,lastType='mouse',themeTransition=null,themeOpener=null,sceneObserver;
  let origin={x:innerWidth/2,y:60},haloTarget=0;
  const point=(value=0)=>({value,target:value,velocity:0});
  const fieldX=point(),fieldY=point(),indX=point(),indS=point(1),haloX=point(),haloY=point();
  const halo=document.createElement('div');halo.className='mm-context-halo';halo.setAttribute('aria-hidden','true');document.body.append(halo);
  const saveData=()=>Boolean(connection?.saveData||root.hasAttribute('data-save-data'));
- const canMove=()=>!reduced.matches&&!saveData()&&!document.hidden;
+ const canMove=()=>!reduced.matches&&!saveData()&&!document.hidden&&(!navigator.deviceMemory||navigator.deviceMemory>=4);
  const physics=()=>canMove()&&fine.matches&&lastType==='mouse'&&(!navigator.deviceMemory||navigator.deviceMemory>=4);
  const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
  function rect(el){if(!cache.has(el)){reads++;cache.set(el,el.getBoundingClientRect());}return cache.get(el);}
@@ -71,8 +71,8 @@
  document.addEventListener('pointermove',pointer,{passive:true});
  document.documentElement.addEventListener('pointerleave',reset,{passive:true});
  document.addEventListener('pointerout',event=>{if(!event.relatedTarget)reset();},{passive:true});
- document.addEventListener('pointerdown',event=>{lastType=event.pointerType||'mouse';origin={x:event.clientX,y:event.clientY};if(lastType!=='mouse')stop();},{passive:true});
- document.addEventListener('focusin',event=>{focusLink=event.target.closest?.('#main-header .nav-link')||null;placeIndicator();});
+ document.addEventListener('pointerdown',event=>{if(event.target.closest?.('.theme-switch'))themeOpener=event.target.closest('.theme-switch');lastType=event.pointerType||'mouse';origin={x:event.clientX,y:event.clientY};if(lastType!=='mouse')stop();},{passive:true});
+ document.addEventListener('focusin',event=>{if(event.target.matches?.('.theme-switch'))themeOpener=event.target;focusLink=event.target.closest?.('#main-header .nav-link')||null;placeIndicator();});
  document.addEventListener('focusout',()=>{focusLink=null;queueMicrotask(placeIndicator);});
  addEventListener('scroll',invalidate,{passive:true});addEventListener('resize',()=>{invalidate();placeIndicator();},{passive:true});
  document.fonts?.addEventListener('loadingdone',()=>{invalidate();placeIndicator();});
@@ -86,7 +86,7 @@
   return animate(node,[{opacity:.72,transform:start},{opacity:1,transform:'translate3d(0,0,0)'}],{duration});
  }
  function scenes(){
-  if(sceneObserver||!('IntersectionObserver'in window))return;
+  if(sceneObserver||!canMove()||!('IntersectionObserver'in window))return;
   sceneObserver=new IntersectionObserver(entries=>{for(const e of entries){if(!e.isIntersecting)continue;sceneObserver.unobserve(e.target);if(e.boundingClientRect.top<80)continue;const section=e.target.closest('section[id]')?.id||'';const lateral=/services|biography|about/.test(section);reveal(e.target,lateral?12:16,section==='method-proof'?620:520,lateral?'lateral':'rise');}},{threshold:.12,rootMargin:'0px 0px -24px 0px'});
   document.querySelectorAll('.mm-editorial-head,#proof-system .mm-trust-card,#method-proof .mm-editorial-step,#about .mm-author-purpose,#community .mm-community-card,.mm-os-story').forEach(el=>sceneObserver.observe(el));
  }
@@ -127,11 +127,20 @@
   }).catch(()=>{});
   transition.finished.catch(()=>{}).then(()=>{if(themeTransition===transition)themeTransition=null;});
  }
- function preference(){stop();if(physics())header?.setAttribute('data-mm-nav-ready','');}
- reduced.addEventListener('change',preference);fine.addEventListener('change',preference);connection?.addEventListener?.('change',preference);
+ // Firefox can discard a dialog's restored focus when its root snapshot ends.
+ // Repair only lost/body or now-closed-dialog focus, never a user's new target.
+ document.addEventListener('close',event=>{
+  if(event.target.id!=='mm-theme-dialog')return;
+  const dialog=event.target,opener=themeOpener||[...document.querySelectorAll('.theme-switch')].find(el=>el.getClientRects().length);
+  const restore=()=>{const active=document.activeElement;if(!dialog.open&&opener?.isConnected&&(!active||active===document.body||dialog.contains(active)))opener.focus({preventScroll:true});};
+  queueMicrotask(()=>{if(themeTransition)themeTransition.finished.catch(()=>{}).then(restore);else restore();});
+ },true);
+ function preference(){stop();scenes();if(physics())header?.setAttribute('data-mm-nav-ready','');}
+ reduced.addEventListener('change',preference);fine.addEventListener('change',preference);connection?.addEventListener?.('change',()=>{root.toggleAttribute('data-save-data',Boolean(connection.saveData));preference();});
+ if(connection?.saveData)root.setAttribute('data-save-data','');
  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
  addEventListener('pagehide',()=>{stop();sceneObserver?.disconnect();resize?.disconnect();},{once:true});
- window.MarkovMadeMotion={theme,point:pointer,reveal,discover,scenes,inspect:()=>({enabled:physics(),framePending:Boolean(frame),frames,geometryReads:reads,activeSurfaces:surfaceStates.size,header:{x:fieldX.value,y:fieldY.value},indicator:{x:indX.value,scale:indS.value,target:currentLink()?.getAttribute('href')||null}})};
+ window.MarkovMadeMotion={theme,point:pointer,reveal,discover,scenes,inspect:()=>({enabled:physics(),themeActive:Boolean(themeTransition),animationCount:animations.size,framePending:Boolean(frame),frames,geometryReads:reads,activeSurfaces:surfaceStates.size,header:{x:fieldX.value,y:fieldY.value},indicator:{x:indX.value,scale:indS.value,target:currentLink()?.getAttribute('href')||null}})};
  focusLink=document.activeElement?.closest?.('#main-header .nav-link')||null;discover();scenes();placeIndicator();
  if(physics())header?.setAttribute('data-mm-nav-ready','');
  // Readable first paint is already complete. This finite optical entrance never

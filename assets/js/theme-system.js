@@ -37,12 +37,8 @@
   function safeSet(key, value) { try { localStorage.setItem(key, value); } catch (_) {} }
   function resolve(value) { return aliases[value] || (themes[value] ? value : null); }
 
-/* BEGIN BEYOND PRESENTATION: theme */
   function apply(name) {
     var theme = resolve(name) || 'aurum-noir';
-    var revision=apply.revision=(apply.revision||0)+1;
-    function paint(){
-    if(revision!==apply.revision)return;
     var previous = document.documentElement.dataset.theme;
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme === 'clarity' ? 'light' : 'dark';
@@ -69,12 +65,9 @@
         }
       });
     }
-    }
-    if(window.MarkovMadeMotion)window.MarkovMadeMotion.theme(paint);else paint();
     return theme;
   }
 
-/* END BEYOND PRESENTATION: theme */
   function updateLabels() {
     document.querySelectorAll('.theme-switch').forEach(function (button) {
       var label = copy('Выбрать тему оформления', 'Choose appearance theme');
@@ -146,7 +139,9 @@
           history.replaceState(null, '', sharedUrl);
         }
         syncSelected();
-        dialog.close();
+/* BEGIN BEYOND PRESENTATION: theme confirmation */
+        if(window.MarkovMadeMotion)window.MarkovMadeMotion.theme(()=>dialog.close());else dialog.close();
+/* END BEYOND PRESENTATION: theme confirmation */
       });
     });
     dialog.querySelector('[data-theme-close]').addEventListener('click', function () { dialog.close(); });

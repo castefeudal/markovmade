@@ -34,3 +34,5 @@ html[data-save-data] .mm-context-halo,html[data-save-data] .mm-surface-light{dis
 ::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
 @media(prefers-reduced-motion:reduce){::view-transition-group(root){animation:none}}
 @media print{.mm-surface-light,.mm-result-glint,.mm-context-halo{display:none}}
+/* Snapshot layers are visual only: real controls must retain their hit targets. */
+::view-transition,::view-transition-group(root),::view-transition-image-pair(root),::view-transition-old(root),::view-transition-new(root){pointer-events:none}

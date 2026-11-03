@@ -204,6 +204,9 @@
     // still settling, which is a single 350 ms blocked task on slower machines.
     if (!scrolled) return;
     const y = scrollY;
+/* BEGIN BEYOND PRESENTATION: compact header */
+    header?.toggleAttribute('data-mm-compact',y>96);
+/* END BEYOND PRESENTATION: compact header */
     updateCurrentLocation();
     progress.style.transform = `scaleX(${Math.min(1, y / Math.max(1, geometry().height - innerHeight))})`;
     const down = y > 200 && y > lastY + 2;

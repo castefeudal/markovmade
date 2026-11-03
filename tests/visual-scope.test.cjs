@@ -1,9 +1,9 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),crypto=require('node:crypto');
-test('visual reconstruction preserves source bytes except the explicit report focus attribute',()=>{
+test('visual reconstruction preserves source bytes outside exact presentation regions',()=>{
  for(const[file,expected]of Object.entries(require('./visual-scope.json'))){
   let bytes=fs.readFileSync(file,'utf8').replace(/\r\n/g,'\n');
   // The scrollable report needs native keyboard access. This exact, single DOM
-  // attribute is the only approved presentation change to the sealed JS sources.
+  // attribute is an explicit presentation change to the sealed report source.
   // The original SHA-256 manifest remains unchanged; every other byte is checked.
   if(file==='assets/js/lab-toolkit.js'){
    const marker='section.tabIndex=0;';
@@ -13,7 +13,7 @@ test('visual reconstruction preserves source bytes except the explicit report fo
   }
   const originals=require('./fixtures/beyond-presentation-originals.json');
   const name=file.split('/').at(-1);
-  if(originals[name]){
+  if(Object.prototype.hasOwnProperty.call(originals,name)){
    const region=/\/\* BEGIN BEYOND PRESENTATION: [^*]+\*\/[\s\S]*?\/\* END BEYOND PRESENTATION: [^*]+\*\/\n/;
    assert.equal([...bytes.matchAll(new RegExp(region.source,'g'))].length,1,file+' has one approved presentation region');
    bytes=bytes.replace(region,()=>originals[name]);
