@@ -36,3 +36,12 @@ html[data-save-data] .mm-context-halo,html[data-save-data] .mm-surface-light{dis
 @media print{.mm-surface-light,.mm-result-glint,.mm-context-halo{display:none}}
 /* Snapshot layers are visual only: real controls must retain their hit targets. */
 ::view-transition,::view-transition-group(root),::view-transition-image-pair(root),::view-transition-old(root),::view-transition-new(root){pointer-events:none}
+/* Native scroll progression fades the architectural rail as the opening scene exits.
+   Content, portrait and data remain fully visible; unsupported engines keep the rail. */
+@supports(animation-timeline:view()){
+ @media(min-width:1181px) and (prefers-reduced-motion:no-preference) and (hover:hover) and (pointer:fine){
+  html:not([data-save-data]) #hero{view-timeline-name:--mm-opening;view-timeline-axis:block}
+  html:not([data-save-data]) #hero::before{animation:mm-opening-rail 1s linear both;animation-timeline:--mm-opening;animation-range:exit 0% exit 100%}
+ }
+}
+@keyframes mm-opening-rail{from{opacity:.65}to{opacity:.12}}

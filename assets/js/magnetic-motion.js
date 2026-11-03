@@ -139,7 +139,8 @@
  reduced.addEventListener('change',preference);fine.addEventListener('change',preference);connection?.addEventListener?.('change',()=>{root.toggleAttribute('data-save-data',Boolean(connection.saveData));preference();});
  if(connection?.saveData)root.setAttribute('data-save-data','');
  document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();});
- addEventListener('pagehide',()=>{stop();sceneObserver?.disconnect();resize?.disconnect();},{once:true});
+ addEventListener('pagehide',()=>{stop();sceneObserver?.disconnect();resize?.disconnect();});
+ addEventListener('pageshow',event=>{if(event.persisted){invalidate();sceneObserver=null;if(header)resize?.observe(header);if(nav)resize?.observe(nav);preference();}});
  window.MarkovMadeMotion={theme,point:pointer,reveal,discover,scenes,inspect:()=>({enabled:physics(),themeActive:Boolean(themeTransition),animationCount:animations.size,framePending:Boolean(frame),frames,geometryReads:reads,activeSurfaces:surfaceStates.size,header:{x:fieldX.value,y:fieldY.value},indicator:{x:indX.value,scale:indS.value,target:currentLink()?.getAttribute('href')||null}})};
  focusLink=document.activeElement?.closest?.('#main-header .nav-link')||null;discover();scenes();placeIndicator();
  if(physics())header?.setAttribute('data-mm-nav-ready','');
