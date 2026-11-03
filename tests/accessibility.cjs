@@ -7,7 +7,7 @@ const findings=[],incomplete=new Map();
 (async()=>{
   const server=await startServer();let browser;
   try {
-    browser=await chromium.launch({headless:true});
+    browser=await chromium.launch({headless:true,proxy:{server:"http://127.0.0.1:9",bypass:"127.0.0.1,localhost"}});
     const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
     await page.goto(server.url,{waitUntil:'load'});
     await page.evaluate(()=>Promise.all([window.mmLoadLab(),window.mmLoadOS(),window.mmLoadContent()]));

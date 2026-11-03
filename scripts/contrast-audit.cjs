@@ -50,7 +50,7 @@ const MEASURE=`(() => {
 })()`;
 
 (async()=>{
-  const server=await startServer();const browser=await chromium.launch({headless:true});
+  const server=await startServer();const browser=await chromium.launch({headless:true,proxy:{server:"http://127.0.0.1:9",bypass:"127.0.0.1,localhost"}});
   try{
     const page=await browser.newPage({viewport:{width,height},deviceScaleFactor:1,reducedMotion:'reduce'});
     await page.goto(server.url+'/?lang=ru',{waitUntil:'load'});

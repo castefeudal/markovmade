@@ -15,7 +15,7 @@ function assertVisualBaseline(name, actualPath, maxMismatch = defaultMismatch) {
     console.log(`Candidate captured (not validated): ${name}`);
     return;
   }
-  const directory=process.platform==='linux'&&name.startsWith('contract-')?path.join(baselineDir,'linux'):baselineDir;
+  const directory=process.platform==='linux'?path.join(baselineDir,'linux'):baselineDir;
   fs.mkdirSync(directory, {recursive:true});
   const baselinePath = path.join(directory, name);
   if (update) {
