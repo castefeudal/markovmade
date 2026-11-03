@@ -36,3 +36,25 @@ body.menu-open { overflow: hidden; }
   :where(button, select, textarea, summary, input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"])) { min-height:44px; }
   :where(a[class*="cta"]) { display:inline-flex; align-items:center; min-height:44px; }
 }
+/* Authored action families: stable boxes, precision typography and material edges. */
+@layer components {
+:where(.mm-primary-cta,.mm-lab-primary,.mm-secondary-cta,.mm-lab-secondary,.mm-editorial-cta,.lead-action,.contact-btn){position:relative;isolation:isolate;border-radius:14px;font:var(--mm-font-action);letter-spacing:.005em;touch-action:manipulation}
+#hero .mm-primary-cta,#calculators .mm-lab-primary{background:linear-gradient(130deg,rgb(255 255 255 / 13%),transparent 60%),var(--mm-accent);border:1px solid var(--mm-accent);box-shadow:inset 0 1px rgb(255 255 255 / 30%),inset 0 -2px rgb(0 0 0 / 9%),0 8px 24px rgb(0 0 0 / 12%);color:var(--mm-on-accent)}
+#hero .mm-secondary-cta,#calculators .mm-lab-secondary{background:var(--mm-surface-sheen),var(--mm-bg-secondary);border:1px solid var(--mm-border-strong);box-shadow:inset 0 1px var(--mm-edge-highlight);color:var(--mm-text-primary)}
+#calculators :is(.mm-lab-primary,.mm-lab-secondary){min-height:52px;padding:14px 20px;white-space:normal;overflow-wrap:anywhere}
+#calculators .mm-lab-primary:is(:disabled,[aria-disabled=true]){border-style:dashed;background:var(--mm-surface-2);color:var(--mm-text-muted);box-shadow:none;cursor:not-allowed}
+#calculators :is(.mm-lab-input,.mm-lab-select,.mm-lab-textarea){border-radius:12px;background:var(--mm-input-bg);border:1px solid var(--mm-border-strong);box-shadow:inset 0 2px 5px rgb(0 0 0 / 5%);transition:border-color var(--mm-duration-control),box-shadow var(--mm-duration-control)}
+#calculators :is(.mm-lab-input,.mm-lab-select,.mm-lab-textarea):focus{border-color:var(--mm-accent);outline:3px solid var(--mm-focus);outline-offset:3px;box-shadow:inset 0 1px var(--mm-edge-highlight)}
+#calculators .mm-lab-field>label{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;justify-content:space-between}
+#calculators .mm-lab-field>label em{font:var(--mm-font-micro);font-style:normal;color:var(--mm-text-muted)}
+#calculators .mm-lab-mode,#calculators .mm-lab-segment{padding:5px;border:1px solid var(--mm-border);border-radius:15px;background:var(--mm-bg-primary);gap:5px}
+#calculators :is(.mm-lab-mode,.mm-lab-segment) button{border-radius:10px;min-height:44px;transition:background var(--mm-duration-control),border-color var(--mm-duration-control),box-shadow var(--mm-duration-control)}
+#calculators :is(.mm-lab-mode,.mm-lab-segment) button[aria-pressed=true]{box-shadow:inset 0 1px var(--mm-edge-highlight),0 2px 6px rgb(0 0 0 / 8%);background:var(--mm-accent-soft);color:var(--mm-text-primary);border-color:var(--mm-border-strong)}
+#calculators :is(.mm-lab-mode,.mm-lab-segment) button:focus-visible{outline:3px solid var(--mm-focus);outline-offset:2px}
+#calculators :is(.mm-lab-actions,.mm-toolkit-actions) button:active{box-shadow:inset 0 2px 6px rgb(0 0 0 / 18%)}
+#calculators input[type=checkbox],#app-ecosystem input[type=checkbox]{accent-color:var(--mm-accent);min-width:22px;min-height:22px;cursor:pointer}
+#calculators input[type=checkbox]:focus-visible,#app-ecosystem input[type=checkbox]:focus-visible{outline:3px solid var(--mm-focus);outline-offset:4px}
+#calculators :is(.mm-lab-details,.mm-evidence,.mm-toolkit-precision)>summary{min-height:48px;padding-block:12px;color:var(--mm-text-primary);font:var(--mm-font-label);letter-spacing:0}
+#calculators :is(.mm-lab-details,.mm-evidence,.mm-toolkit-precision)>summary:focus-visible{outline:3px solid var(--mm-focus);outline-offset:3px}
+#mm-quick-actions .mm-quick-btn{width:48px;height:48px;min-height:48px;border-radius:16px;background:var(--mm-nav-material);box-shadow:var(--mm-nav-shadow);border:1px solid var(--mm-border-strong)}
+}

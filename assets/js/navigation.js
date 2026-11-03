@@ -124,6 +124,21 @@
     if(target.matches('[role="tab"]'))target.click();
     if(target.tagName==='DETAILS')target.open=true;
     for(let parent=target.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
+/* BEGIN BEYOND PRESENTATION: anchor settling */
+    // Offscreen content can acquire its real size during native smooth scrolling.
+    // One final alignment follows the last scroll event; new reader intent cancels it.
+    if(behavior==='smooth'){
+      let quiet,deadline,done=false;
+      const abortEvents=['wheel','touchstart','pointerdown','keydown'];
+      main.dataset.mmAnchorSettling=String(request);
+      const cancel=()=>{if(done)return;done=true;clearTimeout(quiet);clearTimeout(deadline);removeEventListener('scroll',moved);abortEvents.forEach(type=>removeEventListener(type,interrupt,true));removeEventListener('pagehide',cancel);if(main.dataset.mmAnchorSettling===String(request))delete main.dataset.mmAnchorSettling;};
+      const interrupt=()=>{cancel();if(request===navigationRequest){++navigationRequest;const x=scrollX,y=scrollY;scrollTo({top:y+1,left:x,behavior:'instant'});scrollTo({top:y,left:x,behavior:'instant'});}};
+      const align=()=>{cancel();if(request===navigationRequest&&target.isConnected&&!document.hidden)target.scrollIntoView({behavior:'instant',block:'start'});};
+      const moved=()=>{clearTimeout(quiet);quiet=setTimeout(align,160);};
+      addEventListener('scroll',moved,{passive:true});abortEvents.forEach(type=>addEventListener(type,interrupt,{capture:true,passive:true}));addEventListener('pagehide',cancel);
+      deadline=setTimeout(cancel,2500);moved();
+    }
+/* END BEYOND PRESENTATION: anchor settling */
     target.scrollIntoView({behavior,block:'start'});
     if(focus){
       if(!target.matches('a[href],button,input,select,textarea,[tabindex]'))target.setAttribute('tabindex','-1');
@@ -204,6 +219,9 @@
     // still settling, which is a single 350 ms blocked task on slower machines.
     if (!scrolled) return;
     const y = scrollY;
+/* BEGIN BEYOND PRESENTATION: compact header */
+    header?.toggleAttribute('data-mm-compact',y>96);
+/* END BEYOND PRESENTATION: compact header */
     updateCurrentLocation();
     progress.style.transform = `scaleX(${Math.min(1, y / Math.max(1, geometry().height - innerHeight))})`;
     const down = y > 200 && y > lastY + 2;

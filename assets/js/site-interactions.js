@@ -6,19 +6,10 @@ if(navigator.connection?.saveData)document.documentElement.setAttribute('data-sa
   function isEnglish(){return document.documentElement.lang === 'en';}
 
   /* ---------- Product ambient pointer light (no text transform / no blur) ---------- */
-  function initProductLight(){
-    var product=document.querySelector('#app-ecosystem .mm-os-product');
-    if(!product||product.dataset.mmV31Light==='true') return;
-    product.dataset.mmV31Light='true';
-    product.addEventListener('pointermove',function(e){
-      if(e.pointerType==='touch') return;
-      var r=product.getBoundingClientRect();
-      product.style.setProperty('--os-px',(clamp((e.clientX-r.left)/Math.max(1,r.width),0,1)*100).toFixed(1)+'%');
-      product.style.setProperty('--os-py',(clamp((e.clientY-r.top)/Math.max(1,r.height),0,1)*100).toFixed(1)+'%');
-    },{passive:true});
-    product.addEventListener('pointerleave',function(){product.style.setProperty('--os-px','72%');product.style.setProperty('--os-py','26%');},{passive:true});
-  }
+/* BEGIN BEYOND PRESENTATION: product light */
+  function initProductLight(){window.mmLoadMotion?.().then(motion=>motion?.discover()).catch(()=>{});}
 
+/* END BEYOND PRESENTATION: product light */
   /* ---------- Bilingual deterministic personalized insight engine ---------- */
   var COPY={
     ru:{

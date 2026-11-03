@@ -11,7 +11,7 @@ const {documentSource,scriptSource}=require('./source-components.cjs');
 const namespaces=['shared','lab','personal-os'];
 const productCopy=Object.assign({},...namespaces.map(name=>JSON.parse(fs.readFileSync(path.join(root,'src/locales',name+'.en.json'),'utf8'))));
 const translationSource=fs.readFileSync(path.join(root,'assets/js/i18n.js'),'utf8').replace('var META =',`Object.assign(DICT,${JSON.stringify(productCopy)}); var META =`);
-const cssFiles = ['fonts','foundation','editorial','lab','personal-os','tokens','product','worlds','clarity','hero','controls','header','author','toolkit','experience','composition','signature'];
+const cssFiles = ['fonts','foundation','editorial','lab','personal-os','tokens','product','worlds','clarity','hero','controls','header','author','toolkit','experience','composition','signature','motion'];
 const out = path.join(root,'assets/dist');
 fs.mkdirSync(out,{recursive:true});
 fs.mkdirSync(path.join(out,'locales'),{recursive:true});
@@ -30,7 +30,7 @@ function extractComponent(html, className, name) {
     if (!depth) break;
   }
   if (depth) throw new Error(`Unbalanced ${className}`);
-  fs.writeFileSync(path.join(out,name+'.html'),html.slice(innerStart,token.index));
+  fs.writeFileSync(path.join(out,name+'.html'),html.slice(innerStart,token.index).replace(/\r\n/g,'\n'));
   const loadingCopy = name === 'lab'
     ? 'Инструменты загружаются при открытии раздела.'
     : 'Прототип загружается при открытии раздела.';
@@ -41,7 +41,7 @@ function extractComponent(html, className, name) {
   return html.slice(0,start)+placeholder+html.slice(tags.lastIndex);
 }
 (async () => {
-  const template = documentSource();
+  const template = documentSource().replace(/\r\n/g,'\n');
   const css = cssFiles.map(name => fs.readFileSync(path.join(root,'assets/css',name+'.css'),'utf8')).join('\n');
   const tree = postcss.parse(css), selectors = [];
   tree.walkRules(rule => { if (rule.parent.type==='atrule' && /keyframes/.test(rule.parent.name)) return; selectors.push(rule.selector); });

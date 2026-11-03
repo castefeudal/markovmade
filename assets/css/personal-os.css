@@ -1331,9 +1331,31 @@
 #app-ecosystem .mm-os-connected-metric>strong{font:650 clamp(1.5rem,2.5vw,2.25rem)/1.2 var(--mm-font-numeric);font-variant-numeric:tabular-nums;letter-spacing:-.03em;margin:14px 0}
 #app-ecosystem :is(.mm-os-connected-empty,.mm-os-connected-action){font:var(--mm-font-secondary)}
 #app-ecosystem .mm-os-chart-labels{font:var(--mm-font-micro);letter-spacing:0}
-#app-ecosystem .mm-os-screen.active{animation:mm-product-screen 220ms var(--mm-ease-premium) both}
-@keyframes mm-product-screen{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+
 @media(max-width:1100px){#app-ecosystem .mm-os-layout{grid-template-columns:1fr;grid-template-areas:"story" "product" "notes"}#app-ecosystem .mm-os-story{position:relative;top:auto;display:grid;grid-template-columns:1fr 1fr;gap:0 32px;max-width:none}#app-ecosystem .mm-os-story>h2{grid-column:1}#app-ecosystem .mm-os-story>.mm-os-lead{grid-column:2;grid-row:2/4;align-self:center;max-width:48ch}#app-ecosystem .mm-os-story>.mm-os-insights-link{grid-column:1/-1;justify-self:start}#app-ecosystem .mm-os-notes .mm-os-value{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}}
 @media(max-width:600px){#app-ecosystem .mm-os-story{display:block}#app-ecosystem .mm-os-notes .mm-os-value{grid-template-columns:1fr;gap:0}#app-ecosystem .mm-os-story h2{font-size:clamp(2.5rem,10vw,3.75rem)}#app-ecosystem .mm-os-wrap{width:calc(100% - 2 * var(--mm-page-gutter))}#app-ecosystem .mm-os-frame{border-radius:20px}#app-ecosystem .mm-os-chrome{padding:18px 16px;gap:12px}#app-ecosystem .mm-os-data-choice{padding:16px}#app-ecosystem .mm-os-tabs{padding:10px;gap:4px}#app-ecosystem .mm-os-tab{flex-basis:90px;padding:10px 8px}#app-ecosystem .mm-os-screen{padding:20px 16px}#app-ecosystem .mm-os-metrics>div{padding:16px 12px}#app-ecosystem :is(.mm-os-card,.mm-os-chart-card,.mm-os-connected-metric){padding:18px 16px}}
 @media(prefers-reduced-motion:reduce){#app-ecosystem .mm-os-screen.active{animation:none}}
+}
+/* Product chrome has its own instrument language; the data remains calm. */
+@layer components {
+#app-ecosystem .mm-os-frame{overflow:clip;border-radius:28px;border-top:2px solid var(--mm-accent);box-shadow:0 24px 65px rgb(0 0 0 / 16%),inset 0 1px var(--mm-edge-highlight)}
+#app-ecosystem .mm-os-chrome{padding:22px 24px;background:var(--mm-nav-material)}
+#app-ecosystem .mm-os-brand-mark{border-radius:10px;border:1px solid var(--mm-border-strong);background:var(--mm-accent-soft);box-shadow:inset 0 1px var(--mm-edge-highlight)}
+#app-ecosystem .mm-os-tabs{position:sticky;top:96px;z-index:4;gap:6px;padding:10px 14px;background:var(--mm-bg-secondary);border-top:1px solid var(--mm-border);border-bottom:1px solid var(--mm-border-strong)}
+#app-ecosystem .mm-os-tab{border-radius:12px;border:1px solid transparent;min-height:48px}
+#app-ecosystem .mm-os-tab[aria-selected=true]{background:var(--mm-accent-soft);border-color:var(--mm-border-strong);box-shadow:inset 0 2px var(--mm-accent),0 2px 6px rgb(0 0 0 / 6%)}
+#app-ecosystem .mm-os-tab:focus-visible{outline:3px solid var(--mm-focus);outline-offset:2px}
+#app-ecosystem .mm-os-connected-decision{border:1px solid var(--mm-border-strong);border-radius:22px;background:var(--mm-surface-metal),var(--mm-surface-1);padding:28px}
+#app-ecosystem .mm-os-metrics>div,#app-ecosystem .mm-os-progress-kpis>div{border-radius:15px;background:var(--mm-surface-sheen),var(--mm-bg-secondary);border-top:2px solid var(--mm-border-strong)}
+#app-ecosystem .mm-os-data-choice{transition:background-color var(--mm-duration-control)}
+#app-ecosystem .mm-os-data-choice:has(input:checked){background:var(--mm-accent-soft)}
+#app-ecosystem .mm-os-connected-metric{border-inline-start:2px solid var(--mm-accent);border-radius:6px 18px 18px 6px}
+html[data-theme=clarity] #app-ecosystem .mm-os-frame{box-shadow:0 22px 60px rgb(24 64 83 / 14%),inset 0 1px white}
+@media(max-width:600px){#app-ecosystem .mm-os-frame{border-radius:22px}#app-ecosystem .mm-os-chrome{padding:18px 16px}#app-ecosystem .mm-os-connected-decision{padding:22px 18px;border-radius:18px}#app-ecosystem .mm-os-tabs{padding:10px;top:80px}}
+}
+@layer components {
+/* Text-only zoom must fit the decision bay without shrinking authored type. */
+#app-ecosystem :is(.mm-os-decision-copy,.mm-os-card-head)>*{min-width:0;overflow-wrap:anywhere}
+#app-ecosystem .mm-os-card-head{flex-wrap:wrap;row-gap:8px}
 }

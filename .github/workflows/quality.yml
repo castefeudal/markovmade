@@ -63,6 +63,7 @@ jobs:
             test-results/flagship/
             test-results/text-reflow/
             test-results/grand/
+            test-results/beyond/
           if-no-files-found: ignore
           retention-days: 14
 

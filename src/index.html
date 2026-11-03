@@ -227,11 +227,12 @@ summary { list-style: none; font-weight: 700; }
             </a>
 
             <nav class="hidden md:flex gap-7 lg:gap-9 items-center">
-                <a href="#calculators" class="interactive nav-link relative font-sans text-[13px] uppercase tracking-[0.08em] transition-all duration-300 pb-1">Расчёт</a>
-                <a href="#services" class="nav-link interactive relative font-sans text-[13px] transition-all duration-300 pb-1">Услуги</a>
-                <a href="#app-ecosystem" class="interactive nav-link header-app-link relative font-sans text-[13px] uppercase tracking-[0.08em] transition-all duration-300 pb-1">Приложение</a>
-                <a href="#about" class="interactive nav-link font-sans text-[13px] uppercase tracking-[0.08em] text-dim hover:text-platinum transition-colors">Обо мне</a>
-                <a href="#community" class="interactive nav-link font-sans text-[13px] uppercase tracking-[0.08em] text-dim hover:text-platinum transition-colors">Сообщество</a>
+                <span class="mm-nav-indicator" aria-hidden="true"></span>
+                <a href="#calculators" class="interactive nav-link relative font-sans text-[13px] uppercase tracking-[0.08em] transition-all duration-300 pb-1"><span class="mm-nav-label">Расчёт</span></a>
+                <a href="#services" class="nav-link interactive relative font-sans text-[13px] transition-all duration-300 pb-1"><span class="mm-nav-label">Услуги</span></a>
+                <a href="#app-ecosystem" class="interactive nav-link header-app-link relative font-sans text-[13px] uppercase tracking-[0.08em] transition-all duration-300 pb-1"><span class="mm-nav-label">Приложение</span></a>
+                <a href="#about" class="interactive nav-link font-sans text-[13px] uppercase tracking-[0.08em] text-dim hover:text-platinum transition-colors"><span class="mm-nav-label">Обо мне</span></a>
+                <a href="#community" class="interactive nav-link font-sans text-[13px] uppercase tracking-[0.08em] text-dim hover:text-platinum transition-colors"><span class="mm-nav-label">Сообщество</span></a>
 
                 <div class="flex items-center ml-2 border-l border-white/10 pl-6 gap-5">
                     <button type="button" class="interactive theme-switch" title="Сменить тему" aria-label="Сменить тему">
@@ -402,6 +403,7 @@ summary { list-style: none; font-weight: 700; }
 <script defer src="assets/js/style-loader.js"></script>
 
 <script defer src="assets/js/navigation.js"></script>
+<script defer src="assets/js/motion-loader.js"></script>
 
 <script defer src="assets/js/content-loader.js"></script>
 

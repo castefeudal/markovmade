@@ -1,0 +1,15 @@
+/* Review-only variants. Production keeps one selected concept. */
+html[data-concept=B] #main-header>.container::before{border-radius:10px;background:linear-gradient(90deg,transparent 49.8%,var(--mm-border) 50%,transparent 50.2%) 0 0/80px 100%,var(--mm-nav-material);box-shadow:0 14px 32px rgb(0 0 0 / 12%),inset 0 2px var(--mm-accent)}
+html[data-concept=B] #main-header .mm-nav-indicator{border-radius:3px;height:4px;margin-top:17px;border:0;background:var(--mm-accent)}
+html[data-concept=B] #main-header :is(.theme-switch,.lang-switch,a[href="#contact"]){border-radius:6px}
+html[data-concept=C] #main-header>.container::before{background:none;border-color:transparent;border-radius:0;box-shadow:none}
+html[data-concept=C] #main-header>.container::after{display:none}
+html[data-concept=C] #main-header nav{padding:6px 12px;border-bottom:1px solid var(--mm-border-strong)}
+html[data-concept=C] #main-header .nav-link{letter-spacing:.025em;padding-inline:16px}
+html[data-concept=C] #main-header .mm-nav-indicator{border:0;background:var(--mm-accent);height:2px;margin-top:26px;border-radius:0}
+html[data-concept=C] #main-header .mm-logo-mark{width:30px;height:30px;flex-basis:30px}
+html[data-concept=B] #main-header>.container::before{inset:0 0 0 34%;border-radius:12px;box-shadow:0 14px 32px rgb(0 0 0 / 18%),inset 0 2px var(--mm-accent)}
+html[data-concept=B] #main-header .mm-header-logo-link{padding-inline:16px;border:1px solid var(--mm-border-strong);border-radius:6px;background:var(--mm-nav-material)}
+html[data-concept=C] #main-header>.container::before{opacity:0}
+html[data-concept=C] #main-header nav{padding:6px 12px;background:var(--mm-nav-material);border:1px solid var(--mm-border-strong);border-radius:40px;box-shadow:var(--mm-nav-shadow)}
+html[data-concept=C] #main-header .mm-header-logo-link{border:0;background:none}

@@ -1,0 +1,57 @@
+name: Focused motion diagnostics
+on:
+  workflow_dispatch:
+  push:
+    branches: [codex/**]
+    paths:
+      - assets/css/header.css
+      - assets/css/worlds.css
+      - assets/js/navigation.js
+      - assets/js/motion-loader.js
+      - assets/js/magnetic-motion.js
+      - tests/beyond-motion.cjs
+      - .github/workflows/motion-check.yml
+      - tests/first-paint-trace.cjs
+permissions:
+  contents: read
+jobs:
+  motion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run build
+      - run: node tests/beyond-motion.cjs
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: focused-motion-evidence
+          path: test-results/beyond/
+          retention-days: 14
+
+  first_paint_trace:
+    name: Base/current first-paint trace (diagnostic)
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, 'raster')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: git fetch origin b2e333f0fdd6b52d794290593ea869c0ae40c12e && git worktree add --detach test-results/trace-base b2e333f0fdd6b52d794290593ea869c0ae40c12e
+      - run: node tests/first-paint-trace.cjs
+      - uses: actions/upload-artifact@v6
+        if: always()
+        with:
+          name: first-paint-traces
+          path: test-results/first-paint-trace/
+          retention-days: 14

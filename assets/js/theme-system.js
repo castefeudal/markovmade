@@ -139,7 +139,9 @@
           history.replaceState(null, '', sharedUrl);
         }
         syncSelected();
-        dialog.close();
+/* BEGIN BEYOND PRESENTATION: theme confirmation */
+        if(window.MarkovMadeMotion)window.MarkovMadeMotion.theme(()=>dialog.close());else dialog.close();
+/* END BEYOND PRESENTATION: theme confirmation */
       });
     });
     dialog.querySelector('[data-theme-close]').addEventListener('click', function () { dialog.close(); });

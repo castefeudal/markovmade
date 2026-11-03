@@ -145,3 +145,14 @@ html[data-theme="event-horizon"] #app-ecosystem .mm-os-frame {
   box-shadow: 0 38px 105px rgb(0 0 0 / 48%), inset 0 1px rgb(238 243 248 / 7%);
 }
 }
+/* Bound Aurum's two light textures to their actual visible diameter.
+   The second center stays at 18% of the body: .5*60rem + .18*(H-60rem)
+   - 19.2rem = .18*H. Transparent pixels no longer cover the whole document. */
+@layer base {
+html[data-theme="aurum-noir"] body{
+ background-image:radial-gradient(circle at 24% 0%,rgb(var(--color-gold) / .045),transparent 34rem),radial-gradient(circle at 82% 50%,rgb(255 255 255 / .025),transparent 30rem);
+ background-size:100% 34rem,100% 60rem;
+ background-position:0 0,0 calc(18% - 19.2rem);
+ background-repeat:no-repeat;
+}
+}
