@@ -15,8 +15,15 @@ test('visual reconstruction preserves source bytes outside exact presentation re
   const name=file.split('/').at(-1);
   if(Object.prototype.hasOwnProperty.call(originals,name)){
    const region=/\/\* BEGIN BEYOND PRESENTATION: [^*]+\*\/[\s\S]*?\/\* END BEYOND PRESENTATION: [^*]+\*\/\n/;
-   assert.equal([...bytes.matchAll(new RegExp(region.source,'g'))].length,1,file+' has one approved presentation region');
-   bytes=bytes.replace(region,()=>originals[name]);
+   const matches=[...bytes.matchAll(new RegExp(region.source,'g'))];
+   if(name==='navigation.js'){
+    assert.equal(matches.length,2,'two explicit navigation presentation additions');
+    for(const label of ['compact header','anchor settling'])assert.equal(matches.filter(match=>match[0].startsWith('/* BEGIN BEYOND PRESENTATION: '+label+' */')).length,1,'one '+label+' addition');
+    bytes=bytes.replace(new RegExp(region.source,'g'),'');
+   }else{
+    assert.equal(matches.length,1,file+' has one approved presentation region');
+    bytes=bytes.replace(region,()=>originals[name]);
+   }
   }
   assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),expected,file+' must otherwise remain unchanged');
  }

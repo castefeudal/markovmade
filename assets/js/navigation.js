@@ -124,6 +124,20 @@
     if(target.matches('[role="tab"]'))target.click();
     if(target.tagName==='DETAILS')target.open=true;
     for(let parent=target.parentElement;parent;parent=parent.parentElement)if(parent.tagName==='DETAILS')parent.open=true;
+/* BEGIN BEYOND PRESENTATION: anchor settling */
+    // Offscreen content can acquire its real size during native smooth scrolling.
+    // One final alignment follows the last scroll event; new reader intent cancels it.
+    if(behavior==='smooth'){
+      let quiet,deadline,done=false;
+      const abortEvents=['wheel','touchstart','pointerdown','keydown'];
+      main.dataset.mmAnchorSettling=String(request);
+      const cancel=()=>{if(done)return;done=true;clearTimeout(quiet);clearTimeout(deadline);removeEventListener('scroll',moved);abortEvents.forEach(type=>removeEventListener(type,cancel,true));removeEventListener('pagehide',cancel);if(main.dataset.mmAnchorSettling===String(request))delete main.dataset.mmAnchorSettling;};
+      const align=()=>{cancel();if(request===navigationRequest&&target.isConnected&&!document.hidden)target.scrollIntoView({behavior:'instant',block:'start'});};
+      const moved=()=>{clearTimeout(quiet);quiet=setTimeout(align,160);};
+      addEventListener('scroll',moved,{passive:true});abortEvents.forEach(type=>addEventListener(type,cancel,{capture:true,passive:true}));addEventListener('pagehide',cancel);
+      deadline=setTimeout(cancel,2500);moved();
+    }
+/* END BEYOND PRESENTATION: anchor settling */
     target.scrollIntoView({behavior,block:'start'});
     if(focus){
       if(!target.matches('a[href],button,input,select,textarea,[tabindex]'))target.setAttribute('tabindex','-1');
