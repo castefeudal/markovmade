@@ -1,7 +1,7 @@
 /* Magnetic Floating Navigation. Stable hit geometry; only its material moves. */
 @layer components {
 #main-header{position:fixed;inset:0 0 auto;z-index:50;padding:12px 0 0;border:0;background:transparent;transition:transform var(--mm-duration-navigation) var(--mm-ease-return);pointer-events:none}
-#main-header>.container{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:space-between;gap:24px;width:min(var(--mm-content-width),calc(100% - 2 * var(--mm-page-gutter)));max-width:var(--mm-content-width);min-height:72px;margin-inline:auto;padding:8px 16px;pointer-events:auto}
+#main-header>.container{position:relative;isolation:isolate;contain:paint;overflow:clip;overflow-clip-margin:64px;display:flex;align-items:center;justify-content:space-between;gap:24px;width:min(var(--mm-content-width),calc(100% - 2 * var(--mm-page-gutter)));max-width:var(--mm-content-width);min-height:72px;margin-inline:auto;padding:8px 16px;pointer-events:auto}
 #main-header>.container::before{content:'';position:absolute;inset:0;z-index:-2;border:1px solid var(--mm-border-strong);border-radius:24px;background:var(--mm-nav-material);box-shadow:var(--mm-nav-shadow);transform:translate3d(calc(var(--mm-field-x,0) * 1px),calc(var(--mm-field-y,0) * 1px),0) scaleY(var(--mm-nav-scale,1));transition:border-radius var(--mm-duration-navigation),box-shadow var(--mm-duration-control),scale var(--mm-duration-navigation);pointer-events:none}
 #main-header>.container::after{content:'';position:absolute;inset:1px;z-index:-1;border-radius:23px;pointer-events:none;background:linear-gradient(112deg,transparent 5%,var(--mm-nav-light),transparent 66%);opacity:var(--mm-field-light,.32);transform:translate3d(calc(var(--mm-field-x,0) * -1px),0,0);transition:opacity var(--mm-duration-control)}
 #main-header[data-mm-compact]{--mm-nav-scale:.9}
@@ -44,6 +44,7 @@ html.js:not([data-critical-ready]) #main-header{visibility:hidden}
 @media(max-width:1180px){#main-header{padding-top:8px}#main-header>.container{min-height:64px;padding:6px 10px;gap:16px}#main-header>.container>nav{display:none}#main-header .mm-header-mobile-controls{display:flex}#main-header.scrolled-down:not(:focus-within){transform:translateY(-115%)}#main-header.scrolled-up,#main-header:focus-within{transform:translateY(0)}}
 @media(max-width:600px){#main-header>.container{width:calc(100% - 24px);gap:10px;padding-inline:8px}#main-header .mm-logo{gap:8px}#main-header .mm-logo-mark{width:23px;height:23px;flex-basis:23px}#main-header .mm-logo-word{font-size:.65rem;letter-spacing:.16em}#main-header .mm-header-logo-link{padding-inline:4px}#main-header>.container::before{border-radius:20px}#mobile-menu nav>a{min-height:60px}}
 @media(max-width:359px){#main-header .mm-logo-word{display:none}#main-header .mm-logo-mark{width:26px;height:26px;flex-basis:26px}}
+@media(prefers-reduced-motion:reduce),(pointer:coarse){#main-header>.container::before{transform:scaleY(var(--mm-nav-scale,1))}#main-header>.container::after{transform:none}}
 @media(prefers-reduced-motion:reduce){#main-header,#mobile-menu,#main-header *,#main-header>.container::before,#main-header>.container::after{transition:none}#main-header .mm-logo-mark,#main-header .mm-nav-label{transform:none}}
 }
 html:not(.js) :is(.theme-switch,.lang-switch,#burger-btn){display:none}
