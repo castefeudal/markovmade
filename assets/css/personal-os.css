@@ -1354,3 +1354,8 @@
 html[data-theme=clarity] #app-ecosystem .mm-os-frame{box-shadow:0 22px 60px rgb(24 64 83 / 14%),inset 0 1px white}
 @media(max-width:600px){#app-ecosystem .mm-os-frame{border-radius:22px}#app-ecosystem .mm-os-chrome{padding:18px 16px}#app-ecosystem .mm-os-connected-decision{padding:22px 18px;border-radius:18px}#app-ecosystem .mm-os-tabs{padding:10px;top:80px}}
 }
+@layer components {
+/* Text-only zoom must fit the decision bay without shrinking authored type. */
+#app-ecosystem :is(.mm-os-decision-copy,.mm-os-card-head)>*{min-width:0;overflow-wrap:anywhere}
+#app-ecosystem .mm-os-card-head{flex-wrap:wrap;row-gap:8px}
+}
