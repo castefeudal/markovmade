@@ -5,6 +5,7 @@ on:
     branches: [codex/**]
     paths:
       - assets/css/header.css
+      - assets/css/worlds.css
       - assets/js/navigation.js
       - assets/js/motion-loader.js
       - assets/js/magnetic-motion.js
@@ -35,6 +36,7 @@ jobs:
 
   first_paint_trace:
     name: Base/current first-paint trace (diagnostic)
+    if: github.event_name == 'workflow_dispatch' || contains(github.event.head_commit.message, 'raster')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5

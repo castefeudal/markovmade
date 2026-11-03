@@ -63,3 +63,5 @@ The landing interruption test uses an actual wheel event and verifies that scrol
 ### First-paint raster work
 
 Same-host base/current Chrome traces show a long BeginMainThreadFrame waiting on raster work rather than a JavaScript handler. New header paint clips extended about 7000px beyond its small capsule. The container now bounds paint with a 64px optical margin, and coarse/reduced-motion modes use a 2D compact transform instead of forcing idle 3D layers. The same-host trace comparison and unchanged full Lighthouse floors validate this correction; no asset, model or score condition is replaced.
+
+The same-host trace also reproduces raster stalls in the original base. Aurum's two body lights were sized to the complete document height, despite becoming transparent after 34rem/30rem. Their texture boxes are now bounded to the visible radii; the second background-position compensates its 60rem box so its center remains exactly at 18% of the body. Colours, visible geometry and the photographic assets remain the same. Diagnostic tracing is available manually or on commits explicitly marked raster, rather than on ordinary motion changes.
