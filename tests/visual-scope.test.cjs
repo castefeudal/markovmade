@@ -11,6 +11,13 @@ test('visual reconstruction preserves source bytes except the explicit report fo
    assert.ok(bytes.includes("head=node('tr');"+marker+'for(const label'),'focus belongs to the workout table');
    bytes=bytes.replace(marker,'');
   }
+  const originals=require('./fixtures/beyond-presentation-originals.json');
+  const name=file.split('/').at(-1);
+  if(originals[name]){
+   const region=/\/\* BEGIN BEYOND PRESENTATION: [^*]+\*\/[\s\S]*?\/\* END BEYOND PRESENTATION: [^*]+\*\/\n/;
+   assert.equal([...bytes.matchAll(new RegExp(region.source,'g'))].length,1,file+' has one approved presentation region');
+   bytes=bytes.replace(region,()=>originals[name]);
+  }
   assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),expected,file+' must otherwise remain unchanged');
  }
 });

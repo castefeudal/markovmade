@@ -1,0 +1,36 @@
+/* Motion owns transient layers only. Component geometry stays with each owner. */
+@layer components {
+[data-mm-surface]{position:relative;isolation:isolate}
+.mm-surface-light{position:absolute;inset:0;z-index:-1;overflow:hidden;border-radius:inherit;pointer-events:none;opacity:var(--mm-light-opacity,0);transition:opacity var(--mm-duration-control);transform:translate3d(calc(var(--mm-action-x,0) * 1px),calc(var(--mm-action-y,0) * 1px),0)}
+.mm-surface-light::before{content:'';position:absolute;left:0;top:0;width:220px;height:180px;background:radial-gradient(ellipse at center,var(--mm-nav-light),transparent 68%);transform:translate3d(calc(var(--mm-light-x,0px) - 110px),calc(var(--mm-light-y,0px) - 90px),0)}
+[data-mm-surface=action] .mm-surface-light{z-index:0;background:linear-gradient(115deg,rgb(255 255 255 / 5%),transparent 60%);mix-blend-mode:soft-light}
+[data-mm-surface=action]{transition:border-color var(--mm-duration-control),box-shadow var(--mm-duration-control),background-color var(--mm-duration-control)}
+[data-mm-surface=card]{--mm-light-opacity:0}
+[data-mm-surface=card]>.mm-surface-light{z-index:0;opacity:calc(var(--mm-light-opacity,0) * .7)}
+[data-mm-surface=card]>.mm-surface-light::before{width:360px;height:280px;transform:translate3d(calc(var(--mm-light-x,0px) - 180px),calc(var(--mm-light-y,0px) - 140px),0)}
+.mm-context-halo{position:fixed;z-index:54;left:0;top:0;width:76px;height:76px;border-radius:50%;border:1px solid var(--mm-accent);background:radial-gradient(circle,var(--mm-accent-soft),transparent 65%);pointer-events:none;opacity:0;transition:opacity var(--mm-duration-control);contain:strict}
+.mm-result-glint{position:absolute;z-index:0;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(110deg,transparent 25%,var(--mm-accent-soft) 49%,transparent 73%);opacity:0}
+.mm-lab-result,.mm-toolkit-outcome,.mm-os-connected-decision{position:relative;isolation:isolate}
+@media(hover:hover) and (pointer:fine){
+ [data-mm-surface=action]:hover{box-shadow:inset 0 1px var(--mm-edge-highlight),0 8px 22px rgb(0 0 0 / 12%)}
+ #hero .mm-primary-cta:hover>svg:last-child,.mm-editorial-cta:hover>svg:last-child{transform:translateX(4px)}
+ #hero .mm-primary-cta>svg:last-child,.mm-editorial-cta>svg:last-child{transition:transform var(--mm-duration-control) var(--mm-ease-magnetic)}
+ #services summary:hover .mm-service-toggle{transform:rotate(90deg);border-color:var(--mm-accent);background:var(--mm-accent-soft)}
+ #services .mm-service-toggle{transition:transform var(--mm-duration-navigation) var(--mm-ease-magnetic),background var(--mm-duration-control)}
+}
+:where(.mm-primary-cta,.mm-secondary-cta,.mm-lab-primary,.mm-lab-secondary,.mm-editorial-cta,.mm-quick-btn,.theme-switch,.lang-switch):active{box-shadow:inset 0 2px 5px rgb(0 0 0 / 18%);filter:brightness(.97)}
+:where(.mm-primary-cta,.mm-secondary-cta,.mm-lab-primary,.mm-lab-secondary,.mm-editorial-cta,.mm-quick-btn):focus-visible{outline:3px solid var(--mm-focus);outline-offset:4px}
+[data-mm-surface]:is(:disabled,[aria-disabled=true]) .mm-surface-light{display:none}
+#mobile-menu:not([inert]) nav>a{animation:mm-menu-item 380ms var(--mm-ease-reveal) both}
+#mobile-menu:not([inert]) nav>a:nth-of-type(2){animation-delay:20ms}#mobile-menu:not([inert]) nav>a:nth-of-type(3){animation-delay:40ms}#mobile-menu:not([inert]) nav>a:nth-of-type(4){animation-delay:60ms}#mobile-menu:not([inert]) nav>a:nth-of-type(5){animation-delay:80ms}#mobile-menu:not([inert]) nav>a:nth-of-type(6){animation-delay:100ms}
+#mobile-menu nav>a:focus-visible{animation:none}
+@keyframes mm-menu-item{from{opacity:.7;transform:translateY(9px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce),(pointer:coarse){.mm-context-halo{display:none}.mm-surface-light{display:none}}
+@media(prefers-reduced-motion:reduce){#mobile-menu nav>a{animation:none}#hero .mm-primary-cta>svg:last-child,.mm-editorial-cta>svg:last-child{transform:none;transition:none}}
+html[data-save-data] .mm-context-halo,html[data-save-data] .mm-surface-light{display:none}html[data-save-data] #mobile-menu nav>a{animation:none}
+@media(forced-colors:active){.mm-context-halo,.mm-surface-light,.mm-result-glint,.mm-nav-indicator{display:none}#main-header>.container::before{background:Canvas;border:1px solid CanvasText}#main-header .nav-link[aria-current=location]{outline:2px solid LinkText}}
+}
+::view-transition-group(root){animation-duration:440ms}
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+@media(prefers-reduced-motion:reduce){::view-transition-group(root){animation:none}}
+@media print{.mm-surface-light,.mm-result-glint,.mm-context-halo{display:none}}

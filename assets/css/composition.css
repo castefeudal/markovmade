@@ -115,7 +115,6 @@ html[data-theme="event-horizon"] :is(#proof-system,#method-proof,#biography){bac
 #about .mm-author-purpose p{max-width:28ch;}
 #quick-faq summary{transition:color var(--mm-motion-normal) ease;}
 #quick-faq details[open]>summary{color:var(--mm-accent);}
-#main-header nav a[aria-current=location]::after{transform-origin:left;transition:transform var(--mm-motion-normal) var(--mm-ease-premium);}
 @media(hover:hover) and (pointer:fine){
  #services .mm-service-editorial-item:not([open])>summary:hover{background:var(--mm-accent-soft);}
  #services .mm-service-preview{transition:border-color var(--mm-motion-normal) ease;}
@@ -128,7 +127,7 @@ html[data-theme="event-horizon"] :is(#proof-system,#method-proof,#biography){bac
  #quick-faq summary{line-height:1.5;padding-block:22px;}
 }
 @media(prefers-reduced-motion:reduce){
- #services .mm-service-editorial-item>summary,#quick-faq summary,#main-header nav a[aria-current=location]::after{transition:none;}
+ #services .mm-service-editorial-item>summary,#quick-faq summary{transition:none;}
 }
 
 /* ── Authored media plates ───────────────────────────────────────────────
@@ -183,22 +182,15 @@ html[data-theme="clarity"] .mm-plate-marks::before,html[data-theme="clarity"] .m
 }
 
 /* ── Header identity: legible at 16px, theme-aware by inheritance ───────*/
-#main-header .mm-header-logo-link{flex:0 1 auto;min-width:0;width:auto;justify-content:flex-start;overflow:hidden}
-#main-header .mm-logo{display:flex;align-items:center;gap:.6rem;min-width:0;overflow:hidden;color:var(--mm-accent)}
-#main-header .mm-logo-mark{flex:0 0 26px;width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:4.2;stroke-linecap:square;stroke-linejoin:miter}
-#main-header .mm-logo-word{font:700 .78rem/1 var(--mm-font-body);letter-spacing:.3em;text-transform:uppercase;color:var(--mm-text-primary);white-space:nowrap;flex:0 1 auto;min-width:0;overflow:hidden}
-#main-header .mm-header-mobile-controls{flex:0 0 auto}
-@media(max-width:600px){#main-header .mm-header-logo-link{height:2.5rem}#main-header .mm-logo-mark{flex-basis:21px;width:21px;height:21px;stroke-width:5.4}#main-header .mm-logo-word{font-size:.68rem;letter-spacing:.2em}}
+@media(max-width:600px){}
 /* Phones used to inherit the header's own gutter *and* the container's, so the brand
    sat 47px in while the hero started at 20px and the wordmark was squeezed into a
    clipped fragment next to the three control targets. One gutter, full lockup. */
 @media(max-width:600px){
- #main-header{padding-inline:var(--mm-page-gutter)}
- #main-header > .container{padding-inline:0;gap:1.25rem}
 }
 /* On the narrowest phones the lockup reduces to the monogram, and the wordmark
    clips rather than pushing the theme, language and menu controls aside. */
-@media(max-width:359px){#main-header .mm-logo{gap:0}#main-header .mm-logo-word{display:none}}
+@media(max-width:359px){}
 
 /* ── Chronology rail: the LEGACY marker must never collide with the title ─*/
 @media(min-width:851px){

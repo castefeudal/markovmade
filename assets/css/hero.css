@@ -69,7 +69,7 @@ html[data-theme=clarity] #hero .accent-word{color:var(--mm-accent);font-style:no
  #hero .hero-proof-item span{font-size:.875rem;line-height:1.5}
  html[data-theme=clarity] #hero .mm-hero-media{height:clamp(13.5rem,59vw,21rem)}
 }
-@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){#hero :is(.mm-primary-cta,.mm-secondary-cta):hover{transform:translateY(-2px)}html:not([data-save-data]) #hero::after{animation:mm-hero-rule 800ms var(--mm-ease-premium) both}}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){#hero :is(.mm-primary-cta,.mm-secondary-cta):hover{transform:none}html:not([data-save-data]) #hero::after{animation:mm-hero-rule 800ms var(--mm-ease-premium) both}}
 @keyframes mm-hero-rule{from{transform:scaleX(.4);opacity:0}to{transform:scaleX(1);opacity:.45}}
 @media(prefers-reduced-motion:reduce),(hover:none),(pointer:coarse){.mm-hero-media :is(img,video,canvas){transition:none;transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){#hero :is(.mm-primary-cta,.mm-secondary-cta){transition:none}#hero :is(.mm-primary-cta,.mm-secondary-cta):hover{transform:none}}

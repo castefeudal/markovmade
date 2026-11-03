@@ -1,0 +1,5 @@
+const fs=require('node:fs'),path=require('node:path'),{chromium}=require('playwright'),{startServer,root}=require('./browser-helpers.cjs');
+(async()=>{const server=await startServer(),browser=await chromium.launch({proxy:{server:'http://127.0.0.1:9',bypass:'127.0.0.1,localhost'}});try{const out=path.join(root,'test-results/beyond/concepts');fs.mkdirSync(out,{recursive:true});for(const theme of ['aurum-noir','event-horizon','clarity']){
+ const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});await page.goto(server.url+'/?lang=ru&theme='+theme);await page.evaluate(async()=>{await mmLoadStyles();await document.fonts.ready;});await page.addStyleTag({path:path.join(__dirname,'fixtures/beyond-concepts.css')});
+ for(const concept of ['A','B','C']){await page.evaluate(c=>document.documentElement.dataset.concept=c,concept);await page.waitForTimeout(500);await page.screenshot({path:path.join(out,theme+'-'+concept+'.png')});}await page.close();
+}console.log('Three concepts captured across all three worlds.');}finally{await browser.close();await server.close();}})().catch(e=>{console.error(e);process.exitCode=1});
