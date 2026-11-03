@@ -4,6 +4,8 @@ on:
   push:
     branches: [codex/**]
     paths:
+      - assets/css/header.css
+      - assets/js/navigation.js
       - assets/js/motion-loader.js
       - assets/js/magnetic-motion.js
       - tests/beyond-motion.cjs
