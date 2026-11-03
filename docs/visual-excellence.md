@@ -34,4 +34,15 @@ The product contract matrix additionally includes 428 and 600px, plus the existi
 
 The unchanged numerical, persistence, migration, import/export and interaction tests are required alongside browser, accessibility, visual, streaming-paint and Lighthouse gates. Automated axe checks report undecidable contrast over complex surfaces separately; a rendered-pixel audit supplements them. This is laboratory evidence, not a claim of manual assistive-technology certification or field Core Web Vitals.
 
-Windows baseline candidates were captured and visually inspected before copying their intentional redesigns. Linux candidates require a separate review before the final non-refresh Quality run. The performance and visual thresholds are not reduced.
+Windows baseline candidates were captured and visually inspected before copying their intentional redesigns. All 48 Linux candidates from run 41547079312 were personally reviewed before accepting their separate platform references. The performance and visual thresholds are not reduced.
+
+
+## Completed resume validation
+
+The expanded result capture completed all six RU/EN-theme contexts: 504 PNG detail states including QUICK, PRO, calibrated Nutrition, all active toolkit models, empty/populated history, errors, session editor and share preview. Geometry passed at all eleven requested widths. The earlier full composition capture contains 558 PNGs across 18 language/theme/width contexts. Compact machine-readable scope and contrast evidence is in [visual-excellence-validation.json](visual-excellence-validation.json).
+
+The normal Windows visual suite passed all three engines, both languages, three themes, all fifteen contract widths and the real portrait turn/nod/neutral sequence; contract screenshots matched their reviewed references. Localhost QA explicitly bypasses system proxies, so machine proxy changes cannot redirect the static test server. Product networking and runtime sources are unchanged.
+
+The final 390px rendered-pixel audit found zero text contrast failures: Aurum 509 text runs, Horizon 509, Clarity 493. It first exposed a 4.40:1 active Aurum tab number; the corrected primary-text colour passes AA. The report header keeps its final column label unbroken; targeted report capture validates all six language/theme contexts at eleven widths, with detail images at 390/768/1440.
+
+The seven after images above have been refreshed from the final composition. The 2026-11-03 paused checkpoint is retained as historical context; its pending list is superseded by this resume record and the exact-head checks attached to PR #15. Merge and production verification remain separate release gates recorded on the PR.

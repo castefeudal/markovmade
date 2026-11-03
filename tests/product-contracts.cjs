@@ -74,7 +74,7 @@ async function assertCta(page,label) {
   try {
     for(const [name,type]of Object.entries(process.env.CONTRACTS_MOTION_ONLY?{}:{chromium,firefox,webkit})){
       // Explicit loopback bypass makes QA independent of Windows system proxies.
-      browser=await type.launch({headless:true,...(name==='firefox'?{firefoxUserPrefs:{'network.proxy.type':0}}:{}),...(name==='webkit'?{proxy:{server:'http://127.0.0.1:9',bypass:'127.0.0.1,localhost'}}:{})});
+      browser=await type.launch({headless:true,...(name==='firefox'?{firefoxUserPrefs:{'network.proxy.type':0}}:{}),...((name==='webkit'||name==='chromium')?{proxy:{server:'http://127.0.0.1:9',bypass:'127.0.0.1,localhost'}}:{})});
       const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
       const errors=[];page.on('pageerror',e=>errors.push(e.message));
       await page.goto(server.url,{waitUntil:'load'});
@@ -114,7 +114,7 @@ async function assertCta(page,label) {
       assert.deepEqual(errors,[],`${name}: runtime errors`);
       await browser.close();browser=null;
     }
-    browser=await chromium.launch({headless:true});
+    browser=await chromium.launch({headless:true,proxy:{server:"http://127.0.0.1:9",bypass:"127.0.0.1,localhost"}});
     const motion=await browser.newPage({viewport:{width:1440,height:900}});
     await motion.addInitScript(()=>{Object.defineProperty(navigator,'hardwareConcurrency',{get:()=>8});Object.defineProperty(navigator,'deviceMemory',{get:()=>8});});
     await motion.goto(server.url,{waitUntil:'load'});

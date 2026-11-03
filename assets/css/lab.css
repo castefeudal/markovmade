@@ -965,3 +965,6 @@
 #calculators .mm-lab-mode{flex-wrap:wrap;min-width:0}
 #calculators .mm-lab-mode button{flex:1 1 max-content;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere}
 }
+@layer components {
+#calculators .mm-lab-tab[aria-selected=true] .mm-lab-tab-num{color:var(--mm-text-primary);opacity:1}
+}

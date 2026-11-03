@@ -1,0 +1,476 @@
+{
+  "reviewedLinuxCandidateRun": 41547079312,
+  "linuxReferenceCount": 48,
+  "windowsReferenceCount": 48,
+  "themes": [
+    "aurum-noir",
+    "event-horizon",
+    "clarity"
+  ],
+  "languages": [
+    "ru",
+    "en"
+  ],
+  "fullSectionContexts": [
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 390,
+      "errors": []
+    },
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 768,
+      "errors": []
+    },
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 1440,
+      "errors": []
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 390,
+      "errors": []
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 768,
+      "errors": []
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 1440,
+      "errors": []
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 390,
+      "errors": []
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 768,
+      "errors": []
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 1440,
+      "errors": []
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 390,
+      "errors": []
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 768,
+      "errors": []
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 1440,
+      "errors": []
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 390,
+      "errors": []
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 768,
+      "errors": []
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 1440,
+      "errors": []
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 390,
+      "errors": []
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 768,
+      "errors": []
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 1440,
+      "errors": []
+    }
+  ],
+  "populatedGeometryContexts": [
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 320
+    },
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 360
+    },
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 390
+    },
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 428
+    },
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 600
+    },
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 768
+    },
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 1024
+    },
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 1280
+    },
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 1440
+    },
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 1920
+    },
+    {
+      "lang": "ru",
+      "theme": "aurum-noir",
+      "width": 2560
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 320
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 360
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 390
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 428
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 600
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 768
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 1024
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 1280
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 1440
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 1920
+    },
+    {
+      "lang": "ru",
+      "theme": "event-horizon",
+      "width": 2560
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 320
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 360
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 390
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 428
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 600
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 768
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 1024
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 1280
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 1440
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 1920
+    },
+    {
+      "lang": "ru",
+      "theme": "clarity",
+      "width": 2560
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 320
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 360
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 390
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 428
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 600
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 768
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 1024
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 1280
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 1440
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 1920
+    },
+    {
+      "lang": "en",
+      "theme": "aurum-noir",
+      "width": 2560
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 320
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 360
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 390
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 428
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 600
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 768
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 1024
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 1280
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 1440
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 1920
+    },
+    {
+      "lang": "en",
+      "theme": "event-horizon",
+      "width": 2560
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 320
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 360
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 390
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 428
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 600
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 768
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 1024
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 1280
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 1440
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 1920
+    },
+    {
+      "lang": "en",
+      "theme": "clarity",
+      "width": 2560
+    }
+  ],
+  "fullSectionPngCount": 558,
+  "populatedPngCount": 504,
+  "preservedSourceCount": 35,
+  "mobileRenderedContrast": [
+    {
+      "theme": "aurum-noir",
+      "checked": 509,
+      "failing": 0
+    },
+    {
+      "theme": "event-horizon",
+      "checked": 509,
+      "failing": 0
+    },
+    {
+      "theme": "clarity",
+      "checked": 493,
+      "failing": 0
+    }
+  ]
+}

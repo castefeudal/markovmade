@@ -85,6 +85,7 @@ html[data-theme=clarity] #calculators .mm-lab-panel::before{filter:brightness(.6
 .mm-workout-report :is(th,td):first-child{text-align:start}
 .mm-workout-report th{font:var(--mm-font-micro);color:var(--mm-text-secondary);background:var(--mm-accent-soft)}
 .mm-workout-report td{color:var(--mm-text-primary)}
+.mm-workout-report th:last-child{white-space:nowrap;overflow-wrap:normal}
 .mm-workout-report td:not(:first-child){white-space:nowrap;overflow-wrap:normal}
 .mm-workout-report tbody tr:nth-child(even){background:var(--signature-paper)}
 .mm-workout-report ul{display:grid;grid-template-columns:1fr 1fr;gap:8px;list-style:none;padding:0}
