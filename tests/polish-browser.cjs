@@ -26,6 +26,17 @@ const luminance=s=>s.match(/[\d.]+/g).slice(0,3).map(Number).map(x=>{x/=255;retu
      assert.ok(Math.abs(cards[0].top-cards[1].top)<2&&cards[2].top>cards[0].top&&cards[2].width>cards[0].width*1.7,`${name}/${theme}/${width}: contact uses a readable 2+1 composition`);
     }
     if(width<=1439)assert.equal(await page.locator('#mm-quick-actions').isVisible(),false,'utility dock is absent where the reading gutter is too narrow');
+    // Text-only enlargement: preserve rem layout lengths and restore every
+    // existing inline value afterwards, so responsive samples stay independent.
+    await page.evaluate(()=>{window.polishTextSizes=[...document.querySelectorAll('body *')].filter(el=>!['SCRIPT','STYLE','TITLE','DESC'].includes(el.tagName)&&(el.matches('input,select,textarea,button')||[...el.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()))).map(el=>[el,el.style.fontSize,el.style.lineHeight,getComputedStyle(el).fontSize,getComputedStyle(el).lineHeight]);for(const[el,,,font,line]of polishTextSizes){el.style.fontSize=parseFloat(font)*2+'px';if(line!=='normal')el.style.lineHeight=parseFloat(line)*2+'px';}});
+    await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth+1),`${name}/${lang}/${theme}/${width}: 200% text fits page`);
+    for(const selector of ['#hero','#mm-lab-body','#mm-os-screen-today']){
+     const box=await page.locator(selector).evaluate(e=>({client:e.clientWidth,scroll:e.scrollWidth}));
+     assert.ok(box.scroll<=box.client+2,`${name}/${lang}/${theme}/${width}: 200% text fits ${selector} ${JSON.stringify(box)}`);
+    }
+    await page.evaluate(()=>{for(const[el,font,line]of polishTextSizes){el.style.fontSize=font;el.style.lineHeight=line;}delete window.polishTextSizes;});
+    await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
    }
    const colors=await page.locator('#lab-body-height').evaluate(e=>{const s=getComputedStyle(e);return{bg:s.backgroundColor,border:s.borderTopColor}});
    const a=luminance(colors.bg),b=luminance(colors.border);assert.ok((Math.max(a,b)+.05)/(Math.min(a,b)+.05)>=3,'input boundary has non-text AA contrast');
@@ -33,6 +44,6 @@ const luminance=s=>s.match(/[\d.]+/g).slice(0,3).map(Number).map(x=>{x/=255;retu
    await page.waitForFunction(()=>!document.querySelector('#app-ecosystem .mm-os-frame').hasAttribute('data-empty'));
    assert.equal(await page.locator('#mm-os-screen-today .mm-os-today-grid').isVisible(),true,'real results restore the detailed next-step dashboard');
    assert.deepEqual(errors,[]);await page.close();
-  }console.log(`${name}: RU/EN × three worlds × 11 widths, mobile entry, 2+1 contact, safe dock, empty/real OS and input boundaries passed`);}finally{await browser.close();}
+  }console.log(`${name}: RU/EN × three worlds × 11 widths × normal/200% text, mobile entry, 2+1 contact, safe dock, empty/real OS and input boundaries passed`);}finally{await browser.close();}
  }
 }finally{await server.close();}})().catch(e=>{console.error(e);process.exitCode=1;});

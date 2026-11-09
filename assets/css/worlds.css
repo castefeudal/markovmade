@@ -21,6 +21,7 @@ html[data-theme=clarity] :is(#biography .mm-plate,#about .mm-author-story-photo)
 html[data-theme=clarity] #method-proof .mm-editorial-layout-steps{background:none}
 html[data-theme=clarity] #contact .contact-value-card{background:var(--mm-surface-1);border:0;border-top:3px solid var(--mm-text-primary);border-radius:0;box-shadow:none}
 html[data-theme=clarity] #contact .contact-card-kicker{background:none;padding-inline:0;text-align:start;border-radius:0;border:0;box-shadow:none;justify-content:flex-start}
+html[data-theme=clarity] #contact .tooltip-hint span{color:var(--mm-accent-hover)}
 html[data-theme=clarity] #contact .contact-outcome-panel{border-radius:0;box-shadow:none;background:var(--mm-bg-secondary)}
 }
 @layer base {

@@ -59,11 +59,25 @@ Raw 216 captures stay in ignored `test-results/polish`.
 
 - Clean `npm ci`, production build and 48 unit/source checks passed.
 - `node tests/polish-browser.cjs`: Chromium, Firefox and WebKit × RU/EN × three
-  worlds × 11 CSS widths passed. Includes mobile LAB entry, no page overflow,
+  worlds × 11 CSS widths passed at normal text size. The same matrix now also
+  checks text-only enlargement to 200%. Includes mobile LAB entry, no page overflow,
   Contact 2+1 composition, safe utilities, empty/real OS and AA input boundaries.
   Windows WebKit's display scaling is compensated to test actual CSS widths.
-- Full release suite and reviewed platform-specific visual references: pending
-  final run. Pixel/performance thresholds are unchanged.
+- The complete local accessibility run passed RU/EN × three themes, four widths,
+  nine LAB tabs, five OS tabs and dialogs. Axe's unresolved gradient/background
+  contrast checks remain recorded separately; this is not a manual WCAG certificate.
+- All 24 streamed first-paint/delayed-font samples passed. Largest local CLS:
+  `0.00125`, against the unchanged `<0.01` contract.
+- Pixel contrast measured 478 Aurum and 455 Horizon mobile text runs with no AA
+  failures. It identified a 4.42:1 small Contact hint in Clarity; that hint now uses
+  the darker terracotta ink. Recheck it with `node scripts/contrast-audit.cjs clarity 390 844`.
+- Windows and Linux visual references were reviewed from actual candidates,
+  including the final bilingual previews. Font contracts explicitly require
+  Manrope for Horizon and the appropriate Cormorant locale face for Aurum/Clarity.
+- The full E2E, accessibility, visual, paint and 36-sample Lighthouse release suite
+  is enforced by [Quality CI](https://github.com/castefeudal/markovmade/actions/workflows/quality.yml).
+  The PR records the final run. Pixel/performance thresholds are unchanged;
+  mobile median Performance still must be at least 95.
 
 ## Limits
 
