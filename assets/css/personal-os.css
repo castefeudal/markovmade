@@ -1359,3 +1359,48 @@ html[data-theme=clarity] #app-ecosystem .mm-os-frame{box-shadow:0 22px 60px rgb(
 #app-ecosystem :is(.mm-os-decision-copy,.mm-os-card-head)>*{min-width:0;overflow-wrap:anywhere}
 #app-ecosystem .mm-os-card-head{flex-wrap:wrap;row-gap:8px}
 }
+
+/* One useful route in the empty state, then the existing real-data dashboard. */
+@layer components {
+#app-ecosystem .mm-os-start{margin-top:20px;min-height:48px;background:var(--mm-accent);color:var(--mm-on-accent);border-radius:var(--mm-radius-control);font:var(--mm-font-action);padding:14px 20px}
+#app-ecosystem .mm-os-frame[data-empty] .mm-os-today-grid{display:none}
+#app-ecosystem .mm-os-frame[data-empty] #mm-os-screen-today{min-height:0;align-items:start}
+#app-ecosystem .mm-os-frame[data-empty] .mm-os-metrics>div{background:none;box-shadow:none;border:0;border-top:1px solid var(--mm-border);border-radius:0;padding:14px 0}
+#app-ecosystem .mm-os-frame[data-empty] .mm-os-score{display:none}
+#app-ecosystem .mm-os-frame[data-empty] .mm-os-decision{grid-template-columns:1fr}
+html[data-theme=event-horizon] #app-ecosystem .mm-os-layout{grid-template-columns:1fr;grid-template-areas:"story" "product" "notes";gap:28px}
+html[data-theme=event-horizon] #app-ecosystem .mm-os-story{display:grid;grid-template-columns:1.2fr .8fr;gap:8px 48px;max-width:none;border-top:1px solid var(--mm-border-strong);padding-top:24px}
+html[data-theme=event-horizon] #app-ecosystem .mm-os-story :is(.mm-os-kicker,.mm-os-overline){grid-column:1/-1}
+html[data-theme=event-horizon] #app-ecosystem .mm-os-story h2{font-size:clamp(2.4rem,4vw,4rem)}
+html[data-theme=event-horizon] #app-ecosystem .mm-os-story .mm-os-lead{align-self:center}
+html[data-theme=event-horizon] #app-ecosystem .mm-os-frame{border-radius:6px;border:1px solid var(--mm-border-strong);box-shadow:0 20px 50px rgb(0 4 18 / 20%);background:var(--mm-surface-1)}
+html[data-theme=event-horizon] #app-ecosystem .mm-os-tabs{background:var(--mm-bg-primary);border-radius:0}
+html[data-theme=event-horizon] #app-ecosystem .mm-os-tab{border-radius:3px}
+html[data-theme=event-horizon] #app-ecosystem .mm-os-tab[aria-selected=true]{background:var(--mm-surface-2);box-shadow:inset 0 -2px var(--mm-accent)}
+html[data-theme=event-horizon] #app-ecosystem :is(.mm-os-decision,.mm-os-metrics>div,.mm-os-card,.mm-os-chart-card){border-radius:4px;background:var(--mm-bg-secondary);box-shadow:none}
+html[data-theme=event-horizon] #app-ecosystem .mm-os-decision{border-inline-start:3px solid var(--mm-accent)}
+html[data-theme=event-horizon] #app-ecosystem .mm-os-metrics b{font-size:clamp(1.7rem,3vw,2.8rem);font-weight:500}
+html[data-theme=clarity] #app-ecosystem .mm-os-story{border-top:3px solid var(--mm-text-primary);padding-top:24px}
+html[data-theme=clarity] #app-ecosystem .mm-os-story h2{font-family:var(--mm-font-editorial);font-weight:500;font-size:clamp(3rem,4.4vw,4.8rem)}
+html[data-theme=clarity] #app-ecosystem .mm-os-frame{border-radius:0;border:1px solid var(--mm-border-strong);box-shadow:8px 8px 0 var(--mm-bg-secondary);background:var(--mm-surface-1)}
+html[data-theme=clarity] #app-ecosystem .mm-os-chrome{background:var(--mm-surface-1);border-bottom:1px solid var(--mm-text-primary)}
+html[data-theme=clarity] #app-ecosystem .mm-os-tabs{border-radius:0;background:none;border-bottom:1px solid var(--mm-border-strong)}
+html[data-theme=clarity] #app-ecosystem .mm-os-tab{border-radius:0}
+html[data-theme=clarity] #app-ecosystem .mm-os-tab[aria-selected=true]{background:none;color:var(--mm-accent);border-color:transparent;box-shadow:inset 0 -2px var(--mm-accent)}
+html[data-theme=clarity] #app-ecosystem :is(.mm-os-decision,.mm-os-metrics>div,.mm-os-card,.mm-os-chart-card){border-radius:0;box-shadow:none;background:var(--mm-surface-1)}
+html[data-theme=clarity] #app-ecosystem #mm-os-today-decision{font:500 clamp(2rem,3.6vw,3.25rem)/1.08 var(--mm-font-editorial)}
+html[data-theme=clarity] #app-ecosystem .mm-os-metrics b{font-family:var(--mm-font-editorial);font-weight:500;font-size:2.6rem}
+@media(min-width:901px){html[data-theme=event-horizon] #mm-os-screen-today.active{display:grid;grid-template-columns:1.2fr 1fr;gap:24px}html[data-theme=event-horizon] #mm-os-screen-today>.mm-os-decision{grid-column:1;grid-row:1}html[data-theme=event-horizon] #mm-os-screen-today>.mm-os-metrics{grid-column:2;grid-row:1;align-content:start;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}html[data-theme=event-horizon] #mm-os-screen-today>.mm-os-today-grid{grid-column:1/-1}}
+@media(max-width:600px){
+ #app-ecosystem .mm-os-story,html[data-theme=event-horizon] #app-ecosystem .mm-os-story{display:block}
+ #app-ecosystem .mm-os-story h2,html[data-theme=clarity] #app-ecosystem .mm-os-story h2{font-size:2.5rem;margin-bottom:14px}
+ #app-ecosystem .mm-os-story .mm-os-lead{font-size:1rem;line-height:1.6;margin-block:14px}
+ #app-ecosystem .mm-os-signalbar{display:none}
+ #app-ecosystem .mm-os-chrome{padding:14px 16px}
+ #app-ecosystem .mm-os-data-choice{padding:10px 16px}
+ #app-ecosystem .mm-os-data-origin{padding-block:10px}
+ #app-ecosystem .mm-os-tab{min-height:44px;padding:10px 8px;flex-basis:80px}
+ #app-ecosystem .mm-os-tab svg{display:none}
+ #app-ecosystem .mm-os-start{width:100%}
+}
+}

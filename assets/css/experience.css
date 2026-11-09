@@ -68,7 +68,7 @@ html[data-theme="clarity"] #services .mm-service-summary-main strong{font-family
 
 /* The fixed controls stay useful while taking up less of the page. */
 #mm-scroll-progress{height:2px;box-shadow:0 0 14px rgb(var(--color-gold)/.22);}
-#mm-quick-actions{flex-direction:row;align-items:center;gap:8px;}
+#mm-quick-actions{flex-direction:column;align-items:center;gap:8px;}
 #mm-quick-actions .mm-quick-btn{width:46px;min-width:46px;height:46px;min-height:46px;padding:0;border-color:var(--mm-border-strong);background:color-mix(in srgb,var(--mm-surface-1) 91%,transparent);box-shadow:0 10px 28px rgb(0 0 0/.2);backdrop-filter:blur(18px);letter-spacing:0;}
 #mm-quick-actions .mm-quick-btn.wide{padding:0;}
 #mm-quick-actions .mm-quick-btn svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}

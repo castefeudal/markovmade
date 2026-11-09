@@ -114,7 +114,7 @@ function extractComponent(html, className, name) {
   // Error destinations use the exact shell bootstrap and shared semantic palette.
   const appearance=template.match(/<script>\(function\(\)\{document\.documentElement\.classList\.add\('js'\);[\s\S]*?<\/script>/);
   if(!appearance)throw new Error('Shared appearance bootstrap missing');
-  const errorPage=fs.readFileSync(path.join(root,'src/404.html'),'utf8').replace('<!-- shared-appearance-bootstrap -->',appearance[0].replace(/assets\/media\//g,'/markovmade/assets/media/'));
+  const errorPage=fs.readFileSync(path.join(root,'src/404.html'),'utf8').replace(/\r\n/g,'\n').replace('<!-- shared-appearance-bootstrap -->',appearance[0].replace(/assets\/media\//g,'/markovmade/assets/media/'));
   fs.writeFileSync(path.join(root,'404.html'),errorPage);
   const expected=new Set(['site.css','lab.html','personal-os.html',...fs.readdirSync(path.join(root,'assets/js')).filter(name=>name.endsWith('.js'))]);
   for(const name of fs.readdirSync(out))if(!expected.has(name)&&/\.(css|js|html)$/.test(name))fs.unlinkSync(path.join(out,name));

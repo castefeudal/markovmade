@@ -183,6 +183,9 @@
       readiness: Array.isArray(recovery.signals)?[String(recovery.signals.length),copy('сигналов для перепроверки','signals to review')]:Number.isFinite(recovery.score) ? [`${Math.round(recovery.score)}/100`,recovery.status || copy('самооценка','self-report')] : ['—',copy('нет оценки','not scored')],
       trend: Number.isFinite(progress.weekly) ? [`${progress.weekly >= 0 ? '+' : ''}${n(progress.weekly)} ${unit}`,progress.plateau === 'Возможен' ? copy('возможное плато','possible plateau') : copy('среднее за неделю','weekly trend')] : ['—',copy('нужны измерения','measurements needed')]
     };
+/* BEGIN POLISH PRESENTATION: empty dashboard */
+    document.querySelector('.mm-os-frame')?.toggleAttribute('data-empty',Object.values(values).every(parts=>parts[0]==='—')&&!(state.body&&Number.isFinite(state.body.ffmi)));
+/* END POLISH PRESENTATION: empty dashboard */
     Object.entries(values).forEach(([key, parts]) => {
       const main=document.querySelector(`[data-os-model="${key}"]`), note=document.querySelector(`[data-os-model-note="${key}"]`);
       if(main)main.textContent=parts[0]; if(note)note.textContent=parts[1];

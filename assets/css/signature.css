@@ -1,16 +1,14 @@
 /* Signature surfaces: art direction lives here; component geometry has one owner. */
 @layer components {
 :root{--signature-opacity:.48;--signature-paper:rgb(199 174 120 / 5%);--signature-art:url('../media/signature/editorial-foil.svg')}
-html[data-theme=event-horizon]{--signature-opacity:.56;--signature-paper:rgb(115 169 215 / 7%);--signature-art:url('../media/signature/signal-field.svg')}
-html[data-theme=clarity]{--signature-opacity:.7;--signature-paper:rgb(47 103 125 / 4%);--signature-art:url('../media/signature/ceramic-relief.svg')}
+html[data-theme=event-horizon]{--signature-opacity:.3;--signature-paper:rgb(115 169 215 / 7%);--signature-art:url('../media/signature/signal-field.svg')}
+html[data-theme=clarity]{--signature-opacity:.7;--signature-paper:rgb(47 103 125 / 4%);--signature-art:none}
 #calculators .mm-lab-panel{position:relative;isolation:isolate;background:var(--mm-bg-primary)}
 #calculators .mm-lab-panel::before{content:'';position:absolute;z-index:-1;inset:0;pointer-events:none;background:var(--signature-scene) no-repeat right top / min(80%,700px) auto;opacity:var(--signature-opacity);mask-image:linear-gradient(180deg,#000,transparent 30rem)}
 #mm-lab-body{--signature-scene:url('../media/signature/biological.svg')}
 #mm-lab-nutrition,#mm-lab-overfeeding{--signature-scene:url('../media/signature/energy.svg')}
 #mm-lab-strength,#mm-lab-plates,#mm-lab-progression{--signature-scene:url('../media/signature/performance.svg')}
 #mm-lab-recovery,#mm-lab-progress,#mm-lab-caffeine{--signature-scene:url('../media/signature/signal.svg')}
-html[data-theme=event-horizon] #calculators .mm-lab-panel::before{filter:hue-rotate(155deg) saturate(.8)}
-html[data-theme=clarity] #calculators .mm-lab-panel::before{filter:brightness(.65) hue-rotate(155deg)}
 #calculators .mm-lab-tab::after{content:'';position:absolute;z-index:-1;inset:0;border-radius:inherit;background:var(--signature-art) no-repeat 80% 45% / 360px;opacity:.35;pointer-events:none}
 #calculators .mm-lab-tab[aria-selected=true]::after{opacity:.75}
 #services .mm-service-editorial-item{position:relative;isolation:isolate;border:1px solid var(--mm-border);border-radius:var(--mm-radius-editorial);margin-bottom:18px;background:var(--mm-surface-sheen),var(--mm-surface-1);box-shadow:var(--mm-shadow-card);overflow:clip}
@@ -135,8 +133,6 @@ body>footer [data-privacy-toggle]:focus-visible{outline:3px solid var(--mm-focus
 #community .mm-community-card:first-child{border-radius:var(--mm-radius-feature) 24px 24px 8px;border-top:2px solid var(--mm-accent)}
 #quick-faq .mm-editorial-detail-faq-card{border-radius:4px 18px 18px 18px;border-top:2px solid var(--mm-border-strong);box-shadow:inset 0 1px var(--mm-edge-highlight)}
 #contact .contact-outcome-panel{border-radius:6px 28px 28px 28px;box-shadow:inset 0 1px var(--mm-edge-highlight)}
-html[data-theme=event-horizon] :is(#services .mm-service-editorial-item,#community .mm-community-card,#contact .contact-value-card){border-radius:10px;box-shadow:inset 0 1px var(--mm-edge-highlight),var(--mm-shadow-surface)}
-html[data-theme=clarity] #quick-faq .mm-editorial-detail-faq-card{background:var(--mm-bg-primary);box-shadow:0 8px 24px rgb(40 49 63 / 5%)}
 @media(max-width:850px){#services .mm-service-editorial-item>summary{grid-template-columns:48px minmax(0,1fr) 44px;gap:12px 16px;padding:24px}#services .mm-service-preview{display:none}#services .mm-service-toggle{grid-column:3}#services .mm-service-editorial-body{margin-inline:24px}}
 @media(max-width:600px){#services .mm-service-editorial-item>summary{grid-template-columns:36px minmax(0,1fr) 44px;padding:20px 16px;gap:16px 10px}#services .mm-service-index{grid-row:1;font-size:1.5rem}#services .mm-service-icon{grid-column:2;grid-row:1}#services .mm-service-code{grid-column:2;grid-row:1;padding-left:36px;font-size:.6875rem;letter-spacing:.025em}#services .mm-service-summary-main{grid-column:1/-1;grid-row:2}#services .mm-service-summary-main strong{font-size:1.75rem}#services .mm-service-toggle{grid-column:3;grid-row:1}#services .mm-service-preview{display:block;grid-column:1/-1;grid-row:3;width:100%;height:160px}#services .mm-service-editorial-item[open] .mm-service-preview{display:none}#services .mm-service-editorial-body{margin-inline:16px}#biography .mm-timeline-list summary{grid-template-columns:72px minmax(0,1fr);padding-right:44px}#biography .mm-timeline-list summary>span:first-child{font-size:1.125rem;letter-spacing:-.07em}#biography .mm-timeline-summary-copy small{font-size:.6875rem;letter-spacing:.02em}}
 }

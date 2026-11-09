@@ -11,6 +11,16 @@ test('visual reconstruction preserves source bytes outside exact presentation re
    assert.ok(bytes.includes("head=node('tr');"+marker+'for(const label'),'focus belongs to the workout table');
    bytes=bytes.replace(marker,'');
   }
+  if(file==='assets/js/theme-system.js'){
+   const region=/\/\* BEGIN POLISH PRESENTATION: browser chrome \*\/[\s\S]*?\/\* END POLISH PRESENTATION: browser chrome \*\/\n/;
+   assert.equal([...bytes.matchAll(new RegExp(region.source,'g'))].length,1);
+   bytes=bytes.replace(region,"        'aurum-noir':'#080807', 'event-horizon':'#070b14', clarity:'#f6f5f1'\n");
+  }
+  if(file==='assets/js/lab-history.js'){
+   const region=/\/\* BEGIN POLISH PRESENTATION: empty dashboard \*\/[\s\S]*?\/\* END POLISH PRESENTATION: empty dashboard \*\/\n/;
+   assert.equal([...bytes.matchAll(new RegExp(region.source,'g'))].length,1);
+   bytes=bytes.replace(region,'');
+  }
   // Reconstruct exact Theme Studio UI regions (copy, preview and confirmation)
   // and retain the original hash over all remaining source bytes.
   if(file==='assets/js/theme-system.js'){

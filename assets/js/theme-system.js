@@ -9,14 +9,14 @@
     },
     'event-horizon': {
 /* BEGIN SIGNATURE PRESENTATION: studio-1 */
-      ru: ['Event Horizon', 'Холодная сталь · координаты · точность'],
-      en: ['Event Horizon', 'Cold steel · coordinates · precision']
+      ru: ['Event Horizon', 'Титан · хроматический свет · точность'],
+      en: ['Event Horizon', 'Titanium · chromatic light · precision']
 /* END SIGNATURE PRESENTATION: studio-1 */
     },
     clarity: {
 /* BEGIN SIGNATURE PRESENTATION: studio-2 */
-      ru: ['Clarity', 'Светлый камень · графит · ясность'],
-      en: ['Clarity', 'Light stone · graphite · clarity']
+      ru: ['Clarity', 'Архитектурная бумага · терракота · ателье'],
+      en: ['Clarity', 'Architectural paper · terracotta · atelier']
 /* END SIGNATURE PRESENTATION: studio-2 */
     }
   };
@@ -59,7 +59,9 @@
     var meta = document.getElementById('theme-color-meta');
     if (meta) {
       var colors = {
-        'aurum-noir':'#080807', 'event-horizon':'#070b14', clarity:'#f6f5f1'
+/* BEGIN POLISH PRESENTATION: browser chrome */
+        'aurum-noir':'#080807', 'event-horizon':'#0b1020', clarity:'#f4f1ea'
+/* END POLISH PRESENTATION: browser chrome */
       };
       meta.setAttribute('content', colors[theme]);
     }
@@ -143,7 +145,7 @@
     dialog.innerHTML = '<div class="mm-theme-head"><div><span class="mm-theme-overline">MARKOVMADE · APPEARANCE</span><h2 id="mm-theme-title" data-theme-title></h2><p data-theme-intro></p></div><button class="mm-theme-close" type="button" data-theme-close><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div><div class="mm-theme-options" role="group" aria-labelledby="mm-theme-title">' +
       Object.keys(themes).map(function (name) {
 /* BEGIN SIGNATURE PRESENTATION: studio-10 */
-        return '<button class="mm-theme-option" type="button" data-theme-value="' + name + '" aria-pressed="false"><span class="mm-theme-preview" aria-hidden="true"><img src="assets/media/theme-previews/' + name + '.webp" width="480" height="333" alt="" loading="lazy" decoding="async"></span><span class="mm-theme-copy"><b data-theme-name></b><small data-theme-description></small><span class="mm-theme-action" data-theme-action></span></span></button>';
+        return '<button class="mm-theme-option" type="button" data-theme-value="' + name + '" aria-pressed="false"><span class="mm-theme-preview" aria-hidden="true"><img src="assets/media/theme-previews/' + name + '.webp" width="480" height="480" alt="" loading="lazy" decoding="async"></span><span class="mm-theme-copy"><b data-theme-name></b><small data-theme-description></small><span class="mm-theme-action" data-theme-action></span></span></button>';
       }).join('') + '</div><p class="mm-theme-note" id="mm-theme-note" data-theme-note></p><div class="mm-theme-footer"><button type="button" data-theme-cancel></button><button type="button" data-theme-apply></button></div>';
 /* END SIGNATURE PRESENTATION: studio-10 */
     document.body.appendChild(dialog);

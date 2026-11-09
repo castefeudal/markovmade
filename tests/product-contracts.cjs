@@ -159,7 +159,9 @@ async function assertCta(page,label) {
       if(lang==='en')await first.waitForFunction(()=>document.querySelector('#hero .mm-primary-cta').textContent.includes('Open LAB'));
       assert.equal(await first.locator('html').getAttribute('data-theme'),theme);
       await assertComposition(first,`first-paint/${theme}/${lang}`);
-      if(theme!=='clarity'){const family=await first.locator('#hero h1').evaluate(el=>getComputedStyle(el).fontFamily);assert.ok(family.startsWith(lang==='ru'?'"Cormorant RU"':'"Cormorant Garamond"'),`${theme}/${lang}: first paint uses its locale font`);}
+      const family=await first.locator('#hero h1').evaluate(el=>getComputedStyle(el).fontFamily);
+      const expectedFamily=theme==='event-horizon'?'Manrope':lang==='ru'?'"Cormorant RU"':'"Cormorant Garamond"';
+      assert.ok(family.startsWith(expectedFamily),`${theme}/${lang}: first paint uses the world's locale font (${family})`);
       const colors=await first.locator('#hero .mm-primary-cta').evaluate(el=>({fg:getComputedStyle(el.querySelector('span')).color,bg:getComputedStyle(el).backgroundColor}));
       assert.ok(contrast(colors.fg,colors.bg)>=4.5,`critical CSS CTA is legible in ${theme}/${lang}`);
       assert.ok(!fetched.some(u=>/site\.css|\.mp4|hero-frames|lab-runtime|personal-os\.html|lab\.html/.test(u)),`${theme}/${lang}: first paint is independent of below-fold assets`);
