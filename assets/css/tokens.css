@@ -26,6 +26,7 @@
   --mm-selection-text: #17140e;
   --mm-focus: #e2ca91;
   --mm-input-bg: #11100e;
+  --mm-control-border:#77746c;
   --mm-success: #91b69b;
   --mm-warning: #d3b36e;
   --mm-danger: #d78e84;
@@ -150,8 +151,8 @@ html[data-theme="event-horizon"] {
   --mm-accent:#8fe3dd;--mm-accent-hover:#b6f3ec;--mm-accent-soft:rgb(143 227 221 / 10%);--mm-on-accent:#081b22;
   --mm-metal-highlight:#e4eef7;--mm-data-primary:#8fe3dd;--mm-data-secondary:#c3cadd;
   --mm-data-band:rgb(143 227 221 / 12%);--mm-chart-grid:rgb(193 206 221 / 15%);
-  --mm-border:rgb(193 206 221 / 18%);--mm-border-strong:rgb(193 206 221 / 38%);--mm-section-divider:rgb(193 206 221 / 22%);
-  --mm-selection-bg:#8fe3dd;--mm-selection-text:#081b22;--mm-focus:#b6f3ec;--mm-input-bg:#0f1728;
+  --mm-border:rgb(193 206 221 / 18%);--mm-border-strong:rgb(193 206 221 / 46%);--mm-section-divider:rgb(193 206 221 / 22%);
+  --mm-selection-bg:#8fe3dd;--mm-selection-text:#081b22;--mm-focus:#b6f3ec;--mm-input-bg:#0f1728;--mm-control-border:#62768c;
   --mm-media-filter:none;--mm-noise-opacity:0;--mm-grid-color:rgb(193 206 221 / 8%);--mm-glow-primary:rgb(143 227 221 / 6%);
   --mm-surface-sheen:linear-gradient(110deg,rgb(230 242 255 / 7%),transparent 36%,rgb(143 227 221 / 3%) 70%,transparent);
   --mm-surface-metal:linear-gradient(110deg,rgb(196 218 240 / 7%),transparent 65%);
@@ -175,7 +176,7 @@ html[data-theme="clarity"] {
   --mm-accent:#a43b29;--mm-accent-hover:#802b20;--mm-accent-soft:#f4e4dc;--mm-on-accent:#fffdf8;
   --mm-metal-highlight:#a43b29;--mm-data-primary:#a43b29;--mm-data-secondary:#465d62;
   --mm-data-band:#eed6c9;--mm-chart-grid:#bdb5a8;--mm-border:#d4ccbf;--mm-border-strong:#978a78;--mm-section-divider:#bdb1a0;
-  --mm-selection-bg:#ecd3c4;--mm-selection-text:#172027;--mm-focus:#8b2e21;--mm-input-bg:#fffdf8;
+  --mm-selection-bg:#ecd3c4;--mm-selection-text:#172027;--mm-focus:#8b2e21;--mm-input-bg:#fffdf8;--mm-control-border:#978a78;
   --mm-success:#246044;--mm-warning:#795012;--mm-danger:#a02c28;--mm-info:#365962;
   --mm-media-filter:none;--mm-hero-overlay:none;--mm-noise-opacity:0;--mm-grid-color:rgb(151 138 120 / 12%);--mm-glow-primary:transparent;
   --mm-surface-sheen:linear-gradient(115deg,rgb(255 255 255 / 60%),transparent 65%);
@@ -224,4 +225,3 @@ img, video { filter: var(--mm-media-filter); }
     *, *::before, *::after { transition-property: none; animation-name: none; }
   }
 }
-

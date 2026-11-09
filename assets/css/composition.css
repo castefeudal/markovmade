@@ -2,7 +2,7 @@
 /* Composition owns section grids and editorial rhythm. Component controls keep
    their own files; replaced card/layout rules have been removed from legacy owners. */
 .mm-editorial-inner{width:min(var(--mm-content-width),calc(100% - 2 * var(--mm-page-gutter)));}
-#proof-system,#case-scenarios,#method-proof,#about,#biography,#community,#quick-faq,#calculators,#app-ecosystem{padding-block:var(--mm-space-section);}
+#proof-system,#case-scenarios,#method-proof,#about,#biography,#community,#quick-faq,#app-ecosystem{padding-block:var(--mm-space-section);}
 :is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-head{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:20px 64px;align-items:end;max-width:none;text-align:left;margin-bottom:clamp(40px,5vw,72px);}
 :is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-kicker{grid-column:1/-1;justify-content:flex-start;margin:0;}
 :is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-title{margin:0;font:var(--mm-font-section-display);letter-spacing:-.04em;}
@@ -100,8 +100,8 @@
 #contact .contact-value-card>p{font-size:1rem;line-height:1.8;}
 #personal-request .mm-editorial-quiz{border-radius:8px;box-shadow:none;background:var(--mm-bg-secondary);}
 @media(max-width:1100px){#proof-system .mm-editorial-inner{gap:40px;}#proof-system .mm-trust-heading{top:96px;}}
-@media(max-width:850px){:is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-head,#calculators .mm-lab-intro,#community .mm-community-head{grid-template-columns:1fr;gap:20px;}:is(#case-scenarios,#method-proof,#biography) .mm-editorial-copy{max-width:64ch;}#proof-system .mm-editorial-inner,#about .mm-about-grid,#method-proof .mm-editorial-process{grid-template-columns:1fr;}#proof-system .mm-trust-heading,#about .mm-author-story-photo{position:relative;top:auto;}#about .mm-author-story-photo{max-width:640px;margin-inline:auto;}#case-scenarios .mm-case-study-layout-cases-grid{grid-template-columns:1fr;}#case-scenarios .mm-case-study-layout-case-card{padding:26px 0 30px;}#case-scenarios .mm-case-study-layout-cases-cta{flex-direction:column;align-items:flex-start;}#biography .mm-timeline-list summary{grid-template-columns:96px minmax(0,1fr);gap:24px;}#biography .mm-timeline-content{padding-left:120px;}}
-@media(max-width:600px){:is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-title,#proof-system h2,#about h2,#calculators .mm-lab-title{font-size:clamp(2.35rem,10vw,3.5rem);}#proof-system .mm-trust-card{padding-block:28px;}#proof-system .mm-trust-years{flex-wrap:wrap;}#about .mm-author-purpose{grid-template-columns:1fr;gap:24px;}#biography .mm-timeline-list summary{grid-template-columns:72px minmax(0,1fr);gap:16px;padding-right:32px;min-height:112px;}#biography .mm-timeline-content{padding-left:0;}#biography .mm-timeline-photos{gap:16px;}#biography .mm-timeline-photos img{max-height:360px;}#method-proof .mm-editorial-step{grid-template-columns:44px minmax(0,1fr);gap:16px;}#method-proof .mm-editorial-step-num{font-size:2.5rem;}#case-scenarios .mm-case-study-case-list li{grid-template-columns:1fr;gap:4px;}#community .mm-community-card,#community .mm-community-card:first-child{padding:28px 0;border-left:0;}#community .mm-community-head h2{font-size:clamp(2.8rem,11vw,4rem);}}
+@media(max-width:850px){:is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-head,#community .mm-community-head{grid-template-columns:1fr;gap:20px;}:is(#case-scenarios,#method-proof,#biography) .mm-editorial-copy{max-width:64ch;}#proof-system .mm-editorial-inner,#about .mm-about-grid,#method-proof .mm-editorial-process{grid-template-columns:1fr;}#proof-system .mm-trust-heading,#about .mm-author-story-photo{position:relative;top:auto;}#about .mm-author-story-photo{max-width:640px;margin-inline:auto;}#case-scenarios .mm-case-study-layout-cases-grid{grid-template-columns:1fr;}#case-scenarios .mm-case-study-layout-case-card{padding:26px 0 30px;}#case-scenarios .mm-case-study-layout-cases-cta{flex-direction:column;align-items:flex-start;}#biography .mm-timeline-list summary{grid-template-columns:96px minmax(0,1fr);gap:24px;}#biography .mm-timeline-content{padding-left:120px;}}
+@media(max-width:600px){:is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-title,#proof-system h2,#about h2{font-size:clamp(2.35rem,10vw,3.5rem);}#proof-system .mm-trust-card{padding-block:28px;}#proof-system .mm-trust-years{flex-wrap:wrap;}#about .mm-author-purpose{grid-template-columns:1fr;gap:24px;}#biography .mm-timeline-list summary{grid-template-columns:72px minmax(0,1fr);gap:16px;padding-right:32px;min-height:112px;}#biography .mm-timeline-content{padding-left:0;}#biography .mm-timeline-photos{gap:16px;}#biography .mm-timeline-photos img{max-height:360px;}#method-proof .mm-editorial-step{grid-template-columns:44px minmax(0,1fr);gap:16px;}#method-proof .mm-editorial-step-num{font-size:2.5rem;}#case-scenarios .mm-case-study-case-list li{grid-template-columns:1fr;gap:4px;}#community .mm-community-card,#community .mm-community-card:first-child{padding:28px 0;border-left:0;}#community .mm-community-head h2{font-size:clamp(2.8rem,11vw,4rem);}}
 
 /* Optical finishing: one quiet edge, a clear reading measure, responsive actions. */
 :is(#services,#case-scenarios,#biography) figure{isolation:isolate;}
@@ -257,18 +257,18 @@
 /* Editorial depth follows the shared palette in every world. Static layers keep paint inexpensive. */
 }
 @layer components {
-  :is(#services,#about,#biography,#calculators,#app-ecosystem,#method-proof,#contact){
+  :is(#services,#about,#biography,#app-ecosystem,#method-proof,#contact){
     background-image:radial-gradient(ellipse at 8% 0,var(--mm-glow-primary),transparent 54%),linear-gradient(115deg,var(--mm-accent-soft),transparent 38%);
     background-repeat:no-repeat;
   }
-  :is(#services,#about,#biography,#calculators,#app-ecosystem,#method-proof,#contact)::before{
+  :is(#services,#about,#biography,#app-ecosystem,#method-proof,#contact)::before{
     content:"";display:block;width:min(100%,var(--mm-content-width));height:1px;margin:0 auto clamp(24px,3vw,48px);
     background:linear-gradient(90deg,transparent,var(--mm-border-strong) 18%,var(--mm-accent) 52%,transparent);
   }
 }
 @layer components {
-  :is(#services,#method-proof,#calculators,#app-ecosystem,#contact){position:relative;isolation:isolate}
-  :is(#services,#method-proof,#calculators,#app-ecosystem,#contact)::after{
+  :is(#services,#method-proof,#app-ecosystem,#contact){position:relative;isolation:isolate}
+  :is(#services,#method-proof,#app-ecosystem,#contact)::after{
     content:"";position:absolute;z-index:-1;pointer-events:none;inset:0 0 auto auto;width:min(72%,1200px);height:640px;
     background:var(--mm-accent);opacity:.055;mask:var(--mm-scene) center/contain no-repeat;
   }
@@ -281,7 +281,7 @@
     html:not([data-save-data]) #calculators .mm-lab-scenarios button{transition:transform var(--mm-motion-fast),border-color var(--mm-motion-fast)}
     html:not([data-save-data]) #calculators .mm-lab-scenarios button:hover{transform:translateY(-2px);border-color:var(--mm-accent)}
   }
-  @media(max-width:640px){:is(#services,#method-proof,#calculators,#app-ecosystem,#contact)::after{width:100%;height:360px;opacity:.035}}
+  @media(max-width:640px){:is(#services,#method-proof,#app-ecosystem,#contact)::after{width:100%;height:360px;opacity:.035}}
 }
 @layer components {
   /* Keep final punctuation in the text flow when the editorial accent wraps. */

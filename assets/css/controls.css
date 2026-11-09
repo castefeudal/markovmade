@@ -43,7 +43,7 @@ body.menu-open { overflow: hidden; }
 #hero .mm-secondary-cta,#calculators .mm-lab-secondary{background:var(--mm-surface-sheen),var(--mm-bg-secondary);border:1px solid var(--mm-border-strong);box-shadow:inset 0 1px var(--mm-edge-highlight);color:var(--mm-text-primary)}
 #calculators :is(.mm-lab-primary,.mm-lab-secondary){min-height:52px;padding:14px 20px;white-space:normal;overflow-wrap:anywhere}
 #calculators .mm-lab-primary:is(:disabled,[aria-disabled=true]){border-style:dashed;background:var(--mm-surface-2);color:var(--mm-text-muted);box-shadow:none;cursor:not-allowed}
-#calculators :is(.mm-lab-input,.mm-lab-select,.mm-lab-textarea){border-radius:12px;background:var(--mm-input-bg);border:1px solid var(--mm-border-strong);box-shadow:inset 0 2px 5px rgb(0 0 0 / 5%);transition:border-color var(--mm-duration-control),box-shadow var(--mm-duration-control)}
+#calculators :is(.mm-lab-input,.mm-lab-select,.mm-lab-textarea){border-radius:12px;background:var(--mm-input-bg);border:1px solid var(--mm-control-border);box-shadow:inset 0 2px 5px rgb(0 0 0 / 5%);transition:border-color var(--mm-duration-control),box-shadow var(--mm-duration-control)}
 #calculators :is(.mm-lab-input,.mm-lab-select,.mm-lab-textarea):focus{border-color:var(--mm-accent);outline:3px solid var(--mm-focus);outline-offset:3px;box-shadow:inset 0 1px var(--mm-edge-highlight)}
 #calculators .mm-lab-field>label{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;justify-content:space-between}
 #calculators .mm-lab-field>label em{font:var(--mm-font-micro);font-style:normal;color:var(--mm-text-muted)}
@@ -63,7 +63,7 @@ body.menu-open { overflow: hidden; }
 /* A utility dock stays outside the reading column and out of all modal surfaces. */
 #mm-quick-actions{right:max(12px,calc((100vw - var(--mm-content-width))/2 - 58px));bottom:max(20px,env(safe-area-inset-bottom));z-index:40}
 body.menu-open #mm-quick-actions,body:has(dialog[open]) #mm-quick-actions{visibility:hidden;pointer-events:none}
-@media(max-width:1100px){#mm-quick-actions{display:none}}
+@media(max-width:1439px){#mm-quick-actions{display:none}}
 html[data-theme=event-horizon] :is(.mm-primary-cta,.mm-lab-primary,.lead-action){border-radius:6px}
 html[data-theme=clarity] :is(.mm-primary-cta,.mm-lab-primary,.lead-action,.contact-btn){border-radius:3px;box-shadow:none}
 }

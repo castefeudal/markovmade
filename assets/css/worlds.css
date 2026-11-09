@@ -7,6 +7,7 @@ html[data-theme=event-horizon] .mm-editorial-kicker{font-family:var(--mm-font-bo
 html[data-theme=event-horizon] :is(.mm-editorial-title,.mm-trust-heading h2){font-weight:600}
 html[data-theme=event-horizon] :is(#community .mm-community-card,#contact .contact-value-card){border-radius:4px;box-shadow:none;background:var(--mm-surface-sheen),var(--mm-surface-1)}
 html[data-theme=event-horizon] #services .mm-service-editorial-item{border-radius:6px;border-color:var(--mm-border-strong);box-shadow:inset 4px 0 var(--mm-surface-2)}
+html[data-theme=event-horizon] #contact .contact-card-kicker{border-radius:2px;background:var(--mm-bg-primary);justify-content:flex-start}
 html[data-theme=event-horizon] #services .mm-service-preview{border-radius:3px}
 html[data-theme=event-horizon] .mm-timeline-list summary>span:first-child{font-family:var(--mm-font-body);font-size:1.25rem;letter-spacing:0}
 html[data-theme=clarity] :is(#proof-system,#method-proof,#quick-faq){background:var(--mm-bg-primary)}
@@ -19,7 +20,7 @@ html[data-theme=clarity] #services :is(.mm-service-preview,.mm-service-editorial
 html[data-theme=clarity] :is(#biography .mm-plate,#about .mm-author-story-photo){border-radius:0;padding:8px;background:var(--mm-surface-1);box-shadow:6px 6px 0 var(--mm-bg-secondary)}
 html[data-theme=clarity] #method-proof .mm-editorial-layout-steps{background:none}
 html[data-theme=clarity] #contact .contact-value-card{background:var(--mm-surface-1);border:0;border-top:3px solid var(--mm-text-primary);border-radius:0;box-shadow:none}
-html[data-theme=clarity] #contact .contact-card-kicker{background:none;padding-inline:0;text-align:start;border-radius:0}
+html[data-theme=clarity] #contact .contact-card-kicker{background:none;padding-inline:0;text-align:start;border-radius:0;border:0;box-shadow:none;justify-content:flex-start}
 html[data-theme=clarity] #contact .contact-outcome-panel{border-radius:0;box-shadow:none;background:var(--mm-bg-secondary)}
 }
 @layer base {
