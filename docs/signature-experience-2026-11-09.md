@@ -48,13 +48,40 @@ commit; photos and other resources are shared. It also checks page overflow at
 captures the 404 in each theme. `SIGNATURE_STAGE=after` refreshes only the final
 captures. These are review artifacts, not automatically approved baselines.
 
+Comparisons use **before on the left / after on the right**; rows are Aurum
+Noir, Event Horizon and Clarity. These are actual browser screenshots:
+
+- [Hero](signature-evidence/compare-hero.png)
+- [LAB](signature-evidence/compare-lab.png)
+- [Personal OS](signature-evidence/compare-os.png)
+- [Contact](signature-evidence/compare-contact.png)
+- [Theme Studio](signature-evidence/compare-studio.png)
+
 Only reviewed Theme Studio baselines should change. Existing comparison
 thresholds and the other visual references remain in force.
 
 ## Validation status
 
-Final command outcomes and reviewed screenshots are recorded here before the
-PR is marked ready. In-progress logs are under `test-results/signature-*.log`.
+| Check | Local result |
+| --- | --- |
+| `npm ci` | Passed |
+| `npm run build` | Passed; generated `index.html`, `404.html`, `assets/dist/` |
+| `npm test` | 48/48 passed |
+| `npm run test:e2e` | Complete pipeline status is recorded in PR #19 Quality checks; component logs are retained locally |
+| `npm run test:a11y` | Passed RU/EN × three themes, LAB/OS/dialogs; axe still leaves contrast checks for manual review |
+| `npm run test:visual` | Passed Chromium/Firefox/WebKit, RU/EN, three themes, 320–2560; real video poses and touch/reduced motion |
+| `npm run test:paint` | Passed 24 streaming scenes; maximum observed CLS 0.00069 |
+| `npm run test:lighthouse` | Three cold-site runs: median mobile 98, desktop 100; A/BP/SEO 100 |
+| `node tests/signature-browser.cjs` | All three engines; RU/EN, keyboard/touch, preview/cancel/save, storage/URL/focus |
+| `node tests/signature-review.cjs` | Real before/after captures and responsive/404 checks passed |
+| `npm run audit:contrast -- <theme> 390 844` | Painted-pixel samples: Aurum 504, Horizon 498, Clarity 499 text runs; no sampled run below AA (sampling does not replace a full manual audit) |
+| `git diff --check` | Passed |
+| `npm run test:production` | Not run: this PR has not been deployed |
+
+Mobile Lighthouse LCP samples were 1.932 / 2.075 / 2.168 seconds, with CLS 0.
+These are local laboratory observations. Logs are under
+`test-results/signature-*.log`; CI results and Linux baseline review follow in
+the PR.
 
 There is no production claim before this PR is merged and its matching Pages
 build is published. `test:production` checks exact served bytes and must run
@@ -65,3 +92,15 @@ separate from the automated browser matrix.
 `npm ci` completed. Its audit reported four existing development-tool dependency
 findings (one moderate, three high); no runtime dependency was added. Dependency
 upgrades are not bundled into the visual change.
+
+## Linux visual review
+
+The [Linux candidate run](https://github.com/castefeudal/markovmade/actions/runs/42693805418)
+captured real UI images at `206b5e8`. Both changed Theme Studio images were
+opened and reviewed at their original dimensions before copying **only those
+two files** into `tests/visual-baselines/linux/`. Windows counterparts were
+likewise reviewed. No mismatch threshold changed. The 30 Linux Hero contract
+captures still compare within the existing 10% threshold against their original
+references; 10 matching UI captures also compared successfully after the two
+intentional picker updates. Final acceptance is the PR's normal Quality job,
+not the capture workflow (which deliberately permits failing capture steps).

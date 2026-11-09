@@ -41,7 +41,6 @@
   --mm-radius-technical: 4px;
   --mm-radius-editorial: 20px;
   --mm-radius-instrument: 18px;
-  --mm-panel-rule: solid;
   --mm-hero-scene: linear-gradient(90deg, transparent 72%, var(--mm-grid-color) 72%, var(--mm-grid-color) calc(72% + 1px), transparent calc(72% + 1px));
   --mm-radius-control:12px;
   --mm-radius-card:20px;
@@ -145,7 +144,6 @@ html[data-theme="aurum-noir"], html[data-theme="obsidian"] {
 html[data-theme="event-horizon"] {
   --mm-radius-editorial: 8px;
   --mm-radius-instrument: 6px;
-  --mm-panel-rule: dashed;
   --mm-hero-scene: linear-gradient(var(--mm-grid-color) 1px, transparent 1px), linear-gradient(90deg,var(--mm-grid-color) 1px, transparent 1px);
   --mm-on-accent: #07101d;
   color-scheme: dark;

@@ -81,4 +81,3 @@ html[data-theme=clarity] #hero .hero-proof-grid{background:linear-gradient(130de
 @media(max-width:1180px){#hero::before{inset:86px var(--mm-page-gutter) 30px;border-inline-start:0}#hero .hero-kicker{padding:8px 12px}#hero .hero-proof-grid{margin-top:4px}}
 @media(max-width:600px){#hero .hero-proof-grid{padding:18px 14px;gap:10px}#hero .hero-proof-item+.hero-proof-item{padding-inline-start:10px}#hero .hero-proof-item span{font-size:.8125rem}#hero .hero-kicker{max-width:100%;font-size:.75rem;letter-spacing:.025em}}
 }
-/* The portrait's authored crop is unchanged. Its plinth and light are architectural. */

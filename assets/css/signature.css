@@ -129,8 +129,6 @@ body>footer [data-privacy-toggle]:focus-visible{outline:3px solid var(--mm-focus
 #method-proof .mm-editorial-layout-step{position:relative;padding-block:28px;transition:border-color var(--mm-duration-control)}
 #method-proof .mm-editorial-layout-step:hover{border-color:var(--mm-accent)}
 #method-proof .mm-editorial-step-num{font-family:var(--mm-font-body);font-weight:450;letter-spacing:-.08em;opacity:.72}
-#proof-system .mm-trust-card{border-radius:8px 24px 24px 8px;border-inline-start:3px solid var(--mm-border-strong)}
-#proof-system .mm-trust-card:first-child{border-inline-start-color:var(--mm-accent)}
 #about .mm-author-purpose{border-radius:4px 24px 24px 24px;border-top:2px solid var(--mm-accent)}
 #case-scenarios .mm-case-study-layout-case-card{position:relative;border-bottom:1px solid var(--mm-border-strong);padding-bottom:32px}
 #community .mm-community-card{border-radius:var(--mm-radius-feature) 24px 8px 24px;box-shadow:inset 0 1px var(--mm-edge-highlight),var(--mm-shadow-surface)}
