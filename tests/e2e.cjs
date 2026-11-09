@@ -274,6 +274,9 @@ let browser;
   await page.waitForFunction(() => JSON.parse(localStorage.getItem('markovmade-lab-history-v1') || '[]').length === 10);
   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-daily-v1')).length),14,'JSON backup restores daily check-ins');
 
+  // Import reloads the shell. Reach lazy editorial content through the same
+  // navigation path as a visitor, rather than racing a still-skipped subtree.
+  await page.locator('#main-header nav a[href="#services"]').click();
   const accordion = page.locator('#services .mm-service-editorial-item summary').first();
   await accordion.click();
   assert.equal(await accordion.evaluate(el=>el.parentElement.open),true);
