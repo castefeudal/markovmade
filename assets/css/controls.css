@@ -58,3 +58,12 @@ body.menu-open { overflow: hidden; }
 #calculators :is(.mm-lab-details,.mm-evidence,.mm-toolkit-precision)>summary:focus-visible{outline:3px solid var(--mm-focus);outline-offset:3px}
 #mm-quick-actions .mm-quick-btn{width:48px;height:48px;min-height:48px;border-radius:16px;background:var(--mm-nav-material);box-shadow:var(--mm-nav-shadow);border:1px solid var(--mm-border-strong)}
 }
+
+@layer components {
+/* A utility dock stays outside the reading column and out of all modal surfaces. */
+#mm-quick-actions{right:max(12px,calc((100vw - var(--mm-content-width))/2 - 58px));bottom:max(20px,env(safe-area-inset-bottom));z-index:40}
+body.menu-open #mm-quick-actions,body:has(dialog[open]) #mm-quick-actions{visibility:hidden;pointer-events:none}
+@media(max-width:1100px){#mm-quick-actions{display:none}}
+html[data-theme=event-horizon] :is(.mm-primary-cta,.mm-lab-primary,.lead-action){border-radius:6px}
+html[data-theme=clarity] :is(.mm-primary-cta,.mm-lab-primary,.lead-action,.contact-btn){border-radius:3px;box-shadow:none}
+}

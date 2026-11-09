@@ -99,8 +99,6 @@
 #contact .contact-value-card h3{font-size:clamp(1.75rem,2.5vw,2.5rem);line-height:1.15;}
 #contact .contact-value-card>p{font-size:1rem;line-height:1.8;}
 #personal-request .mm-editorial-quiz{border-radius:8px;box-shadow:none;background:var(--mm-bg-secondary);}
-html[data-theme="clarity"] :is(#proof-system h2,#about h2,#community .mm-community-head h2,#calculators .mm-lab-title){font-weight:650;line-height:1.12;letter-spacing:-.04em;}
-html[data-theme="event-horizon"] :is(#proof-system,#method-proof,#biography){background-image:linear-gradient(90deg,transparent calc(50% - .5px),var(--mm-grid-color) 50%,transparent calc(50% + .5px));}
 @media(max-width:1100px){#proof-system .mm-editorial-inner{gap:40px;}#proof-system .mm-trust-heading{top:96px;}}
 @media(max-width:850px){:is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-head,#calculators .mm-lab-intro,#community .mm-community-head{grid-template-columns:1fr;gap:20px;}:is(#case-scenarios,#method-proof,#biography) .mm-editorial-copy{max-width:64ch;}#proof-system .mm-editorial-inner,#about .mm-about-grid,#method-proof .mm-editorial-process{grid-template-columns:1fr;}#proof-system .mm-trust-heading,#about .mm-author-story-photo{position:relative;top:auto;}#about .mm-author-story-photo{max-width:640px;margin-inline:auto;}#case-scenarios .mm-case-study-layout-cases-grid{grid-template-columns:1fr;}#case-scenarios .mm-case-study-layout-case-card{padding:26px 0 30px;}#case-scenarios .mm-case-study-layout-cases-cta{flex-direction:column;align-items:flex-start;}#biography .mm-timeline-list summary{grid-template-columns:96px minmax(0,1fr);gap:24px;}#biography .mm-timeline-content{padding-left:120px;}}
 @media(max-width:600px){:is(#case-scenarios,#method-proof,#biography,#quick-faq) .mm-editorial-title,#proof-system h2,#about h2,#calculators .mm-lab-title{font-size:clamp(2.35rem,10vw,3.5rem);}#proof-system .mm-trust-card{padding-block:28px;}#proof-system .mm-trust-years{flex-wrap:wrap;}#about .mm-author-purpose{grid-template-columns:1fr;gap:24px;}#biography .mm-timeline-list summary{grid-template-columns:72px minmax(0,1fr);gap:16px;padding-right:32px;min-height:112px;}#biography .mm-timeline-content{padding-left:0;}#biography .mm-timeline-photos{gap:16px;}#biography .mm-timeline-photos img{max-height:360px;}#method-proof .mm-editorial-step{grid-template-columns:44px minmax(0,1fr);gap:16px;}#method-proof .mm-editorial-step-num{font-size:2.5rem;}#case-scenarios .mm-case-study-case-list li{grid-template-columns:1fr;gap:4px;}#community .mm-community-card,#community .mm-community-card:first-child{padding:28px 0;border-left:0;}#community .mm-community-head h2{font-size:clamp(2.8rem,11vw,4rem);}}
@@ -166,8 +164,6 @@ html[data-theme="event-horizon"] :is(#proof-system,#method-proof,#biography){bac
 #biography .mm-plate-caption{margin-top:11px;font:500 .6875rem/1.6 var(--mm-font-body);letter-spacing:.17em;text-transform:uppercase;color:var(--mm-text-muted)}
 #biography .mm-timeline-list details:nth-of-type(2) .mm-plates-lead,#biography .mm-timeline-list details:nth-of-type(3) .mm-plates-lead{margin-left:0}
 #biography .mm-timeline-list details:nth-of-type(5) .mm-plates-pair{grid-template-columns:minmax(0,290px) minmax(0,1fr)}
-html[data-theme="clarity"] :is(#services .mm-service-editorial-visual,#services .mm-service-preview,#biography .mm-plate picture,#about .mm-author-story-plate picture){border:1px solid rgb(32 90 112/.14);box-shadow:0 22px 44px -30px rgb(12 26 33/.4)}
-html[data-theme="clarity"] .mm-plate-marks::before,html[data-theme="clarity"] .mm-plate-marks::after{border-color:var(--mm-accent);opacity:.6}
 @media(max-width:850px){
  #about .mm-author-story-plate{position:relative;top:auto;width:min(100%,520px);max-width:520px;margin-inline:auto}
  #biography .mm-timeline-photos,#biography .mm-timeline-list details:nth-of-type(5) .mm-plates-pair{grid-template-columns:minmax(0,1fr);max-width:560px}
@@ -182,15 +178,11 @@ html[data-theme="clarity"] .mm-plate-marks::before,html[data-theme="clarity"] .m
 }
 
 /* ── Header identity: legible at 16px, theme-aware by inheritance ───────*/
-@media(max-width:600px){}
 /* Phones used to inherit the header's own gutter *and* the container's, so the brand
    sat 47px in while the hero started at 20px and the wordmark was squeezed into a
    clipped fragment next to the three control targets. One gutter, full lockup. */
-@media(max-width:600px){
-}
 /* On the narrowest phones the lockup reduces to the monogram, and the wordmark
    clips rather than pushing the theme, language and menu controls aside. */
-@media(max-width:359px){}
 
 /* ── Chronology rail: the LEGACY marker must never collide with the title ─*/
 @media(min-width:851px){
@@ -295,4 +287,10 @@ html[data-theme="clarity"] .mm-plate-marks::before,html[data-theme="clarity"] .m
   /* Keep final punctuation in the text flow when the editorial accent wraps. */
   #method-proof .mm-editorial-goldline{display:inline;text-decoration:underline;text-decoration-color:var(--mm-accent);text-decoration-thickness:1px;text-underline-offset:.14em}
   #method-proof .mm-editorial-goldline::after{content:none}
+}
+
+/* Tablet contact has a reading measure, not three narrow text columns. */
+@layer components {
+@media(min-width:600px) and (max-width:1100px){#contact .contact-value-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}#contact .contact-value-card:last-child{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:0 32px}#contact .contact-value-card:last-child .contact-card-kicker{grid-column:1/-1}#contact .contact-value-card:last-child .value-mini-list{grid-column:2;grid-row:2/5}#contact .contact-value-card>p{min-height:0}}
+@media(max-width:599px){#contact .contact-value-grid{grid-template-columns:1fr}#contact .contact-value-card>p{min-height:0}}
 }

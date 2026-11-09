@@ -9,14 +9,14 @@
     },
     'event-horizon': {
 /* BEGIN SIGNATURE PRESENTATION: studio-1 */
-      ru: ['Event Horizon', 'Холодная сталь · координаты · точность'],
-      en: ['Event Horizon', 'Cold steel · coordinates · precision']
+      ru: ['Event Horizon', 'Титан · хроматический свет · точность'],
+      en: ['Event Horizon', 'Titanium · chromatic light · precision']
 /* END SIGNATURE PRESENTATION: studio-1 */
     },
     clarity: {
 /* BEGIN SIGNATURE PRESENTATION: studio-2 */
-      ru: ['Clarity', 'Светлый камень · графит · ясность'],
-      en: ['Clarity', 'Light stone · graphite · clarity']
+      ru: ['Clarity', 'Архитектурная бумага · терракота · ателье'],
+      en: ['Clarity', 'Architectural paper · terracotta · atelier']
 /* END SIGNATURE PRESENTATION: studio-2 */
     }
   };
@@ -59,7 +59,9 @@
     var meta = document.getElementById('theme-color-meta');
     if (meta) {
       var colors = {
-        'aurum-noir':'#080807', 'event-horizon':'#070b14', clarity:'#f6f5f1'
+/* BEGIN POLISH PRESENTATION: browser chrome */
+        'aurum-noir':'#080807', 'event-horizon':'#0b1020', clarity:'#f4f1ea'
+/* END POLISH PRESENTATION: browser chrome */
       };
       meta.setAttribute('content', colors[theme]);
     }
