@@ -26,6 +26,10 @@ const luminance=s=>s.match(/[\d.]+/g).slice(0,3).map(Number).map(x=>{x/=255;retu
      assert.ok(Math.abs(cards[0].top-cards[1].top)<2&&cards[2].top>cards[0].top&&cards[2].width>cards[0].width*1.7,`${name}/${theme}/${width}: contact uses a readable 2+1 composition`);
     }
     if(width<=1439)assert.equal(await page.locator('#mm-quick-actions').isVisible(),false,'utility dock is absent where the reading gutter is too narrow');
+    else{
+     const gutter=await page.locator('#mm-quick-actions').evaluate(el=>({left:el.getBoundingClientRect().left,right:document.querySelector('#main-header>.container').getBoundingClientRect().right}));
+     assert.ok(gutter.left>=gutter.right-1,`${name}/${lang}/${theme}/${width}: utilities stay outside the reading column ${JSON.stringify(gutter)}`);
+    }
     // Text-only enlargement: preserve rem layout lengths and restore every
     // existing inline value afterwards, so responsive samples stay independent.
     await page.evaluate(()=>{window.polishTextSizes=[...document.querySelectorAll('body *')].filter(el=>!['SCRIPT','STYLE','TITLE','DESC'].includes(el.tagName)&&(el.matches('input,select,textarea,button')||[...el.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()))).map(el=>[el,el.style.fontSize,el.style.lineHeight,getComputedStyle(el).fontSize,getComputedStyle(el).lineHeight]);for(const[el,,,font,line]of polishTextSizes){el.style.fontSize=parseFloat(font)*2+'px';if(line!=='normal')el.style.lineHeight=parseFloat(line)*2+'px';}});

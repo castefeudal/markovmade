@@ -24,7 +24,8 @@ labels, five tabs, models, diary and storage are retained. The new empty-state
 attribute is presentation only; source-hash guards still protect model code.
 
 Contact uses two cards plus a full-width third card on tablets and one column on
-phones. The floating utilities disappear below 1440 px and while a menu/dialog is
+phones. The floating utilities form a vertical rail entirely outside the reading
+column at desktop widths; they disappear below 1440 px and while a menu/dialog is
 open. Header hit areas and the existing magnetic motion system are retained.
 Long mobile-menu labels wrap at enlarged text sizes while their navigation
 numbers keep their own space. The close control keeps a reserved top area even
