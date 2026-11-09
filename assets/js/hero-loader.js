@@ -5,6 +5,9 @@
   const motion=matchMedia('(prefers-reduced-motion: reduce)');
   const fine=matchMedia('(hover: hover) and (pointer: fine)');
   let loaded=false,mouseSeen=false;
+/* BEGIN SIGNATURE HERO INTENT: origin */
+  let lastMouse=null;
+/* END SIGNATURE HERO INTENT: origin */
   // Establish the static first-paint state before DOMContentLoaded; resource
   // preparation still waits for load or an actual mouse interaction.
   media.classList.toggle('mm-static-poster',Boolean(motion.matches||navigator.connection?.saveData||!fine.matches));
@@ -19,6 +22,13 @@
   }
   window.addEventListener('pointermove',event=>{
     if(event.pointerType!=='mouse'||!event.isPrimary)return;
+/* BEGIN SIGNATURE HERO INTENT: movement */
+    // Navigation can place a stationary cursor without an actual mouse action.
+    // WebKit reports zero movementX/Y, so coordinate deltas also establish intent.
+    const moved=Boolean(event.movementX||event.movementY||(lastMouse&&(event.clientX!==lastMouse.x||event.clientY!==lastMouse.y)));
+    lastMouse={x:event.clientX,y:event.clientY};
+    if(!mouseSeen&&!moved)return;
+/* END SIGNATURE HERO INTENT: movement */
     const hero=document.getElementById('hero').getBoundingClientRect();
     if(event.clientY<hero.top||event.clientY>hero.bottom)return;
     mouseSeen=true;media.dataset.mmPointer='mouse';

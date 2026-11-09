@@ -35,6 +35,11 @@ The previous branches and their working trees were not edited.
   both languages, URL/storage compatibility and restored focus in all engines.
   Existing theme consumers explicitly confirm selection. Source checks retain
   their original hashes outside enumerated Theme Studio UI edits.
+- Hybrid touch-first portrait loading now requires real pointer movement;
+  stationary cursor placement from navigation cannot start frame downloads.
+  Coordinate deltas support WebKit, whose movementX/Y can remain zero. The
+  original pose extraction and source media remain sealed. The same portrait
+  checks run first in E2E for faster diagnosis, with no coverage removed.
 - Responsive portrait checks wait for a stable `currentSrc` when a resize
   replaces an image during decoding; a decode error on the same source fails.
 

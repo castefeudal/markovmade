@@ -21,6 +21,11 @@ test('visual reconstruction preserves source bytes outside exact presentation re
     bytes=bytes.replace(region,()=>original);
    }
   }
+  if(file==='assets/js/hero-loader.js'){
+   const region=/\/\* BEGIN SIGNATURE HERO INTENT: (?:origin|movement) \*\/[\s\S]*?\/\* END SIGNATURE HERO INTENT: (?:origin|movement) \*\/\n/g;
+   assert.equal([...bytes.matchAll(region)].length,2,'only explicit pointer-intent state and gate are added');
+   bytes=bytes.replace(region,'');
+  }
   const originals=require('./fixtures/beyond-presentation-originals.json');
   const name=file.split('/').at(-1);
   if(Object.prototype.hasOwnProperty.call(originals,name)){
