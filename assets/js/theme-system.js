@@ -106,6 +106,7 @@
       button.querySelector('[data-theme-name]').textContent = content[0];
       button.querySelector('[data-theme-description]').textContent = content[1];
 /* BEGIN SIGNATURE PRESENTATION: studio-6 */
+      button.querySelector('.mm-theme-preview img').src = 'assets/media/theme-previews/' + button.dataset.themeValue + (language() === 'en' ? '-en' : '') + '.webp';
       button.querySelector('[data-theme-action]').textContent = button.dataset.themeValue === pending ? copy('Выбрана', 'Selected') : copy('Посмотреть', 'Preview');
 /* END SIGNATURE PRESENTATION: studio-6 */
     });

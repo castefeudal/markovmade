@@ -22,6 +22,7 @@ const {startServer}=require('./browser-helpers.cjs');
       assert.equal(await card.getAttribute('aria-pressed'),'true');
      };
      await opener.click();
+     assert.ok(await page.locator('.mm-theme-preview img').evaluateAll((images,lang)=>images.every(image=>image.getAttribute('src').endsWith((lang==='en'?'-en':'')+'.webp')),lang),'interface preview copy follows the selected language');
      const bounds=await page.locator('#mm-theme-dialog').boundingBox();
      await page.mouse.click(bounds.x+bounds.width/2,bounds.y+4);
      assert.equal(await page.locator('#mm-theme-dialog').evaluate(el=>el.open),true,'interior padding does not dismiss the dialog');

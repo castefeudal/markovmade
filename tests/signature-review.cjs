@@ -28,6 +28,7 @@ const base='2e0ead3';
    }
    await page.evaluate(()=>scrollTo(0,0));
    await page.locator('.theme-switch:visible').first().click();
+   if(stage==='after')await page.locator('.mm-theme-preview img').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
    await page.screenshot({path:path.join(output,`${prefix}-studio.png`)});
    if(stage==='after'){
     assert.equal(await page.locator('.mm-theme-preview img').count(),3);

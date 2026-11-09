@@ -10,8 +10,8 @@ The previous branches and their working trees were not edited.
 ## Delivered changes
 
 - Theme Studio uses actual browser captures of the three interfaces, rather
-  than an invented “84 / READY” metric. The three WebP previews load only when
-  the dialog is opened and total less than a typical single content photo.
+  than an invented “84 / READY” metric. The six RU/EN WebP previews load only when
+  the dialog is opened, with three requested for the active language.
 - Card selection previews a theme. A separate Save appearance action commits
   it; Cancel, Escape and dismissal restore the committed appearance and focus.
   Both `mm.theme` and the legacy `markov-theme` key remain supported, including
