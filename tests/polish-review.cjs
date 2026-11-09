@@ -3,6 +3,7 @@ const fs=require('node:fs'),path=require('node:path'),assert=require('node:asser
 const {execFileSync}=require('node:child_process');
 const {chromium}=require('playwright');const {startServer,root}=require('./browser-helpers.cjs');
 const output=path.join(root,'test-results/polish');const base='9274897';
+const studioOnly=process.env.POLISH_SCENES==='studio';
 (async()=>{
  fs.mkdirSync(output,{recursive:true});const server=await startServer();
  const browser=await chromium.launch({headless:true,proxy:{server:'http://127.0.0.1:9',bypass:'127.0.0.1,localhost'}});
@@ -29,29 +30,29 @@ const output=path.join(root,'test-results/polish');const base='9274897';
    await page.goto(`${server.url}/?theme=${theme}&lang=${lang}`);
    await page.evaluate(async()=>{await Promise.all([mmLoadStyles(),mmLoadLab(),mmLoadOS(),mmLoadContent(),mmLoadLanguage()]);await mmLanguageReady;await document.fonts.ready;});
    const prefix=`${stage}-${lang}-${theme}-${width}`;
-   for(const [scene,selector]of [['hero','#hero'],['lab','#calculators .mm-lab-shell'],['os','#app-ecosystem .mm-os-product'],['services','#services'],['contact','#contact']]){
+   for(const [scene,selector]of (studioOnly?[]:[['hero','#hero'],['lab','#calculators .mm-lab-shell'],['os','#app-ecosystem .mm-os-product'],['services','#services'],['contact','#contact']])){
     await frame(selector);await page.screenshot({path:path.join(output,`${prefix}-${scene}.png`)});
    }
-   await frame('#services');await page.locator('#services details>summary').first().click();await frame('#services details');
+   if(!studioOnly){await frame('#services');await page.locator('#services details>summary').first().click();await frame('#services details');
    await page.screenshot({path:path.join(output,`${prefix}-service-open.png`)});
-   await page.evaluate(()=>scrollTo(0,0));await page.locator('#main-header').screenshot({path:path.join(output,`${prefix}-header.png`)});
+   await page.evaluate(()=>scrollTo(0,0));await page.locator('#main-header').screenshot({path:path.join(output,`${prefix}-header.png`)});}
    await page.locator('.theme-switch:visible').first().click();
    await page.locator('.mm-theme-preview img').evaluateAll(images=>Promise.all(images.map(i=>i.decode())));
    await page.screenshot({path:path.join(output,`${prefix}-studio.png`)});await page.keyboard.press('Escape');
    // A calculation fixture produces real model output; no demo values are seeded.
-   await page.locator('#mm-lab-tab-body').evaluate(el=>el.click());
+   if(!studioOnly){await page.locator('#mm-lab-tab-body').evaluate(el=>el.click());
    await page.locator('#lab-body-sex').selectOption('male');await page.locator('#lab-body-height').fill('180');
    await page.locator('#lab-body-weight').fill('80');await page.locator('#lab-body-bf').fill('15');
    await page.locator('[data-calc=body]').click();await frame('#app-ecosystem .mm-os-product');
-   await page.screenshot({path:path.join(output,`${prefix}-os-filled.png`)});
+   await page.screenshot({path:path.join(output,`${prefix}-os-filled.png`)});}
    if(stage==='after'){
     assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${prefix}: no page overflow`);
     assert.equal(await page.locator('#mm-lab-clear-all').count(),1);
     assert.equal(await page.locator('.mm-lab-data-tools #mm-lab-clear-all').count(),1,'clear remains in data management');
     assert.equal(await page.locator('#mm-os-screen-today .mm-os-start').count(),1,'one primary LAB route');
    }
-   report.push({stage,lang,theme,width,scenes:9});console.log(prefix);
+   report.push({stage,lang,theme,width,scenes:studioOnly?1:9});console.log(prefix);
   }
-  assert.deepEqual(errors,[]);fs.writeFileSync(path.join(output,'report.json'),JSON.stringify({base,captures:report},null,2));
+  assert.deepEqual(errors,[]);fs.writeFileSync(path.join(output,studioOnly?'studio-report.json':'report.json'),JSON.stringify({base,captures:report},null,2));
  }finally{await browser.close();await server.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
