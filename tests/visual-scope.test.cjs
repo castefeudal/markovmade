@@ -11,6 +11,21 @@ test('visual reconstruction preserves source bytes outside exact presentation re
    assert.ok(bytes.includes("head=node('tr');"+marker+'for(const label'),'focus belongs to the workout table');
    bytes=bytes.replace(marker,'');
   }
+  // Reconstruct exact Theme Studio UI regions (copy, preview and confirmation)
+  // and retain the original hash over all remaining source bytes.
+  if(file==='assets/js/theme-system.js'){
+   const studio=require('./fixtures/signature-presentation-originals.json');
+   for(const [label,original]of Object.entries(studio)){
+    const region=new RegExp('/\\* BEGIN SIGNATURE PRESENTATION: '+label+' \\*/[\\s\\S]*?/\\* END SIGNATURE PRESENTATION: '+label+' \\*/\\n','g');
+    assert.equal([...bytes.matchAll(region)].length,1,'one exact '+label+' region');
+    bytes=bytes.replace(region,()=>original);
+   }
+  }
+  if(file==='assets/js/hero-loader.js'){
+   const region=/\/\* BEGIN SIGNATURE HERO INTENT: (?:origin|movement) \*\/[\s\S]*?\/\* END SIGNATURE HERO INTENT: (?:origin|movement) \*\/\n/g;
+   assert.equal([...bytes.matchAll(region)].length,2,'only explicit pointer-intent state and gate are added');
+   bytes=bytes.replace(region,'');
+  }
   const originals=require('./fixtures/beyond-presentation-originals.json');
   const name=file.split('/').at(-1);
   if(Object.prototype.hasOwnProperty.call(originals,name)){

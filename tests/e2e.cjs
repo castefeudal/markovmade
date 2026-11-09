@@ -50,9 +50,11 @@ let browser;
   assert.match(await page.locator('#mm-lab-snapshot-empty').textContent(), /состав тела|body composition/i);
   await page.locator('.theme-switch:visible').first().click();
   assert.equal(await page.locator('#mm-theme-dialog').isVisible(), true, `native theme dialog opens; errors: ${runtimeErrors.join(' | ')}`);
-  assert.equal(await page.locator('[data-theme-value="clarity"] [data-theme-metric-label]').textContent(),'ЧЁТКО');
+  assert.equal(await page.locator('[data-theme-value="clarity"] [data-theme-action]').textContent(),'Посмотреть');
+  assert.equal(await page.locator('.mm-theme-preview img').count(),3,'each theme previews the real portrait composition');
+  assert.equal(await page.locator('[data-theme-value="aurum-noir"] [data-theme-action]').textContent(),'Выбрана');
   for (const theme of ['event-horizon','clarity','aurum-noir']) {
-    await page.locator(`[data-theme-value="${theme}"]`).click();
+    await page.locator(`[data-theme-value="${theme}"]`).click();await page.locator('[data-theme-apply]').click();
     await page.waitForTimeout(180);
     assert.equal(await page.locator('#mm-theme-dialog').isVisible(), false, `dialog closes after selecting ${theme}`);
     assert.equal(await page.locator('html').getAttribute('data-theme'), theme);
@@ -272,6 +274,9 @@ let browser;
   await page.waitForFunction(() => JSON.parse(localStorage.getItem('markovmade-lab-history-v1') || '[]').length === 10);
   assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-daily-v1')).length),14,'JSON backup restores daily check-ins');
 
+  // Import reloads the shell. Reach lazy editorial content through the same
+  // navigation path as a visitor, rather than racing a still-skipped subtree.
+  await page.locator('#main-header nav a[href="#services"]').click();
   const accordion = page.locator('#services .mm-service-editorial-item summary').first();
   await accordion.click();
   assert.equal(await accordion.evaluate(el=>el.parentElement.open),true);
@@ -364,6 +369,7 @@ let browser;
   await page.setViewportSize({width:390,height:844});
   await page.evaluate(()=>window.scrollTo(0,0));
   await page.locator('.theme-switch:visible').first().evaluate(button=>button.click());
+  await page.locator('.mm-theme-preview img').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
   const pickerShot = path.join(visualDir,'theme-picker-390x844.png');
   await page.locator('#mm-theme-dialog').screenshot({path:pickerShot});
   assertVisualBaseline('theme-picker-390x844.png',pickerShot);

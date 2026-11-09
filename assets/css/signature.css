@@ -13,7 +13,7 @@ html[data-theme=event-horizon] #calculators .mm-lab-panel::before{filter:hue-rot
 html[data-theme=clarity] #calculators .mm-lab-panel::before{filter:brightness(.65) hue-rotate(155deg)}
 #calculators .mm-lab-tab::after{content:'';position:absolute;z-index:-1;inset:0;border-radius:inherit;background:var(--signature-art) no-repeat 80% 45% / 360px;opacity:.35;pointer-events:none}
 #calculators .mm-lab-tab[aria-selected=true]::after{opacity:.75}
-#services .mm-service-editorial-item{position:relative;isolation:isolate;border:1px solid var(--mm-border);border-radius:22px;margin-bottom:18px;background:var(--mm-surface-sheen),var(--mm-surface-1);box-shadow:var(--mm-shadow-card);overflow:clip}
+#services .mm-service-editorial-item{position:relative;isolation:isolate;border:1px solid var(--mm-border);border-radius:var(--mm-radius-editorial);margin-bottom:18px;background:var(--mm-surface-sheen),var(--mm-surface-1);box-shadow:var(--mm-shadow-card);overflow:clip}
 #services .mm-service-editorial-item::before{content:'';position:absolute;z-index:-1;inset:0;pointer-events:none;background:var(--signature-art) no-repeat right center / 640px;opacity:.6}
 #services .mm-service-editorial-item>summary{padding:24px clamp(20px,2.5vw,36px)}
 #services .mm-service-editorial-item[open]{border-color:var(--mm-accent)}
@@ -27,23 +27,21 @@ html[data-theme=clarity] #calculators .mm-lab-panel::before{filter:brightness(.6
 #biography .mm-plate-caption{font:var(--mm-font-micro);letter-spacing:.06em;color:var(--mm-text-secondary);padding:12px 4px 4px}
 #method-proof .mm-editorial-layout-steps{background:url('../media/signature/blueprint.svg') no-repeat right bottom / 80%}
 #method-proof .mm-editorial-layout-step{padding-block:24px;border-top:1px solid var(--mm-border)}
-#method-proof .mm-editorial-promise{background:var(--mm-surface-metal),var(--mm-surface-1);border:1px solid var(--mm-border);border-radius:18px;padding:24px}
-#proof-system .mm-trust-card{position:relative;isolation:isolate;border:1px solid var(--mm-border);border-radius:20px;padding:28px;background:var(--mm-surface-sheen),var(--mm-surface-1);box-shadow:var(--mm-shadow-surface);margin-bottom:14px}
-#proof-system .mm-trust-card:first-child{background:var(--signature-art) no-repeat 100% 50% / 520px,var(--mm-surface-1);border-color:var(--mm-border-strong)}
-#about .mm-author-story-photo{border-radius:22px;border:1px solid var(--mm-border);box-shadow:var(--mm-shadow-card)}
-#about .mm-author-purpose{padding:24px;border:1px solid var(--mm-border);border-radius:20px;background:var(--mm-surface-metal),var(--mm-surface-1)}
-#community .mm-community-card,#community .mm-community-card:first-child{padding:28px;border:1px solid var(--mm-border);border-radius:20px;background:var(--mm-surface-sheen),var(--mm-surface-1);box-shadow:var(--mm-shadow-surface)}
+#method-proof .mm-editorial-promise{background:var(--mm-surface-metal),var(--mm-surface-1);border:1px solid var(--mm-border);border-radius:var(--mm-radius-instrument);padding:24px}
+#about .mm-author-story-photo{border-radius:var(--mm-radius-editorial);border:1px solid var(--mm-border);box-shadow:var(--mm-shadow-card)}
+#about .mm-author-purpose{padding:24px;border:1px solid var(--mm-border);border-radius:var(--mm-radius-editorial);background:var(--mm-surface-metal),var(--mm-surface-1)}
+#community .mm-community-card,#community .mm-community-card:first-child{padding:28px;border:1px solid var(--mm-border);border-radius:var(--mm-radius-editorial);background:var(--mm-surface-sheen),var(--mm-surface-1);box-shadow:var(--mm-shadow-surface)}
 #community .mm-community-card:nth-child(2){background:var(--signature-art) no-repeat center / cover,var(--mm-surface-1)}
-#quick-faq .mm-editorial-detail-faq-card{border:1px solid var(--mm-border);border-radius:18px;background:var(--mm-surface-sheen),var(--mm-surface-1);padding:24px}
+#quick-faq .mm-editorial-detail-faq-card{border:1px solid var(--mm-border);border-radius:var(--mm-radius-instrument);background:var(--mm-surface-sheen),var(--mm-surface-1);padding:24px}
 #quick-faq .mm-editorial-detail-faq-card h3{font:var(--mm-font-card-heading);font-size:1.25rem}
 #quick-faq .mm-editorial-detail-faq-card p{font:var(--mm-font-secondary)}
-#contact .contact-value-card{padding:clamp(24px,3vw,40px);border:1px solid var(--mm-border);border-top:2px solid var(--mm-accent);border-radius:24px;background:var(--signature-art) no-repeat right top / 520px,var(--mm-surface-sheen),var(--mm-surface-1);box-shadow:var(--mm-shadow-card)}
+#contact .contact-value-card{padding:clamp(24px,3vw,40px);border:1px solid var(--mm-border);border-top:2px solid var(--mm-accent);border-radius:var(--mm-radius-feature);background:var(--signature-art) no-repeat right top / 520px,var(--mm-surface-sheen),var(--mm-surface-1);box-shadow:var(--mm-shadow-card)}
 #contact .contact-card-kicker{color:var(--mm-text-primary);background:var(--mm-bg-primary);font:var(--mm-font-micro);letter-spacing:.06em}
-#contact .contact-outcome-panel{padding:32px;border:1px solid var(--mm-border-strong);border-radius:24px;background:var(--mm-surface-metal),var(--mm-bg-secondary)}
-#insights .mm-insights-shell{background:var(--signature-art) no-repeat right top / 900px,var(--mm-surface-1);border:1px solid var(--mm-border-strong);box-shadow:var(--mm-shadow-card);border-radius:24px}
-#insights :is(.mm-insights-context,.mm-insights-result){background:var(--mm-surface-sheen),var(--mm-bg-secondary);border:1px solid var(--mm-border);border-radius:18px}
+#contact .contact-outcome-panel{padding:32px;border:1px solid var(--mm-border-strong);border-radius:var(--mm-radius-feature);background:var(--mm-surface-metal),var(--mm-bg-secondary)}
+#insights .mm-insights-shell{background:var(--signature-art) no-repeat right top / 900px,var(--mm-surface-1);border:1px solid var(--mm-border-strong);box-shadow:var(--mm-shadow-card);border-radius:var(--mm-radius-feature)}
+#insights :is(.mm-insights-context,.mm-insights-result){background:var(--mm-surface-sheen),var(--mm-bg-secondary);border:1px solid var(--mm-border);border-radius:var(--mm-radius-instrument)}
 #insights .mm-insights-choice{font:var(--mm-font-label);letter-spacing:0}
-.mm-barbell-engineering{border:1px solid var(--mm-border-strong);border-radius:18px;padding:clamp(16px,2vw,24px);background:url('../media/signature/performance.svg') no-repeat center / cover,var(--mm-surface-metal),var(--mm-bg-secondary);color:var(--mm-accent);box-shadow:inset 0 1px var(--mm-edge-highlight)}
+.mm-barbell-engineering{border:1px solid var(--mm-border-strong);border-radius:var(--mm-radius-instrument);padding:clamp(16px,2vw,24px);background:url('../media/signature/performance.svg') no-repeat center / cover,var(--mm-surface-metal),var(--mm-bg-secondary);color:var(--mm-accent);box-shadow:inset 0 1px var(--mm-edge-highlight)}
 .mm-barbell-engineering svg,.mm-calendar-chart svg{display:block;width:100%;height:auto;max-height:280px}
 .mm-barbell-engineering p{font:var(--mm-font-secondary);color:var(--mm-text-secondary)}
 .mm-instrument-kicker{font:var(--mm-font-micro);letter-spacing:.06em}
@@ -51,7 +49,7 @@ html[data-theme=clarity] #calculators .mm-lab-panel::before{filter:brightness(.6
 .mm-bar-shaft{fill:var(--mm-text-secondary)}.mm-bar-grip{fill:var(--mm-text-primary)}
 .mm-bar-plate{fill:var(--mm-surface-2);stroke:currentColor;stroke-width:2}
 .mm-bar-collar{fill:currentColor}
-.mm-calendar-chart,.mm-strength-trend{margin:24px 0;padding:20px;border:1px solid var(--mm-border);border-radius:18px;background:var(--mm-surface-sheen),var(--mm-surface-1);color:var(--mm-data-primary)}
+.mm-calendar-chart,.mm-strength-trend{margin:24px 0;padding:20px;border:1px solid var(--mm-border);border-radius:var(--mm-radius-instrument);background:var(--mm-surface-sheen),var(--mm-surface-1);color:var(--mm-data-primary)}
 .mm-calendar-chart :is(figcaption,summary){font:var(--mm-font-label);color:var(--mm-text-secondary)}
 .mm-calendar-chart table{width:100%;font:var(--mm-font-table);font-variant-numeric:tabular-nums}
 .mm-calendar-chart th,.mm-calendar-chart td{padding:12px 8px;border-bottom:1px solid var(--mm-border);text-align:start}
@@ -60,7 +58,7 @@ html[data-theme=clarity] #calculators .mm-lab-panel::before{filter:brightness(.6
 .mm-dose-chart{width:100%;height:auto;display:block;color:var(--mm-data-primary);margin-top:20px;background:var(--mm-bg-primary);border:1px solid var(--mm-border);border-radius:12px;padding:8px}
 .mm-dose-chart text{font-family:var(--mm-font-body);font-variant-numeric:tabular-nums}
 .mm-caffeine-scenarios>p{color:var(--mm-text-secondary);font:var(--mm-font-secondary)}
-.mm-science-view{margin:24px 0;padding:24px;border:1px solid var(--mm-border);border-radius:18px;background:var(--mm-surface-sheen),var(--mm-bg-secondary)}
+.mm-science-view{margin:24px 0;padding:24px;border:1px solid var(--mm-border);border-radius:var(--mm-radius-instrument);background:var(--mm-surface-sheen),var(--mm-bg-secondary)}
 .mm-science-view figcaption{font:var(--mm-font-label);color:var(--mm-text-primary);margin-bottom:20px}
 .mm-science-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(40px,1fr) auto;align-items:center;gap:12px;padding-block:12px;border-bottom:1px solid var(--mm-border);font:var(--mm-font-secondary);color:var(--mm-text-secondary)}
 .mm-science-row meter,.mm-caffeine-row meter{width:100%;height:10px;appearance:none;-webkit-appearance:none;border:0;border-radius:5px;background:var(--mm-accent-soft);accent-color:var(--mm-accent)}
@@ -71,14 +69,14 @@ html[data-theme=clarity] #calculators .mm-lab-panel::before{filter:brightness(.6
 .mm-science-view>p{margin-top:16px;font:var(--mm-font-secondary);color:var(--mm-text-secondary)}
 .mm-session-editor{min-width:0;padding:0;border:0;margin:24px 0}
 .mm-session-editor legend{font:var(--mm-font-instrument);font-size:1.25rem;margin-bottom:20px;letter-spacing:-.02em}
-.mm-session-set{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:20px;margin-bottom:16px;border:1px solid var(--mm-border);border-radius:18px;background:var(--mm-surface-sheen),var(--mm-surface-1);box-shadow:inset 0 1px var(--mm-edge-highlight)}
+.mm-session-set{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;padding:20px;margin-bottom:16px;border:1px solid var(--mm-border);border-radius:var(--mm-radius-instrument);background:var(--mm-surface-sheen),var(--mm-surface-1);box-shadow:inset 0 1px var(--mm-edge-highlight)}
 .mm-session-set>strong{grid-column:1/-1;color:var(--mm-accent);font:var(--mm-font-label);padding-bottom:12px;border-bottom:1px solid var(--mm-border)}
 .mm-session-set label{min-width:0;font:var(--mm-font-label);font-size:.875rem;color:var(--mm-text-secondary)}
 .mm-session-set input{display:block;width:100%;margin-top:8px}
 .mm-session-set input[type=checkbox]{width:24px;height:24px;accent-color:var(--mm-accent)}
 .mm-session-queue-item{display:flex;gap:12px;justify-content:space-between;align-items:center;padding:16px;border:1px solid var(--mm-border);border-radius:12px;background:var(--mm-accent-soft);overflow-wrap:anywhere}
 .mm-session-editor>button{max-width:100%;margin:8px 0}
-.mm-workout-report{margin-block:24px;padding:20px;border:1px solid var(--mm-border-strong);border-radius:18px;overflow-x:auto;max-width:100%;background:var(--mm-surface-sheen),var(--mm-bg-secondary);box-shadow:inset 0 1px var(--mm-edge-highlight)}
+.mm-workout-report{margin-block:24px;padding:20px;border:1px solid var(--mm-border-strong);border-radius:var(--mm-radius-instrument);overflow-x:auto;max-width:100%;background:var(--mm-surface-sheen),var(--mm-bg-secondary);box-shadow:inset 0 1px var(--mm-edge-highlight)}
 .mm-workout-report:focus-visible{outline:3px solid var(--mm-focus);outline-offset:3px}
 .mm-workout-report h4{font:var(--mm-font-label);font-size:1.0625rem;letter-spacing:-.015em}
 .mm-workout-report table{width:100%;min-width:260px;border-collapse:collapse;font:var(--mm-font-table);font-variant-numeric:tabular-nums}
@@ -108,7 +106,7 @@ body>footer [data-privacy-toggle]:focus-visible{outline:3px solid var(--mm-focus
 }
 /* Beyond: distinct editorial objects, sharing material rather than identical cards. */
 @layer components {
-#services .mm-service-editorial-item{--service-art:url('../media/signature/performance.svg');border-radius:24px}
+#services .mm-service-editorial-item{--service-art:url('../media/signature/performance.svg');border-radius:var(--mm-radius-feature)}
 #services .mm-service-editorial-item:nth-child(2){--service-art:url('../media/signature/biological.svg')}
 #services .mm-service-editorial-item:nth-child(3){--service-art:url('../media/signature/energy.svg')}
 #services .mm-service-editorial-item:nth-child(4){--service-art:url('../media/signature/blueprint.svg')}
@@ -131,12 +129,10 @@ body>footer [data-privacy-toggle]:focus-visible{outline:3px solid var(--mm-focus
 #method-proof .mm-editorial-layout-step{position:relative;padding-block:28px;transition:border-color var(--mm-duration-control)}
 #method-proof .mm-editorial-layout-step:hover{border-color:var(--mm-accent)}
 #method-proof .mm-editorial-step-num{font-family:var(--mm-font-body);font-weight:450;letter-spacing:-.08em;opacity:.72}
-#proof-system .mm-trust-card{border-radius:8px 24px 24px 8px;border-inline-start:3px solid var(--mm-border-strong)}
-#proof-system .mm-trust-card:first-child{border-inline-start-color:var(--mm-accent)}
 #about .mm-author-purpose{border-radius:4px 24px 24px 24px;border-top:2px solid var(--mm-accent)}
 #case-scenarios .mm-case-study-layout-case-card{position:relative;border-bottom:1px solid var(--mm-border-strong);padding-bottom:32px}
-#community .mm-community-card{border-radius:24px 24px 8px 24px;box-shadow:inset 0 1px var(--mm-edge-highlight),var(--mm-shadow-surface)}
-#community .mm-community-card:first-child{border-radius:24px 24px 24px 8px;border-top:2px solid var(--mm-accent)}
+#community .mm-community-card{border-radius:var(--mm-radius-feature) 24px 8px 24px;box-shadow:inset 0 1px var(--mm-edge-highlight),var(--mm-shadow-surface)}
+#community .mm-community-card:first-child{border-radius:var(--mm-radius-feature) 24px 24px 8px;border-top:2px solid var(--mm-accent)}
 #quick-faq .mm-editorial-detail-faq-card{border-radius:4px 18px 18px 18px;border-top:2px solid var(--mm-border-strong);box-shadow:inset 0 1px var(--mm-edge-highlight)}
 #contact .contact-outcome-panel{border-radius:6px 28px 28px 28px;box-shadow:inset 0 1px var(--mm-edge-highlight)}
 html[data-theme=event-horizon] :is(#services .mm-service-editorial-item,#community .mm-community-card,#contact .contact-value-card){border-radius:10px;box-shadow:inset 0 1px var(--mm-edge-highlight),var(--mm-shadow-surface)}

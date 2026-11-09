@@ -130,10 +130,6 @@
     min-height: 54px;
 } }
 @layer base {
-body:not(.theme-light) button:not(.calc-primary-btn):not(.calc-gold-link):not(.lead-action):not(.mm-quick-btn):not(.mm-primary-cta) {
-    background-color: transparent;
-} }
-@layer base {
 #contact .tooltip-hint span {
     align-items: center;
     justify-content: center;

@@ -10,7 +10,7 @@ const output=path.join(root,'test-results/contracts');fs.mkdirSync(output,{recur
 function luminance(rgb){const c=rgb.match(/[\d.]+/g).slice(0,3).map(Number).map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4});return .2126*c[0]+.7152*c[1]+.0722*c[2];}
 function contrast(fg,bg){const a=luminance(fg),b=luminance(bg);return(Math.max(a,b)+.05)/(Math.min(a,b)+.05);}
 async function assertComposition(page,label) {
-  await page.locator('#hero-head-fallback').evaluate(el=>el.decode());
+  await settleResponsivePoster(page);
   const result=await page.evaluate(()=>{
     const hero=document.getElementById('hero'),media=hero.querySelector('.mm-hero-media'),image=hero.querySelector('img'),heading=hero.querySelector('h1');
     const ir=image.getBoundingClientRect(),mr=media.getBoundingClientRect(),hr=heading.getBoundingClientRect();
@@ -34,7 +34,10 @@ async function settleResponsivePoster(page) {
   await page.waitForFunction(()=>{const img=document.getElementById('hero-head-fallback');return img.complete&&img.naturalWidth>0&&img.currentSrc;});
   for(let attempt=0;attempt<3;attempt++){
     const source=await image.evaluate(el=>el.currentSrc);
-    await image.evaluate(el=>el.decode());
+    try { await image.evaluate(el=>el.decode()); } catch(error) {
+      if(await image.evaluate(el=>el.currentSrc)!==source)continue;
+      throw error;
+    }
     await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
     if(await image.evaluate(el=>el.currentSrc)===source)return;
   }
@@ -84,7 +87,7 @@ async function assertCta(page,label) {
         if(lang==='en'){await page.locator('[data-lang-toggle]:visible').first().click();await page.waitForFunction(()=>document.documentElement.lang==='en');await page.evaluate(async()=>{await window.mmLanguageReady;await document.fonts.ready;});}
         for(const theme of themes) {
           await page.locator('.theme-switch:visible').first().click();
-          await page.locator(`[data-theme-value="${theme}"]`).click();
+          await page.locator(`[data-theme-value="${theme}"]`).click();await page.locator('[data-theme-apply]').click();
           await assertPalette(page,`${name}/${lang}/${theme}`);
           for(const width of widths){
             await page.setViewportSize({width,height:width<=430?844:900});
@@ -228,7 +231,7 @@ async function assertCta(page,label) {
       if(lang==='en'){await bilingual.locator('[data-lang-toggle]:visible').first().click();await bilingual.waitForTimeout(300);}
       for(const theme of themes) {
         await bilingual.evaluate(()=>scrollTo(0,0));await bilingual.waitForTimeout(100);
-        await bilingual.locator('.theme-switch:visible').first().click();await bilingual.locator(`[data-theme-value="${theme}"]`).click();
+        await bilingual.locator('.theme-switch:visible').first().click();await bilingual.locator(`[data-theme-value="${theme}"]`).click();await bilingual.locator('[data-theme-apply]').click();
         for(const width of [320,390,768,1440]) {
           await bilingual.setViewportSize({width,height:900});
           await bilingual.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
