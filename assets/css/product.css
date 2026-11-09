@@ -1,7 +1,7 @@
 /* Explicit cascade: base declarations, component owners, then legacy priority contracts. No importance flags. */
 @layer base {/* Product-specific components and responsive behavior. */
 .mm-theme-dialog {
-  width: min(48rem, calc(100vw - 2rem));
+  width: min(62rem, calc(100vw - 2rem));
   max-width: none;
   max-height: min(88dvh, 48rem);
   margin: auto;
@@ -12,6 +12,8 @@
   border-radius: var(--mm-radius-feature);
   box-shadow: var(--mm-shadow-floating);
 }
+.mm-theme-dialog[open] { display:grid; grid-template-rows:auto minmax(0,1fr) auto auto; overflow:hidden; }
+.mm-theme-options { min-height:0; grid-auto-rows:max-content; align-content:start; overflow-y:auto; overscroll-behavior:contain; padding:4px; margin:-4px; }
 .mm-theme-dialog::backdrop { background: rgb(0 0 0 / .68); backdrop-filter: blur(3px); }
 .mm-lab-history-dialog {
   width:min(52rem,calc(100vw - 2rem)); max-width:none; max-height:min(86dvh,48rem); margin:auto;
@@ -43,7 +45,7 @@
 .mm-theme-close { display:grid; place-items:center; width:2.75rem; height:2.75rem; flex:0 0 auto; border:1px solid var(--mm-border); border-radius:50%; color:var(--mm-text-secondary); background:transparent; cursor:pointer; }
 .mm-theme-options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:.75rem; }
 .mm-theme-option {
-  display:grid; grid-template-columns:5rem minmax(0,1fr); gap:.9rem; align-items:center;
+  display:grid; grid-template-columns:minmax(0,1fr); gap:1.1rem; align-items:start;
   min-height:6.25rem; padding:.75rem; text-align:left; border:1px solid var(--mm-border);
   border-radius:var(--mm-radius-card); color:var(--mm-text-primary); background:var(--mm-surface-1);
   cursor:pointer; transition:background-color var(--mm-motion-fast) var(--mm-ease-premium),border-color var(--mm-motion-fast) var(--mm-ease-premium),transform var(--mm-motion-fast) var(--mm-ease-premium);
@@ -51,13 +53,13 @@
 .mm-theme-option:hover { border-color:var(--mm-accent); transform:translateY(-1px); }
 .mm-theme-option[aria-pressed="true"] { border-color:var(--mm-accent); box-shadow:inset 0 0 0 1px var(--mm-accent); }
 .mm-theme-preview {
-  position:relative; display:flex; flex-direction:column; justify-content:space-between; overflow:hidden;
-  min-height:4.5rem; padding:.48rem; border:1px solid var(--preview-border); border-radius:var(--mm-radius-control);
+  position:relative; display:block; overflow:hidden; aspect-ratio:480/333;
+  border:1px solid var(--preview-border); border-radius:10px;
   color:var(--preview-text); background:var(--preview-bg);
 }
-.mm-theme-preview i { position:absolute; inset:0 0 auto; height:1rem; background:var(--preview-surface); border-bottom:1px solid var(--preview-border); }
-.mm-theme-preview b { z-index:1; align-self:flex-end; margin-top:.8rem; color:var(--preview-accent); font:700 1rem/1 var(--mm-font-body); font-variant-numeric:tabular-nums; }
-.mm-theme-preview small { z-index:1; align-self:flex-end; color:var(--preview-text); font:700 .875rem/1 var(--mm-font-body); letter-spacing:.04em; }
+.mm-theme-preview img { display:block; width:100%; height:100%; object-fit:cover; filter:none; }
+.mm-theme-action{display:block;margin-top:14px;padding-top:10px;border-top:1px solid var(--mm-border);color:var(--mm-accent);font:var(--mm-font-label)}
+.mm-theme-option[aria-pressed="true"] .mm-theme-action::before{content:'✓';margin-inline-end:8px}
 .mm-theme-copy { min-width:0; }
 .mm-theme-option b[data-theme-name] { display:block; font:700 .9375rem/1.3 var(--mm-font-body); }
 .mm-theme-option small[data-theme-description] { display:block; margin-top:.25rem; color:var(--mm-text-secondary); font:500 .875rem/1.35 var(--mm-font-body); }
@@ -65,8 +67,17 @@
 .mm-theme-option[data-theme-value="event-horizon"] { --preview-bg:#070b14;--preview-surface:#182640;--preview-accent:#bdd4e9;--preview-text:#eef3f8;--preview-border:rgb(189 212 233 / .23); }
 .mm-theme-option[data-theme-value="clarity"] { --preview-bg:#f6f5f1;--preview-surface:#fff;--preview-accent:#205a70;--preview-text:#17232b;--preview-border:#7e929b; }
 .mm-theme-option[data-theme-value="clarity"] .mm-theme-preview { box-shadow:inset 0 0 0 1px #fff; }
-.mm-theme-option[data-theme-value="event-horizon"] .mm-theme-preview::after { content:""; position:absolute; inset:-2rem -1rem auto auto; width:4rem; height:4rem; border:1px solid var(--preview-border); border-radius:50%; box-shadow:0 0 0 1.2rem rgb(189 212 233 / .035); }
+.mm-theme-footer { display:flex; justify-content:flex-end; flex-wrap:wrap; gap:12px; margin-top:20px; padding-top:20px; border-top:1px solid var(--mm-border); }
+.mm-theme-footer button { min-height:48px; padding:12px 20px; border-radius:var(--mm-radius-control); border:1px solid var(--mm-border-strong); background:var(--mm-bg-secondary); color:var(--mm-text-primary); font:var(--mm-font-action); }
+.mm-theme-footer [data-theme-apply] { background:var(--mm-accent); color:var(--mm-on-accent); border-color:var(--mm-accent); }
+.mm-theme-footer button:focus-visible { outline:3px solid var(--mm-focus); outline-offset:3px; }
 .mm-theme-note { margin:.9rem 0 0; color:var(--mm-text-secondary); font:500 .875rem/1.5 var(--mm-font-body); }
+/* At large text or a short viewport, let the whole sheet scroll instead of
+   allowing fixed header/copy rows to squeeze its choices to zero height. */
+@media (max-width:359px), (max-height:640px) {
+  .mm-theme-dialog[open] { display:block; overflow-y:auto; overscroll-behavior:contain; }
+  .mm-theme-options { overflow:visible; }
+}
 .mm-line-icon { display:inline-block; width:1.15em; height:1.15em; flex:0 0 auto; vertical-align:-.16em; fill:none; stroke:currentColor; stroke-width:1.45; stroke-linecap:round; stroke-linejoin:round; color:var(--mm-accent); }
 .service-item h3 .mm-line-icon { width:1.05em; height:1.05em; margin-right:.25em; }
 @media(max-width:600px) {
@@ -76,8 +87,8 @@
   .mm-lab-data-status { flex:1 0 100%; }
   .mm-lab-history-compare { grid-template-columns:1fr; }
   .mm-theme-options { grid-template-columns:1fr; gap:.5rem; }
-  .mm-theme-option { min-height:5.2rem; grid-template-columns:4.5rem minmax(0,1fr); }
-  .mm-theme-preview { min-height:3.75rem; }
+  .mm-theme-option { min-height:7.5rem; grid-template-columns:6rem minmax(0,1fr); gap:12px; align-items:center; }
+  .mm-theme-action { margin-top:8px; padding-top:8px; }
 }
 @media(max-width:760px) {
   .mm-lab-snapshot-head { align-items:flex-start; flex-direction:column; gap:.9rem; }

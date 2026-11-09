@@ -27,7 +27,7 @@ const { startServer, root } = require('./browser-helpers.cjs');
             await page.evaluate(() => scrollTo(0, 0));
             await page.waitForTimeout(400);
             await page.locator('.theme-switch:visible').first().click();
-            await page.locator(`[data-theme-value="${theme}"]`).click();
+            await page.locator(`[data-theme-value="${theme}"]`).click();await page.locator('[data-theme-apply]').click();
             for (const width of [320, 390, 768, 1440, 2560]) {
               await page.setViewportSize({ width, height: 900 });
               await page.evaluate(() => document.fonts.ready);

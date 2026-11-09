@@ -1,0 +1,19 @@
+{
+  "studio-1": "      ru: ['Event Horizon / Cosmos', 'Полночная глубина · платина · орбитальная точность'],\n      en: ['Event Horizon / Cosmos', 'Midnight depth · platinum · orbital precision']\n",
+  "studio-2": "      ru: ['Clarity / Vision Assist', 'Крупнее текст · ясные границы · спокойный свет'],\n      en: ['Clarity / Vision Assist', 'Larger text · clear edges · softer light']\n",
+  "studio-3": "",
+  "studio-4": "    dialog.querySelector('[data-theme-title]').textContent = copy('Атмосфера MARKOVMADE', 'The MARKOVMADE atmosphere');\n",
+  "studio-5": "    dialog.querySelector('[data-theme-note]').textContent = copy('Наведите или сфокусируйтесь, чтобы посмотреть тему. Выбор сохраняется только по нажатию.', 'Hover or focus to preview. A theme is saved only when selected.');\n",
+  "studio-6": "      button.querySelector('[data-theme-metric-label]').textContent = button.dataset.themeValue === 'clarity' ? copy('ЧЁТКО', 'CLEAR') : copy('РЕСУРС', 'READY');\n",
+  "studio-7": "      button.setAttribute('aria-pressed', String(button.dataset.themeValue === selected));\n",
+  "studio-8": "    updateLabels();\n    if (preview) { apply(selected); preview = null; }\n",
+  "studio-9": "",
+  "studio-10": "        return '<button class=\"mm-theme-option\" type=\"button\" data-theme-value=\"' + name + '\" aria-pressed=\"false\"><span class=\"mm-theme-preview\" aria-hidden=\"true\"><i></i><b>84</b><small data-theme-metric-label>READY</small></span><span class=\"mm-theme-copy\"><b data-theme-name></b><small data-theme-description></small></span></button>';\n      }).join('') + '</div><p class=\"mm-theme-note\" data-theme-note></p>';\n",
+  "studio-11": "      button.addEventListener('pointerenter', function () { preview = name; apply(name); });\n",
+  "studio-12": "        if (!button.matches(':focus')) { preview = null; apply(selected); }\n",
+  "studio-13": "      button.addEventListener('blur', function () { preview = null; apply(selected); });\n",
+  "studio-14": "        selected = name;\n",
+  "studio-15": "      });\n    });\n",
+  "studio-16": "",
+  "studio-17": ""
+}

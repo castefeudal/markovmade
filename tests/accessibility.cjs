@@ -44,7 +44,7 @@ const findings=[],incomplete=new Map();
     for(const lang of ['ru','en']) {
       if(lang==='en'){await page.locator('[data-lang-toggle]:visible').first().click();await page.waitForFunction(()=>document.documentElement.lang==='en');await page.waitForTimeout(800);}
       for(const theme of themes) {
-        await page.locator('.theme-switch:visible').first().click();await page.locator(`[data-theme-value="${theme}"]`).click();
+        await page.locator('.theme-switch:visible').first().click();await page.locator(`[data-theme-value="${theme}"]`).click();await page.locator('[data-theme-apply]').click();
         for(const width of [320,390,768,1440]){
           await page.setViewportSize({width,height:1000});await page.waitForTimeout(100);
           await audit(`${lang}/${theme}/${width}`);
