@@ -191,7 +191,13 @@
     dialog.querySelector('[data-theme-cancel]').addEventListener('click', function () { dialog.close(); });
 /* END SIGNATURE PRESENTATION: studio-15 */
     dialog.querySelector('[data-theme-close]').addEventListener('click', function () { dialog.close(); });
-    dialog.addEventListener('click', function (event) { if (event.target === dialog) dialog.close(); });
+/* BEGIN SIGNATURE PRESENTATION: studio-16 */
+    dialog.addEventListener('click', function (event) {
+      if (event.target !== dialog) return;
+      var bounds = dialog.getBoundingClientRect();
+      if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) dialog.close();
+    });
+/* END SIGNATURE PRESENTATION: studio-16 */
     dialog.addEventListener('cancel', function () { closeAndRestore(); });
     dialog.addEventListener('close', closeAndRestore);
     updateLabels();
@@ -200,10 +206,10 @@
 
   function open(event) {
     if (event) event.preventDefault();
-/* BEGIN SIGNATURE PRESENTATION: studio-16 */
+/* BEGIN SIGNATURE PRESENTATION: studio-17 */
     pending = selected;
     preview = null;
-/* END SIGNATURE PRESENTATION: studio-16 */
+/* END SIGNATURE PRESENTATION: studio-17 */
     buildDialog();
     returnFocus = event && event.currentTarget ? event.currentTarget : document.activeElement;
     updateLabels();
@@ -222,9 +228,9 @@
       saved = resolve(boot) || 'aurum-noir';
     }
     selected = apply(resolve(new URLSearchParams(location.search).get('theme')) || saved);
-/* BEGIN SIGNATURE PRESENTATION: studio-17 */
+/* BEGIN SIGNATURE PRESENTATION: studio-18 */
     pending = selected;
-/* END SIGNATURE PRESENTATION: studio-17 */
+/* END SIGNATURE PRESENTATION: studio-18 */
     document.querySelectorAll('.theme-switch').forEach(function (button) { button.addEventListener('click', open); });
     document.addEventListener('click', function (event) {
       if (event.target.closest && event.target.closest('[data-lang-toggle]')) window.setTimeout(updateLabels, 0);

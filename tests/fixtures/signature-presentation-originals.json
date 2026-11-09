@@ -14,6 +14,7 @@
   "studio-13": "      button.addEventListener('blur', function () { preview = null; apply(selected); });\n",
   "studio-14": "        selected = name;\n",
   "studio-15": "      });\n    });\n",
-  "studio-16": "",
-  "studio-17": ""
+  "studio-16": "    dialog.addEventListener('click', function (event) { if (event.target === dialog) dialog.close(); });\n",
+  "studio-17": "",
+  "studio-18": ""
 }
