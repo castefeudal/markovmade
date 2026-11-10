@@ -1439,4 +1439,7 @@ html[data-theme] #app-ecosystem :is(.mm-os-frame,.mm-os-product)::before,
 html[data-theme] #app-ecosystem :is(.mm-os-frame,.mm-os-product)::after{content:none;display:none;background:none;filter:none}
 html #app-ecosystem[data-os-active-tab="today"] :is(.mm-os-story-footer,.mm-os-frame-footer){display:none}
 html #app-ecosystem[data-os-active-tab="today"] .mm-os-frame{min-height:0;align-self:start}
+/* Opaque secondary text preserves contrast on Clarity's light paper surfaces. */
+html[data-theme="clarity"] #app-ecosystem #insights .mm-insights-private,
+html[data-theme="clarity"] #app-ecosystem .mm-os-frame-footer{color:var(--mm-text-secondary)}
 }
