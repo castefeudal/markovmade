@@ -28,6 +28,7 @@ Meal transfer first asks for confirmation and then fills the existing diary form
 | LAB | [390](before/calculators-390.png) | [390](after/calculators-390.png) | [1440](before/calculators-1440.png) | [1440](after/calculators-1440.png) |
 | Personal OS | [390](before/app-ecosystem-390.png) | [390](after/app-ecosystem-390.png) | [1440](before/app-ecosystem-1440.png) | [1440](after/app-ecosystem-1440.png) |
 | Services | [390](before/services-390.png) | [390](after/services-390.png) | [1440](before/services-1440.png) | [1440](after/services-1440.png) |
+| Contact | [390](before/contact-390.png) | [390](after/contact-390.png) | [1440](before/contact-1440.png) | [1440](after/contact-1440.png) |
 
 ## Test contract changes
 

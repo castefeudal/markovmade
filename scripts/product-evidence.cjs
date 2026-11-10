@@ -18,7 +18,7 @@ const {startServer}=require('../tests/browser-helpers.cjs');
   await page.goto(server.url,{waitUntil:'domcontentloaded'});
   await page.evaluate(async()=>{await Promise.all([mmLoadLab(),mmLoadOS(),mmLoadContent(),mmLoadStyles()]);await document.fonts.ready});
   await page.addStyleTag({content:'*{content-visibility:visible!important;scroll-behavior:auto!important}'});
-  for(const id of['hero','calculators','app-ecosystem','services']){
+  for(const id of['hero','calculators','app-ecosystem','services','contact']){
    const section=page.locator('#'+id);
    await section.locator('h1,h2').first().scrollIntoViewIfNeeded();
    await section.evaluate(async el=>{el.scrollIntoView({block:'start',behavior:'instant'});await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));el.scrollIntoView({block:'start',behavior:'instant'});});

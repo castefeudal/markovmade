@@ -12,4 +12,14 @@ test('one contact event never contains free text, URLs or health measurements',(
  rootHandlers['mm:toolkit-result']({detail:{id:'caffeine',result:{dose:200}}});
  assert.equal(window.dataLayer.length,3);assert.equal(window.dataLayer[2].markovmade.tool,'caffeine');
  assert.equal(JSON.stringify(window.dataLayer).includes('dose'),false);
+ rootHandlers['mm:toolkit-open']({detail:{id:'session',inputs:{weight:80}}});
+ handlers['mm:tool-open']({detail:{tool:'meal',recipe:'private food'}});
+ assert.equal(window.dataLayer[3].event,'tool_open');assert.equal(window.dataLayer[3].markovmade.tool,'session');
+ assert.equal(window.dataLayer[4].markovmade.tool,'meal');
+ assert.equal(JSON.stringify(window.dataLayer).includes('private food'),false);
+ const count=window.dataLayer.length;
+ rootHandlers['mm:lab-tab']({detail:{key:'caffeine'}});
+ assert.equal(window.dataLayer.length,count,'specialist parent routing is not another opening');
+ rootHandlers['mm:toolkit-open']({detail:{id:'caffeine'}});
+ assert.equal(window.dataLayer.length,count+1,'one specialist opening is recorded once');
 });

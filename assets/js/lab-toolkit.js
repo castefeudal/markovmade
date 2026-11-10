@@ -92,17 +92,26 @@
     }
     return out;
   }
-  function open(tool,focus=true){
+  function open(tool,focus=true,announce=true){
     if(!tool)return;
     const key=parent[tool.id]||tool.id;
     const tab=root.querySelector(`[data-mm-lab-tab="${key}"]`);
-    if(tab?.getAttribute('aria-selected')!=='true')tab?.click();
+    if(tab?.getAttribute('aria-selected')!=='true'){
+      tab?.click();
+      // Canonical specialist tabs open their workspace through mm:lab-tab.
+      // That handler already rendered and announced this opening.
+      if(primary.includes(tool.id)&&!legacy.includes(tool)){
+        if(focus){workspace.querySelector('#mm-toolkit-active-title')?.focus({preventScroll:true});workspace.scrollIntoView({block:'start',behavior:'auto'});}
+        return;
+      }
+    }
     const activeForm=workspace.querySelector('form');if(selected&&activeForm)drafts[selected]=Object.fromEntries(new FormData(activeForm));
     selected=tool.id;
     if(legacy.includes(tool)){
-      workspace.hidden=true;root.querySelector(`[data-mm-lab-tab="${tool.id}"]`).click();
+      workspace.hidden=true;
       const panel=document.getElementById('mm-lab-'+tool.id);panel.setAttribute('tabindex','-1');panel.focus({preventScroll:true});panel.scrollIntoView({block:'start',behavior:'auto'});return;
     }
+    if(announce)root.dispatchEvent(new CustomEvent('mm:toolkit-open',{detail:{id:tool.id}}));
     root.querySelector(`[data-mm-lab-panel="${key}"]`).append(workspace);workspace.hidden=false;workspace.replaceChildren();const title=node('h3',tool.title);title.id='mm-toolkit-active-title';title.tabIndex=-1;
     const form=node('form'),fields=node('div',undefined,'mm-toolkit-fields');form.noValidate=false;
     const previous=app.state.toolkit?.[tool.id]?.inputs||{};
@@ -217,7 +226,7 @@
     const n=app.state.nutrition;if(Number.isFinite(n?.tdee)){const rows=[[p('RMR · оценка','RMR · estimate'),n.rmr,'kcal'],[p('TDEE · оценка','TDEE · estimate'),n.tdee,'kcal'],[p('Рабочая цель','Working target'),n.target,'kcal']].filter(r=>Number.isFinite(r[1]));view('nutrition',p('Энергетические ориентиры','Energy references'),rows,p('Это отдельные ориентиры; их нельзя складывать. TDEE уже включает активность и TEF.','These are separate references; do not add them. TDEE already includes activity and TEF.'));}
     const r=app.state.recovery;if(r?.history?.length){const latest=r.history.at(-1),base=r.history.slice(0,-1).slice(-28),valid=base.filter(x=>Number.isFinite(x.rhr));if(valid.length>=14){const sorted=valid.map(x=>x.rhr).sort((a,b)=>a-b),mid=Math.floor(sorted.length/2),median=sorted.length%2?sorted[mid]:(sorted[mid-1]+sorted[mid])/2;view('recovery',p('RHR · наблюдения, уд/мин','RHR · observations, bpm'),[[p('Личная медиана','Personal median'),median,'bpm'],[p('Последняя запись','Latest entry'),latest.rhr,'bpm']],p('Сопоставляйте одинаковое устройство и протокол. Разница сама по себе не диагноз.','Compare the same device and protocol. A difference alone is not a diagnosis.'));}}
   }
-  function localise(){renderScience();renderScenarios();renderSummary();legacyEvidence();window.mmLanguageReady?.then(legacyResult);if(selected&&models.definitions.some(item=>item.id===selected))open(models.definitions.find(item=>item.id===selected),false);}
+  function localise(){renderScience();renderScenarios();renderSummary();legacyEvidence();window.mmLanguageReady?.then(legacyResult);if(selected&&models.definitions.some(item=>item.id===selected))open(models.definitions.find(item=>item.id===selected),false,false);}
   new MutationObserver(localise).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
   root.addEventListener('mm:lab-state',()=>{renderScience();renderSummary();legacyResult();});
   root.addEventListener('click',event=>{if(event.target.closest('[data-calc]'))setTimeout(()=>{legacyResult();renderScience();},0);});

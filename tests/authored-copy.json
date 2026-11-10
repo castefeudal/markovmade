@@ -923,8 +923,8 @@
   },
   "translations": {
     "assets/js/i18n.js": "248b33c16c4adc015e82ad7c7dd618d82f024b2af6080bde2e2f63ae816477dc",
-    "src/locales/shared.en.json": "31f4426735d6ed587488ebf0a67503bf8f8e4ae28a92dea0a7b422ccc11d491f",
-    "src/locales/lab.en.json": "1fcfbdaade2faba9f9f951ccbb7a08be5b1599b2becd2256a42da6556761f26a",
+    "src/locales/shared.en.json": "5b17c06cec82a4e6148affd183161e1b606ab3863944fcbc8016c978feb1373d",
+    "src/locales/lab.en.json": "c0606dcb3588db4a7526dbf325c9ad906d46a5a81c1881b9e452bcab4dbc779c",
     "src/locales/personal-os.en.json": "7995b2643b5b7c7b39feec17ba2b7807f4879f0288dc4237a9d5481602f40ca0"
   }
 }

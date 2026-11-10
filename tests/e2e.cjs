@@ -457,10 +457,11 @@ let browser;
       await page.waitForTimeout(300);
       for (const section of ['case-scenarios','calculators','app-ecosystem','services','biography','contact']) {
         if (section==='calculators') await selectLabTool(page,'body');
-        await page.locator(`#${section}`).evaluate(element=>window.scrollTo(0,element.getBoundingClientRect().top+window.scrollY));
+        await page.locator(`#${section}`).evaluate(element=>window.scrollTo(0,Math.max(0,element.getBoundingClientRect().top+window.scrollY-(document.getElementById('main-header')?.offsetHeight||0)-16)));
         await page.waitForTimeout(180);
-        await page.locator(`#${section}`).evaluate(element=>window.scrollTo(0,element.getBoundingClientRect().top+window.scrollY));
+        await page.locator(`#${section}`).evaluate(element=>window.scrollTo(0,Math.max(0,element.getBoundingClientRect().top+window.scrollY-(document.getElementById('main-header')?.offsetHeight||0)-16)));
         await page.waitForTimeout(80);
+        assert.ok(await page.locator(`#${section} h2`).first().evaluate(el=>el.getBoundingClientRect().top>=(Math.max(0,document.getElementById('main-header').getBoundingClientRect().bottom)+4)),`${theme}/${section}/${width}: captured heading clears the fixed header`);
         const shot = path.join(visualDir,`${theme}-${section}-${width}x${height}.png`);
         await page.screenshot({path:shot,fullPage:false});
         if (section==='calculators' && width===390) assertVisualBaseline(`${theme}-lab-390x844.png`,shot);

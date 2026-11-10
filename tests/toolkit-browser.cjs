@@ -18,7 +18,14 @@ const fixtures=require('./toolkit-fixtures.json');
       assert.equal(await page.evaluate(()=>window.MarkovMadeToolkit.tools.length),17);
       assert.equal(await page.locator('.mm-toolkit').count(),0,'no second catalogue');
       await revealLabCatalog(page);await page.locator('#mm-lab-tab-body').focus();await page.keyboard.press('End');assert.equal(await page.locator('#mm-lab-tab-caffeine').getAttribute('aria-selected'),'true');assert.equal(await page.locator('#toolkit-caffeine-dose').isVisible(),true);await page.keyboard.press('Home');assert.equal(await page.locator('#mm-lab-tab-body').getAttribute('aria-selected'),'true');
-      await page.evaluate(()=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='protein')));await page.locator('.mm-toolkit-favorite').click();assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-favorites-v1'))),['protein']);
+      await page.evaluate(()=>{window.__toolkitOpenEvents=[];window.__canonicalOpenEvents=[];const root=document.getElementById('calculators');root.addEventListener('mm:toolkit-open',event=>window.__toolkitOpenEvents.push(event.detail));root.addEventListener('mm:lab-tab',event=>window.__canonicalOpenEvents.push(event.detail));window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='nutrition'));});
+      assert.deepEqual(await page.evaluate(()=>window.__canonicalOpenEvents),[{key:'nutrition'}],'opening a legacy tool routes through its canonical tab once');
+      assert.deepEqual(await page.evaluate(()=>window.__toolkitOpenEvents),[],'legacy routing does not duplicate specialist opening events');
+      await page.evaluate(()=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='caffeine')));
+      assert.deepEqual(await page.evaluate(()=>window.__toolkitOpenEvents),[{id:'caffeine'}],'canonical specialist routing emits exactly one thin opening event');
+      await page.evaluate(()=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='protein')));
+      assert.deepEqual(await page.evaluate(()=>window.__toolkitOpenEvents),[{id:'caffeine'},{id:'protein'}],'specialist events carry identifiers only, without profile or form values');
+      await page.locator('.mm-toolkit-favorite').click();assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-favorites-v1'))),['protein']);
       for(const [id,values] of Object.entries(fixtures)){
         if(!await page.evaluate(id=>window.MarkovMadeToolkit.tools.some(tool=>tool.id===id),id))continue;
         await page.evaluate(id=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id===id)),id);

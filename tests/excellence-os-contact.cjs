@@ -1,6 +1,8 @@
 const assert=require('node:assert/strict');
 const {chromium}=require('playwright');
 const {startServer}=require('./browser-helpers.cjs');
+function lum(v){const c=v.match(/[\d.]+/g).slice(0,3).map(Number).map(x=>{x/=255;return x<=.04045?x/12.92:((x+.055)/1.055)**2.4});return c[0]*.2126+c[1]*.7152+c[2]*.0722;}
+function contrast(a,b){a=lum(a);b=lum(b);return(Math.max(a,b)+.05)/(Math.min(a,b)+.05);}
 (async()=>{const server=await startServer(),browser=await chromium.launch({headless:true});try{
  for(const lang of ['ru','en'])for(const theme of ['aurum-noir','event-horizon','clarity']){
   console.log('Precision UI:',lang,theme);
@@ -19,6 +21,11 @@ const {startServer}=require('./browser-helpers.cjs');
   assert.equal(await page.locator('#request-quiz').count(),1,'one optional request mechanism');
   assert.equal(await page.locator('#contact .mm-contact-optional').evaluate(el=>el.open),false,'request fields are optional');
   assert.match(await page.locator('#contact .mm-contact-direct a').first().getAttribute('href'),/^https:\/\/t\.me\//);
+  await page.locator('#contact .mm-contact-direct').scrollIntoViewIfNeeded();
+  const contact=await page.locator('#contact .mm-contact-direct>a').evaluateAll(links=>links.map(el=>{const style=getComputedStyle(el);return{bg:style.backgroundColor,fg:style.color,height:el.getBoundingClientRect().height,display:style.display,border:parseFloat(style.borderTopWidth)};}));
+  for(const action of contact){assert.notEqual(action.bg,'rgba(0, 0, 0, 0)');assert.ok(contrast(action.fg,action.bg)>=4.5,'direct contact contrast '+JSON.stringify(action));assert.ok(action.height>=48&&['flex','inline-flex'].includes(action.display)&&action.border>=1,'contact action has button material and hit area '+JSON.stringify(action));}
+  assert.ok(await page.locator('.mm-contact-email').evaluate(el=>{const inner=document.querySelector('#contact>.mm-editorial-inner'),r=el.getBoundingClientRect(),box=inner.getBoundingClientRect();return Boolean(el.closest('#contact'))&&r.left>=box.left-1&&r.right<=box.right+1;}),'email stays within contact before any optional form interaction');
+  assert.ok(await page.locator('#app-ecosystem').evaluate(el=>{const s=getComputedStyle(el,'::after');return s.content==='none'||s.display==='none';}),'no faux device background behind OS');
   await page.locator('#app-ecosystem').scrollIntoViewIfNeeded();
   await page.evaluate(()=>{const state=MarkovMadeLab.state;state.profile.weight=80;state.nutrition={target:2400,goal:'cut',pMid:160,fatMid:70,carbMid:282};state.recovery={score:81,modelVersion:'1.0.0'};const d=new Date(),today=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');localStorage.setItem('markovmade-lab-daily-v1',JSON.stringify([{date:today,weight:90}]));mmRefreshPersonalOS();});
   assert.equal(await page.locator('.mm-os-frame').getAttribute('data-empty'),null);

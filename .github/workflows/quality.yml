@@ -83,6 +83,7 @@ jobs:
         env:
           LIGHTHOUSE_MATRIX: 1
           LIGHTHOUSE_RUNS: 3
+          LIGHTHOUSE_TRACE_SCENE: ru-event-horizon-mobile
       - uses: actions/upload-artifact@v6
         if: always()
         with:

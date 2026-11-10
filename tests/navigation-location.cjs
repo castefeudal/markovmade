@@ -44,7 +44,7 @@ const {startServer}=require('./browser-helpers.cjs');
    await scrollToSection('services');
    await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));await current('');await page.waitForFunction(()=>!document.getElementById('main-header').hasAttribute('data-mm-scroll-hidden'));
    await page.locator('#main-header nav a[href="#app-ecosystem"]').click();await current('app-ecosystem');
-   await viewport(390,844);await page.evaluate(()=>scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));await current('contact');await page.evaluate(()=>scrollBy({top:-80,behavior:'instant'}));await page.waitForFunction(()=>!document.getElementById('main-header').hasAttribute('data-mm-scroll-hidden'));await page.locator('#burger-btn').click();await current('contact');await page.keyboard.press('Escape');
+   await viewport(390,844);await page.evaluate(()=>scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));await current('community');await page.evaluate(()=>scrollBy({top:-80,behavior:'instant'}));await page.waitForFunction(()=>!document.getElementById('main-header').hasAttribute('data-mm-scroll-hidden'));await page.locator('#burger-btn').click();await current('community');await page.keyboard.press('Escape');
    await page.locator('#hero').evaluate(el=>el.scrollIntoView({behavior:'instant',block:'start'}));await current('');
    await page.close();
   }console.log('Current-section navigation verified: '+name+' · RU/EN × three themes · anchors, wheel, reverse scroll, resize, mobile menu and page end.');}finally{await browser.close();}
