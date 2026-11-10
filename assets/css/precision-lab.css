@@ -1,0 +1,69 @@
+@layer components {
+  @media(min-width:1181px){
+    html[data-theme] #calculators .mm-lab-shell{display:block;grid-template-columns:none;}
+    #calculators .mm-lab-content{grid-column:auto;grid-row:auto;border-inline-start:0;padding:0;}
+    #calculators :is(.mm-lab-groups,.mm-lab-group-actions,.mm-lab-tool-catalog){margin-inline:28px;}
+  }
+  .mm-lab-groups { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin-block:18px 12px; }
+  .mm-lab-groups button { min-width:0; min-height:92px; padding:16px; border:1px solid var(--mm-border); border-radius:var(--mm-radius-control); background:var(--mm-surface-1); text-align:left; color:var(--mm-text-primary); cursor:pointer; overflow-wrap:anywhere; }
+  .mm-lab-groups strong { display:block; font:var(--mm-font-label); }
+  .mm-lab-groups span { display:block; margin-top:5px; font:var(--mm-font-micro); color:var(--mm-text-secondary); }
+  .mm-lab-groups button[aria-pressed=true] { border-color:var(--mm-accent); background:var(--mm-accent-soft); }
+  .mm-lab-groups button:focus-visible { outline:3px solid var(--mm-focus); outline-offset:3px; }
+  .mm-lab-group-actions,.mm-lab-group-shortcuts { display:flex; flex-wrap:wrap; gap:8px; }
+  .mm-lab-group-shortcuts { min-width:0; max-width:100%; }
+  .mm-lab-group-shortcuts:has(>button:only-child){display:none}
+  #calculators .mm-lab-group-actions button,#calculators .mm-meal-actions button { max-width:100%; white-space:normal; overflow-wrap:anywhere; }
+  #calculators .mm-meal-tool button { max-width:100%; white-space:normal; overflow-wrap:anywhere; }
+  .mm-lab-group-actions { margin-bottom:12px; }
+  #calculators .mm-lab-group-actions [data-open-meal][hidden]{display:none;}
+  #calculators details.mm-lab-scenarios{display:block;margin-top:16px;padding-top:10px;border-top:1px solid var(--mm-border);}
+  #calculators details.mm-lab-scenarios>summary{min-height:44px;cursor:pointer;font:var(--mm-font-label);color:var(--mm-text-secondary);}
+  #calculators details.mm-lab-scenarios>button{margin:4px 6px 4px 0;max-width:100%;white-space:normal;}
+  .mm-lab-tool-catalog { margin-bottom:16px; border-bottom:1px solid var(--mm-border); padding-bottom:12px; }
+  .mm-lab-tool-catalog>summary,.mm-meal-tool>summary { min-width:0; min-height:44px; display:flex; align-items:center; gap:10px; cursor:pointer; font:var(--mm-font-label); color:var(--mm-text-primary); overflow-wrap:anywhere; }
+  .mm-lab-tool-catalog>summary::after,.mm-meal-tool>summary::after { content:'+'; margin-left:auto; color:var(--mm-accent); }
+  .mm-lab-tool-catalog[open]>summary::after,.mm-meal-tool[open]>summary::after { content:'−'; }
+  .mm-lab-tool-catalog .mm-lab-tabs { margin-top:12px; }
+  .mm-meal-tool { margin-top:24px; border-top:1px solid var(--mm-border); padding-top:12px; }
+  .mm-meal-body { max-width:880px; padding-block:12px; }
+  .mm-meal-body>p,.mm-meal-result p { color:var(--mm-text-secondary); font:var(--mm-font-label); font-weight:400; }
+  .mm-meal-fields,.mm-meal-saved { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-block:16px; }
+  .mm-meal-fields label,.mm-meal-saved label { display:grid; gap:6px; min-width:0; color:var(--mm-text-secondary); font:var(--mm-font-micro); }
+  .mm-meal-fields input,.mm-meal-saved select { width:100%; min-width:0; }
+  #calculators .mm-meal-saved select { max-width:100%; overflow:hidden; text-overflow:ellipsis; }
+  .mm-meal-remember { display:flex; align-items:center; gap:9px; min-height:44px; font:var(--mm-font-micro); }
+  .mm-meal-remember input { width:20px; height:20px; accent-color:var(--mm-accent); }
+  .mm-meal-ingredients { display:grid; gap:8px; margin:18px 0; padding:0; list-style:none; }
+  .mm-meal-ingredients li { display:flex; align-items:center; justify-content:space-between; gap:12px; border-bottom:1px solid var(--mm-border); padding:8px 0; font:var(--mm-font-label); }
+  .mm-meal-ingredients li span { overflow-wrap:anywhere; min-width:0; }
+  .mm-meal-result { padding:20px 0; margin-top:16px; border-top:1px solid var(--mm-border-strong); }
+  .mm-meal-result h4 { margin:0 0 8px; font:var(--mm-font-label); }
+  #meal-main { font:var(--mm-font-instrument); color:var(--mm-accent); }
+  .mm-meal-result details { margin-block:12px; }
+  .mm-meal-result summary { min-height:44px; cursor:pointer; font:var(--mm-font-label); }
+  .mm-meal-actions { display:flex; flex-wrap:wrap; gap:8px; margin-top:16px; }
+  #meal-transfer:not([open]) { display:none; }
+  #meal-status { min-height:1.5em; color:var(--mm-text-secondary); font:var(--mm-font-micro); }
+  @media(max-width:1024px){.mm-lab-groups{grid-template-columns:repeat(2,minmax(0,1fr));}}
+  @media(max-width:640px){
+    #calculators{padding-block:32px;}
+    #calculators .mm-lab-intro>.mm-lab-kicker{display:none;}
+    #calculators .mm-lab-title{font-size:1.75rem;line-height:1.15;}
+    .mm-lab-groups{gap:6px;margin-block:10px 8px;}
+    .mm-lab-groups button{padding:10px;min-height:68px;}
+    .mm-lab-groups strong{font-size:.875rem;line-height:1.4;}
+    .mm-lab-groups span{display:none;}
+    .mm-lab-groups:has([data-lab-group="nutrition"][aria-pressed="true"])+.mm-lab-group-actions .mm-lab-group-shortcuts{display:none;}
+    .mm-lab-tool-catalog{margin-bottom:8px;padding-bottom:0;}
+    #calculators #mm-lab-nutrition .mm-lab-toolhead{gap:8px;margin-bottom:12px;padding-bottom:10px;}
+    #calculators #mm-lab-nutrition .mm-lab-toolhead h3{font-size:1.25rem;margin-block:4px;}
+    #calculators #mm-lab-nutrition .mm-lab-toolhead .eyebrow{display:none;}
+    #calculators #mm-lab-nutrition .mm-lab-mode{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;gap:4px;padding:4px;}
+    #calculators #mm-lab-nutrition .mm-lab-mode button{min-width:0;width:100%;min-height:44px;padding:8px 4px;font-size:.8125rem;overflow-wrap:anywhere;}
+    #calculators #mm-lab-nutrition .mm-lab-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 10px;}
+    #calculators #mm-lab-nutrition .mm-lab-field label{overflow-wrap:anywhere;}
+    #calculators #mm-lab-nutrition select{max-width:100%;overflow:hidden;text-overflow:ellipsis;}
+  }
+  @media(max-width:480px){.mm-meal-fields,.mm-meal-saved{grid-template-columns:minmax(0,1fr);}.mm-meal-actions>*{width:100%;}.mm-meal-recipe-fields{grid-template-columns:minmax(0,1fr);}}
+}

@@ -1,3 +1,4 @@
+const {selectLabTool,revealLabCatalog}=require('./browser-helpers.cjs');
 const fs=require('node:fs'),path=require('node:path');
 const {chromium}=require('playwright');
 const {startServer,root}=require('./browser-helpers.cjs');
@@ -50,7 +51,7 @@ const findings=[],incomplete=new Map();
           await audit(`${lang}/${theme}/${width}`);
         }
         await page.locator('#calculators').scrollIntoViewIfNeeded();await page.waitForTimeout(100);
-        for(const tab of await page.locator('[data-mm-lab-tab]').all()){
+        await revealLabCatalog(page);for(const tab of await page.locator('[data-mm-lab-tab]').all()){
           await tab.click();await audit(`${lang}/${theme}/LAB/${await tab.getAttribute('data-mm-lab-tab')}`,'#calculators');
         }
         for(const [id,values] of Object.entries(fixtures)){

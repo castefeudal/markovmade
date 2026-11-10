@@ -31,7 +31,7 @@
                     measurementMethod=val('lab-body-bf-source')||'unknown';
                     const methods={dexa:['DEXA','Выше средней'], 'multi-bia':['многочастотный BIA','Умеренная'], 'consumer-bia':['бытовой BIA','Низкая'], skinfold:['калипер / складки','Умеренная'], tape:['лента / окружности','Умеренная'], visual:['визуальная оценка','Низкая'], professional:['оценка специалиста','Умеренная'], unknown:['неизвестный метод','Низкая']};
                     const methodInfo=methods[measurementMethod]||methods.unknown;
-                    bfLow=bf; bfHigh=bf; source=`введено пользователем · метод: ${methodInfo[0]}`; confidence=methodInfo[1];
+                    bfLow=bf; bfHigh=bf; source=`введено пользователем · метод: ${methodInfo[0]}`; confidence='Не установлена';
                     quality=currentMode('body')==='pro'?'Хорошая':'Базовая';
                 } else {
                     for(const [v,min,max,label] of [[waist,40,200,'Талия'],[neck,20,80,'Шея']]){ const m=safeRange(v,min,max,label); if(m) return error('body',m),null; }
@@ -39,35 +39,37 @@
                     if(sex==='male' && waist<=neck) return error('body','Талия должна быть больше окружности шеи для этой формулы. Проверьте точки измерения.'),null;
                     if(sex==='female' && waist+hips<=neck) return error('body','Проверьте окружности: сумма талии и бёдер должна быть больше окружности шеи.'),null;
                     bf=navyBodyFat(sex,h,waist,neck,hips);
-                    if(!Number.isFinite(bf) || bf<2 || bf>65) return error('body','Формула получила нереалистичный результат. Проверьте единицы и места измерения.'),null;
-                    bf=clamp(bf,3,60); bfLow=NaN; bfHigh=NaN;
+                    if(!Number.isFinite(bf) || bf<3 || bf>60) return error('body','Формула получила нереалистичный результат. Проверьте единицы и места измерения.'),null;
+                    bfLow=NaN; bfHigh=NaN;
                     source='окружностная модель Hodgdon/Beckett'; quality='Хорошая';
                 }
-                const fatMass=w*bf/100, lbm=w-fatMass, hm=h/100, baseFfmi=ffmi(w,bf,h), nffmi=baseFfmi+6.3*(1.80-hm), bmi=w/(hm*hm);
+                const fatMass=w*bf/100, lbm=w-fatMass, hm=h/100, baseFfmi=ffmi(w,bf,h), nffmi=sex==='male'?baseFfmi+6.3*(1.80-hm):NaN, bmi=w/(hm*hm);
                 const whtr=Number.isFinite(waist)?waist/h:NaN;
                 const targetBF=currentMode('body')==='pro'?number('lab-body-target-bf'):NaN;
+                if(Number.isFinite(targetBF)&&(targetBF<3||targetBF>60))return error('body','Целевой процент жира: от 3 до 60%; это условие сценария, не рекомендация.'),null;
+                if(Number.isFinite(waist)&&(waist<40||waist>200))return error('body','Проверьте окружность талии: 40–200 см.'),null;
                 const goal=val('lab-body-goal')||'recomp', level=val('lab-body-level')||'intermediate';
                 const targetWeight=Number.isFinite(targetBF)&&targetBF>0&&targetBF<60 ? lbm/(1-targetBF/100) : NaN;
-                const targetWeightLow=Number.isFinite(targetWeight)?targetWeight*.97:NaN;
-                const targetWeightHigh=Number.isFinite(targetWeight)?targetWeight*1.03:NaN;
+                const targetWeightLow=Number.isFinite(targetWeight)?targetWeight:NaN;
+                const targetWeightHigh=Number.isFinite(targetWeight)?targetWeight:NaN;
                 state.profile={...state.profile,sex,height:h,weight:w,bodyFat:round(bf,1)};
                 state.body={modelVersion:MODEL_VERSIONS.body,bf,bfLow,bfHigh,fatMass,lbm,ffmi:baseFfmi,nffmi,bmi,whtr,targetBF,targetWeight,targetWeightLow,targetWeightHigh,source,confidence,measurementMethod,goal,level}; save(); applyProfile();
                 setText('lab-body-main',`${fmt(bf,1)}%`);
                 setText('lab-body-range',method==='tape'?`Это ориентир по окружностной модели, а не персональный доверительный интервал. В исходных валидациях ошибка модели составляла несколько процентных пунктов; техника и места замера влияют на результат.`:`Сохранено введённое значение ${fmt(bf,1)}% без коррекции. Источник: ${source}. Точный диапазон ошибки без индивидуальной валидации не выводится.`);
-                setText('lab-body-fatmass',kg(fatMass)); setText('lab-body-lbm',kg(lbm)); setText('lab-body-ffmi',fmt(baseFfmi,1)); setText('lab-body-nffmi',fmt(nffmi,1)); setText('lab-body-bmi',fmt(bmi,1)); setText('lab-body-whtr',Number.isFinite(whtr)?fmt(whtr,2):'—');
-                setText('lab-body-target-weight',Number.isFinite(targetWeight)?`${fmt(targetWeightLow,1)}–${fmt(targetWeightHigh,1)} кг`:'—');
+                setText('lab-body-fatmass',kg(fatMass)); setText('lab-body-lbm',kg(lbm)); setText('lab-body-ffmi',fmt(baseFfmi,1)); setText('lab-body-nffmi',Number.isFinite(nffmi)?fmt(nffmi,1):'Не применяется'); setText('lab-body-bmi',fmt(bmi,1)); setText('lab-body-whtr',Number.isFinite(whtr)?fmt(whtr,2):'—');
+                setText('lab-body-target-weight',Number.isFinite(targetWeight)?`~${fmt(targetWeight,1)} кг · при постоянной FFM`:'—');
                 let meaning=`При ${fmt(bf,1)}% жира из ${fmt(w,1)} кг примерно ${fmt(lbm,1)} кг приходится на безжировую массу. FFMI ${fmt(baseFfmi,1)} полезен как контекст мышечной массы, но наследует ошибку оценки % жира.`;
                 if(goal==='cut' && baseFfmi>=22) meaning+=' При снижении жира ключевая задача — сохранять сухую массу и силовые, а не гнаться за максимальной скоростью снижения веса.';
                 if(goal==='bulk' && bf>(sex==='male'?20:30)) meaning+=' При высокой жировой массе набор веса любой ценой обычно имеет худший ROI, чем сначала стабилизировать композицию тела.';
                 setText('lab-body-meaning',`Что это значит: ${meaning}`);
                 const actions=[];
-                if(Number.isFinite(targetWeight)) actions.push(`При ${fmt(targetBF,1)}% жира ориентир ${fmt(targetWeightLow,1)}–${fmt(targetWeightHigh,1)} кг, если безжировая масса изменится в пределах ±3%. Это сценарная чувствительность, не доверительный интервал и не обещание.`);
+                if(Number.isFinite(targetWeight)) actions.push(`При ${fmt(targetBF,1)}% жира ориентир ~${fmt(targetWeight,1)} кг при неизменной безжировой массе. Это условный сценарий; ошибка исходного BF и возможное изменение FFM сохраняются.`);
                 actions.push('Повторяйте % жира одним методом и в одинаковых условиях: тренд ценнее разового абсолютного числа.');
                 actions.push(Number.isFinite(whtr)?`Талия/рост сейчас ${fmt(whtr,2)} — отслеживайте её вместе с весом и фото.`:'Добавьте талию при следующем замере: она делает интерпретацию изменения формы заметно полезнее.');
                 setHTMLSafeList('lab-body-actions',actions);
                 setText('lab-body-method',`Источник % жира: ${source}. LBM = вес × (1 − BF). FFMI = LBM / рост². Height-adjusted FFMI использует поправку Kouri 6,3 × (1,80 − рост); исходная нормализация была разработана на мужских атлетах, поэтому её нельзя трактовать как универсальный «лимит». Окружностная формула имеет стандартную ошибку порядка 3–4 п.п. в исходных валидациях.`);
                 setBadge('body',quality,confidence);
-                const summary=`MARKOVMADE LAB — Состав тела\n% жира: ~${fmt(bf,1)}%${method==='tape'?' (окружностная оценка, не доверительный интервал)':''}\nЖировая масса: ${kg(fatMass)}\nLBM: ${kg(lbm)}\nFFMI: ${fmt(baseFfmi,1)}\nНормализованный FFMI: ${fmt(nffmi,1)}${Number.isFinite(targetWeight)?`\nОриентир при ${fmt(targetBF,1)}%: ${kg(targetWeight)}`:''}\n\nMARKOVMADE / Pavel Markov`;
+                const summary=`MARKOVMADE LAB — Состав тела\n% жира: ~${fmt(bf,1)}%${method==='tape'?' (окружностная оценка, не доверительный интервал)':''}\nЖировая масса: ${kg(fatMass)}\nLBM: ${kg(lbm)}\nFFMI: ${fmt(baseFfmi,1)}\nНормализованный FFMI: ${Number.isFinite(nffmi)?fmt(nffmi,1):'не применяется к этой популяции'}${Number.isFinite(targetWeight)?`\nОриентир при ${fmt(targetBF,1)}%: ${kg(targetWeight)}`:''}\n\nMARKOVMADE / Pavel Markov`;
                 mmCalcSummaries.body=summary; updateSnapshot(); return state.body;
             }
 

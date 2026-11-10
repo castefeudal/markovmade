@@ -1,3 +1,4 @@
+const {selectLabTool}=require('./browser-helpers.cjs');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const {chromium,firefox,webkit}=require('playwright');
@@ -18,11 +19,11 @@ try{for(const[name,engine]of Object.entries({chromium,firefox,webkit})){
  await page.locator('#mm-lab-import-file').setInputFiles({name:'invalid.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify({schema:'markovmade-lab-export-v1',lab:{profile:{weight:1}},history:[{id:'bad',tool:'body',at:'invalid',result:{}}]}))});
  await page.waitForFunction(()=>document.getElementById('mm-lab-data-status').textContent.includes('не распознан'));
  assert.equal(await page.evaluate(()=>localStorage.getItem('markovmade-lab-v1')),before,'invalid backup leaves stored profile untouched');
- await page.locator('#lab-body-sex').selectOption('male');await page.locator('#lab-body-bf-source').selectOption('dexa');await page.locator('#lab-body-height').fill('188');await page.locator('#lab-body-weight').fill('100');await page.locator('#lab-body-bf').fill('15');
+ await selectLabTool(page,'body');await page.locator('#lab-body-sex').selectOption('male');await page.locator('#lab-body-bf-source').selectOption('dexa');await page.locator('#lab-body-height').fill('188');await page.locator('#lab-body-weight').fill('100');await page.locator('#lab-body-bf').fill('15');
  await page.evaluate(()=>{const original=Storage.prototype.setItem;Storage.prototype.setItem=function(key,value){if(key==='markovmade-lab-history-v1')throw new DOMException('Full','QuotaExceededError');return original.call(this,key,value);};document.querySelector('[data-calc="body"]').click();});
  await page.waitForFunction(()=>document.getElementById('mm-lab-data-status').textContent.includes('история не сохранена'));
  await page.locator('#main-header .mm-header-mobile-controls [data-lang-toggle]').first().focus();await page.locator('#main-header .mm-header-mobile-controls [data-lang-toggle]').first().click();await page.evaluate(()=>mmLanguageReady);
- const task=page.locator('.mm-app-task').first();await task.click();assert.equal(await task.locator('em').textContent(),'done');
+ await page.locator('.mm-os-extra-actions>summary').click();const task=page.locator('.mm-app-task').first();await task.click();assert.equal(await task.locator('em').textContent(),'done');
  await page.locator('#main-header .mm-header-mobile-controls [data-lang-toggle]').first().focus();await page.locator('#main-header .mm-header-mobile-controls [data-lang-toggle]').first().click();await page.evaluate(()=>mmLanguageReady);assert.equal(await task.locator('em').textContent(),'готово');
  await task.click();assert.equal(await task.locator('em').textContent(),'сейчас');
  assert.deepEqual(errors,[],name+' audited edge cases produce no runtime errors');

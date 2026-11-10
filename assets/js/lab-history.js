@@ -58,6 +58,7 @@
       tool, at: new Date().toISOString(), modelVersion: result.modelVersion,
       inputs, result: JSON.parse(JSON.stringify(result))
     };
+    if (!app.state.toolkit?.[tool]) document.dispatchEvent(new CustomEvent('mm:calculation-complete',{detail:{tool}}));
     const next = [entry, ...snapshots()].slice(0, MAX_HISTORY);
     if (!writeJson(HISTORY_KEY, next)) {
       status(copy('Расчёт готов, но история не сохранена: хранилище недоступно. Сохраните результат отдельно.', 'Calculation complete, but history could not be saved: storage is unavailable. Save the result separately.'));
@@ -180,7 +181,7 @@
       calories: Number.isFinite(nutrition.target) ? [`~${n(nutrition.target)} kcal`,copy('рабочая цель','working target')] :
         Number.isFinite(nutrition.tdee) ? [`~${n(nutrition.tdee)} kcal`,copy('поддержание','maintenance')] : ['—',copy('нет расчёта','not calculated')],
       weight: Number.isFinite(profile.weight) ? [`${n(profile.weight)} ${unit}`,progress.source || copy('данные профиля','profile data')] : ['—',copy('нет измерения','no measurement')],
-      readiness: Array.isArray(recovery.signals)?[String(recovery.signals.length),copy('сигналов для перепроверки','signals to review')]:Number.isFinite(recovery.score) ? [`${Math.round(recovery.score)}/100`,recovery.status || copy('самооценка','self-report')] : ['—',copy('нет оценки','not scored')],
+      readiness: Array.isArray(recovery.signals)?[String(recovery.signals.length),copy('сигналов для перепроверки','signals to review')]:Number.isFinite(recovery.score) ? ['—',copy('архивная модель: пересчитайте в LAB','archived model: recalculate in LAB')] : ['—',copy('нет оценки','not scored')],
       trend: Number.isFinite(progress.weekly) ? [`${progress.weekly >= 0 ? '+' : ''}${n(progress.weekly)} ${unit}`,progress.plateau === 'Возможен' ? copy('возможное плато','possible plateau') : copy('среднее за неделю','weekly trend')] : ['—',copy('нужны измерения','measurements needed')]
     };
 /* BEGIN POLISH PRESENTATION: empty dashboard */
@@ -190,38 +191,45 @@
       const main=document.querySelector(`[data-os-model="${key}"]`), note=document.querySelector(`[data-os-model-note="${key}"]`);
       if(main)main.textContent=parts[0]; if(note)note.textContent=parts[1];
     });
-    const score=document.querySelector('#mm-os-today-score strong'), scoreBox=document.getElementById('mm-os-today-score');
-    if(score)score.textContent=Number.isFinite(recovery.score)?String(Math.round(recovery.score)):'—';
-    if(scoreBox)scoreBox.setAttribute('aria-label',Number.isFinite(recovery.score)?copy(`Ресурс ${Math.round(recovery.score)} из 100`,`Readiness ${Math.round(recovery.score)} out of 100`):copy('Ресурс ещё не рассчитан','Readiness has not been calculated'));
-
+    let nextHref='#mm-lab-tab-nutrition',nextLabel=copy('Рассчитать питание','Calculate nutrition');
     let decision=copy('Сначала соберите исходные данные.','Start by collecting baseline data.');
     let reason=copy('Выполните расчёт в LAB. Здесь появится следующий шаг и сигналы, на которых он основан.','Run a model in LAB. The next step and the signals behind it will appear here.');
     let signal=copy('Данных пока нет','No model data yet');
     let explanation=copy('После расчёта в LAB появится измеримый сигнал, который поддерживает решение дня.','A measurable LAB signal will support the daily decision after a calculation.');
     if(state.strategy && state.strategy.main){
+      nextHref='#mm-lab-tab-strategy';nextLabel=copy('Проверить план в LAB','Review the plan in LAB');
       decision=state.strategy.main; reason=state.strategy.reason || reason; signal=state.strategy.control || signal;
       explanation=copy(`Сверьте результат через ${state.strategy.horizon || 14} дней и меняйте один фактор за раз.`,`Review in ${state.strategy.horizon || 14} days and change one factor at a time.`);
-    }else if(recovery.signals?.length){decision=copy('Перепроверьте восстановление перед нагрузкой.','Review recovery signals before loading.');reason=copy('В LAB отмечены выраженные субъективные сигналы. Проверьте условия, разминку и динамику.','LAB contains pronounced self-reported signals. Check conditions, warm-up and changes over time.');signal=copy('Сигналы самонаблюдения','Self-observation signals');explanation=String(recovery.signals.length);
-    }else if(Number.isFinite(recovery.score) && recovery.score<55){
-      decision=copy('Приоритет — восстановление.','Prioritise recovery.'); reason=recovery.status || reason;
-      signal=copy('Снизьте цену нагрузки','Reduce training load'); explanation=copy('Основано на оценке восстановления в LAB.','Based on the recovery assessment in LAB.');
+    }else if(recovery.signals?.length){nextHref='#mm-lab-tab-recovery';nextLabel=copy('Перепроверить восстановление','Review recovery');decision=copy('Перепроверьте восстановление перед нагрузкой.','Review recovery signals before loading.');reason=copy('В LAB отмечены выраженные субъективные сигналы. Проверьте условия, разминку и динамику.','LAB contains pronounced self-reported signals. Check conditions, warm-up and changes over time.');signal=copy('Сигналы самонаблюдения','Self-observation signals');explanation=String(recovery.signals.length);
     }else if(progress.plateau==='Возможен'){
+      nextHref='#mm-lab-daily';nextLabel=copy('Проверить записи дневника','Review journal entries');
       decision=copy('Проверьте сигнал плато.','Review the plateau signal.');
       reason=copy('Сопоставьте соблюдение, средний вес и талию перед небольшой корректировкой.','Check adherence, average weight and waist before making a small adjustment.');
       signal=copy('Тренд почти не меняется','Trend is nearly flat');
       explanation=`${n(progress.weekly)} ${unit} / ${copy('неделю · эвристика, не диагноз','week · heuristic, not diagnosis')}`;
     }else if(Number.isFinite(progress.weekly)){
+      nextHref='#mm-lab-daily';nextLabel=copy('Добавить наблюдение','Log an observation');
       decision=copy('Сохраните план до следующей оценки.','Keep the plan until the next review.');
       reason=copy('Читайте вес, талию и соблюдение вместе; один сигнал не требует автоматической коррекции.','Read weight, waist and adherence together; one signal does not call for an automatic change.');
       signal=copy('Недельный тренд','Weekly trend');
       explanation=`${progress.weekly>=0?'+':''}${n(progress.weekly)} ${unit} / ${copy('неделю','week')}`;
+    }else if(Number.isFinite(nutrition.target)){
+      nextHref='#mm-lab-daily';nextLabel=copy('Добавить наблюдение','Log an observation');
+      decision=copy('Начните с рабочего ориентира питания.','Start with your working nutrition target.');
+      reason=copy('Записывайте вес и питание в сопоставимых условиях. Через 2–3 недели проверьте динамику, полноту записей и самочувствие.','Record weight and intake consistently. Review the trend, record completeness and wellbeing in 2–3 weeks.');
+      signal=copy('Следующая проверка: 2–3 недели','Next review: 2–3 weeks');
+      explanation=copy('Цель — стартовый расчётный ориентир, не измерение вашего расхода.','The target is a calculated starting point, not a measurement of your expenditure.');
     }else if(state.body && Number.isFinite(state.body.ffmi)){
+      nextHref='#mm-lab-tab-strategy';nextLabel=copy('Выбрать следующий шаг','Choose the next step');
       decision=copy('Уточните следующий шаг в навигаторе стратегии.','Choose a next step in Strategy Navigator.');
       reason=copy('Исходная модель состава тела рассчитана; FFMI сам по себе не определяет цель.','A body-composition baseline is available; FFMI alone does not set a goal.');
       signal=`FFMI ${n(state.body.ffmi)}`;
       explanation=copy('Оценка, не диагноз.','An estimate, not a diagnosis.');
     }
     const set=(id,value)=>{const node=document.getElementById(id);if(node)node.textContent=value;};
+    const goals={lose:copy('Снижение массы','Weight loss'),cut:copy('Снижение массы','Weight loss'),maintain:copy('Поддержание массы','Weight maintenance'),bulk:copy('Набор массы','Weight gain'),gain:copy('Набор массы','Weight gain')};
+    set('mm-os-current-goal',copy('Ваша цель: ','Your goal: ')+(goals[nutrition.goal] || copy('начните с расчёта питания','start with a nutrition calculation')));
+    const nextAction=document.querySelector('#mm-os-screen-today .mm-os-start');if(nextAction){nextAction.href=nextHref;nextAction.textContent=nextLabel;}
     set('mm-os-today-decision',decision); set('mm-os-today-reason',reason); set('mm-os-signal-title',signal); set('mm-os-signal-copy',explanation);
     const actions=state.strategy && Array.isArray(state.strategy.actions)?state.strategy.actions:[
       copy('Рассчитайте состав тела или питание в LAB.','Calculate body composition or nutrition in LAB.'),
@@ -240,7 +248,8 @@
       history:snapshots(),
       dailyCheckins:readJson('markovmade-lab-daily-v1') || [],
       favorites:readJson('markovmade-lab-favorites-v1') || [],
-      osActions:readJson('markovmade-os-actions-v1') || {}
+      osActions:readJson('markovmade-os-actions-v1') || {},
+      meals:readJson('markovmade-meals-v1') || {schema:1,products:[],recipes:[]}
     };
     const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
     const url = URL.createObjectURL(blob);
@@ -274,6 +283,10 @@
       const history = (payload.history || []).slice(0,MAX_HISTORY);
       // Validate the complete backup before changing any persistent key.
       const staged=[[LAB_KEY,payload.lab],[HISTORY_KEY,history]];
+      if(payload.meals!==undefined){
+        if(!window.MarkovMadeMeals?.validStore(payload.meals))throw new Error('meal data');
+        staged.push(['markovmade-meals-v1',payload.meals]);
+      }
       if(Array.isArray(payload.dailyCheckins)){
         if(payload.dailyCheckins.some(item=>!item||!/^\d{4}-\d{2}-\d{2}$/.test(item.date)||!Number.isFinite(Date.parse(item.date))||new Date(item.date).toISOString().slice(0,10)!==item.date||!['weight','waist','sleep','energy','calories','adherence'].every(key=>item[key]===undefined||Number.isFinite(item[key]))))throw new Error('daily data');
         staged.push(['markovmade-lab-daily-v1',payload.dailyCheckins]);

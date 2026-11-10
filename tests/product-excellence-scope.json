@@ -1,0 +1,21 @@
+{
+  "reason": "User-authorized Product Excellence functional redesign; exact reviewed source checksums, unchanged visual/numerical tolerances.",
+  "files": {
+    "assets/js/analytics.js": "fc25d4d516b1a2c8d500c93f4e6bbd6b5bce3484e02909045caee27f91c51402",
+    "assets/js/dynamic-copy.js": "dd322014c36fdbca00434d3bda2e582bfca4010eb647b6098a722a516a894374",
+    "assets/js/lab-dashboard.js": "8b3fa1a0fe2519d1a4e4241bbdb8c110fae4101e5e350aca25c02ac4771bd68d",
+    "assets/js/lab-domains/body.js": "68ae3093e3582df459af57059868eea7abc01e5da42cb044856016018732d64e",
+    "assets/js/lab-domains/nutrition.js": "3834ec519b8d92ec5e62cd8e424deffbfac692e4eb75c3c091c8b0084a629191",
+    "assets/js/lab-domains/overfeeding.js": "376af053f86e57f7853b6d248352d8146e9d7467ae222391e298ee00d2b3d899",
+    "assets/js/lab-domains/progress.js": "b5f03fcd512016064c864f3a9e54ce0e3efa8fd4d3b09702056a98a8cedbb0c5",
+    "assets/js/lab-domains/recovery.js": "d355429cd2cb07b2983afb741ac254f515d43f8dafcb63b595ce53bea3d637a5",
+    "assets/js/lab-history.js": "3b1f5e3e8d0e87cacdd8d90d0bb1eeeee580441b256f9616f1665e5f254722a8",
+    "assets/js/lab-loader.js": "844c69e65313d5f98e16a2ee2e77d41c1ab74879230f522d5e521b844bb6e9c7",
+    "assets/js/lab-models.js": "e5203e7aeb556d4341cefa6381afbef3c8a9804d0abc5be50cff51259d62e903",
+    "assets/js/lab-runtime.js": "4258f996dd47389f97232559dc5b543e6f34d82092f4f291bcc35c27044a52f9",
+    "assets/js/lab-toolkit.js": "181a785645bf16c3cc46c51ce39f25ad96a3dfc6c6f6c502968ca7c15d4c7460",
+    "assets/js/personal-os.js": "d61fed26c173cbad4082710522b5b55b2a9dd2cfb74e1f5c0f132ac2e63bb181",
+    "src/locales/lab.en.json": "c0606dcb3588db4a7526dbf325c9ad906d46a5a81c1881b9e452bcab4dbc779c",
+    "src/locales/shared.en.json": "5b17c06cec82a4e6148affd183161e1b606ab3863944fcbc8016c978feb1373d"
+  }
+}

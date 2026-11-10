@@ -1,3 +1,4 @@
+const {selectLabTool,revealLabCatalog}=require('./browser-helpers.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs');
 const {chromium,firefox,webkit}=require('playwright');
 const {startServer,root}=require('./browser-helpers.cjs');
@@ -8,16 +9,23 @@ const fixtures=require('./toolkit-fixtures.json');
     const browser=await engine.launch({headless:true,...(name==='firefox'?{firefoxUserPrefs:{'network.proxy.type':0}}:{}),...(name==='webkit'?{proxy:{server:'http://127.0.0.1:9',bypass:'127.0.0.1,localhost'}}:{})});
     try{for(const lang of ['ru','en'])for(const theme of ['aurum-noir','event-horizon','clarity']){
       const page=await browser.newPage({viewport:{width:390,height:900},reducedMotion:'reduce'}),errors=[];page.on('pageerror',e=>errors.push(e.message));
-      await page.goto(server.url+`/?lang=${lang}&theme=${theme}`);await page.evaluate(async()=>{await window.mmLoadLab();await window.mmLoadLanguage();await window.mmLanguageReady;});
+      await page.goto(server.url+`/?lang=${lang}&theme=${theme}`,{waitUntil:'commit'});await page.waitForFunction(()=>typeof window.mmLoadLab==='function'&&typeof window.mmLoadLanguage==='function');await page.evaluate(async()=>{await window.mmLoadLab();await window.mmLoadLanguage();await window.mmLanguageReady;});
       assert.equal(await page.locator('.mm-lab-daily .mm-lab-kicker').count(),0,'the removed daily LAB kicker is not rendered');
-      assert.equal(await page.locator('.mm-lab-tab-icon svg use').count(),9,'nine primary LAB sections use the custom SVG icon set');
+      assert.equal(await page.locator('.mm-lab-tab-icon svg use').count(),9,'nine secondary LAB sections preserve the custom SVG icon set');
       assert.equal(await page.locator('.mm-checkin-label svg use').count(),7,'daily input labels have matching visual icons');
       assert.equal(await page.locator('.mm-lab-daily-trends small svg use').count(),4,'daily trend cards have matching visual icons');
       assert.equal(await page.locator('.mm-toolkit-card-head svg').count(),0,'the competing catalogue is removed');
       assert.equal(await page.evaluate(()=>window.MarkovMadeToolkit.tools.length),17);
       assert.equal(await page.locator('.mm-toolkit').count(),0,'no second catalogue');
-      await page.locator('#mm-lab-tab-body').focus();await page.keyboard.press('End');assert.equal(await page.locator('#mm-lab-tab-caffeine').getAttribute('aria-selected'),'true');assert.equal(await page.locator('#toolkit-caffeine-dose').isVisible(),true);await page.keyboard.press('Home');assert.equal(await page.locator('#mm-lab-tab-body').getAttribute('aria-selected'),'true');
-      await page.evaluate(()=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='protein')));await page.locator('.mm-toolkit-favorite').click();assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-favorites-v1'))),['protein']);
+      await revealLabCatalog(page);await page.locator('#mm-lab-tab-body').focus();await page.keyboard.press('End');assert.equal(await page.locator('#mm-lab-tab-caffeine').getAttribute('aria-selected'),'true');assert.equal(await page.locator('#toolkit-caffeine-dose').isVisible(),true);await page.keyboard.press('Home');assert.equal(await page.locator('#mm-lab-tab-body').getAttribute('aria-selected'),'true');
+      await page.evaluate(()=>{window.__toolkitOpenEvents=[];window.__canonicalOpenEvents=[];const root=document.getElementById('calculators');root.addEventListener('mm:toolkit-open',event=>window.__toolkitOpenEvents.push(event.detail));root.addEventListener('mm:lab-tab',event=>window.__canonicalOpenEvents.push(event.detail));window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='nutrition'));});
+      assert.deepEqual(await page.evaluate(()=>window.__canonicalOpenEvents),[{key:'nutrition'}],'opening a legacy tool routes through its canonical tab once');
+      assert.deepEqual(await page.evaluate(()=>window.__toolkitOpenEvents),[],'legacy routing does not duplicate specialist opening events');
+      await page.evaluate(()=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='caffeine')));
+      assert.deepEqual(await page.evaluate(()=>window.__toolkitOpenEvents),[{id:'caffeine'}],'canonical specialist routing emits exactly one thin opening event');
+      await page.evaluate(()=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='protein')));
+      assert.deepEqual(await page.evaluate(()=>window.__toolkitOpenEvents),[{id:'caffeine'},{id:'protein'}],'specialist events carry identifiers only, without profile or form values');
+      await page.locator('.mm-toolkit-favorite').click();assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-favorites-v1'))),['protein']);
       for(const [id,values] of Object.entries(fixtures)){
         if(!await page.evaluate(id=>window.MarkovMadeToolkit.tools.some(tool=>tool.id===id),id))continue;
         await page.evaluate(id=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id===id)),id);

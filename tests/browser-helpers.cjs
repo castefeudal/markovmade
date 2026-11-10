@@ -18,4 +18,12 @@ async function startServer() {
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
   return {url:`http://127.0.0.1:${server.address().port}`,close:()=>new Promise(resolve=>server.close(resolve))};
 }
-module.exports={startServer,root};
+async function revealLabCatalog(page) {
+  const catalog=page.locator('.mm-lab-tool-catalog');
+  if(await catalog.count()&&!await catalog.evaluate(el=>el.open))await catalog.locator(':scope > summary').click();
+}
+async function selectLabTool(page,key) {
+  await revealLabCatalog(page);
+  await page.locator(`[data-mm-lab-tab="${key}"]`).click();
+}
+module.exports={startServer,root,revealLabCatalog,selectLabTool};

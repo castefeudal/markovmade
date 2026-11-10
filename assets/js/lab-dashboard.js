@@ -47,7 +47,7 @@
     if(!validDate(date)||date>today()||date<floor){status(copy('Выберите дату за последние 180 дней.','Choose a date within the last 180 days.'));return;}
     const record={...entries().find(item=>item.date===date),date};
     let supplied=0;
-    const bounds={weight:[35,300],waist:[40,200],sleep:[0,16],energy:[1,10],calories:[1000,8000],adherence:[0,100]};
+    const bounds={weight:[35,300],waist:[40,200],sleep:[0,16],energy:[1,10],calories:[0,8000],adherence:[0,100]};
     for(const [key,[min,max]] of Object.entries(bounds)){
       const value=number(`mm-checkin-${key}`);
       if(value===null)continue;
@@ -150,6 +150,7 @@
     renderChart(trend);renderRecords(records);
     const observed=calibration(records),use=$('mm-checkin-use-calibration');use.hidden=!observed.ready;
     if(observed.ready){const {result}=observed;set('mm-checkin-maintenance',copy('Наблюдаемое поддержание: ','Observed maintenance: ')+fmt(result.low,0)+'–'+fmt(result.high,0)+' '+copy('ккал/сут','kcal/day')+' · '+result.days+' '+copy('последовательных дней','consecutive days')+' · '+copy('соблюдение известно за ','adherence recorded on ')+observed.adherenceCount+'/'+observed.count+' '+copy('дней. Уверенность: ','days. Confidence: ')+(en()?(result.confidence==='Низкая'?'low':result.confidence==='Умеренная'?'moderate':'above average'):result.confidence.toLowerCase())+'. '+copy('Ориентир с допущениями энергетического баланса.','An estimate with energy-balance assumptions.'));}
+    else if(observed.reason==='calories')set('mm-checkin-maintenance',copy('Записи сохранены. При среднем потреблении ниже 1000 ккал эта калибровка не строит ориентир питания; проверьте полноту записей и обсудите ситуацию индивидуально.','Records are saved. With average intake below 1000 kcal this calibration does not produce a food target; review logging completeness and discuss your situation individually.'));
     else if(observed.reason==='adherence')set('mm-checkin-maintenance',copy('Недостаточно данных о соблюдении: ','Insufficient adherence data: ')+observed.adherenceCount+'/'+observed.count+'. '+copy('Для калибровки нужны оценки минимум за 75% дней. Пропуски не заменяются предполагаемыми значениями.','Calibration needs ratings on at least 75% of days. Missing ratings are never replaced with assumed values.'));
     else set('mm-checkin-maintenance',copy('Адаптивное поддержание появится после 14 последовательных дней с весом и калориями. Сейчас: ','Adaptive maintenance needs 14 consecutive days with weight and calories. Current: ')+observed.count+'/14.');
   }

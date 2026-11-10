@@ -83,6 +83,7 @@ jobs:
         env:
           LIGHTHOUSE_MATRIX: 1
           LIGHTHOUSE_RUNS: 3
+          LIGHTHOUSE_TRACE_SCENE: ru-event-horizon-mobile
       - uses: actions/upload-artifact@v6
         if: always()
         with:
@@ -105,6 +106,10 @@ jobs:
       - run: npx playwright install --with-deps chromium firefox webkit
       - run: npm run build
       # Capture deliberately fails until the images have been reviewed and committed.
+      - run: node tests/e2e.cjs
+        continue-on-error: true
+        env:
+          CAPTURE_VISUAL_CANDIDATES: 1
       - run: npm run test:visual
         env:
           CAPTURE_VISUAL_CANDIDATES: 1
@@ -112,6 +117,8 @@ jobs:
         if: always()
         with:
           name: markovmade-linux-candidates
-          path: test-results/contracts/
+          path: |
+            test-results/contracts/
+            test-results/visual/
           if-no-files-found: error
           retention-days: 14

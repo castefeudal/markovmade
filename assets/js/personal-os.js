@@ -11,6 +11,7 @@
         var screens = Array.from(root.querySelectorAll('[data-app-screen]'));
 
         function activate(name, focusTab) {
+            root.dataset.osActiveTab=name;
             tabs.forEach(function (tab) {
                 var active = tab.dataset.appTab === name;
                 tab.classList.toggle('active', active);
@@ -112,6 +113,11 @@
         var prepare=(name,title,intro)=>{var panel=root.querySelector('[data-os-connected="'+name+'"]');if(!panel)return null;panel.replaceChildren(node('h3',title),node('p',intro));panel.setAttribute('aria-label',copy('Ваши локальные данные','Your local data'));return panel;};
         var metric=(panel,label,value,note)=>{if(!panel)return;var card=document.createElement('div');card.className='mm-os-connected-metric';card.append(node('span',label),node('strong',value));if(note)card.append(node('small',note));panel.append(card);};
         var action=(panel,label,tab)=>{if(!panel)return;var link=node('a',label);link.href=tab==='progress'?'#mm-lab-daily':'#mm-lab-tab-'+tab;link.className='mm-lab-secondary';panel.append(link);};
+        var nutritionState=state.nutrition||{},hasUserData=[nutritionState.target,nutritionState.tdee,state.profile?.weight,state.body?.ffmi,state.progress?.weekly,latestWeight?.value].some(Number.isFinite)||Boolean(state.recovery?.signals?.length);
+        root.querySelector('.mm-os-frame')?.toggleAttribute('data-empty',!hasUserData);
+        if(!hasUserData){var startAction=root.querySelector('.mm-os-start');if(startAction){startAction.textContent=copy('Рассчитать питание','Calculate nutrition');startAction.href='#mm-lab-tab-nutrition';}}
+        var goalNames={cut:copy('Снижение массы','Weight loss'),lose:copy('Снижение массы','Weight loss'),maintain:copy('Поддержание массы','Weight maintenance'),bulk:copy('Набор массы','Weight gain'),gain:copy('Набор массы','Weight gain')};
+        var goalNode=root.querySelector('#mm-os-current-goal');if(goalNode)goalNode.textContent=copy('Ваша цель: ','Your goal: ')+(goalNames[nutritionState.goal]||copy('начните с расчёта питания','start with a nutrition calculation'));
         var n=state.nutrition||{},panel=prepare('nutrition',copy('Ваши ориентиры питания','Your nutrition targets'),copy('Цели из расчёта LAB, а не съеденное количество или измеренный расход.','LAB planning targets, not logged intake or measured energy expenditure.'));
         metric(panel,copy('Калории','Calories'),Number.isFinite(n.target)?'≈ '+fmt(n.target)+' kcal':'—',Number.isFinite(n.target)?copy('Расчётная цель LAB','Calculated LAB target'):copy('Сначала рассчитайте питание в LAB','Calculate nutrition in LAB first'));
         for(var entry of [['pMid','Белок','Protein'],['fatMid','Жиры','Fat'],['carbMid','Углеводы','Carbohydrate']])if(Number.isFinite(n[entry[0]]))metric(panel,copy(entry[1],entry[2]),fmt(n[entry[0]])+' '+copy('г','g'),'');
@@ -125,7 +131,7 @@
         action(panel,copy('Открыть график и добавить измерение','Open chart and add a reading'),'progress');
         panel=prepare('recovery',copy('Ваш ресурс','Your recovery signals'),copy('Самооценка и практическая эвристика. Это не диагноз и не разрешение на нагрузку.','Self-report and a practical heuristic. This is not a diagnosis or clearance to train.'));
         var recovery=state.recovery||{};
-        metric(panel,copy('Наблюдения LAB','LAB observations'),Array.isArray(recovery.signals)?String(recovery.signals.length)+' '+copy('сигналов','signals'):Number.isFinite(recovery.score)?fmt(recovery.score)+'/100':'—',Array.isArray(recovery.signals)?copy('Открытые правила перепроверки, не тест готовности','Transparent review rules, not a readiness test'):Number.isFinite(recovery.score)?copy('Практическая эвристика, не медицинский индекс','Practical heuristic, not a medical index'):copy('Сначала выполните оценку ресурса в LAB','Run a recovery assessment in LAB first'));
+        metric(panel,copy('Наблюдения LAB','LAB observations'),Array.isArray(recovery.signals)?String(recovery.signals.length)+' '+copy('сигналов','signals'):'—',Array.isArray(recovery.signals)?copy('Открытые правила перепроверки, не тест готовности','Transparent review rules, not a readiness test'):Number.isFinite(recovery.score)?copy('Архивная модель: откройте новый расчёт LAB','Archived model: open the current LAB calculation'):copy('Сначала выполните оценку ресурса в LAB','Run a recovery assessment in LAB first'));
         metric(panel,copy('Последний сон','Latest sleep'),latestSleep?fmt(latestSleep.value)+' '+copy('ч','h'):'—',latestSleep?latestSleep.date:copy('Нет доступных наблюдений','No available observations'));
         metric(panel,copy('Последняя энергия','Latest energy'),latestEnergy?fmt(latestEnergy.value)+'/10':'—',latestEnergy?latestEnergy.date:copy('Нет доступных наблюдений','No available observations'));
         action(panel,copy('Добавить оценку ресурса','Add a recovery assessment'),'recovery');

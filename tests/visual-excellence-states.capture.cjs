@@ -1,3 +1,4 @@
+const {selectLabTool,revealLabCatalog}=require('./browser-helpers.cjs');
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const {chromium}=require('playwright'),{startServer,root}=require('./browser-helpers.cjs');
 const fixtures=require('./toolkit-fixtures.json'),out=path.join(root,'test-results/visual-excellence/states');fs.mkdirSync(out,{recursive:true});
@@ -8,7 +9,7 @@ for(const lang of ['ru','en'])for(const theme of ['aurum-noir','event-horizon','
  async function fill(values){for(const[id,value]of Object.entries(values)){const field=page.locator('#'+id);await field.evaluate(el=>{for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true;});if(await field.evaluate(el=>el.tagName==='SELECT'))await field.selectOption(value);else await field.fill(value);}}
  await page.locator('[data-lab-history-open]').click();await shot('#mm-lab-history-dialog','history-empty');await page.keyboard.press('Escape');
  const values={body:{'lab-body-sex':'male','lab-body-bf-source':'dexa','lab-body-height':'188','lab-body-weight':'100','lab-body-bf':'15'},nutrition:{'lab-nutri-sex':'male','lab-nutri-age':'29','lab-nutri-height':'188','lab-nutri-weight':'100'},overfeeding:{'lab-fat-intake':'5000','lab-fat-sex':'male','lab-fat-age':'29','lab-fat-height':'188','lab-fat-weight':'100','lab-fat-maint':'3000'},recovery:{'lab-rec-sleep':'7','lab-rec-energy':'6','lab-rec-stress':'5','lab-rec-desire':'8','lab-rec-soreness':'4','lab-rec-well':'7'},progress:{'lab-prog-start-date':'2026-10-01','lab-prog-end-date':'2026-10-15','lab-prog-start-weight':'100','lab-prog-current-weight':'99','lab-prog-start-waist':'90','lab-prog-current-waist':'89'}};
- for(const[id,data]of Object.entries(values)){await page.locator('#mm-lab-tab-'+id).click();await fill(data);await page.locator(`[data-calc=${id}]`).click();assert.equal(await page.locator('#lab-'+id+'-error').innerText(),'');await shot('#mm-lab-'+id+' .mm-lab-result',id+'-result');
+ for(const[id,data]of Object.entries(values)){await selectLabTool(page,id);await fill(data);await page.locator(`[data-calc=${id}]`).click();assert.equal(await page.locator('#lab-'+id+'-error').innerText(),'');await shot('#mm-lab-'+id+' .mm-lab-result',id+'-result');
  const pro=page.locator(`[data-mode-switch="${id}"] [data-mode="pro"]`);if(await pro.count()){
   await pro.click();if(id==='progress')await fill({'lab-prog-daily':Array.from({length:14},(_,i)=>(100-i*.075).toFixed(2)).join(', '),'lab-prog-adherence':'90'});
   await page.locator(`[data-calc=${id}]`).click();assert.equal(await page.locator('#lab-'+id+'-error').innerText(),'');await shot('#mm-lab-'+id+' .mm-lab-result',id+'-pro-result');
@@ -16,12 +17,12 @@ for(const lang of ['ru','en'])for(const theme of ['aurum-noir','event-horizon','
  if(id==='nutrition'){await page.locator('[data-mode-switch=nutrition] [data-mode=calibrated]').click();await fill({'lab-nutri-calibration-weights':Array(14).fill('80').join('\n'),'lab-nutri-calibration-calories':'2800','lab-nutri-calibration-adherence':'90'});await page.locator('[data-calc=nutrition]').click();assert.equal(await page.locator('#lab-nutrition-error').innerText(),'');await shot('#mm-lab-nutrition .mm-lab-result','nutrition-calibrated-result');}
  }
 
- await page.locator('#mm-lab-tab-strength').click();await fill({'lab-e1rm-load':'80','lab-e1rm-reps':'5'});await page.locator('#lab-e1rm-calculate').click();await shot('#mm-lab-strength','strength-result');
+ await selectLabTool(page,'strength');await fill({'lab-e1rm-load':'80','lab-e1rm-reps':'5'});await page.locator('#lab-e1rm-calculate').click();await shot('#mm-lab-strength','strength-result');
  for(const[id,data]of Object.entries(fixtures)){
   if(!await page.evaluate(id=>MarkovMadeToolkit.tools.some(t=>t.id===id),id))continue;
   await page.evaluate(id=>MarkovMadeToolkit.open(MarkovMadeToolkit.tools.find(t=>t.id===id)),id);await fill(Object.fromEntries(Object.entries(data).map(([k,v])=>['toolkit-'+id+'-'+k,String(v)])));await page.locator('#mm-toolkit-workspace button[type=submit]').click();assert.equal(await page.locator('#mm-toolkit-result .mm-toolkit-outcome').count(),1);await shot('#mm-toolkit-result','tool-'+id+'-result');if(id==='session')await shot('.mm-session-editor','session-editor');
  }
- await page.locator('#mm-lab-tab-body').click();await page.locator('#lab-body-weight').fill('');await page.locator('[data-calc=body]').click();await shot('#mm-lab-body','body-error');
+ await selectLabTool(page,'body');await page.locator('#lab-body-weight').fill('');await page.locator('[data-calc=body]').click();await shot('#mm-lab-body','body-error');
  await page.locator('[data-lab-history-open]').click();await shot('#mm-lab-history-dialog','history');await page.keyboard.press('Escape');await page.evaluate(()=>mmPreviewShare('Reviewed visual state','https://t.me/share/url?text=Reviewed'));await shot('.mm-share-preview','share-preview');await page.keyboard.press('Escape');
  for(const width of [320,360,390,428,600,768,1024,1280,1440,1920,2560]){await page.setViewportSize({width,height:1000});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`${lang}/${theme}/${width}`);report.push({lang,theme,width});}
  assert.deepEqual(errors,[]);await page.close();console.log('Populated art states: '+lang+'/'+theme);

@@ -8,7 +8,7 @@
             if (!root) return;
 
             const STORAGE_KEY = 'markovmade-lab-v1';
-            const MODEL_VERSIONS = Object.freeze({ body:'1.0.0', nutrition:'2.0.0', overfeeding:'2.0.0', recovery:'3.0.0', progress:'2.0.0', strategy:'1.0.0' });
+            const MODEL_VERSIONS = Object.freeze({ body:'2.0.0', nutrition:'3.0.0', overfeeding:'3.0.0', recovery:'4.0.0', progress:'3.0.0', strategy:'1.0.0' });
             const {mifflin,tenHaaf,tenHaafFFM,navyBodyFat,ffmi,weightedTef,glycogenRange,average:avg,movingAverage,regressionSlope,maintenanceCalibration,plateauStatus,detectWeightOutliers,robustDailySlope,estimate1RM,personalRecoveryBaseline} = window.MarkovMadeModels;
             const K = Object.freeze({
                 kcalPerKgFatEquivalent: 7700,
@@ -69,7 +69,7 @@
                 const details=recoveryMethod.closest('.mm-lab-details');
                 if(details&&!el('lab-rec-breakdown')){
                     const baselineNote=document.createElement('p');baselineNote.id='lab-rec-baseline';baselineNote.className='mm-lab-insight';baselineNote.textContent='Baseline формируется: внесите RHR и HRV в PRO-режиме.';details.before(baselineNote);
-                    const breakdown=document.createElement('div');breakdown.id='lab-rec-breakdown';breakdown.className='mm-lab-metrics';breakdown.setAttribute('role','group');breakdown.setAttribute('aria-label','Вклад сигналов в индекс самонаблюдения');details.before(breakdown);
+                    const breakdown=document.createElement('div');breakdown.id='lab-rec-breakdown';breakdown.className='mm-lab-metrics';breakdown.setAttribute('role','group');breakdown.setAttribute('aria-label','Исходные оценки самонаблюдения');details.before(breakdown);
                 }
             }
             const strengthMount=el('lab-strength-mount');
@@ -284,11 +284,12 @@
             el('mm-lab-clear-all')?.addEventListener('click',()=>{
                 const english=document.documentElement.lang==='en';
                 if(!window.confirm(english?'Clear local MARKOVMADE LAB data on this device?':'Очистить локальные данные MARKOVMADE LAB на этом устройстве?')) return;
-                try{for(const key of [STORAGE_KEY,'markovmade-lab-history-v1','markovmade-lab-daily-v1','markovmade-lab-favorites-v1','markovmade-os-actions-v1'])localStorage.removeItem(key);}
+                try{for(const key of [STORAGE_KEY,'markovmade-lab-history-v1','markovmade-lab-daily-v1','markovmade-lab-favorites-v1','markovmade-os-actions-v1','markovmade-meals-v1'])localStorage.removeItem(key);}
                 catch(e){const status=el('mm-lab-data-status');if(status)status.textContent=english?'Storage is unavailable. Complete deletion could not be confirmed. Try again.':'Хранилище недоступно. Полную очистку подтвердить не удалось. Повторите попытку.';return;}
                 if(el('mm-lab-data-status'))el('mm-lab-data-status').textContent='';state=emptyState(); if(window.MarkovMadeLab) window.MarkovMadeLab.state=state;
                 window.mmRefreshOSActions?.();window.mmRefreshPersonalOS?.();
                 $$('[data-profile]').forEach(x=>x.value=''); ['body','nutrition','overfeeding','recovery','progress','strategy'].forEach(resetTool); updateFemaleFields(); updateSnapshot();
+                document.dispatchEvent(new CustomEvent('mm:lab-cleared'));
             });
 
             // Consistency check between declared calories and macros.

@@ -6,12 +6,6 @@
           </div>
           <p class="mm-os-data-origin" data-no-translate data-os-provenance>Сегодня: локальные данные LAB · остальные экраны: демо</p>
           <label class="mm-os-data-choice" data-no-translate><input type="checkbox" id="mm-os-daily-consent"><span data-os-daily-ru="Использовать мой дневник LAB" data-os-daily-en="Use my LAB journal">Использовать мой дневник LAB</span></label><p id="mm-os-data-status" role="status" data-no-translate></p>
-          <div class="mm-os-signalbar" aria-hidden="true" data-no-translate>
-            <span><i></i> LIVE SIGNALS</span>
-            <div class="mm-os-signalbar-track"><b></b></div>
-            <strong>DECISION ENGINE / 01</strong>
-          </div>
-
           <div class="mm-os-tabs" role="tablist" aria-label="Экраны живого прототипа">
             <button id="mm-os-tab-today" type="button" class="mm-os-tab active" role="tab" aria-selected="true" aria-controls="mm-os-screen-today" data-app-tab="today">
               <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg><span>Сегодня</span>
@@ -30,27 +24,12 @@
             </button>
           </div>
 
-          <div class="mm-os-screen active" id="mm-os-screen-today" data-app-screen="today" role="tabpanel" aria-labelledby="mm-os-tab-today">
-            <div class="mm-os-decision">
-              <div class="mm-os-decision-copy"><span>РЕШЕНИЕ ДНЯ</span><h3 id="mm-os-today-decision">Сначала соберите исходные данные.</h3><p id="mm-os-today-reason">Выполните расчёт в LAB. Здесь появится следующий шаг и сигналы, на которых он основан.</p><a class="mm-os-start mm-primary-cta" href="#calculators" data-copy-ru="Открыть LAB" data-copy-en="Open LAB">Открыть LAB</a></div>
-              <div class="mm-os-score" id="mm-os-today-score" role="group" aria-label="Ресурс: ещё не рассчитан"><strong>—</strong><span>/100</span><small>ресурс</small></div>
-            </div>
-            <div class="mm-os-metrics" role="group" aria-label="Ключевые показатели дня">
-              <div><span>Калории</span><b data-os-model="calories">—</b><small data-os-model-note="calories">нет расчёта</small></div>
-              <div><span>Вес</span><b data-os-model="weight">—</b><small data-os-model-note="weight">нет измерения</small></div>
-              <div><span>Ресурс</span><b data-os-model="readiness">—</b><small data-os-model-note="readiness">нет оценки</small></div>
-              <div><span>Тренд</span><b data-os-model="trend">—</b><small data-os-model-note="trend">нужны измерения</small></div>
-            </div>
-            <div class="mm-os-today-grid">
-              <div class="mm-os-actions-card">
-                <div class="mm-os-card-head"><span>Следующий шаг</span><small>на основании LAB</small></div>
-                <button type="button" class="mm-os-task mm-app-task" aria-pressed="false"><span class="mm-os-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><span><b data-os-action="0">Рассчитайте исходные данные</b><small data-os-action-note="0">Первый сигнал займёт меньше минуты.</small></span><em>сейчас</em></button>
-                <button type="button" class="mm-os-task mm-app-task" aria-pressed="false"><span class="mm-os-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><span><b data-os-action="1">Соберите тренд веса</b><small data-os-action-note="1">Сравните недельные средние.</small></span><em>7 дней</em></button>
-                <button type="button" class="mm-os-task mm-app-task" aria-pressed="false"><span class="mm-os-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><span><b data-os-action="2">Повторите оценку ресурса</b><small data-os-action-note="2">Сверяйте сигналы в одинаковых условиях.</small></span><em>регулярно</em></button>
-              </div>
-              <div class="mm-os-signal-card"><span class="mm-os-signal-label">СИГНАЛ СИСТЕМЫ</span><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 17l5-5 3 3 7-8"/><path d="M15 7h4v4"/></svg><b id="mm-os-signal-title">Данных пока нет</b><p id="mm-os-signal-copy">После расчёта в LAB здесь появится измеримый сигнал, который поддерживает решение дня.</p></div>
-            </div>
-          </div>
+          <div class="mm-os-screen active mm-os-today-precision" id="mm-os-screen-today" data-app-screen="today" role="tabpanel" aria-labelledby="mm-os-tab-today">
+<p class="mm-os-current-goal" data-no-translate id="mm-os-current-goal">Ваша цель: начните с расчёта питания</p>
+<div class="mm-os-decision"><div class="mm-os-decision-copy"><span>Следующее действие</span><h3 id="mm-os-today-decision">Сначала соберите исходные данные.</h3><p id="mm-os-today-reason">Выполните расчёт в LAB. Здесь появится следующий шаг и сигналы, на которых он основан.</p><a class="mm-os-start mm-primary-cta" href="#mm-lab-tab-nutrition" data-no-translate>Рассчитать питание</a></div></div>
+<div class="mm-os-metrics" role="group" aria-label="Ключевые показатели дня"><div><span>Калории</span><b data-os-model="calories">—</b><small data-os-model-note="calories">нет расчёта</small></div><div><span>Вес</span><b data-os-model="weight">—</b><small data-os-model-note="weight">нет измерения</small></div></div>
+<div class="mm-os-checkpoint"><span id="mm-os-signal-title">Данных пока нет</span><b data-os-model="trend">—</b><small data-os-model-note="trend">нужны измерения</small><p id="mm-os-signal-copy">После расчёта в LAB появится ориентир для следующей проверки.</p></div>
+<details class="mm-os-extra-actions"><summary>Действия и отметки</summary><button type="button" class="mm-os-task mm-app-task" aria-pressed="false"><span class="mm-os-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><span><b data-os-action="0">Рассчитайте исходные данные</b><small data-os-action-note="0">Первый сигнал займёт меньше минуты.</small></span><em>сейчас</em></button><button type="button" class="mm-os-task mm-app-task" aria-pressed="false"><span class="mm-os-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><span><b data-os-action="1">Соберите тренд веса</b><small data-os-action-note="1">Сравните недельные средние.</small></span><em>7 дней</em></button><button type="button" class="mm-os-task mm-app-task" aria-pressed="false"><span class="mm-os-check" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12l4 4 10-10"/></svg></span><span><b data-os-action="2">Повторите оценку ресурса</b><small data-os-action-note="2">Сверяйте сигналы в одинаковых условиях.</small></span><em>регулярно</em></button></details></div>
 
           <div class="mm-os-screen" id="mm-os-screen-nutrition" data-app-screen="nutrition" role="tabpanel" aria-labelledby="mm-os-tab-nutrition" hidden>
             <section class="mm-os-connected" data-os-connected="nutrition" data-no-translate aria-label="Локальные данные"><h3>Ваши данные LAB</h3><p>Выполните расчёт или добавьте наблюдение в LAB.</p><a href="#calculators" class="mm-lab-secondary">Открыть LAB</a></section>
@@ -82,7 +61,7 @@
                 <circle class="mm-os-point" cx="620" cy="150" r="5"/>
               </svg>
             </div>
-            <div class="mm-os-progress-kpis"><div><span>Талия</span><b>−6 см</b><small>с 91 до 85 см</small></div><div><span>Силовые</span><b>−1%</b><small>практически сохранены</small></div><div><span>Соблюдение</span><b>86%</b><small>последние 4 недели</small></div><div><span>До цели</span><b>≈ 8 нед.</b><small>при текущем темпе</small></div></div>
+            <div class="mm-os-progress-kpis"><div><span>Талия</span><b>−6 см</b><small>с 91 до 85 см</small></div><div><span>Силовые</span><b>−1%</b><small>практически сохранены</small></div><div><span>Соблюдение</span><b>86%</b><small>последние 4 недели</small></div><div><span>До цели</span><b>Сценарий</b><small>надёжный срок не известен</small></div></div>
             <div class="mm-os-insight mm-os-insight--wide"><span>РЕШЕНИЕ</span><p><strong>Калории пока не менять.</strong> Темп находится в рабочем диапазоне, талия уменьшается, а силовые сохраняются.</p></div>
             </details>
           </div>
@@ -90,10 +69,10 @@
           <div class="mm-os-screen" id="mm-os-screen-recovery" data-app-screen="recovery" role="tabpanel" aria-labelledby="mm-os-tab-recovery" hidden>
             <section class="mm-os-connected" data-os-connected="recovery" data-no-translate aria-label="Локальные данные"><h3>Ваши данные LAB</h3><p>Выполните расчёт или добавьте наблюдение в LAB.</p><a href="#calculators" class="mm-lab-secondary">Открыть LAB</a></section>
             <details class="mm-os-demo"><summary data-no-translate data-os-daily-ru="DEMO · посмотреть пример, это не ваши данные" data-os-daily-en="DEMO · view an example, these are not your data">DEMO · посмотреть пример, это не ваши данные</summary>
-            <div class="mm-os-recovery-hero"><div class="mm-os-recovery-score"><strong>81</strong><span>/100</span><small>ресурс</small></div><div><span>ГОТОВНОСТЬ</span><h3>Можно тренироваться по плану.</h3><p>Сон и субъективная энергия в норме. Накопленная нагрузка не требует снижения объёма.</p></div></div>
+            <div class="mm-os-recovery-hero"><div><span>ПРИМЕР НАБЛЮДЕНИЙ</span><h3>Проверьте самочувствие перед нагрузкой.</h3><p>Сон, стресс и разминка помогают обсудить нагрузку. Эти сигналы не измеряют готовность и не заменяют медицинскую оценку.</p></div></div>
             <div class="mm-os-metrics mm-os-metrics--recovery"><div><span>Сон</span><b>7:42</b><small>+22 мин к среднему</small></div><div><span>Стресс</span><b>3 / 10</b><small>низкий</small></div><div><span>RHR</span><b>58</b><small>обычный уровень</small></div><div><span>Тренировки</span><b>4 / 7</b><small>за последние 7 дней</small></div></div>
-            <div class="mm-os-readiness"><div><span>Восстановление</span><b>81%</b></div><i><em style="--fill:81%"></em></i></div>
-            <div class="mm-os-insight mm-os-insight--wide"><span>РЕШЕНИЕ ДНЯ</span><p><strong>Оставьте плановую силовую.</strong> Кардио — умеренное. Сегодня важнее сохранить обычное время сна, чем добавлять нагрузку.</p></div>
+
+            <div class="mm-os-insight mm-os-insight--wide"><span>РЕШЕНИЕ ДНЯ</span><p>Оцените самочувствие на разминке. При устойчивом ухудшении пересмотрите нагрузку и обратитесь к подходящему специалисту.</p></div>
             </details>
           </div>
 
