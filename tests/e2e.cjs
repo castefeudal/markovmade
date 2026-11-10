@@ -278,7 +278,13 @@ let browser;
   // navigation path as a visitor, rather than racing a still-skipped subtree.
   await page.waitForFunction(() => document.getElementById('main-header').hasAttribute('data-mm-scroll-hidden'));
   await page.evaluate(() => window.scrollBy({top:-120,behavior:'instant'}));
-  await page.waitForFunction(() => !document.getElementById('main-header').hasAttribute('data-mm-scroll-hidden'));
+   await page.waitForFunction(() => {
+     const header = document.getElementById('main-header');
+     const link = header.querySelector('nav a[href="#services"]');
+     const headerBox = header.getBoundingClientRect();
+     const linkBox = link.getBoundingClientRect();
+     return !header.hasAttribute('data-mm-scroll-hidden') && headerBox.top >= -1 && headerBox.bottom > 0 && linkBox.top >= 0 && linkBox.bottom <= innerHeight;
+   });
   await page.locator('#main-header nav a[href="#services"]').click();
   const accordion = page.locator('#services .mm-service-editorial-item summary').first();
   await accordion.click();
