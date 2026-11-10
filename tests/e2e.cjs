@@ -276,6 +276,9 @@ let browser;
 
   // Import reloads the shell. Reach lazy editorial content through the same
   // navigation path as a visitor, rather than racing a still-skipped subtree.
+  await page.waitForFunction(() => document.getElementById('main-header').hasAttribute('data-mm-scroll-hidden'));
+  await page.evaluate(() => window.scrollBy({top:-120,behavior:'instant'}));
+  await page.waitForFunction(() => !document.getElementById('main-header').hasAttribute('data-mm-scroll-hidden'));
   await page.locator('#main-header nav a[href="#services"]').click();
   const accordion = page.locator('#services .mm-service-editorial-item summary').first();
   await accordion.click();

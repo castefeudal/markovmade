@@ -11,7 +11,7 @@ const {documentSource,scriptSource}=require('./source-components.cjs');
 const namespaces=['shared','lab','personal-os'];
 const productCopy=Object.assign({},...namespaces.map(name=>JSON.parse(fs.readFileSync(path.join(root,'src/locales',name+'.en.json'),'utf8'))));
 const translationSource=fs.readFileSync(path.join(root,'assets/js/i18n.js'),'utf8').replace('var META =',`Object.assign(DICT,${JSON.stringify(productCopy)}); var META =`);
-const cssFiles = ['fonts','foundation','editorial','lab','personal-os','tokens','product','worlds','clarity','hero','controls','header','author','toolkit','experience','composition','signature','motion'];
+const cssFiles = ['fonts','foundation','editorial','lab','personal-os','tokens','product','worlds','clarity','hero','controls','header','reading-size','author','toolkit','experience','composition','signature','motion'];
 const out = path.join(root,'assets/dist');
 fs.mkdirSync(out,{recursive:true});
 fs.mkdirSync(path.join(out,'locales'),{recursive:true});
@@ -80,7 +80,7 @@ function extractComponent(html, className, name) {
   const used=new Set(matches);
   const critical=tree.clone();
   critical.walkRules(rule => {
-    if (!used.has(rule.selector) && !/content-visibility|contain-intrinsic-size/.test(rule.toString()) && !/#hero\b|\.mm-hero\b|main-header|mobile-menu|menu-open|theme-switch|lang-switch|burger-btn|mm-theme-|theme-preview|mm-quick|mm-scroll-progress|mm-skip-link|skip-to-main|data-mm-surface|mm-surface-light|mm-context-halo|mm-result-glint|:root/.test(rule.selector)) rule.remove();
+    if (!used.has(rule.selector) && !/content-visibility|contain-intrinsic-size/.test(rule.toString()) && !/#hero\b|\.mm-hero\b|main-header|mobile-menu|menu-open|theme-switch|lang-switch|burger-btn|mm-theme-|mm-reading-size|reading-size|theme-preview|mm-quick|mm-scroll-progress|mm-skip-link|skip-to-main|data-mm-surface|mm-surface-light|mm-context-halo|mm-result-glint|:root/.test(rule.selector)) rule.remove();
   });
   // Below-fold keyframes are not needed to paint the shell.
   critical.walkAtRules(rule => { if (/keyframes/.test(rule.name) || (rule.nodes && !rule.nodes.length)) rule.remove(); });
