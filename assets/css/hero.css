@@ -1,6 +1,6 @@
 /* Hero composition. Portrait files, crop and pointer poses remain unchanged. */
 @layer components {
-html.js:not([data-critical-ready]) #hero>.container{visibility:hidden}
+html.js:not([data-critical-ready]) #hero,html.js:not([data-critical-ready]) #hero>.container{visibility:hidden}
 #hero{position:relative;isolation:isolate;display:grid;align-items:center;min-height:min(60rem,100svh);padding:9rem 0 4rem;overflow:clip;background:var(--mm-bg-primary);border-bottom:1px solid var(--mm-border);touch-action:pan-y;background-image:radial-gradient(ellipse at 2% 40%,var(--mm-glow-primary),transparent 60%),radial-gradient(ellipse at 80% 20%,var(--mm-glow-primary),transparent 45%)}
 #hero>.container{width:min(var(--mm-content-width),calc(100% - 2 * var(--mm-page-gutter)));max-width:var(--mm-content-width);padding-inline:0;margin-inline:auto;position:relative;z-index:2}
 #hero .hero-content-premium{width:55%;max-width:46rem;padding:0;line-height:1.5}
@@ -106,5 +106,27 @@ html[data-theme=clarity] #hero :is(.mm-primary-cta,.mm-secondary-cta),html[data-
  html[data-theme=clarity] #hero .mm-hero-media{border-width:6px}
  #hero .hero-content-premium>p{line-height:1.6}
  #hero .hero-proof-grid{padding-block:14px}
+}
+}
+
+/* Precision conversion: immediate personal contact, free calculation second. */
+@layer components {
+@media(min-width:1181px){html:lang(en) #hero h1{font-size:clamp(3.4rem,5.2vw,5.2rem)}}
+html #hero .hero-specialties{margin:0;max-width:42ch;font:var(--mm-font-secondary);font-size:.875rem;color:var(--mm-text-muted)}
+html #hero .hero-specialties a{color:var(--mm-text-secondary);text-underline-offset:4px}
+html #hero .hero-content-premium>div:nth-of-type(2){margin-bottom:1.25rem}
+@media(max-width:1180px){
+ html #hero>.container{order:1;margin-top:6rem}
+ html #hero .mm-hero-media,html[data-theme=event-horizon] #hero .mm-hero-media,html[data-theme=clarity] #hero .mm-hero-media{order:2;margin-top:1.75rem}
+ html #hero .hero-content-premium{max-width:48rem}
+ html #hero h1,html[data-theme=event-horizon] #hero h1,html[data-theme=clarity] #hero h1{font-size:clamp(2.1rem,7vw,4rem);line-height:1.08;margin-bottom:1rem}
+ html #hero .hero-content-premium>p.hero-intro{font-size:1rem;line-height:1.55;margin-bottom:1.25rem;max-width:48ch}
+}
+@media(max-width:600px){
+ html #hero>.container{margin-top:5.75rem}
+ html #hero .hero-content-premium>div:first-child{margin-bottom:1rem}
+ html #hero :is(.mm-primary-cta,.mm-secondary-cta){min-height:48px;padding:12px 16px;gap:8px;justify-content:center;white-space:normal;text-align:center}
+ html #hero .hero-content-premium>div:nth-of-type(2){gap:9px}
+ html #hero .hero-specialties{font-size:.8125rem;line-height:1.6}
 }
 }

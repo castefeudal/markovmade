@@ -246,3 +246,38 @@
 @media(max-width:640px){.mm-request-details>summary{padding-inline:15px}.mm-request-details>summary span{margin-left:auto}}
 
 /* Give the authored case photos enough room to read as work, not thumbnails. */
+
+/* Precision offers and one contact destination. */
+@layer components {
+html #services .mm-editorial-head{margin-bottom:28px}
+html #services .mm-service-editorial-item{border-inline:0;border-radius:0;box-shadow:none;background:none}
+html #services .mm-service-editorial-item summary{min-height:112px;padding-block:22px}
+html #services .mm-service-summary-main strong{font-size:clamp(1.25rem,2.2vw,1.8rem);line-height:1.25}
+html #services .mm-service-summary-main small{max-width:54ch;line-height:1.6}
+html #services .mm-service-editorial-body{padding-top:8px;padding-bottom:28px}
+html #services .mm-service-facts{gap:16px}
+html #services .mm-service-specialties{max-width:80ch;margin:24px 0 0;font:var(--mm-font-secondary);color:var(--mm-text-muted);line-height:1.65}
+html #contact.mm-contact-precision{padding-block:clamp(48px,7vw,96px);background:var(--mm-bg-secondary)}
+html #contact .mm-editorial-head{max-width:48rem;margin:0 0 24px;text-align:start}
+html #contact .mm-contact-direct{display:flex;flex-wrap:wrap;gap:12px;max-width:42rem}
+html #contact .mm-contact-direct>a{min-height:48px;padding:14px 22px;text-align:center}
+html #contact .mm-contact-privacy{max-width:60ch;margin:16px 0 28px;font:var(--mm-font-secondary);color:var(--mm-text-muted)}
+html #contact .mm-contact-optional{border-block:1px solid var(--mm-border);padding-block:8px}
+html #contact .mm-contact-optional>summary{display:flex;flex-wrap:wrap;gap:10px;align-items:center;min-height:52px;padding:12px 0;cursor:pointer;font:var(--mm-font-label);color:var(--mm-text-primary);list-style:none}
+html #contact .mm-contact-optional>summary::before{content:'+';color:var(--mm-accent);font-size:1.5rem}
+html #contact .mm-contact-optional[open]>summary::before{content:'−'}
+html #contact .mm-contact-optional>summary>span{font:var(--mm-font-secondary);color:var(--mm-text-muted)}
+html #contact .mm-contact-optional>summary:focus-visible{outline:3px solid var(--mm-focus);outline-offset:4px}
+html #contact #personal-request{padding-block:24px}
+html #contact #personal-request>.mm-editorial-inner{width:100%;max-width:none}
+html #contact .lead-application-intro{display:none}
+html #contact .mm-contact-email{display:inline-block;margin-top:24px;color:var(--mm-text-secondary);font:var(--mm-font-secondary);overflow-wrap:anywhere;text-underline-offset:4px}
+@media(max-width:600px){html #services .mm-service-editorial-item summary{padding-block:18px;min-height:96px}html #contact .mm-contact-direct{flex-direction:column}html #contact .mm-contact-direct>a{width:100%}}
+}
+
+@layer components {
+html #services .mm-service-code{padding-left:0;letter-spacing:.025em}
+@media(max-width:600px){html #services .mm-service-preview{display:none}html #services .mm-service-editorial-item>summary{grid-template-columns:28px minmax(0,1fr) 44px;gap:10px;min-height:0;padding:18px 0}html #services .mm-service-summary-main{grid-column:1/-1}html #services .mm-service-editorial-body{margin-inline:0}html #services .mm-service-summary-main strong{font-size:1.35rem}}
+}
+
+@layer components {html[data-theme] #hero .hero-specialties a{text-decoration-line:underline;text-decoration-thickness:1px;text-underline-offset:4px}}

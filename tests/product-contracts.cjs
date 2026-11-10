@@ -26,7 +26,7 @@ async function assertComposition(page,label) {
   assert.ok(result.face.left>=result.media.left-2 && result.face.right<=result.media.right+2,`${label}: face clips horizontally ${JSON.stringify(result)}`);
   assert.ok(result.face.top>=result.media.top-2,`${label}: head clips at the top ${JSON.stringify(result)}`);
   if(result.viewport>1180)assert.ok(result.heading.right<=result.face.left+2,`${label}: text overlaps the face`);
-  else assert.ok(result.heading.top>=result.media.bottom,`${label}: mobile text overlaps the portrait`);
+  else assert.ok(result.heading.bottom<=result.media.top,`${label}: mobile text overlaps the portrait`);
 }
 async function settleResponsivePoster(page) {
   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(resolve)));
@@ -64,7 +64,7 @@ async function assertCta(page,label) {
     await page.waitForTimeout(180);
     const s=await cta.evaluate(el=>{const text=el.querySelector('span'),cs=getComputedStyle(text),bg=getComputedStyle(el),sr=text.getBoundingClientRect();return {text:text.textContent.trim(),fg:cs.color,fill:cs.webkitTextFillColor||cs.color,bg:bg.backgroundColor,opacity:Number(bg.opacity),width:sr.width,height:sr.height,svg:getComputedStyle(el.querySelector('svg')).color};});
     if(state==='active'){await page.mouse.move(0,0);await page.mouse.up();}
-    assert.match(s.text,/Открыть LAB|Open LAB/i,`${label}/${state}: visible CTA text`);
+    assert.match(s.text,/Обсудить мою цель|Discuss my goal/i,`${label}/${state}: visible CTA text`);
     assert.ok(s.width>20&&s.height>10&&s.opacity>.9,`${label}/${state}: text is drawn`);
     assert.ok(contrast(s.fg,s.bg)>=4.5,`${label}/${state}: contrast ${contrast(s.fg,s.bg)}`);
     assert.ok(contrast(s.fill,s.bg)>=4.5,`${label}/${state}: text fill is legible`);
@@ -149,14 +149,14 @@ async function assertCta(page,label) {
     const touch=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
     const requests=[];touch.on('request',r=>requests.push(r.url()));await touch.goto(server.url,{waitUntil:'load'});
     assert.ok(!requests.some(u=>/\.mp4|hero-frames|lab-runtime|personal-os\.html|lab\.html/.test(u)),'touch first paint does not fetch video, pose frames or below-fold calculators');
-    await touch.locator('#hero .mm-primary-cta').tap();
+    await touch.locator('#hero .mm-secondary-cta').tap();
     await touch.waitForFunction(()=>!!window.MarkovMadeLab);
     assert.equal(await touch.locator('[data-mm-lab-panel="body"]').isVisible(),true,'touch CTA loads a working LAB');
     for(const theme of themes)for(const lang of ['ru','en']) {
       const first=await browser.newPage({viewport:{width:390,height:844},hasTouch:true,isMobile:true,reducedMotion:'reduce'});
       await first.addInitScript(({theme,lang})=>{localStorage.setItem('mm.theme',theme);localStorage.setItem('markovmade_lang',lang)},{theme,lang});
       const fetched=[];first.on('request',r=>fetched.push(r.url()));await first.goto(server.url,{waitUntil:'load'});
-      if(lang==='en')await first.waitForFunction(()=>document.querySelector('#hero .mm-primary-cta').textContent.includes('Open LAB'));
+      if(lang==='en')await first.waitForFunction(()=>document.querySelector('#hero .mm-primary-cta').textContent.includes('Discuss my goal'));
       assert.equal(await first.locator('html').getAttribute('data-theme'),theme);
       await assertComposition(first,`first-paint/${theme}/${lang}`);
       const family=await first.locator('#hero h1').evaluate(el=>getComputedStyle(el).fontFamily);
@@ -191,7 +191,7 @@ async function assertCta(page,label) {
     await failure.close();
     const retry=await browser.newPage({viewport:{width:390,height:844},hasTouch:true,isMobile:true});
     await retry.route('**/lab.html',route=>route.abort());await retry.goto(server.url,{waitUntil:'load'});
-    await retry.locator('#hero .mm-primary-cta').tap();await retry.locator('[data-retry-lab]').waitFor();
+    await retry.locator('#hero .mm-secondary-cta').tap();await retry.locator('[data-retry-lab]').waitFor();
     await retry.unroute('**/lab.html');await retry.locator('[data-retry-lab]').click();
     await retry.waitForFunction(()=>!!window.MarkovMadeLab);await retry.locator('#mm-lab-load-error').waitFor({state:'detached'});
     await retry.route('**/site-interactions.js',route=>route.abort());await retry.evaluate(()=>window.mmLoadOS().catch(()=>{}));
@@ -213,22 +213,22 @@ async function assertCta(page,label) {
       return [...new Set(texts)];
     });
     assert.deepEqual(untranslated,[],'all authored LAB/OS/editorial copy, including select options, is translated');
-    assert.equal(await bilingual.locator('#services .mm-service-icon[aria-hidden="true"] svg').count(),4,'each work format has a decorative semantic icon');
+    assert.equal(await bilingual.locator('#services .mm-service-editorial-item > summary').count(),3,'three clearly named work formats use native disclosures');
     assert.equal(await bilingual.locator('#proof-system .mm-trust-card-heading > span').count(),4,'trust icons retain their readable labels');
     assert.equal(await bilingual.locator('#proof-system .mm-trust-card-heading svg[aria-hidden="true"]').count(),4,'all trust icons are decorative alongside visible labels');
     assert.match(await bilingual.locator('#proof-system').innerText(),/14\+\s*years of training experience/,'trust section states the author’s verified training tenure');
     assert.equal(await bilingual.locator('#proof-system .mm-trust-credentials li').count(),3,'education is presented with clear institutions and years');
     assert.equal(await bilingual.locator('#proof-system .mm-trust-card--education').evaluate(el=>getComputedStyle(el).gridColumn),'auto','education shares the compact four-card trust layout');
     assert.equal(await bilingual.locator('#calculators .mm-method-v3__principle').count(),4,'methodology keeps four distinct, understandable principles');
-    assert.equal(await bilingual.locator('#calculators [data-mm-lab-tab]').count(),9,'LAB presents nine primary tools');
+    assert.equal(await bilingual.locator('#calculators [data-mm-lab-tab]').count(),9,'LAB preserves nine secondary tools');
     await bilingual.locator('#services details').first().evaluate(node=>node.open=true);
     await bilingual.locator('#services details').first().scrollIntoViewIfNeeded();
     const servicePhoto=bilingual.locator('#services details').first().locator('figure img');
     await servicePhoto.evaluate(image=>image.decode());
     assert.equal(await servicePhoto.evaluate(image=>getComputedStyle(image).objectFit),'contain','expanded service photos remain fully visible');
     await bilingual.locator('[data-lang-toggle]:visible').first().click();
-    await bilingual.waitForFunction(()=>document.querySelector('#hero h1').textContent.includes('Тело, питание и мышление'));
-    assert.match(await bilingual.locator('#hero .mm-primary-cta').innerText(),/Открыть LAB/,'saved EN restores exact RU copy');
+    await bilingual.waitForFunction(()=>document.querySelector('#hero h1').textContent.includes('Тренировки и питание'));
+    assert.match(await bilingual.locator('#hero .mm-primary-cta').innerText(),/Обсудить мою цель/,'saved EN restores exact RU copy');
     for(const lang of ['ru','en']) {
       if(lang==='en'){await bilingual.locator('[data-lang-toggle]:visible').first().click();await bilingual.waitForTimeout(300);}
       for(const theme of themes) {

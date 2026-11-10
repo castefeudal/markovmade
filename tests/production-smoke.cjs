@@ -1,3 +1,4 @@
+const {selectLabTool,revealLabCatalog}=require('./browser-helpers.cjs');
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const {chromium}=require('playwright');
 const root=path.resolve(__dirname,'..');
@@ -20,11 +21,11 @@ const base=process.env.BASE_URL||'https://castefeudal.github.io/markovmade/';
       await page.goto(url.href,{waitUntil:'load'});
       assert.equal(await page.locator('html').getAttribute('data-theme'),theme);
       assert.equal(await page.locator('html').getAttribute('lang'),lang);
-      assert.match(await page.locator('#hero .mm-primary-cta').textContent(),lang==='en'?/Open LAB/:/Открыть LAB/);
-      await page.locator('#hero .mm-primary-cta').tap();
+      assert.match(await page.locator('#hero .mm-primary-cta').textContent(),lang==='en'?/Discuss my goal/:/Обсудить мою цель/);
+      await page.locator('#hero .mm-secondary-cta').tap();
       await page.evaluate(()=>Promise.all([window.mmLoadLab(),window.mmLoadOS(),window.mmLoadContent(),window.mmLoadLanguage()]));
       await page.evaluate(()=>window.mmLanguageReady);
-      assert.equal(await page.locator('[data-mm-lab-panel="body"]').isVisible(),true);
+      assert.equal(await page.locator('[data-mm-lab-panel="nutrition"]').isVisible(),true);await selectLabTool(page,'body');
       await page.locator('#lab-body-weight').fill('100');
       await page.locator('#lab-body-height').fill('188');
       assert.equal(await page.evaluate(()=>window.MarkovMadeToolkit.tools.length),17);
@@ -32,7 +33,7 @@ const base=process.env.BASE_URL||'https://castefeudal.github.io/markovmade/';
       assert.equal(await page.locator('#toolkit-protein-weight').inputValue(),'100','shared profile reaches production toolkit');
       await page.locator('#mm-toolkit-workspace button[type="submit"]').click();
       assert.match(await page.locator('#mm-toolkit-result .mm-toolkit-value').innerText(),/160–220/);
-      await page.locator('#mm-lab-tab-plates').click();await page.locator('#toolkit-plates-target').fill('35');await page.locator('#toolkit-plates-collars').fill('2.5');await page.locator('#mm-toolkit-workspace button[type="submit"]').click();assert.equal(await page.evaluate(()=>window.MarkovMadeLab.state.toolkit.plates.result.data.achieved),35);assert.equal(await page.locator('.mm-bar-plate').count(),4);
+      await selectLabTool(page,'plates');await page.locator('#toolkit-plates-target').fill('35');await page.locator('#toolkit-plates-collars').fill('2.5');await page.locator('#mm-toolkit-workspace button[type="submit"]').click();assert.equal(await page.evaluate(()=>window.MarkovMadeLab.state.toolkit.plates.result.data.achieved),35);assert.equal(await page.locator('.mm-bar-plate').count(),4);
       const broken=await page.evaluate(()=>{
         const known=new Set([...document.querySelectorAll('[id]')].map(el=>el.id));
         return [...document.querySelectorAll('a[href^="#"]')].map(el=>el.getAttribute('href')).filter(href=>href.length>1&&!known.has(decodeURIComponent(href.slice(1))));

@@ -43,6 +43,9 @@
       await loadScript('lab-runtime');
       await Promise.all([loadScript('lab-history'), loadScript('lab-dashboard')]);
       await loadScript('lab-toolkit');
+      await loadScript('meal-models');
+      await loadScript('lab-meal');
+      await loadScript('lab-groups');
       await window.mmTranslate?.(section);
       status.textContent = document.documentElement.lang === 'en'
         ? 'LAB tools are loaded and ready.'

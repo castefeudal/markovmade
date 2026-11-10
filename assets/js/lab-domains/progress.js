@@ -1,7 +1,7 @@
             function calculateProgress(){
                 error('progress');
                 const sd=new Date(val('lab-prog-start-date')),ed=new Date(val('lab-prog-end-date')),sw=number('lab-prog-start-weight'),cw=number('lab-prog-current-weight'),stw=number('lab-prog-start-waist'),ctw=number('lab-prog-current-waist'),target=number('lab-prog-target'),goal=val('lab-prog-goal');
-                if(!Number.isFinite(sd.getTime())||!Number.isFinite(ed.getTime())) return error('progress','Укажите дату старта и текущую дату.'),null;
+                if(![val('lab-prog-start-date'),val('lab-prog-end-date')].every(raw=>/^\d{4}-\d{2}-\d{2}$/.test(raw)&&Number.isFinite(Date.parse(raw))&&new Date(raw).toISOString().slice(0,10)===raw)) return error('progress','Укажите дату старта и текущую дату.'),null;
                 const days=(ed-sd)/86400000; if(!(days>=3)) return error('progress','Текущая дата должна быть позже старта минимум на 3 дня.'),null;
                 for(const [v,min,max,label] of [[sw,35,300,'Стартовый вес'],[cw,35,300,'Текущий вес']]){const m=safeRange(v,min,max,label);if(m)return error('progress',m),null;}
                 const weeks=days/7,delta=cw-sw,quickWeekly=delta/weeks; let weekly=quickWeekly,source='средний темп за весь период',daily=[];
@@ -28,10 +28,10 @@
                 if(pro){ if(Number.isFinite(adherence)&&adherence<75) actions.push('Соблюдение <75%: прежде чем урезать калории или добавлять кардио, улучшите воспроизводимость плана.'); }
                 actions.push('Меняйте один главный рычаг за раз, иначе вы не узнаете, что сработало.');
                 state.profile.weight=cw; const bfn=pro?number('lab-prog-bf-now'):NaN; if(Number.isFinite(bfn)) state.profile.bodyFat=bfn;
-                state.progress={...state.progress,modelVersion:MODEL_VERSIONS.progress,days,weeks,delta,waistDelta,weekly,weeklyPct,plateau,eta,source,dailyCount:daily.length,goal,dailyWeights:daily.slice(),calendarDates:calendar.dates,outlierChoices:choices}; save(); applyProfile();
-                const etaRange=Number.isFinite(eta)?`${Math.max(1,Math.floor(eta*.8/2)*2)}–${Math.max(2,Math.ceil(eta*1.2/2)*2)} нед. · ориентир, не обещание`: '—';
+                state.progress={...state.progress,modelVersion:MODEL_VERSIONS.progress,days,weeks,delta,waistDelta,weekly,weeklyPct,plateau,eta,source,dailyCount:daily.length,goal,rawObservations:val('lab-prog-daily'),dailyWeights:daily.slice(),calendarDates:calendar.dates,outlierChoices:choices}; save(); applyProfile();
+                const etaRange=Number.isFinite(eta)?`${Math.max(1,Math.floor(eta*.8/2)*2)}–${Math.max(2,Math.ceil(eta*1.2/2)*2)} нед. · линейный сценарий, существенная неопределённость`: '—';
                 setText('lab-prog-main',`${weekly>=0?'+':''}${fmt(weekly,2)} кг / нед.`); setText('lab-prog-sub',source); setText('lab-prog-weight-delta',`${delta>=0?'+':''}${fmt(delta,1)} кг`); setText('lab-prog-waist-delta',Number.isFinite(waistDelta)?`${waistDelta>=0?'+':''}${fmt(waistDelta,1)} см`:'—'); setText('lab-prog-weekly-pct',`${weeklyPct>=0?'+':''}${fmt(weeklyPct,2)}%`); setText('lab-prog-plateau',plateau); setText('lab-prog-eta',etaRange); setText('lab-prog-data',daily.length>=7?`${daily.length-excluded.length} из ${daily.length} весов в тренде`:`${fmt(days,0)} дней`); setText('lab-prog-meaning',`Что это значит: ${meaning}`); setHTMLSafeList('lab-prog-actions',actions);
-                setBadge('progress',daily.length>=14?'Высокая':daily.length>=7||weeks>=3?'Хорошая':'Базовая',daily.length>=14?'Выше средней':daily.length>=7?'Умеренная':'Низкая');
+                setBadge('progress',daily.length>=14&&!calendarGaps?'Достаточно для тренда':daily.length>=7?'Ограниченные данные':'Две точки',daily.length>=14&&!calendarGaps?'Тренд, не прогноз':'Ограниченная');
                 const summary=`MARKOVMADE LAB — Прогресс\nПериод: ${fmt(days,0)} дней\nВес: ${fmt(sw,1)} → ${fmt(cw,1)} кг (${delta>=0?'+':''}${fmt(delta,1)} кг)\nСредний темп: ${weekly>=0?'+':''}${fmt(weekly,2)} кг/нед. (${weeklyPct>=0?'+':''}${fmt(weeklyPct,2)}%/нед.)${Number.isFinite(waistDelta)?`\nТалия: ${waistDelta>=0?'+':''}${fmt(waistDelta,1)} см`:''}\nПлато: ${plateau}\n\nВес за один день — шум. Тренд — сигнал.\nMARKOVMADE / Pavel Markov`;
                 mmCalcSummaries.progress=summary; updateSnapshot(); return state.progress;
             }

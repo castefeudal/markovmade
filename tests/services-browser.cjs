@@ -70,7 +70,7 @@ const { startServer, root } = require('./browser-helpers.cjs');
             }
           }
         }
-        console.log(`Services verified: ${name}, RU/EN, three themes, five widths, four keyboard disclosures.`);
+        console.log(`Services verified: ${name}, RU/EN, three themes, five widths, three keyboard disclosures.`);
       } finally { await browser.close(); }
     }
   } finally { await server.close(); }

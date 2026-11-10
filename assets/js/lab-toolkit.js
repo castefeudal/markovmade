@@ -29,8 +29,8 @@
   function renderScenarios(){
     root.querySelectorAll('.mm-lab-scenarios').forEach(el=>el.remove());
     for(const key of [...new Set(Object.values(parent))]){
-      const group=node('div',undefined,'mm-lab-scenarios');group.dataset.noTranslate='';
-      group.append(node('h4',p('Дополнительные сценарии','Additional scenarios')));
+      const group=node('details',undefined,'mm-lab-scenarios');group.dataset.noTranslate='';
+      group.append(node('summary',p('Дополнительные инструменты','Additional tools')));
       for(const tool of tools.filter(tool=>parent[tool.id]===key)){
         const button=node('button',tool.title,'mm-lab-secondary');button.type='button';button.dataset.toolId=tool.id;button.addEventListener('click',()=>open(tool));group.append(button);
       }

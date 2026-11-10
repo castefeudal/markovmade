@@ -145,6 +145,81 @@
     ['Здравствуйте, Павел. Я прошёл расчёт на сайте MARKOVMADE.','Hello, Pavel. I completed the MARKOVMADE assessment.'], ['Хочу получить разбор и понять, какая стратегия мне подойдёт.','I want an audit and to understand which strategy fits me.'],
     ['Baseline формируется','Baseline forming'], ['качественных дней','quality days'], ['Личный baseline','Personal baseline'], ['внесите RHR и HRV в PRO-режиме.','enter RHR and HRV in PRO mode.'], ['Вклад сигналов в индекс самонаблюдения','Signal contributions to the self-monitoring score'], ['Силовой ориентир · e1RM','Strength reference · e1RM'], ['Расчётный максимум для сравнения динамики, а не рекомендация проверять реальный 1ПМ.','Estimated max for tracking progress, not a recommendation to test a true one-rep max.'], ['Упражнение','Exercise'], ['Рабочий вес · кг','Working load · kg'], ['Повторения','Repetitions'], ['Оценить 1ПМ','Estimate 1RM'], ['Введите вес и повторы.','Enter load and reps.'], ['Укажите рабочий вес от 1 до 500 кг и 1–15 повторений.','Enter a working load from 1 to 500 kg and 1–15 repetitions.'], ['Запись стала начальной точкой тренда','This is the starting point for your trend'], ['к предыдущей записи','vs previous entry'], ['уверенность: Умеренная','confidence: Moderate'], ['уверенность: Ограниченная','confidence: Limited'], ['уверенность: Низкая','confidence: Low'], ['уверенность: Высокая','confidence: High'], ['Умеренная','Moderate'], ['При ','At '], ['% жира ориентир ','% body fat, indicative range '], ['если безжировая масса изменится в пределах ±3%.','if lean mass changes within ±3%.'], ['Это сценарная чувствительность, не доверительный интервал и не обещание.','This shows scenario sensitivity, not a confidence interval or promise.']
   ];
+  // Scientific output fragments are shared with the lab locale dictionary.
+  var scienceCopy = {
+  "Не больше 90 измерений.": "No more than 90 measurements.",
+  "Введите один вес на строку, например 106,5, или YYYY-MM-DD=106,5.": "Enter one weight per line, for example 106.5, or YYYY-MM-DD=106.5.",
+  "Вес должен быть от 35 до 300 кг.": "Weight must be between 35 and 300 kg.",
+  "Проверьте календарную дату.": "Check the calendar date.",
+  "Даты измерений должны быть уникальными.": "Measurement dates must be unique.",
+  "Для калибровки требуется минимум 14 ежедневных весов за 14–28 дней.": "Calibration needs at least 14 daily weights over 14–28 days.",
+  "В калибровке есть пропущенные даты. Соберите 14–28 последовательных дней веса и питания; пропуски не заменяются вымышленными значениями.": "Calibration has missing dates. Collect 14–28 consecutive days of weight and intake records; gaps are never replaced with invented values.",
+  "Проверьте процент жира: 3–60%.": "Check body-fat percentage: 3–60%.",
+  "Проверьте шаги, частоту и длительность тренировок: значения не могут быть отрицательными или чрезмерными.": "Check steps, training frequency and duration: values cannot be negative or excessive.",
+  "Калорийность не вмещает выбранные белки и жиры.": "Calories cannot accommodate the selected protein and fat.",
+  "указанный пользователем ориентир поддержания · сценарий ±10%, не измерение": "user-entered maintenance estimate · ±10% scenario, not a measurement",
+  "указанный ориентир · сценарий ±10%, не измерение": "entered estimate · ±10% scenario, not a measurement",
+  "Не установлена": "Not established",
+  "Модельная оценка": "Model estimate",
+  "Достаточно для тренда": "Sufficient for a trend",
+  "Ограниченные данные": "Limited data",
+  "Две точки": "Two data points",
+  "Тренд, не прогноз": "Trend, not forecast",
+  "Наблюдения + контекст": "Observations + context",
+  "Самонаблюдение": "Self-observation",
+  "Не применяется": "Not applicable",
+  "Не измерено": "Not measured",
+  "Исходные оценки самонаблюдения": "Raw self-reported ratings",
+  "линейный сценарий, существенная неопределённость": "linear scenario with substantial uncertainty",
+  "1,6–2,2 г/кг — ориентир при силовых тренировках; верхняя граница не обязательна": "1.6–2.2 g/kg is a resistance-training reference; the upper bound is not mandatory",
+  "RHR выше личной медианы минимум на 10% три дня подряд": "RHR at least 10% above your personal median for three consecutive days",
+  "HRV ниже личной медианы минимум на 20% три дня подряд": "HRV at least 20% below your personal median for three consecutive days",
+  "Показаны ваши наблюдения. Правила перепроверки MARKOVMADE: сон <6 ч, энергия или самочувствие ≤3/10, стресс или болезненность ≥8/10. Это открытые эвристические пороги, не валидированный тест готовности. Дополнительно проверяются три последовательных дня RHR ≥110% или HRV ≤80% личной медианы минимум 14 предыдущих дней; это повод проверить условия измерения и нагрузку, не диагноз. RHR и HRV сравнивайте с личной медианой и одним протоколом; изменения не являются диагнозом.": "Your observations are shown. MARKOVMADE review rules: sleep <6 h, energy or wellbeing ≤3/10, stress or soreness ≥8/10. These are explicit heuristic thresholds, not a validated readiness test. We also review three consecutive days with RHR ≥110% or HRV ≤80% of the personal median from at least 14 earlier days; this prompts a review of measurement conditions and load, not a diagnosis. Compare RHR and HRV using one protocol; changes are not a diagnosis.",
+  "Стартуйте около ": "Start near ",
+  " ккал, но считайте ": " kcal, but treat ",
+  " сценарной чувствительностью исходного расхода, а не обязательным коридором питания. Расчётные калории поддержания сами имеют диапазон ": " as sensitivity to the starting expenditure scenario, not a compulsory intake corridor. Estimated maintenance itself spans ",
+  "Стартовое распределение: белок ": "Starting distribution: protein ",
+  " г, жиры ": " g, fat ",
+  " г, углеводы ": " g, carbohydrate ",
+  " г. Оно согласовано с калорийностью; верхняя граница белкового диапазона не обязательна.": " g. This distribution matches the calorie target; the upper protein bound is optional.",
+  "при постоянной FFM": "at constant FFM",
+  " кг при неизменной безжировой массе. Это условный сценарий; ошибка исходного BF и возможное изменение FFM сохраняются.": " kg at unchanged fat-free mass. This is a conditional scenario; initial body-fat error and potential FFM change remain.",
+  "не применяется к этой популяции": "not applicable to this population",
+  "По этим данным нельзя разделить прибавку на жир, воду, гликоген и содержимое ЖКТ. Энергетический эквивалент не измеряет состав прибавки.": "These data cannot separate the gain into fat, water, glycogen and gut contents. The energy equivalent does not measure the composition of weight gain.",
+  "Вес на весах: +": "Scale weight: +",
+  "Разделение прибавки веса на ткани, воду, гликоген и содержимое ЖКТ без измерений невозможно.": "Weight gain cannot be partitioned into tissue, water, glycogen and gut contents without measurements.",
+  "Сценарный энергетический эквивалент, не измерение жира:": "Scenario energy equivalent, not measured fat:",
+  "Рабочий старт: ~": "Starting target: ~",
+  " ккал; чувствительность расхода ": " kcal; expenditure sensitivity ",
+  " (сценарий)": " (scenario)",
+  "Полнота: Модельная оценка": "Data: model estimate",
+  "Полнота: Достаточно для тренда": "Data: sufficient for a trend",
+  "Полнота: Ограниченные данные": "Data: limited",
+  "Полнота: Две точки": "Data: two points",
+  "Полнота: Наблюдения + контекст": "Data: observations + context",
+  "Полнота: Самонаблюдение": "Data: self-observation",
+  "Уверенность: Не установлена": "Confidence: not established",
+  "Уверенность: Тренд, не прогноз": "Interpretation: trend, not forecast",
+  "Уверенность: Ограниченная": "Confidence: limited",
+  "Целевой процент жира: от 3 до 60%; это условие сценария, не рекомендация.": "Target body fat: 3–60%; this is a scenario assumption, not a recommendation.",
+  "Проверьте окружность талии: 40–200 см.": "Check waist circumference: 40–200 cm.",
+  "Полнота: БЖУ и калории": "Data: macros and calories",
+  "Полнота: Введены калории": "Data: entered calories",
+  "Уверенность: Сценарий, не измерение": "Interpretation: scenario, not measurement",
+  "Расчётная цель ниже 1000 ккал: инструмент не рекомендует такой рацион. Пересмотрите цель и исходные данные с квалифицированным специалистом.": "The calculated target is below 1000 kcal: this tool does not recommend that intake. Review your goal and inputs with a qualified professional.",
+  "Mifflin–St Jeor · возраст вне исходной выборки 19–78 лет": "Mifflin–St Jeor · age outside the original 19–78-year sample",
+  "Длительность сна: укажите значение от 0 до 16.": "Sleep duration: enter a value from 0 to 16.",
+  "Тренировки: укажите значение от 0 до 21.": "Sessions: enter a value from 0 to 21.",
+  "RHR: укажите значение от 30 до 130.": "RHR: enter a value from 30 to 130.",
+  "HRV: укажите значение от 5 до 300.": "HRV: enter a value from 5 to 300.",
+  "RHR baseline: укажите значение от 30 до 130.": "RHR baseline: enter a value from 30 to 130.",
+  "HRV baseline: укажите значение от 5 до 300.": "HRV baseline: enter a value from 5 to 300.",
+  "Допущение неопределённости: укажите от 0 до 30%.": "Assumed uncertainty: enter 0–30%.",
+  "указанный пользователем ориентир поддержания · сценарий ±": "user-entered maintenance estimate · scenario ±",
+  "%, не измерение": "%, not a measurement"
+};
+  Object.assign(exact, scienceCopy);
+  var scienceParts = Object.entries(scienceCopy).sort(function(a,b){return b[0].length-a[0].length;});
   function isEn(){
     try { return document.documentElement.lang === 'en' || window.mmSafeStorage.get('markovmade_lang', 'ru') === 'en'; } catch(e){ return document.documentElement.lang === 'en'; }
   }
@@ -152,6 +227,7 @@
     var s = String(value == null ? '' : value);
     if (!isEn()) return s;
     if (exact[s]) return exact[s];
+    scienceParts.forEach(function(pair){ s = s.split(pair[0]).join(pair[1]); });
     parts.forEach(function(pair){ s = s.split(pair[0]).join(pair[1]); });
     return s;
   };

@@ -2,6 +2,14 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 test('visual reconstruction preserves source bytes outside exact presentation regions',()=>{
  for(const[file,expected]of Object.entries(require('./visual-scope.json'))){
   let bytes=fs.readFileSync(file,'utf8').replace(/\r\n/g,'\n');
+  // Product Excellence explicitly changes calculation, privacy and navigation
+  // behavior. Freeze those reviewed functional sources at their new exact bytes;
+  // retain the original presentation-only contract for every untouched source.
+  const functional=require('./product-excellence-scope.json').files;
+  if(Object.hasOwn(functional,file)){
+   assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),functional[file],file+' functional source checksum');
+   continue;
+  }
   // The scrollable report needs native keyboard access. This exact, single DOM
   // attribute is an explicit presentation change to the sealed report source.
   // The original SHA-256 manifest remains unchanged; every other byte is checked.
