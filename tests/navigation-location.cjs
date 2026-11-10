@@ -8,6 +8,12 @@ const {startServer}=require('./browser-helpers.cjs');
    const page=await browser.newPage({viewport:{width:1440,height:900},reducedMotion:'reduce'});
    await page.goto(server.url+`/?lang=${lang}&theme=${theme}`,{waitUntil:'domcontentloaded'});async function viewport(width,height){await page.setViewportSize({width,height});const actual=await page.evaluate(()=>document.documentElement.clientWidth);if(actual!==width)await page.setViewportSize({width:Math.floor(width*width/actual),height:Math.round(height*width/actual)});await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));assert.equal(await page.evaluate(()=>document.documentElement.clientWidth),width);}await viewport(1440,900);await page.evaluate(async()=>{await Promise.all([mmLoadLab(),mmLoadOS(),mmLoadContent(),mmLoadLanguage(),mmLoadStyles()]);await window.mmLanguageReady;await document.fonts.ready;});
    const baseTextSize=await page.evaluate(()=>parseFloat(getComputedStyle(document.documentElement).fontSize));
+   await page.evaluate(()=>{
+    window.__qaHeaderEvents=[];
+    const record=event=>{window.__qaHeaderEvents.push({event:event.type,at:Math.round(performance.now()),y:scrollY,active:document.activeElement?.outerHTML.slice(0,100),headerFocus:document.getElementById('main-header').matches(':focus-within')});window.__qaHeaderEvents=window.__qaHeaderEvents.slice(-16);};
+    for(const type of ['focusin','focusout','close'])document.addEventListener(type,record,true);
+    window.addEventListener('scroll',record,{passive:true});
+   });
    await page.locator('[data-reading-size-open]:visible').click();
    const smallLabel=lang==='en'?'Small':'Мелко',mediumLabel=lang==='en'?'Medium':'Средне',largeLabel=lang==='en'?'Large':'Крупно';
    await page.getByRole('button',{name:smallLabel}).click();
@@ -17,6 +23,11 @@ const {startServer}=require('./browser-helpers.cjs');
    assert.ok(Math.abs(await page.evaluate(()=>parseFloat(getComputedStyle(document.documentElement).fontSize))/baseTextSize-1.1)<.01,'large text preference scales the page up');
    await page.locator('[data-reading-size-open]:visible').click();await page.getByRole('button',{name:mediumLabel}).click();
    assert.equal(await page.evaluate(()=>localStorage.getItem('mm.reading-size')),'medium','medium restores the site default');
+   // dialog.close() clears `open` synchronously, but its close event restores
+   // focus in a later task. Finish that interaction before releasing header
+   // focus for the separate scrolling scenario.
+   await page.waitForFunction(()=>!document.getElementById('mm-reading-size-dialog').open&&document.activeElement.matches('[data-reading-size-open][aria-expanded="false"]'));
+   assert.equal(await page.locator('#main-header').evaluate(el=>el.contains(document.activeElement)),true,'closing reading preferences restores its header opener before scroll testing');
    await page.evaluate(()=>document.activeElement.blur());
    async function current(id){
     try{await page.waitForFunction(id=>{
@@ -28,8 +39,7 @@ const {startServer}=require('./browser-helpers.cjs');
    }
    async function scrollToSection(id){await page.locator('#'+id).evaluate(async el=>{el.scrollIntoView({behavior:'instant',block:'start'});await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));el.scrollIntoView({behavior:'instant',block:'start'});});await current(id);}
    await page.evaluate(()=>{scrollTo({top:600,behavior:'instant'});dispatchEvent(new Event('scroll'));});
-   await page.waitForFunction(()=>document.getElementById('main-header').hasAttribute('data-mm-scroll-hidden'));
-   try{await page.waitForFunction(()=>document.getElementById('main-header').getBoundingClientRect().bottom<=1);}catch(error){console.error('Hidden header geometry failed',name,lang,theme,await page.evaluate(()=>({y:scrollY,header:document.getElementById('main-header').getBoundingClientRect().toJSON(),classes:document.getElementById('main-header').className,transform:getComputedStyle(document.getElementById('main-header')).transform,focus:document.getElementById('main-header').matches(':focus-within'),active:document.activeElement.outerHTML.slice(0,120),styles:document.documentElement.dataset.sectionStylesReady})));throw error;}
+   try{await page.waitForFunction(()=>document.getElementById('main-header').hasAttribute('data-mm-scroll-hidden'));await page.waitForFunction(()=>document.getElementById('main-header').getBoundingClientRect().bottom<=1);}catch(error){console.error('Hidden header state/geometry failed',name,lang,theme,await page.evaluate(()=>({y:scrollY,header:document.getElementById('main-header').getBoundingClientRect().toJSON(),classes:document.getElementById('main-header').className,transform:getComputedStyle(document.getElementById('main-header')).transform,focus:document.getElementById('main-header').matches(':focus-within'),active:document.activeElement.outerHTML.slice(0,160),dialogOpen:document.getElementById('mm-reading-size-dialog')?.open,expanded:document.querySelector('[data-reading-size-open]')?.getAttribute('aria-expanded'),styles:document.documentElement.dataset.sectionStylesReady,events:window.__qaHeaderEvents})));throw error;}
    assert.ok(await page.locator('#main-header').evaluate(el=>el.getBoundingClientRect().bottom<=1),'header hides while scrolling down');
    await page.evaluate(()=>{scrollTo({top:480,behavior:'instant'});dispatchEvent(new Event('scroll'));});
    await page.waitForFunction(()=>!document.getElementById('main-header').hasAttribute('data-mm-scroll-hidden'));
