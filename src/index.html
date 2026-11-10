@@ -163,6 +163,7 @@
   ]
 }</script>
 <script>(function(){document.documentElement.classList.add('js');var aliases={obsidian:'aurum-noir',dark:'aurum-noir',deep:'aurum-noir',ivory:'clarity',light:'clarity','ivory-atelier':'clarity','imperial-emerald':'aurum-noir','oxblood-atelier':'aurum-noir',graphite:'event-horizon',soft:'event-horizon',calm:'event-horizon','titanium-midnight':'event-horizon',contrast:'clarity','mono-access':'clarity'};var known=['aurum-noir','event-horizon','clarity'];var resolve=function(value){return aliases[value]|| (known.indexOf(value)>=0?value:null)};var value=null;try{value=resolve(localStorage.getItem('mm.theme'))||resolve(localStorage.getItem('markov-theme'))}catch(e){}value=resolve(new URLSearchParams(location.search).get('theme'))||value;document.documentElement.dataset.theme=value||'aurum-noir';var palette={'aurum-noir':'#080807','event-horizon':'#0b1020',clarity:'#f4f1ea'};var themeColor=document.getElementById('theme-color-meta');if(themeColor)themeColor.setAttribute('content',palette[document.documentElement.dataset.theme]);var params=new URLSearchParams(location.search);var english=params.get('lang')==='en';try{if(!params.has('lang'))english=localStorage.getItem('markovmade_lang')==='en'}catch(e){}var fonts=[];if(value!=='event-horizon')fonts.push('cormorant-normal-'+(english?'latin':'ru'),'cormorant-italic-'+(english?'latin':'ru'));fonts.forEach(function(font){var link=document.createElement('link');link.rel='preload';link.href='assets/media/fonts/'+font+'.woff2';link.as='font';link.type='font/woff2';link.crossOrigin='anonymous';document.head.appendChild(link)})})();</script>
+<script>(function(){var size='medium';try{var saved=localStorage.getItem('mm.reading-size');if(saved==='small'||saved==='large')size=saved}catch(e){}document.documentElement.dataset.readingSize=size})();</script>
 <link rel="stylesheet" href="assets/css/foundation.css">
 <link rel="stylesheet" href="assets/css/editorial.css">
 <link rel="stylesheet" href="assets/css/lab.css">
@@ -240,6 +241,10 @@ summary { list-style: none; font-weight: 700; }
                         <span class="theme-switch-text">Тема</span>
                     </button>
 
+<button type="button" class="interactive" data-reading-size-open aria-haspopup="dialog" aria-label="Размер текста" title="Размер текста">
+<span class="mm-reading-size-glyph" aria-hidden="true">Aa</span>
+</button>
+
                     <button type="button" class="interactive lang-switch" data-lang-toggle title="Switch language" aria-label="Switch language">
                         <span class="lang-switch-flag lang-flag-en" aria-hidden="true"></span>
                         <span class="lang-switch-label">EN</span>
@@ -262,6 +267,10 @@ summary { list-style: none; font-weight: 700; }
                     <span class="theme-switch-icon" aria-hidden="true"></span>
                     <span class="sr-only">Сменить тему</span>
                 </button>
+
+<button type="button" class="interactive" data-reading-size-open aria-haspopup="dialog" aria-label="Размер текста" title="Размер текста">
+<span class="mm-reading-size-glyph" aria-hidden="true">Aa</span>
+</button>
 
                 <button type="button" class="interactive lang-switch lang-switch-mobile" data-lang-toggle title="Switch language" aria-label="Switch language">
                     <span class="lang-switch-flag lang-flag-en" aria-hidden="true"></span>
@@ -403,6 +412,7 @@ summary { list-style: none; font-weight: 700; }
 <script defer src="assets/js/style-loader.js"></script>
 
 <script defer src="assets/js/navigation.js"></script>
+<script defer src="assets/js/header-scroll.js"></script>
 <script defer src="assets/js/motion-loader.js"></script>
 
 <script defer src="assets/js/content-loader.js"></script>
@@ -427,6 +437,7 @@ summary { list-style: none; font-weight: 700; }
 
 
 <script defer src="assets/js/theme-system.js"></script>
+<script defer src="assets/js/reading-size.js"></script>
 <script defer src="assets/js/analytics.js"></script>
 <script defer src="assets/js/seo.js"></script>
 
