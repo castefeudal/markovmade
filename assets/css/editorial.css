@@ -294,3 +294,23 @@ html[data-theme] #app-ecosystem::after{content:none;display:none;background:none
 @media(max-width:600px){html[data-theme] #contact .mm-contact-direct>a{flex:1 1 auto;width:100%}}
 @media(prefers-reduced-motion:reduce){html[data-theme] #contact .mm-contact-direct>a{transition:none}}
 }
+
+/* Contact follows the editorial grid, with no separate illustrated backdrop. */
+@layer components {
+html[data-theme] #contact.mm-contact-precision{background:var(--mm-bg-primary);border-block:1px solid var(--mm-border);padding-block:clamp(40px,6vw,80px)}
+html[data-theme] #contact::before,html[data-theme] #contact::after{content:none;display:none;background:none;mask:none}
+html[data-theme] #contact>.mm-editorial-inner{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px clamp(28px,5vw,80px);align-items:start}
+html[data-theme] #contact .mm-editorial-head{margin:0;text-align:left;max-width:none}
+html[data-theme] #contact .mm-editorial-title{margin-inline:0;max-width:14ch;text-align:left}
+html[data-theme] #contact .mm-editorial-copy{margin-inline:0;max-width:48ch;text-align:left}
+html[data-theme] #contact .mm-contact-actions{min-width:0;padding-top:8px}
+html[data-theme] #contact .mm-contact-direct{display:grid;grid-template-columns:minmax(0,1fr);max-width:28rem;gap:10px}
+html[data-theme] #contact .mm-contact-direct>a{width:100%;min-height:52px}
+html[data-theme] #contact .mm-contact-privacy{margin:16px 0 0;max-width:48ch;line-height:1.65}
+html[data-theme] #contact .mm-contact-email{margin-top:8px;text-decoration-color:var(--mm-border-strong)}
+html[data-theme] #contact .mm-contact-optional{grid-column:1/-1;margin:0;padding-block:4px;border-bottom:0}
+html[data-theme] :is(#services,#contact) .mm-editorial-kicker{max-width:100%;overflow-wrap:anywhere}
+html[data-theme] :is(#services,#contact) .mm-editorial-title{overflow-wrap:anywhere}
+@media(max-width:600px){html[data-theme] #services .mm-service-editorial-item>summary{grid-template-columns:minmax(28px,max-content) minmax(0,1fr) 44px}}
+@media(max-width:767px){html[data-theme] #contact>.mm-editorial-inner{grid-template-columns:minmax(0,1fr);gap:24px}html[data-theme] #contact .mm-contact-actions{padding:0}html[data-theme] #contact .mm-contact-direct{max-width:none}html[data-theme] #contact .mm-editorial-title{max-width:100%}}
+}

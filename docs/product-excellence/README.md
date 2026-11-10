@@ -5,7 +5,7 @@ Base for before screenshots: `3f00e9d1fbe7ee3f182ae45b5b1c91aabc4bc45a`.
 ## Product changes
 
 - Hero explains training and nutrition, with immediate Telegram contact and a separate free-calculation path. Mobile presents both actions before the original portrait. Contact follows the core product/method flow; biography and community are secondary.
-- Three native service disclosures describe personal analysis, training/nutrition and comprehensive support without invented prices, durations or guarantees. Telegram and WhatsApp are available without a questionnaire; the optional form exists once.
+- Three native service disclosures present Men's transformation, Women's transformation, and Mentorship and coaching, restoring the original direction-specific descriptions and media. Telegram and WhatsApp are available without a questionnaire; the optional form exists once. See the [targeted correction and screenshots](targeted-corrections/README.md).
 - LAB starts with four task groups. All nine existing tab identities, history and specialized tools remain available through the optional catalog and related shortcuts. QUICK remains the first view; PRO and calibration require an explicit choice.
 - Nutrition, body composition, progress, recovery and overfeeding receive versioned corrections. See [scientific methods, populations, limitations and fixtures](scientific-methods.md).
 - Meal arithmetic uses the user's label energy and nutrients. It supports comma decimals, reference portions, ingredient masses, recipe portions, local products/recipes, copying, and explicit diary transfer. Missing diary entries are not treated as observed zero intake.
