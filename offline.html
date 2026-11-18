@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080807">
+<link rel="manifest" href="manifest.json">
+<title>MARKOVMADE — Offline</title>
+<style>
+:root { color-scheme: dark; background:#080807; color:#f4f1ea; font:1rem/1.6 system-ui,sans-serif }
+main { max-width:40rem; margin:8vh auto; padding:1rem }
+button,a { color:#f0d49c; font:inherit }
+button { padding:.65rem 1rem; min-height:44px; background:#201c16; border:1px solid #a89161; border-radius:.5rem; cursor:pointer }
+:focus-visible { outline:3px solid #f0d49c; outline-offset:4px }
+</style>
+<main>
+  <p><a id="home" href="./">На сайт</a> · <a id="language" href="?lang=en" lang="en">English</a></p>
+  <h1 id="title">MARKOVMADE офлайн</h1>
+  <p id="description">Сохраните приложение на этом устройстве, чтобы открывать LAB и Personal OS без интернета. Для отправки сообщений нужен интернет.</p>
+  <button id="download" type="button">Скачать для работы офлайн</button>
+  <button id="install" type="button" hidden>Установить приложение</button>
+  <p id="install-note">После загрузки можно установить приложение из меню браузера, если эта функция поддерживается.</p>
+  <p id="status" role="status"></p>
+</main>
+<script src="assets/dist/offline-page.js" defer></script>
+</html>

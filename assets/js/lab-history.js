@@ -241,13 +241,17 @@
   }
 
   function exportData() {
+    let osTasks;
+    try { osTasks = window.MarkovMadeTasks.read(); }
+    catch { status(copy('Не удалось прочитать задачи для резервной копии.', 'Could not read tasks for the backup.')); return; }
     const payload = {
       schema:'markovmade-lab-export-v1',
       exportedAt:new Date().toISOString(),
-      lab:readJson(LAB_KEY) || {},
+      lab:readJson(LAB_KEY) || {profile:{}},
       history:snapshots(),
       dailyCheckins:readJson('markovmade-lab-daily-v1') || [],
       favorites:readJson('markovmade-lab-favorites-v1') || [],
+      osTasks,
       osActions:readJson('markovmade-os-actions-v1') || {},
       meals:readJson('markovmade-meals-v1') || {schema:1,products:[],recipes:[]}
     };
@@ -292,6 +296,10 @@
         staged.push(['markovmade-lab-daily-v1',payload.dailyCheckins]);
       }
       if(Array.isArray(payload.favorites))staged.push(['markovmade-lab-favorites-v1',[...new Set(payload.favorites.filter(key=>Object.hasOwn(tools,key)))]]);
+      if(payload.osTasks!==undefined){
+        if(!window.MarkovMadeTasks.valid(payload.osTasks))throw new Error('OS tasks');
+        staged.push([window.MarkovMadeTasks.key,payload.osTasks]);
+      }
       if(payload.osActions!==undefined){
         if(!payload.osActions||typeof payload.osActions!=='object'||Array.isArray(payload.osActions)||Object.entries(payload.osActions).some(([key,value])=>!/^\d{4}-\d{1,2}-\d{1,2}:[0-2]$/.test(key)||typeof value!=='boolean'))throw new Error('OS actions');
         staged.push(['markovmade-os-actions-v1',payload.osActions]);

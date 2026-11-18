@@ -118,5 +118,16 @@ function extractComponent(html, className, name) {
   fs.writeFileSync(path.join(root,'404.html'),errorPage);
   const expected=new Set(['site.css','lab.html','personal-os.html',...fs.readdirSync(path.join(root,'assets/js')).filter(name=>name.endsWith('.js'))]);
   for(const name of fs.readdirSync(out))if(!expected.has(name)&&/\.(css|js|html)$/.test(name))fs.unlinkSync(path.join(out,name));
+  const offlineFiles = ['index.html', 'offline.html', 'manifest.json', 'markovmade_fitness.pdf', 'markovmade_mentorship.pdf', 'markovmade_nutrition.pdf'];
+  for (const folder of ['assets/dist', 'assets/media']) {
+    for (const file of fs.readdirSync(path.join(root, folder), { recursive: true, withFileTypes: true })) {
+      if (file.isFile() && !file.name.startsWith('.')) offlineFiles.push(path.relative(root, path.join(file.parentPath, file.name)).split(path.sep).join('/'));
+    }
+  }
+  offlineFiles.sort();
+  const worker = fs.readFileSync(path.join(root, 'src/sw.js'), 'utf8').replace(/\r\n/g, '\n');
+  const version = require('node:crypto').createHash('sha256').update(worker);
+  for (const file of offlineFiles) version.update(file).update(fs.readFileSync(path.join(root, file)));
+  fs.writeFileSync(path.join(root, 'sw.js'), worker.replace('__VERSION__', version.digest('hex').slice(0, 24)).replace('__FILES__', JSON.stringify(offlineFiles)));
   console.log(`Built: critical CSS ${Buffer.byteLength(criticalCss)} B; full CSS ${Buffer.byteLength(fullCss)} B; HTML ${Buffer.byteLength(html)} B.`);
 })().catch(error=>{console.error(error);process.exitCode=1;});

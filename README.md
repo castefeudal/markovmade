@@ -81,3 +81,9 @@ Pages публикует корень `main`. Перед push нужны сбо�
 [Девять разделов LAB и границы моделей](docs/toolkit-models.md). Основные вкладки объединены с вложенными сценариями. Избранное и недавние расчёты доступны рядом с дневником. Результаты и профиль включены в JSON backup и историю; сводка скачивается в TXT.
 
 `Visual candidates (review only)` — отдельный capture workflow для просмотра Linux-снимков. Capture не утверждает baseline и намеренно возвращает ненулевой код. Обновлять `tests/visual-baselines/linux` можно только после просмотра artifact. Обычный Quality workflow сохраняет строгий visual threshold 1,5% и запускается без capture-флагов.
+
+## Personal OS and offline use
+
+In Personal OS, open Today and use My tasks to add, edit, complete or delete your own tasks. Tasks are stored on the current device and included in LAB JSON backups. Existing suggested-action checkmarks use their original storage key.
+
+Open Offline from the footer and select Download for offline use while connected. The download saves a versioned copy of the site, LAB, Personal OS, local media and linked guides. The browser can then open the saved app and its deep links without a connection. Supported browsers also offer installation. Sending messages still requires a connection. An updated copy activates when the existing MARKOVMADE tabs are closed. Clearing site data removes the offline copy and local records.
