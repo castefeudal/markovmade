@@ -1424,8 +1424,6 @@ html #app-ecosystem #mm-os-screen-today .mm-os-metrics b{font-size:clamp(1.5rem,
 html #app-ecosystem .mm-os-checkpoint{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;padding-top:16px;border-top:1px solid var(--mm-border);font:var(--mm-font-secondary);color:var(--mm-text-secondary)}
 html #app-ecosystem .mm-os-checkpoint p{flex-basis:100%;margin:0;color:var(--mm-text-muted);font:var(--mm-font-secondary);line-height:1.6}
 html #app-ecosystem .mm-os-checkpoint b{font-variant-numeric:tabular-nums;color:var(--mm-text-primary)}
-/* Hydration already deferred the work. Keep the interactive subtree in layout for native disclosures and focus. */
-html[data-section-styles-ready] #app-ecosystem[data-v24-ready="true"]{content-visibility:visible}
 html #app-ecosystem .mm-os-extra-actions{border-top:1px solid var(--mm-border);padding-top:4px}
 html #app-ecosystem .mm-os-extra-actions>summary{min-height:44px;padding-block:12px;cursor:pointer;color:var(--mm-text-secondary);font:var(--mm-font-secondary)}
 html #app-ecosystem .mm-os-frame[data-empty] #mm-os-screen-today>:is(.mm-os-current-goal,.mm-os-metrics,.mm-os-checkpoint){display:none}
