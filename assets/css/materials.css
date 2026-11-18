@@ -1,0 +1,139 @@
+:is(#method-proof, #contact) {
+  --mm-material: url("../media/materials/aurum-noir-640w.webp");
+}
+@supports (background-image: image-set(url("x") type("image/webp") 1x)) {
+  :is(#method-proof, #contact) {
+    --mm-material: image-set(
+    url("../media/materials/aurum-noir-640w.avif") type("image/avif") 1x,
+    url("../media/materials/aurum-noir-640w.webp") type("image/webp") 1x
+    );
+  }
+}
+html[data-theme="event-horizon"] :is(#method-proof, #contact) {
+  --mm-material: url("../media/materials/event-horizon-640w.webp");
+}
+@supports (background-image: image-set(url("x") type("image/webp") 1x)) {
+  html[data-theme="event-horizon"] :is(#method-proof, #contact) {
+    --mm-material: image-set(
+    url("../media/materials/event-horizon-640w.avif") type("image/avif") 1x,
+    url("../media/materials/event-horizon-640w.webp") type("image/webp") 1x
+    );
+  }
+}
+html[data-theme="clarity"] :is(#method-proof, #contact) {
+  --mm-material: url("../media/materials/clarity-640w.webp");
+}
+@supports (background-image: image-set(url("x") type("image/webp") 1x)) {
+  html[data-theme="clarity"] :is(#method-proof, #contact) {
+    --mm-material: image-set(
+    url("../media/materials/clarity-640w.avif") type("image/avif") 1x,
+    url("../media/materials/clarity-640w.webp") type("image/webp") 1x
+    );
+  }
+}
+@media (max-width: 700px) {
+  :is(#method-proof, #contact) {
+    --mm-material: url("../media/materials/aurum-noir-320w.webp");
+  }
+  @supports (background-image: image-set(url("x") type("image/webp") 1x)) {
+    :is(#method-proof, #contact) {
+      --mm-material: image-set(
+      url("../media/materials/aurum-noir-320w.avif") type("image/avif") 1x,
+      url("../media/materials/aurum-noir-320w.webp") type("image/webp") 1x,
+      url("../media/materials/aurum-noir-640w.avif") type("image/avif") 2x,
+      url("../media/materials/aurum-noir-640w.webp") type("image/webp") 2x
+      );
+    }
+  }
+  html[data-theme="event-horizon"] :is(#method-proof, #contact) {
+    --mm-material: url("../media/materials/event-horizon-320w.webp");
+  }
+  @supports (background-image: image-set(url("x") type("image/webp") 1x)) {
+    html[data-theme="event-horizon"] :is(#method-proof, #contact) {
+      --mm-material: image-set(
+      url("../media/materials/event-horizon-320w.avif") type("image/avif") 1x,
+      url("../media/materials/event-horizon-320w.webp") type("image/webp") 1x,
+      url("../media/materials/event-horizon-640w.avif") type("image/avif") 2x,
+      url("../media/materials/event-horizon-640w.webp") type("image/webp") 2x
+      );
+    }
+  }
+  html[data-theme="clarity"] :is(#method-proof, #contact) {
+    --mm-material: url("../media/materials/clarity-320w.webp");
+  }
+  @supports (background-image: image-set(url("x") type("image/webp") 1x)) {
+    html[data-theme="clarity"] :is(#method-proof, #contact) {
+      --mm-material: image-set(
+      url("../media/materials/clarity-320w.avif") type("image/avif") 1x,
+      url("../media/materials/clarity-320w.webp") type("image/webp") 1x,
+      url("../media/materials/clarity-640w.avif") type("image/avif") 2x,
+      url("../media/materials/clarity-640w.webp") type("image/webp") 2x
+      );
+    }
+  }
+}
+
+/* Architectural materials are reserved for the methodology and closing invitation. */
+@layer components {
+  #hero {
+    background-image:
+      linear-gradient(145deg, transparent 42%, var(--mm-border) 42.12%, transparent 42.24%),
+      radial-gradient(ellipse at 12% 24%, var(--mm-glow-primary), transparent 58%);
+  }
+
+  :is(#method-proof, #contact) > .mm-editorial-inner {
+    position: relative;
+    isolation: isolate;
+  }
+
+  :is(#method-proof, #contact) > .mm-editorial-inner::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    pointer-events: none;
+    inset: 0 0 auto auto;
+    width: min(53%, 40rem);
+    height: min(100%, 24rem);
+    background-image: var(--mm-material);
+    background-position: center;
+    background-size: cover;
+    opacity: .45;
+    mask-image: radial-gradient(ellipse at 81% 25%, #000 3%, transparent 66%);
+  }
+
+  #contact > .mm-editorial-inner::before {
+    height: min(100%, 32rem);
+    background-position: center 70%;
+    mask-image: radial-gradient(ellipse at 84% 48%, #000 4%, transparent 70%);
+  }
+
+  #services .mm-service-head,
+  #calculators .mm-lab-intro,
+  #app-ecosystem .mm-os-story {
+    border-block-start: 1px solid var(--mm-border);
+    padding-block-start: clamp(1.125rem, 2.8vw, 2.375rem);
+    background: linear-gradient(90deg, var(--mm-accent), transparent) no-repeat 0 0 / 5rem 1px;
+  }
+
+  footer {
+    box-shadow: inset 0 1px var(--mm-edge-highlight);
+  }
+
+  @media (max-width: 700px) {
+    :is(#method-proof, #contact) > .mm-editorial-inner::before {
+      width: min(78%, 20rem);
+      height: min(100%, 15rem);
+      opacity: .3;
+      mask-image: radial-gradient(ellipse at 93% 26%, #000, transparent 65%);
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    #contact > .mm-editorial-inner::before {
+      transition: opacity 450ms ease;
+    }
+    #contact > .mm-editorial-inner:focus-within::before {
+      opacity: .57;
+    }
+  }
+}

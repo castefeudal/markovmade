@@ -23,8 +23,8 @@ try{for(const[name,engine]of Object.entries({chromium,firefox,webkit})){
  await page.evaluate(()=>{const original=Storage.prototype.setItem;Storage.prototype.setItem=function(key,value){if(key==='markovmade-lab-history-v1')throw new DOMException('Full','QuotaExceededError');return original.call(this,key,value);};document.querySelector('[data-calc="body"]').click();});
  await page.waitForFunction(()=>document.getElementById('mm-lab-data-status').textContent.includes('история не сохранена'));
  await page.locator('#main-header .mm-header-mobile-controls [data-lang-toggle]').first().focus();await page.locator('#main-header .mm-header-mobile-controls [data-lang-toggle]').first().click();await page.evaluate(()=>mmLanguageReady);
- await page.locator('.mm-os-extra-actions>summary').click();const task=page.locator('.mm-app-task').first();await task.click();assert.equal(await task.locator('em').textContent(),'done');
- await page.locator('#main-header .mm-header-mobile-controls [data-lang-toggle]').first().focus();await page.locator('#main-header .mm-header-mobile-controls [data-lang-toggle]').first().click();await page.evaluate(()=>mmLanguageReady);assert.equal(await task.locator('em').textContent(),'готово');
+ const actions=page.locator('.mm-os-extra-actions');await actions.locator('summary').click();await page.waitForFunction(()=>document.querySelector('.mm-os-extra-actions').open);const task=page.locator('.mm-app-task').first();await task.click();assert.equal(await task.locator('em').textContent(),'done');
+ await page.locator('#main-header .mm-header-mobile-controls [data-lang-toggle]').first().focus();await page.locator('#main-header .mm-header-mobile-controls [data-lang-toggle]').first().click();await page.evaluate(()=>mmLanguageReady);assert.equal(await task.locator('em').textContent(),'готово');assert.equal(await actions.evaluate(details=>details.open),true,'language switch preserves expanded actions');
  await task.click();assert.equal(await task.locator('em').textContent(),'сейчас');
  assert.deepEqual(errors,[],name+' audited edge cases produce no runtime errors');
  fs.mkdirSync(root+'/test-results/audit',{recursive:true});
