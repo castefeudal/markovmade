@@ -308,6 +308,7 @@
             // Public namespace: calculations remain deterministic and testable.
             window.MarkovMadeLab={
                 version:'1.0.0', state, constants:K,
+                selectTab: key => { if (tabs.some(tab => tab.dataset.mmLabTab === key)) showTab(key); },
                 engine:{mifflin,tenHaaf,tenHaafFFM,navyBodyFat,ffmi,weightedTef,glycogenRange,average:avg,movingAverage,regressionSlope,maintenanceCalibration,plateauStatus},
                 calculate:{body:calculateBody,nutrition:calculateNutrition,overfeeding:calculateOverfeeding,recovery:calculateRecovery,progress:calculateProgress,strategy:calculateStrategy},
                 runSelfTests:function(){
