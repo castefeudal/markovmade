@@ -264,7 +264,11 @@
             $$('[data-telegram]').forEach(btn=>btn.addEventListener('click',()=>{const s=summaryFor(btn.dataset.telegram);if(!s)return;window.mmPreviewShare(s,`https://t.me/share/url?url=${encodeURIComponent(location.href.split('#')[0])}&text=${encodeURIComponent(s)}`);}));
 
             const calculators={body:calculateBody,nutrition:calculateNutrition,overfeeding:calculateOverfeeding,recovery:calculateRecovery,progress:calculateProgress,strategy:calculateStrategy};
-            $$('[data-calc]').forEach(btn=>btn.addEventListener('click',()=>{const fn=calculators[btn.dataset.calc];if(fn)fn();}));
+            $$('[data-calc]').forEach(button => button.addEventListener('click', () => {
+                const tool = button.dataset.calc;
+                if (!calculators[tool]?.()) return;
+                button.dispatchEvent(new CustomEvent('mm:lab-result', { bubbles: true, detail: { tool } }));
+            }));
 
             const defaults={
                 'lab-fat-days':'1','lab-rec-sleep':'7','lab-rec-energy':'7','lab-rec-stress':'4','lab-rec-desire':'7','lab-rec-soreness':'4','lab-rec-well':'7','lab-prog-end-date':localToday()
@@ -304,6 +308,7 @@
             // Public namespace: calculations remain deterministic and testable.
             window.MarkovMadeLab={
                 version:'1.0.0', state, constants:K,
+                selectTab: key => { if (tabs.some(tab => tab.dataset.mmLabTab === key)) showTab(key); },
                 engine:{mifflin,tenHaaf,tenHaafFFM,navyBodyFat,ffmi,weightedTef,glycogenRange,average:avg,movingAverage,regressionSlope,maintenanceCalibration,plateauStatus},
                 calculate:{body:calculateBody,nutrition:calculateNutrition,overfeeding:calculateOverfeeding,recovery:calculateRecovery,progress:calculateProgress,strategy:calculateStrategy},
                 runSelfTests:function(){

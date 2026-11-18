@@ -333,9 +333,9 @@
     document.querySelector('[data-lab-export]').addEventListener('click', exportData);
     document.querySelector('[data-lab-import-trigger]').addEventListener('click', () => file.click());
     file.addEventListener('change', () => importData(file.files && file.files[0]));
-    document.addEventListener('click', event => {
-      const button = event.target.closest && event.target.closest('[data-calc]');
-      if (button) window.setTimeout(() => { record(button.dataset.calc); renderPersonalOS(); }, 0);
+    document.getElementById('calculators')?.addEventListener('mm:lab-result', event => {
+      record(event.detail.tool);
+      renderPersonalOS();
     });
     document.getElementById('calculators')?.addEventListener('mm:toolkit-result',event=>{record(event.detail.id);renderPersonalOS();});
     new MutationObserver(localize).observe(document.documentElement, {attributes:true,attributeFilter:['lang']});

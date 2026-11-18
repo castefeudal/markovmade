@@ -284,6 +284,11 @@
    materialising the browser's large content-visibility:auto proximity range. */
 @layer components {
 html.js:not([data-section-styles-ready]) #main-content>section:not(#hero){content-visibility:hidden;contain-intrinsic-size:auto 1100px}
+
+/* Once hydrated, keep interactive sections sized across language and focus changes.
+   An offscreen LAB size cached in the old language can move a later click target. */
+html[data-section-styles-ready] #calculators:has([data-component="lab"][data-hydrated]),
+html[data-section-styles-ready] #app-ecosystem[data-v24-ready="true"]{content-visibility:visible}
 }
 
 @layer components {
