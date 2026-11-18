@@ -110,8 +110,7 @@ html[data-theme="clarity"] :is(#method-proof, #contact) {
   #services .mm-service-head,
   #calculators .mm-lab-intro,
   #app-ecosystem .mm-os-story {
-    border-block-start: 1px solid var(--mm-border);
-    padding-block-start: clamp(1.125rem, 2.8vw, 2.375rem);
+    box-shadow: 0 -1px var(--mm-border);
     background: linear-gradient(90deg, var(--mm-accent), transparent) no-repeat 0 0 / 5rem 1px;
   }
 
