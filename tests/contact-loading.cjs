@@ -44,6 +44,10 @@ const fs=require('node:fs');
         await failedContact.waitForFunction(()=>document.querySelector('#mm-content-load-error').textContent.includes('Уточнения'));
       }
       await failedContact.locator('.mm-request-details > summary').click();
+      if(lang==='en'){
+        assert.match(await failedContact.locator('#problem').getAttribute('placeholder'),/^For example:/);
+        assert.match(await failedContact.locator('#value').getAttribute('placeholder'),/^What you/);
+      }
       await failedContact.locator('#name').fill('Мария');await failedContact.locator('#goal').fill('Начать тренироваться');
       await failedContact.locator('#manifest-form').evaluate(form=>form.requestSubmit());
       await failedContact.locator('#lead-form-error button').waitFor();
