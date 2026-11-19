@@ -12,7 +12,7 @@
   .mm-lab-groups button:focus-visible { outline:3px solid var(--mm-focus); outline-offset:3px; }
   .mm-lab-group-actions,.mm-lab-group-shortcuts { display:flex; flex-wrap:wrap; gap:8px; }
   .mm-lab-group-shortcuts { min-width:0; max-width:100%; }
-  .mm-lab-group-shortcuts:has(>button:only-child){display:none}
+  .mm-lab-group-actions:not([data-searching]) .mm-lab-group-shortcuts:has(>button:only-child){display:none}
   #calculators .mm-lab-group-actions button,#calculators .mm-meal-actions button { max-width:100%; white-space:normal; overflow-wrap:anywhere; }
   #calculators .mm-meal-tool button { max-width:100%; white-space:normal; overflow-wrap:anywhere; }
   .mm-lab-group-actions { margin-bottom:12px; }
@@ -51,10 +51,10 @@
     #calculators .mm-lab-intro>.mm-lab-kicker{display:none;}
     #calculators .mm-lab-title{font-size:1.75rem;line-height:1.15;}
     .mm-lab-groups{gap:6px;margin-block:10px 8px;}
-    .mm-lab-groups button{padding:10px;min-height:68px;}
+    .mm-lab-groups button{padding:8px 10px;min-height:48px;}
     .mm-lab-groups strong{font-size:.875rem;line-height:1.4;}
     .mm-lab-groups span{display:none;}
-    .mm-lab-groups:has([data-lab-group="nutrition"][aria-pressed="true"])+.mm-lab-group-actions .mm-lab-group-shortcuts{display:none;}
+    #calculators .mm-lab-groups:has([data-lab-group="nutrition"][aria-pressed="true"]) ~ .mm-lab-group-actions:not([data-searching]) .mm-lab-group-shortcuts{display:none;}
     .mm-lab-tool-catalog{margin-bottom:8px;padding-bottom:0;}
     #calculators #mm-lab-nutrition .mm-lab-toolhead{gap:8px;margin-bottom:12px;padding-bottom:10px;}
     #calculators #mm-lab-nutrition .mm-lab-toolhead h3{font-size:1.25rem;margin-block:4px;}
@@ -144,6 +144,17 @@
     color:var(--mm-accent);
   }
   @media(min-width:1181px){#calculators .mm-lab-tool-search{margin-inline:28px;}}
+  @media(max-width:640px){
+    #calculators .mm-lab-tool-search { margin-block:.375rem; }
+    #calculators .mm-lab-tool-search label {
+      position:absolute;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+      clip-path:inset(50%);
+      white-space:nowrap;
+    }
+  }
   @media(max-width:600px){
     #calculators .mm-lab-shortcut { grid-template-columns: minmax(0,1fr); gap:.5rem; }
     #calculators .mm-lab-shortcut small { display:none; }

@@ -49,6 +49,7 @@
     search.placeholder = language ? 'Search all 24 instruments' : 'Поиск по 24 инструментам';
     const query = search.value.trim().toLocaleLowerCase();
     const visible = query ? tools.filter(tool => [...(labels[tool.id] || []), ...tool.title, ...tool.subtitle].some(text => text.toLocaleLowerCase().includes(query))) : groups[activeGroup].map(id => tools.find(tool => tool.id === id));
+    actions.toggleAttribute('data-searching', !!query);
     shortcuts.replaceChildren();
     results.textContent = query ? (language ? 'Tools found: ' : 'Найдено инструментов: ') + visible.length : '';
     for (const tool of visible) {
