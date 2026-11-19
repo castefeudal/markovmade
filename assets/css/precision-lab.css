@@ -12,7 +12,7 @@
   .mm-lab-groups button:focus-visible { outline:3px solid var(--mm-focus); outline-offset:3px; }
   .mm-lab-group-actions,.mm-lab-group-shortcuts { display:flex; flex-wrap:wrap; gap:8px; }
   .mm-lab-group-shortcuts { min-width:0; max-width:100%; }
-  .mm-lab-group-shortcuts:has(>button:only-child){display:none}
+  .mm-lab-group-actions:not([data-searching]) .mm-lab-group-shortcuts:has(>button:only-child){display:none}
   #calculators .mm-lab-group-actions button,#calculators .mm-meal-actions button { max-width:100%; white-space:normal; overflow-wrap:anywhere; }
   #calculators .mm-meal-tool button { max-width:100%; white-space:normal; overflow-wrap:anywhere; }
   .mm-lab-group-actions { margin-bottom:12px; }
@@ -47,14 +47,14 @@
   #meal-status { min-height:1.5em; color:var(--mm-text-secondary); font:var(--mm-font-micro); }
   @media(max-width:1024px){.mm-lab-groups{grid-template-columns:repeat(2,minmax(0,1fr));}}
   @media(max-width:640px){
-    #calculators{padding-block:32px;}
+    #calculators{padding-block:24px;}
     #calculators .mm-lab-intro>.mm-lab-kicker{display:none;}
     #calculators .mm-lab-title{font-size:1.75rem;line-height:1.15;}
     .mm-lab-groups{gap:6px;margin-block:10px 8px;}
-    .mm-lab-groups button{padding:10px;min-height:68px;}
+    .mm-lab-groups button{padding:8px 10px;min-height:48px;}
     .mm-lab-groups strong{font-size:.875rem;line-height:1.4;}
     .mm-lab-groups span{display:none;}
-    .mm-lab-groups:has([data-lab-group="nutrition"][aria-pressed="true"])+.mm-lab-group-actions .mm-lab-group-shortcuts{display:none;}
+    #calculators .mm-lab-groups:has([data-lab-group="nutrition"][aria-pressed="true"]) ~ .mm-lab-group-actions:not([data-searching]) .mm-lab-group-shortcuts{display:none;}
     .mm-lab-tool-catalog{margin-bottom:8px;padding-bottom:0;}
     #calculators #mm-lab-nutrition .mm-lab-toolhead{gap:8px;margin-bottom:12px;padding-bottom:10px;}
     #calculators #mm-lab-nutrition .mm-lab-toolhead h3{font-size:1.25rem;margin-block:4px;}
@@ -66,4 +66,97 @@
     #calculators #mm-lab-nutrition select{max-width:100%;overflow:hidden;text-overflow:ellipsis;}
   }
   @media(max-width:480px){.mm-meal-fields,.mm-meal-saved{grid-template-columns:minmax(0,1fr);}.mm-meal-actions>*{width:100%;}.mm-meal-recipe-fields{grid-template-columns:minmax(0,1fr);}}
+}
+
+@layer components {
+  #calculators .mm-lab-group-shortcuts {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  }
+  #calculators .mm-lab-shortcut {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    gap: .625rem;
+    align-items: center;
+    min-height: 44px;
+    text-align: start;
+  }
+  #calculators .mm-lab-shortcut[aria-current=true] { border-color: var(--mm-accent); background: var(--mm-accent-soft); }
+  #calculators .mm-lab-shortcut svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.65;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    color: var(--mm-accent);
+  }
+  #calculators .mm-lab-tab-icon { display: grid; }
+  @media (min-width: 1000px) {
+    #calculators .mm-lab-group-shortcuts:has(.mm-lab-shortcut:nth-child(5)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+}
+
+@layer components {
+  @media (max-width: 600px) {
+    #calculators .mm-lab-group-shortcuts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #calculators .mm-lab-shortcut { padding: .5rem; gap: .375rem; }
+    #calculators .mm-lab-shortcut span { overflow-wrap: anywhere; }
+  }
+}
+
+@layer components {
+  #calculators .mm-lab-tool-search { display:grid; gap:.375rem; margin: .75rem 0; }
+  #calculators .mm-lab-tool-search label { font: var(--mm-font-label); color: var(--mm-text-primary); }
+  #calculators .mm-lab-search-status { margin: 0; font: var(--mm-font-secondary); color: var(--mm-text-secondary); }
+  #calculators .mm-lab-search-status:empty { display:none; }
+  #calculators .mm-lab-shortcut {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    align-items: start;
+    min-height: 76px;
+    padding: .75rem;
+    border: 1px solid var(--mm-border-strong);
+    background: var(--mm-surface-1);
+  }
+  #calculators .mm-lab-shortcut[aria-current=true] { background:var(--mm-accent-soft); border-color:var(--mm-accent); }
+  #calculators .mm-lab-shortcut-icon {
+    display:grid;
+    place-items:center;
+    width:2rem;
+    height:2rem;
+    border-radius:.5rem;
+    background:var(--mm-accent-soft);
+  }
+  #calculators .mm-lab-shortcut strong { display:block; font:var(--mm-font-label); }
+  #calculators .mm-lab-shortcut small { display:block; margin-top:.25rem; font:var(--mm-font-secondary); color:var(--mm-text-secondary); }
+  #calculators :is(.mm-lab-toolhead h3, .mm-toolkit-workspace>h3)>svg {
+    width:1em;
+    height:1em;
+    margin-inline-end:.375em;
+    vertical-align:-.08em;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.65;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    color:var(--mm-accent);
+  }
+  @media(min-width:1181px){#calculators .mm-lab-tool-search{margin-inline:28px;}}
+  @media(max-width:640px){
+    #calculators .mm-lab-tool-search { margin-block:.25rem; }
+    #calculators .mm-lab-tool-search label {
+      position:absolute;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+      clip-path:inset(50%);
+      white-space:nowrap;
+    }
+  }
+  @media(max-width:600px){
+    #calculators .mm-lab-shortcut { grid-template-columns: minmax(0,1fr); gap:.5rem; }
+    #calculators .mm-lab-shortcut small { display:none; }
+  }
 }
