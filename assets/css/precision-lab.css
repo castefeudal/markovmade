@@ -47,7 +47,7 @@
   #meal-status { min-height:1.5em; color:var(--mm-text-secondary); font:var(--mm-font-micro); }
   @media(max-width:1024px){.mm-lab-groups{grid-template-columns:repeat(2,minmax(0,1fr));}}
   @media(max-width:640px){
-    #calculators{padding-block:32px;}
+    #calculators{padding-block:24px;}
     #calculators .mm-lab-intro>.mm-lab-kicker{display:none;}
     #calculators .mm-lab-title{font-size:1.75rem;line-height:1.15;}
     .mm-lab-groups{gap:6px;margin-block:10px 8px;}
@@ -145,7 +145,7 @@
   }
   @media(min-width:1181px){#calculators .mm-lab-tool-search{margin-inline:28px;}}
   @media(max-width:640px){
-    #calculators .mm-lab-tool-search { margin-block:.375rem; }
+    #calculators .mm-lab-tool-search { margin-block:.25rem; }
     #calculators .mm-lab-tool-search label {
       position:absolute;
       width:1px;
