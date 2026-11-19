@@ -17,6 +17,16 @@ const fixtures=require('./toolkit-fixtures.json');
       assert.equal(await page.locator('.mm-toolkit-card-head svg').count(),0,'the competing catalogue is removed');
       assert.equal(await page.evaluate(()=>window.MarkovMadeToolkit.tools.length),24);
       assert.equal(await page.locator('.mm-toolkit').count(),0,'no second catalogue');
+      const search = page.locator('#mm-lab-tool-search');
+      await search.fill('caffeine');
+      const result = page.locator('.mm-lab-shortcut');
+      assert.equal(await result.count(),1,'search can find an instrument outside the selected group');
+      assert.equal(await result.locator('svg use').getAttribute('href'),'#mm-icon-caffeine');
+      await result.click();
+      assert.equal(await page.locator('#toolkit-caffeine-dose').isVisible(),true);
+      assert.equal(await result.getAttribute('aria-current'),'true');
+      await search.fill('');
+
       await revealLabCatalog(page);await page.locator('#mm-lab-tab-body').focus();await page.keyboard.press('End');assert.equal(await page.locator('#mm-lab-tab-caffeine').getAttribute('aria-selected'),'true');assert.equal(await page.locator('#toolkit-caffeine-dose').isVisible(),true);await page.keyboard.press('Home');assert.equal(await page.locator('#mm-lab-tab-body').getAttribute('aria-selected'),'true');
       await page.evaluate(()=>{window.__toolkitOpenEvents=[];window.__canonicalOpenEvents=[];const root=document.getElementById('calculators');root.addEventListener('mm:toolkit-open',event=>window.__toolkitOpenEvents.push(event.detail));root.addEventListener('mm:lab-tab',event=>window.__canonicalOpenEvents.push(event.detail));window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='nutrition'));});
       assert.deepEqual(await page.evaluate(()=>window.__canonicalOpenEvents),[{key:'nutrition'}],'opening a legacy tool routes through its canonical tab once');

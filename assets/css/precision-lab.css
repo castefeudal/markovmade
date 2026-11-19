@@ -106,3 +106,46 @@
     #calculators .mm-lab-shortcut span { overflow-wrap: anywhere; }
   }
 }
+
+@layer components {
+  #calculators .mm-lab-tool-search { display:grid; gap:.375rem; margin: .75rem 0; }
+  #calculators .mm-lab-tool-search label { font: var(--mm-font-label); color: var(--mm-text-primary); }
+  #calculators .mm-lab-search-status { margin: 0; font: var(--mm-font-secondary); color: var(--mm-text-secondary); }
+  #calculators .mm-lab-search-status:empty { display:none; }
+  #calculators .mm-lab-shortcut {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    align-items: start;
+    min-height: 76px;
+    padding: .75rem;
+    border: 1px solid var(--mm-border-strong);
+    background: var(--mm-surface-1);
+  }
+  #calculators .mm-lab-shortcut[aria-current=true] { background:var(--mm-accent-soft); border-color:var(--mm-accent); }
+  #calculators .mm-lab-shortcut-icon {
+    display:grid;
+    place-items:center;
+    width:2rem;
+    height:2rem;
+    border-radius:.5rem;
+    background:var(--mm-accent-soft);
+  }
+  #calculators .mm-lab-shortcut strong { display:block; font:var(--mm-font-label); }
+  #calculators .mm-lab-shortcut small { display:block; margin-top:.25rem; font:var(--mm-font-secondary); color:var(--mm-text-secondary); }
+  #calculators :is(.mm-lab-toolhead h3, .mm-toolkit-workspace>h3)>svg {
+    width:1em;
+    height:1em;
+    margin-inline-end:.375em;
+    vertical-align:-.08em;
+    fill:none;
+    stroke:currentColor;
+    stroke-width:1.65;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    color:var(--mm-accent);
+  }
+  @media(min-width:1181px){#calculators .mm-lab-tool-search{margin-inline:28px;}}
+  @media(max-width:600px){
+    #calculators .mm-lab-shortcut { grid-template-columns: minmax(0,1fr); gap:.5rem; }
+    #calculators .mm-lab-shortcut small { display:none; }
+  }
+}

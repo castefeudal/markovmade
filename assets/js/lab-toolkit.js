@@ -111,7 +111,7 @@
       const panel=document.getElementById('mm-lab-'+tool.id);panel.setAttribute('tabindex','-1');panel.focus({preventScroll:true});panel.scrollIntoView({block:'start',behavior:'auto'});return;
     }
     if(announce)root.dispatchEvent(new CustomEvent('mm:toolkit-open',{detail:{id:tool.id}}));
-    root.querySelector(`[data-mm-lab-panel="${key}"]`).append(workspace);workspace.hidden=false;workspace.replaceChildren();const title=node('h3',tool.title);title.id='mm-toolkit-active-title';title.tabIndex=-1;
+    root.querySelector(`[data-mm-lab-panel="${key}"]`).append(workspace);workspace.hidden=false;workspace.replaceChildren();const title=node('h3',tool.title);const categoryIcons={body:'body',nutrition:'calories',training:'strength',recovery:'recovery',progress:'trend',behaviour:'compass'};title.prepend(icon(categoryIcons[tool.category]||'compass'));title.id='mm-toolkit-active-title';title.tabIndex=-1;
     const form=node('form'),fields=node('div',undefined,'mm-toolkit-fields');form.noValidate=false;
     const previous=app.state.toolkit?.[tool.id]?.inputs||{};
     for(const field of tool.fields){
