@@ -15,7 +15,7 @@ const fixtures=require('./toolkit-fixtures.json');
       assert.equal(await page.locator('.mm-checkin-label svg use').count(),7,'daily input labels have matching visual icons');
       assert.equal(await page.locator('.mm-lab-daily-trends small svg use').count(),4,'daily trend cards have matching visual icons');
       assert.equal(await page.locator('.mm-toolkit-card-head svg').count(),0,'the competing catalogue is removed');
-      assert.equal(await page.evaluate(()=>window.MarkovMadeToolkit.tools.length),17);
+      assert.equal(await page.evaluate(()=>window.MarkovMadeToolkit.tools.length),24);
       assert.equal(await page.locator('.mm-toolkit').count(),0,'no second catalogue');
       await revealLabCatalog(page);await page.locator('#mm-lab-tab-body').focus();await page.keyboard.press('End');assert.equal(await page.locator('#mm-lab-tab-caffeine').getAttribute('aria-selected'),'true');assert.equal(await page.locator('#toolkit-caffeine-dose').isVisible(),true);await page.keyboard.press('Home');assert.equal(await page.locator('#mm-lab-tab-body').getAttribute('aria-selected'),'true');
       await page.evaluate(()=>{window.__toolkitOpenEvents=[];window.__canonicalOpenEvents=[];const root=document.getElementById('calculators');root.addEventListener('mm:toolkit-open',event=>window.__toolkitOpenEvents.push(event.detail));root.addEventListener('mm:lab-tab',event=>window.__canonicalOpenEvents.push(event.detail));window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='nutrition'));});
@@ -36,8 +36,8 @@ const fixtures=require('./toolkit-fixtures.json');
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true,`${id} page overflow`);
         assert.equal(await page.locator('#mm-toolkit-workspace').evaluate(el=>el.scrollWidth<=el.clientWidth+2),true,`${id} workspace overflow`);
       }
-      assert.equal(await page.evaluate(()=>Object.keys(JSON.parse(localStorage.getItem('markovmade-lab-v1')).toolkit).length),11);
-      assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-history-v1')).filter(item=>['1.0.0','2.0.0','2.1.0','3.0.0'].includes(item.modelVersion)).length),11);
+      assert.equal(await page.evaluate(()=>Object.keys(JSON.parse(localStorage.getItem('markovmade-lab-v1')).toolkit).length),18);
+      assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-history-v1')).filter(item=>['1.0.0','2.0.0','2.1.0','3.0.0'].includes(item.modelVersion)).length),18);
       // Imported literal strings are rendered as text, never markup.
       await page.evaluate(()=>{const state=window.MarkovMadeLab.state;state.profile.weight=80;state.progress=state.progress||{};state.progress.weekly=-.42;localStorage.setItem('markovmade-lab-v1',JSON.stringify(state));});
       await page.evaluate(()=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='plates')));await page.locator('#toolkit-plates-inventory').fill('<img src=x onerror=alert(1)>');await page.locator('#mm-toolkit-workspace button[type="submit"]').click();assert.equal(await page.locator('#mm-toolkit-result img').count(),0);
@@ -48,10 +48,10 @@ const fixtures=require('./toolkit-fixtures.json');
       if(name==='chromium'&&lang==='ru'&&theme==='aurum-noir'){await page.locator('.mm-toolkit-summary').scrollIntoViewIfNeeded();await page.screenshot({path:root+'/test-results/toolkit-summary-demo.png'});}
       const download=page.waitForEvent('download');await page.locator('.mm-toolkit-summary button').click();assert.match((await download).suggestedFilename(),/\.txt$/);
       await page.evaluate(()=>window.mmPreviewShare('Private test text','https://t.me/share/url?text=Private'));assert.equal(await page.locator('.mm-share-preview pre').innerText(),'Private test text');await page.keyboard.press('Escape');await page.locator('.mm-share-preview').waitFor({state:'detached'});
-      await page.reload();await page.evaluate(()=>window.mmLoadLab());assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-favorites-v1'))),['protein']);assert.equal(await page.evaluate(()=>Object.keys(window.MarkovMadeLab.state.toolkit).length),11);
+      await page.reload();await page.evaluate(()=>window.mmLoadLab());assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('markovmade-lab-favorites-v1'))),['protein']);assert.equal(await page.evaluate(()=>Object.keys(window.MarkovMadeLab.state.toolkit).length),18);
       await page.evaluate(()=>window.MarkovMadeToolkit.open(window.MarkovMadeToolkit.tools.find(tool=>tool.id==='protein')));assert.equal(await page.locator('#toolkit-protein-weight').inputValue(),'80');
       for(const width of [320,360,390,430,768,1440,2560]){await page.setViewportSize({width,height:900});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true,`${name}/${theme}/${width} overflow`);}
-      assert.deepEqual(errors,[],`${name}/${lang}/${theme} runtime errors`);report.push({browser:name,lang,theme,tools:11,errors});await page.close();
-    }}finally{await browser.close();}console.log(`Toolkit verified: ${name}, RU/EN × 3 themes × 11 integrated models`);
+      assert.deepEqual(errors,[],`${name}/${lang}/${theme} runtime errors`);report.push({browser:name,lang,theme,tools:Object.keys(fixtures).length,errors});await page.close();
+    }}finally{await browser.close();}console.log(`Toolkit verified: ${name}, RU/EN × 3 themes × 18 integrated models`);
   }}finally{fs.writeFileSync(root+'/test-results/toolkit-browser.json',JSON.stringify(report,null,2));await server.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});

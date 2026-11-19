@@ -67,3 +67,42 @@
   }
   @media(max-width:480px){.mm-meal-fields,.mm-meal-saved{grid-template-columns:minmax(0,1fr);}.mm-meal-actions>*{width:100%;}.mm-meal-recipe-fields{grid-template-columns:minmax(0,1fr);}}
 }
+
+@layer components {
+  #calculators .mm-lab-group-shortcuts {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 1fr));
+  }
+  #calculators .mm-lab-shortcut {
+    display: grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    gap: .625rem;
+    align-items: center;
+    min-height: 44px;
+    text-align: start;
+  }
+  #calculators .mm-lab-shortcut[aria-current=true] { border-color: var(--mm-accent); background: var(--mm-accent-soft); }
+  #calculators .mm-lab-shortcut svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.65;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    color: var(--mm-accent);
+  }
+  #calculators .mm-lab-tab-icon { display: grid; }
+  @media (min-width: 1000px) {
+    #calculators .mm-lab-group-shortcuts:has(.mm-lab-shortcut:nth-child(5)) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+}
+
+@layer components {
+  @media (max-width: 600px) {
+    #calculators .mm-lab-group-shortcuts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    #calculators .mm-lab-shortcut { padding: .5rem; gap: .375rem; }
+    #calculators .mm-lab-shortcut span { overflow-wrap: anywhere; }
+  }
+}
