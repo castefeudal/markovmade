@@ -37,6 +37,8 @@
           return response.text();
         }).then(html => { host.innerHTML = html; host.dataset.hydrated = 'true'; host.removeAttribute('aria-busy'); host.classList.add('visible'); }) : Promise.resolve()
       ]);
+      await script('os-tasks');
+      window.MarkovMadeTasks.mount();
       await script('personal-os');
       await script('site-interactions');
       window.mmRefreshPersonalOS?.();

@@ -288,7 +288,7 @@
             el('mm-lab-clear-all')?.addEventListener('click',()=>{
                 const english=document.documentElement.lang==='en';
                 if(!window.confirm(english?'Clear local MARKOVMADE LAB data on this device?':'Очистить локальные данные MARKOVMADE LAB на этом устройстве?')) return;
-                try{for(const key of [STORAGE_KEY,'markovmade-lab-history-v1','markovmade-lab-daily-v1','markovmade-lab-favorites-v1','markovmade-os-actions-v1','markovmade-meals-v1'])localStorage.removeItem(key);}
+                try{for(const key of [STORAGE_KEY,'markovmade-lab-history-v1','markovmade-lab-daily-v1','markovmade-lab-favorites-v1','markovmade-os-actions-v1','markovmade-os-tasks-v1','markovmade-meals-v1'])localStorage.removeItem(key);}
                 catch(e){const status=el('mm-lab-data-status');if(status)status.textContent=english?'Storage is unavailable. Complete deletion could not be confirmed. Try again.':'Хранилище недоступно. Полную очистку подтвердить не удалось. Повторите попытку.';return;}
                 if(el('mm-lab-data-status'))el('mm-lab-data-status').textContent='';state=emptyState(); if(window.MarkovMadeLab) window.MarkovMadeLab.state=state;
                 window.mmRefreshOSActions?.();window.mmRefreshPersonalOS?.();

@@ -40,7 +40,7 @@
         }).then(html => { host.innerHTML = html; host.dataset.hydrated = 'true'; host.removeAttribute('aria-busy'); host.classList.add('visible'); }) : Promise.resolve()
       ]);
       await Promise.all([loadScript('lab-models'), loadScript('dynamic-copy'), loadScript('toolkit-models')]);
-      await loadScript('lab-runtime');
+      await Promise.all([loadScript('lab-runtime'),loadScript('os-tasks')]);
       await Promise.all([loadScript('lab-history'), loadScript('lab-dashboard')]);
       await loadScript('lab-toolkit');
       await loadScript('meal-models');
