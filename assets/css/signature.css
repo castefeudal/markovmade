@@ -100,6 +100,7 @@ html[data-theme=clarity]{--signature-opacity:.7;--signature-paper:rgb(47 103 125
 body>footer{padding:40px 0;background:var(--mm-surface-sheen),var(--mm-bg-secondary);border-top:1px solid var(--mm-border-strong)}
 body>footer .footer-gold-sync-pulse{font:var(--mm-font-micro);letter-spacing:.06em;color:var(--mm-text-secondary);animation:none}
 body>footer [data-privacy-toggle]{min-height:44px;padding:10px 14px;border:1px solid var(--mm-border);border-radius:var(--mm-radius-control);background:var(--mm-surface-1)}
+body>footer .mm-offline-link{display:inline-flex;align-items:center;min-height:44px;padding-inline:12px}
 body>footer [data-privacy-toggle]:focus-visible{outline:3px solid var(--mm-focus);outline-offset:4px}
 }
 /* Beyond: distinct editorial objects, sharing material rather than identical cards. */
